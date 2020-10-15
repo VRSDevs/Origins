@@ -17,6 +17,7 @@
 - **Correo:** ar.ruano.2018@alumnos.urjc.es
 - **[Cuenta GitHub](https://github.com/Blinx24)** 
 ---
+![alt text](https://github.com/Blinx24/Origins/blob/main/logo.png?raw=true)
 ## Enlaces de interés
 - [Tablero de Trello](https://trello.com/b/EvkI8htP/juegos-en-red-origins)
 - [Cuenta Twitter](https://twitter.com/ArmoonyS?s=20)
