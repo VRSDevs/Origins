@@ -1,4 +1,4 @@
-# Origins
+![alt text](https://github.com/Blinx24/Origins/blob/main/origins.png?raw=true)
 ## Integrantes de Armoony's y Contacto
 ---
 - **Nombre y Apellidos:** Rocio Campo Castaño
