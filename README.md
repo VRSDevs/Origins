@@ -19,6 +19,8 @@
 ---
 ## Enlaces de interés
 - [Tablero de Trello](https://trello.com/b/EvkI8htP/juegos-en-red-origins)
+- [Cuenta Twitter](https://twitter.com/ArmoonyS?s=20)
+- [Cuenta Instagram](https://www.instagram.com/armoony.s/?hl=es)
 ## Temática del juego
 Definido posteriormente en el GDD, apartado de Género (Documento de Diseño de Juego).
 ## Documento de diseño de juego (GDD)
