@@ -89,9 +89,9 @@ Enlaces de referencia artística:
 
 https://www.pinterest.es/pin/188166090660008827/
 
-[Figura 2](https://www.pinterest.es/pin/244883298474322218/)
-
 [Figura 1](https://www.pinterest.es/pin/331577591312078256/)
+
+[Figura 2](https://www.pinterest.es/pin/244883298474322218/)
 
 [Figura 3](http://www.onlinemania.es/juego/8356/Pokemon-Perla-Version-8GBA9.html)
 
