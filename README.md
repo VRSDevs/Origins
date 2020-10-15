@@ -1,5 +1,5 @@
 # Origins
-## Integrantes de Armoonys
+## Integrantes de Armoony's y Contacto
 ---
 - **Nombre y Apellidos:** Rocio Campo Castaño
 - **Correo:** r.campoc.2018@alumnos.urjc.es
@@ -31,14 +31,15 @@ El juego está creado por el estudio Armoony’s, cuyos integrantes son Alejandr
 #### Historia
 Hace millones de años, un planeta poseía una fuente de inmenso poder, la cual convirtió los  cuatro  elementos  en  cuatro  especies:  Fuego,  Tierra,  Aire  y  Agua.  Estas  especies tomaban las características y los poderes relacionados con su elemento.
 
-Durante siglos las cuatro especies convivieron en armonía, unidas paracuidar y proteger la  materia  oscura.  Este  material  se  hallaba  en  la  cueva  más  profunda  del  planeta  y, además, contaba con su propia guardia de élite; compuesta por los guerreros más feroces de la especie aérea.
+Durante siglos las cuatro especies convivieron en armonía, unidas para cuidar y proteger la  materia  oscura.  Este  material  se  hallaba  en  la  cueva  más  profunda  del  planeta  y, además, contaba con su propia guardia de élite; compuesta por los guerreros más feroces de la especie aérea.
+
 Sin embargo, un buen día la desconformidad comenzó a crecer en la población terrestre, quienes envidiaban los poderes del resto de elementos. Guiados por este odio y envidia, los terrestres desencadenaron una guerra y, con ella, la masacre de su especie.
 
 Sólo  dos  terrestres  sobrevivieron  a  la  guerra,  y  en  su  desesperada  huida  robaron  el poderoso material, privando al planeta y a las otras tres especies de su principal fuente de poder y energía.
 
 Por  causas  del  destino,  su  nave  se  estrelló enun  planeta  al  que  llamarían Tierra, provocando un cataclismo que extinguió la forma de vida que había poblado el planeta anteriormente: los dinosaurios. Como únicos supervivientes, e incapaces de regresar, los dos  terrestres  se  asentaron  en  la  Tierra  con  la  esperanza  de  empezar  de  cero.  Con  este deseo en mente olvidaron la materia en su nave, optando por una vida pacifica en su nuevo hogar.
 
-Con el paso de los siglos, las generaciones sucesorasfueron olvidandoesta historia. Sus cuerpos evolucionaron para adaptarse al planeta y sus poderes se ignoraron. La nave, con el material aún dentro, fue sepultada ocultando el mayor secreto jamás guardado.
+Con el paso de los siglos, las generaciones sucesoras fueron olvidando esta historia. Sus cuerpos evolucionaron para adaptarse al planeta y sus poderes se ignoraron. La nave, con el material aún dentro, fue sepultada ocultando el mayor secreto jamás guardado.
 
 Parece todo una leyenda infantil, pero esta historia es real y la nave ha sido encontrada, los  elementos  han  conseguido  ubicar  la  materia.  Esto  desencadenará  una  nueva  guerra para conseguir la materia oscura y extinguir la raza humana; el único punto de esta nueva guerra  es  que,  con  la  llegada de  los  elementos  a  la  Tierra,  todos  los  elementos  se  han convertido en gatos.
 #### Concepto del juego
