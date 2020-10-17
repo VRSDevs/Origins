@@ -24,7 +24,7 @@
 - [Cuenta Instagram](https://www.instagram.com/armoony.s/?hl=es)
 - [Cuenta YouTube](https://www.youtube.com/channel/UCJpZbOBYYst2W-elJBd2tBg/?reload=9&guided_help_flow=5)
 ## Temática del juego
-Definido posteriormente en el GDD, apartado de Género (Documento de Diseño de Juego).
+Un videojuego de fantasía y ciencia ficción sobre la creación de la Tierra.
 ## Documento de diseño de juego (GDD)
 ### Introducción
 El documento de diseño del juego _Origins_ tiene como finalidad principal atraer aposibles jugadores y plasmar las ideas de implementación del juego.
