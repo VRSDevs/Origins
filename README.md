@@ -1,23 +1,15 @@
 ![alt text](https://github.com/Blinx24/Origins/blob/main/origins.png?raw=true)
 ## Integrantes de Armoony's y Contacto
 ---
-- **Nombre y Apellidos:** Rocio Campo Castaño
-- **Correo:** r.campoc.2018@alumnos.urjc.es
-- **[Cuenta GitHub](https://github.com/rox06io)** 
----
-- **Nombre y Apellidos:** Ignacio Calles Quintero
-- **Correo:** i.calles.2018@alumnos.urjc.es
-- **[Cuenta GitHub](https://github.com/Nachete07)** 
----
-- **Nombre y Apellidos:** Alejandro Requena Díaz
-- **Correo:** a.requenad.2018@alumnos.urjc.es
-- **[Cuenta GitHub](https://github.com/Requena21)** 
----
-- **Nombre y Apellidos:** Antonio Rafael Ruano Rodríguez
-- **Correo:** ar.ruano.2018@alumnos.urjc.es
-- **[Cuenta GitHub](https://github.com/Blinx24)** 
----
+Nombre y Apellidos | Correo | Cuenta GitHub
+------------ | ------------- | -------------
+Rocio Campo Castaño | r.campoc.2018@alumnos.urjc.es | [Haz click aquí](https://github.com/rox06io)
+Ignacio Calles Quintero | i.calles.2018@alumnos.urjc.es | [Haz click aquí](https://github.com/Nachete07)
+Alejandro Requena Díaz | a.requenad.2018@alumnos.urjc.es | [Haz click aquí](https://github.com/Requena21)
+Antonio Rafael Ruano Rodríguez | ar.ruano.2018@alumnos.urjc.es | [Haz click aquí](https://github.com/Blinx24)
+
 ![alt text](https://github.com/Blinx24/Origins/blob/main/logo.png?raw=true)
+---
 ## Enlaces de interés
 - [Tablero de Trello](https://trello.com/b/EvkI8htP/juegos-en-red-origins)
 - [Cuenta Twitter](https://twitter.com/ArmoonyS?s=20)
