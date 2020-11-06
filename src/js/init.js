@@ -1,6 +1,6 @@
 const config = {
     width: 800,             // Tamaño en píxeles
-    height: 600,
+    height: 640,
     parent: "container",    // Contenedor
     type: Phaser.AUTO,      // Tipo - AUTO hace que Phaser detecte por sí solo si el navegador puede correr WebGL o Canvas
     scene: {
