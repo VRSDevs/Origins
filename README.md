@@ -123,9 +123,9 @@ La forma del mapa será algo similar a esto (véase figura 10).
 La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha modificado para poder cumplir las características pedidas para este trabajo.
 
 #### 5.1 Enlaces de música
-[Música Menú Principal](https://opengameart.org/content/attack-of-the-enormous-mutant-badgers-music)
+[Música Menú Principal]()
 
-[Música Nivel Bosque]()
+[Música Nivel Bosque](https://opengameart.org/content/is-this-supposed-to-be-here)
 
 [Música Nivel Cueva]()
 
