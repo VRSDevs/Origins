@@ -110,7 +110,7 @@ En ambos modos, la condición que define la derrota es tener menos puntos que el
 ### 3. Música
 - **Menú  principal:** música  arcade  para  dar  una  pequeña  introducción  al  juego,  este  audio será compartido también por el menú jugar.
 - **Pantalla de juego:** música de fondo durante la partida. Variará en función del mapa en cual se encuentren los jugadores.
-* _NOTA_: Para una preview de las canciones, vea apartado 5.1 (Anexos y referencias - Enlaces de música).
+_NOTA_: Para una preview de las canciones, vea apartado 5.1 (Anexos y referencias - Enlaces de música).
 
 ### 4. Arte
 Base de los personajes principales (véase figura 8).
@@ -123,11 +123,11 @@ La forma del mapa será algo similar a esto (véase figura 10).
 La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha modificado para poder cumplir las características pedidas para este trabajo.
 
 #### 5.1 Enlaces de música
-[Música Menú Principal]()
+[Música Menú Principal](https://opengameart.org/content/crystal-cave-mysterious-ambience-seamless-loop)
 
 [Música Nivel Bosque](https://opengameart.org/content/is-this-supposed-to-be-here)
 
-[Música Nivel Cueva]()
+[Música Nivel Cueva](https://opengameart.org/content/attack-of-the-enormous-mutant-badgers-music)
 
 [Música Nivel Laboratorio](https://opengameart.org/content/high-tech-lab)
 
