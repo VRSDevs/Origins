@@ -1,4 +1,5 @@
 class bootloader extends Phaser.Scene {
+    //Clase para implementar todos los recursos
     constructor() {
         super({
             key: "bootloader"
