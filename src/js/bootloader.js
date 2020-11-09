@@ -16,10 +16,10 @@ class bootloader extends Phaser.Scene {
         });
 
         // Carga de fondos
-        this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu.png");
-        this.load.image("play","./resources/img/MenuDesign/Game/GameMenu.png");
-        this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu.png");
-        this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu.png");
+        this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
+        this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
+        this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
+        this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
     
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel_800x640.png");
