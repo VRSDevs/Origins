@@ -43,11 +43,11 @@ class scenePlayMenu extends Phaser.Scene {
         }, this);
 
         // Botón del modo 2 jugadores (multijugador local)
-        /*localMultiplayerButton = this.add.sprite(139, 251, "sprite1PlayerGM", 0).setInteractive();
+        localMultiplayerButton = this.add.sprite(405, 251, "sprite2PlayerGM", 0).setInteractive();
 
         this.anims.create({
             key: 'localMultiplayerAnim',
-            frames: this.anims.generateFrameNumbers('sprite2PlayerGM', { start: 0, end: 6 }),
+            frames: this.anims.generateFrameNumbers('sprite2PlayerGM', { start: 0, end: 4 }),
             frameRate: 4, 
             repeat: -1
         });
@@ -60,14 +60,13 @@ class scenePlayMenu extends Phaser.Scene {
             startAnim = false;
             gameModeID = 0;
         }, this);
-*/
+
         // Botón del modo multijugador
-        /*
-        onlineMultiplayerButton = this.add.sprite(139, 251, "spriteMultiplayerGM", 0).setInteractive();
+        onlineMultiplayerButton = this.add.sprite(662, 251, "spriteMultiplayerGM", 0).setInteractive();
 
         this.anims.create({
             key: 'multiplayerAnim',
-            frames: this.anims.generateFrameNumbers('spriteMultiplayerGM', { start: 0, end: 6 }),
+            frames: this.anims.generateFrameNumbers('spriteMultiplayerGM', { start: 0, end: 4 }),
             frameRate: 4, 
             repeat: -1
         });
@@ -80,7 +79,7 @@ class scenePlayMenu extends Phaser.Scene {
             startAnim = false;
             gameModeID = 0;
         }, this);
-*/
+
         // Botón de retroceder
         backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 1).setInteractive();
         backButton.addListener('pointerover', () => {
@@ -94,20 +93,20 @@ class scenePlayMenu extends Phaser.Scene {
     update(time, delta){
         if(startAnim === true && gameModeID === 1){
             singlePlayerButton.anims.play('singlePlayerAnim', true);
-            localMultiplayerButton.anims.play('singlePlayerAnim', false);
-            onlineMultiplayerButton.anims.play('singlePlayerAnim', false);
+            localMultiplayerButton.anims.play('localMultiplayerAnim', false);
+            onlineMultiplayerButton.anims.play('multiplayerAnim', false);
         } else if (startAnim === true && gameModeID === 2){
             singlePlayerButton.anims.play('singlePlayerAnim', false);
-            localMultiplayerButton.anims.play('singlePlayerAnim', true);
-            onlineMultiplayerButton.anims.play('singlePlayerAnim', false);
+            localMultiplayerButton.anims.play('localMultiplayerAnim', true);
+            onlineMultiplayerButton.anims.play('multiplayerAnim', false);
         } else if (startAnim === true && gameModeID === 3){
             singlePlayerButton.anims.play('singlePlayerAnim', false);
-            localMultiplayerButton.anims.play('singlePlayerAnim', false);
-            onlineMultiplayerButton.anims.play('singlePlayerAnim', true);
-        }else {
+            localMultiplayerButton.anims.play('localMultiplayerAnim', false);
+            onlineMultiplayerButton.anims.play('multiplayerAnim', true);
+        } else {
             singlePlayerButton.anims.play('singlePlayerAnim', false);
-            localMultiplayerButton.anims.play('singlePlayerAnim', false);
-            onlineMultiplayerButton.anims.play('singlePlayerAnim', false);
+            localMultiplayerButton.anims.play('localMultiplayerAnim', false);
+            onlineMultiplayerButton.anims.play('multiplayerAnim', false);
         }
     }
 }
