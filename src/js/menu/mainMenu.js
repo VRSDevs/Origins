@@ -61,13 +61,14 @@ class sceneMainMenu extends Phaser.Scene {
         // Botón de salir
         exitButton = this.add.sprite(width - 242/2, 590, "spriteExitButton", 1).setInteractive();
         exitButton.addListener('pointerover', () => {
+            id = 4;
             exitButton.setFrame(0);
         }, this);
         exitButton.addListener('pointerout', () => {
             id = 0;
             exitButton.setFrame(1);
         }, this);
-        //exitButton.addListener('pointerdown', loadScene, this); 
+        exitButton.addListener('pointerdown', loadScene, this); 
     }
     update(time, delta){
         
@@ -87,8 +88,14 @@ function loadScene(){
         case 3:
             console.log(id);
             this.scene.start("sceneSettingsMenu");
-            break; 
+            break;
+        case 4:
+            alert("Gracias por jugar a nuestro juego.");
+            console.log(id);
+            window.close();
+            break;  
         default:
+
             break;
     }   
 }
