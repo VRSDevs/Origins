@@ -32,7 +32,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteBackButton", './resources/img/MenuDesign/Buttons/back_SpriteSheet.png', { frameWidth: 242, frameHeight: 55 });
         this.load.spritesheet("sprite1PlayerGM", './resources/img/MenuDesign/Buttons/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("sprite2PlayerGM", './resources/img/MenuDesign/Buttons/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("spriteMultiplayerGM", './resources/img/MenuDesign/Buttons/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
+        this.load.spritesheet("spriteMultiplayerGM", './resources/img/MenuDesign/Buttons/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
     }
 }
 
