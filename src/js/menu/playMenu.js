@@ -27,7 +27,7 @@ class scenePlayMenu extends Phaser.Scene {
         this.anims.create({
             key: 'singlePlayerAnim',
             frames: this.anims.generateFrameNumbers('sprite1PlayerGM', { start: 0, end: 6 }),
-            frameRate: 2, 
+            frameRate: 4, 
             repeat: -1
         });
 
@@ -41,7 +41,7 @@ class scenePlayMenu extends Phaser.Scene {
         }, this);
 
         // Botón de retroceder
-        backButton = this.add.sprite(width - 242/2, 484, "spriteBackButton", 1).setInteractive();
+        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 1).setInteractive();
         backButton.addListener('pointerover', () => {
             backButton.setFrame(0);
         }, this);

@@ -19,7 +19,6 @@ class sceneControlsMenu extends Phaser.Scene {
         this.add.image(400, 320, "controls");
 
         // Botón de retroceder
-        backButton = this.add.image(100, 100, "imgPlayButton").setInteractive();
         backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 1).setInteractive();
         backButton.addListener('pointerover', () => {
             backButton.setFrame(0);
