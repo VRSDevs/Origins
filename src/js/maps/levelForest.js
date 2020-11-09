@@ -3,6 +3,7 @@
 var cursors
 var playerAir
 var playerGround
+var keys
 
 class sceneForestLevel extends Phaser.Scene {
     constructor() {
@@ -14,15 +15,14 @@ class sceneForestLevel extends Phaser.Scene {
         // Fondo
         this.physics.add.image(400, 320, "forestMap");
 
+        
+
         // Personaje hay que hacer un if con el personaje que toque
+        
+        
         // Gato de aire
         
-        
-
-
        playerAir = this.physics.add.sprite(90,80,'AirCatIdle');
-
-        //Air cat
 
         this.anims.create({
             key: 'leftAir',
@@ -62,11 +62,12 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerAir.anims.play('rightAir');
 
-        
+
+
+        //Ground cat
 
        playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
 
-       //Ground cat
 
        this.anims.create({
            key: 'leftGround',
@@ -104,37 +105,48 @@ class sceneForestLevel extends Phaser.Scene {
        });
 
 
-       playerGround.anims.play('rightGround');
+        playerGround.anims.play('rightGround');
 
+
+
+        //Detección del teclado
 
         cursors = this.input.keyboard.createCursorKeys();
+        keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P');
+
+
+        // Colisiones 
+        playerAir.setCollideWorldBounds(true);
+        playerGround.setCollideWorldBounds(true);
+
+
+        this.physics.add.collider(playerAir, playerGround);
 
     }
     update(time, delta){
 
 
 
+        // Gato de aire
 
-        //Aire
-
-        if (cursors.a.isDown)
+        if (keys.A.isDown)
         {
             playerAir.setVelocityX(-160);
 
             playerAir.anims.play('leftAir', true);
         }
-        else if (cursors.d.isDown)
+        else if (keys.D.isDown)
         {
             playerAir.setVelocityX(160);
 
             playerAir.anims.play('rightAir', true);
         }
-        else if(cursors.s.isDown){
+        else if(keys.S.isDown){
             playerAir.setVelocityY(160);
 
             playerAir.anims.play('downAir', true);
         }
-        else if(cursors.w.isDown){
+        else if(keys.W.isDown){
             playerAir.setVelocityY(-160);
 
             playerAir.anims.play('upAir', true);
@@ -146,42 +158,43 @@ class sceneForestLevel extends Phaser.Scene {
 
             playerAir.anims.play('idleAir',true);
         }
+
     
 
 
 
-    // Gato de tierra
+        // Gato de tierra
 
 
-    if (cursors.left.isDown)
-    {
-        playerGround.setVelocityX(-160);
+        if (cursors.left.isDown)
+        {
+            playerGround.setVelocityX(-160);
 
-        playerGround.anims.play('leftGround', true);
-    }
-    else if (cursors.right.isDown)
-    {
-        playerGround.setVelocityX(160);
+            playerGround.anims.play('leftGround', true);
+        }
+        else if (cursors.right.isDown)
+        {
+            playerGround.setVelocityX(160);
 
-        playerGround.anims.play('rightGround', true);
-    }
-    else if(cursors.down.isDown){
-        playerGround.setVelocityY(160);
+            playerGround.anims.play('rightGround', true);
+        }
+        else if(cursors.down.isDown){
+            playerGround.setVelocityY(160);
 
-        playerGround.anims.play('downGround', true);
-    }
-    else if(cursors.up.isDown){
-        playerGround.setVelocityY(-160);
+            playerGround.anims.play('downGround', true);
+        }
+        else if(cursors.up.isDown){
+            playerGround.setVelocityY(-160);
 
-        playerGround.anims.play('upGround', true);
-    }
-    else
-    {
-        playerGround.setVelocityX(0);
-        playerGround.setVelocityY(0);
+            playerGround.anims.play('upGround', true);
+        }
+        else
+        {
+            playerGround.setVelocityX(0);
+            playerGround.setVelocityY(0);
 
-        playerGround.anims.play('idleGround',true);
-    }
+            playerGround.anims.play('idleGround',true);
+        }
 
 
 
