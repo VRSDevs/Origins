@@ -67,6 +67,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("sprite2PlayerGM", './resources/img/MenuDesign/Buttons/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/MenuDesign/Buttons/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/MenuDesign/Buttons/music_SpriteSheet.png', { frameWidth: 120, frameHeight: 76 });
+        // Carga de música
+        this.load.audio("music", "./resources/music/MainMenu.mp3);
     }
 }
 export default bootloader;
