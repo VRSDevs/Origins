@@ -44,7 +44,12 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('GroundCatLeft','./resources/img/SpriteSheet/Ground_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );
         this.load.spritesheet('GroundCatUp','./resources/img/SpriteSheet/Ground_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('GroundCatRight','./resources/img/SpriteSheet/Ground_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
-        
+        this.load.spritesheet('GroundCatMatterDown','./resources/img/SpriteSheet/Ground_Spritesheet/downMatter.png' , {frameWidth: 30, frameHeight: 38} );
+        this.load.spritesheet('GroundCatMatterIdle','./resources/img/SpriteSheet/Ground_Spritesheet/idleMatter.png' , {frameWidth: 34, frameHeight: 46} );
+        this.load.spritesheet('GroundCatMatterLeft','./resources/img/SpriteSheet/Ground_Spritesheet/leftMatter.png' , {frameWidth: 42, frameHeight: 44} );
+        this.load.spritesheet('GroundCatMatterUp','./resources/img/SpriteSheet/Ground_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 44} );
+        this.load.spritesheet('GroundCatMatterRight','./resources/img/SpriteSheet/Ground_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 45} );
+
         // Water cats
         this.load.spritesheet('WaterCatDown','./resources/img/SpriteSheet/Water_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('WaterCatIdle','./resources/img/SpriteSheet/Water_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );

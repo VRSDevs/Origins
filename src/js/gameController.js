@@ -1,10 +1,19 @@
-var player1;
-var player2;
-var music = true;
-var score;
+class gameController{
+    constructor(player1, player2, music){
+        this.player1 = player1;
+        this.player2 = player2;
+        this.musicEnabled = music;
+    }
 
-class gameControler{
-    
+    getMusicEnabled(){
+        return this.musicEnabled;
+    }
+
+    setMusicEnabled(value){
+        this.musicEnabled = value;
+    }
 }
 
-export {music};
+var controller = new gameController(1, 2, true);
+
+export {controller};
