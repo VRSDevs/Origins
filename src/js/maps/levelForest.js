@@ -21,13 +21,8 @@ class sceneForestLevel extends Phaser.Scene {
         // Fondo
         this.physics.add.image(400, 320, "forestMap");
 
-        
-
         // Personaje hay que hacer un if con el personaje que toque
-        
-        
         // Gato de aire
-        
        playerAir = this.physics.add.sprite(90,80,'AirCatIdle');
 
         this.anims.create({
@@ -68,13 +63,8 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerAir.anims.play('rightAir');
 
-
-
         //Ground cat
-
        playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
-
-
        this.anims.create({
            key: 'leftGround',
            frames: this.anims.generateFrameNumbers('GroundCatLeft', { start: 0, end: 4 }),
@@ -109,32 +99,20 @@ class sceneForestLevel extends Phaser.Scene {
            frameRate: 4, 
            repeat: -1   
        });
-
-
         playerGround.anims.play('rightGround');
 
-
-
         //Detección del teclado
-
         cursors = this.input.keyboard.createCursorKeys();
         keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P');
-
-
         // Colisiones 
         playerAir.setCollideWorldBounds(true);
         playerGround.setCollideWorldBounds(true);
-
 
         this.physics.add.collider(playerAir, playerGround);
 
     }
     update(time, delta){
-
-
-
         // Gato de aire
-
         if (keys.A.isDown)
         {
             playerAir.setVelocityX(-160);
@@ -165,13 +143,7 @@ class sceneForestLevel extends Phaser.Scene {
             playerAir.anims.play('idleAir',true);
         }
 
-    
-
-
-
         // Gato de tierra
-
-
         if (cursors.left.isDown)
         {
             playerGround.setVelocityX(-160);
