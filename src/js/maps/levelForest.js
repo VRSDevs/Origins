@@ -1,9 +1,15 @@
+
 //import gameController from './gameController.js';
 
 var cursors
 var playerAir
 var playerGround
 var keys
+
+//////////////////////////////////////////////////////////////////////
+//                   Clase para el nivel del campo                  //
+//////////////////////////////////////////////////////////////////////
+
 
 class sceneForestLevel extends Phaser.Scene {
     constructor() {
