@@ -79,7 +79,7 @@ function loadScene(){
     switch (id) {
         case 1:
             console.log(id);
-            this.scene.start("sceneForestLevel");
+            this.scene.start("scenePlayMenu");
             break;    
         case 2:
             console.log(id);

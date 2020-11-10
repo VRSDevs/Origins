@@ -41,6 +41,7 @@ class scenePlayMenu extends Phaser.Scene {
             startAnim = false;
             gameModeID = 0;
         }, this);
+        singlePlayerButton.addListener('pointerdown', loadScene, this);
 
         // Botón del modo 2 jugadores (multijugador local)
         localMultiplayerButton = this.add.sprite(405, 251, "sprite2PlayerGM", 0).setInteractive();
@@ -60,6 +61,7 @@ class scenePlayMenu extends Phaser.Scene {
             startAnim = false;
             gameModeID = 0;
         }, this);
+        localMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Botón del modo multijugador
         onlineMultiplayerButton = this.add.sprite(662, 251, "spriteMultiplayerGM", 0).setInteractive();
@@ -79,6 +81,7 @@ class scenePlayMenu extends Phaser.Scene {
             startAnim = false;
             gameModeID = 0;
         }, this);
+        onlineMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Botón de retroceder
         backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 1).setInteractive();
@@ -112,7 +115,15 @@ class scenePlayMenu extends Phaser.Scene {
 }
 
 function loadScene(){
-    this.scene.start("sceneMainMenu");
+    if(gameModeID === 1) {
+        alert("En progreso...");
+    } else if(gameModeID === 2){
+        this.scene.start("sceneForestLevel");
+    } else if(gameModeID === 3){
+        alert("En progreso...");
+    } else {
+        this.scene.start("sceneMainMenu");
+    }
 }
 
 export default scenePlayMenu;
