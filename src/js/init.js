@@ -8,6 +8,7 @@ import scenePlayMenu from './menu/playMenu.js';
 import sceneSettingsMenu from './menu/settingsMenu.js';
 import sceneControlsMenu from './menu/controlsMenu.js';
 import sceneForestLevel from './maps/levelForest.js';
+import {controller} from './gameController.js';
 
 const config = {
     width: 800,             // Tamaño en píxeles
