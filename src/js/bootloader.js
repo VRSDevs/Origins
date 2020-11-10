@@ -24,6 +24,8 @@ class bootloader extends Phaser.Scene {
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel_800x640.png");
     
+        // Materia oscura
+        this.load.image("darkMatter","./resources/img/DarkMatter/DarkMatter.png");
 
         //
         this.load.image("back","./resources/img/DarkMatter/DarkMatter.png");

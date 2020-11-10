@@ -5,6 +5,9 @@ var cursors
 var playerAir
 var playerGround
 var keys
+var darkMatterPosX
+var darkMatterPosY
+
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase para el nivel del campo                  //
@@ -21,14 +24,16 @@ class sceneForestLevel extends Phaser.Scene {
         // Fondo
         this.physics.add.image(400, 320, "forestMap");
 
-        
+        // Materia oscura random
+        posAzar();
+        this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
 
         // Personaje hay que hacer un if con el personaje que toque
         
         
         // Gato de aire
         
-       playerAir = this.physics.add.sprite(90,80,'AirCatIdle');
+       playerAir = this.physics.add.sprite(760,80,'AirCatIdle');
 
         this.anims.create({
             key: 'leftAir',
@@ -206,5 +211,18 @@ class sceneForestLevel extends Phaser.Scene {
 
     }
 }
+
+
+function posAzar(){
+
+    darkMatterPosX = Phaser.Math.Between(20, 780)
+    darkMatterPosY = Phaser.Math.Between(80, 560)
+
+};
+
+
+
+
+
 
 export default sceneForestLevel;

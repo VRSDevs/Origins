@@ -11,7 +11,6 @@ import sceneControlsMenu from './menu/controlsMenu.js';
 import sceneForestLevel from './maps/levelForest.js';
 //import gameController from './gameController.js';
 
-import sceneForestLevel from './maps/levelForest.js'
 
 
 const config = {
