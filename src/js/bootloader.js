@@ -23,6 +23,8 @@ class bootloader extends Phaser.Scene {
     
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel_800x640.png");
+        this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
+        this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
 
         // Air cats
         this.load.spritesheet('AirCatDown','./resources/img/SpriteSheet/Air_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
