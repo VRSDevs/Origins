@@ -23,15 +23,17 @@ class sceneControlsMenu extends Phaser.Scene {
         backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 1).setInteractive();
         backButton.addListener('pointerover', () => {
             backButton.setFrame(0);
+            
         }, this);
         backButton.addListener('pointerout', () => {
             backButton.setFrame(1);
+          
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-
+      
         // Música del menu principal
-        music = this.add.audio ()
-        music.play();
+        var music = this.sound.add('music');
+      
     }
     update(time, delta){
 

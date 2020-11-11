@@ -2,6 +2,7 @@
 //                   Clase para el menu de ajustes                  //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import {game} from '../init.js';
 
 var changeMusicButton;
 var backButton;
@@ -30,7 +31,7 @@ class sceneSettingsMenu extends Phaser.Scene {
             if (controller.getMusicEnabled() === true){
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(false);
-                music.stop();
+             
             } else {
                 changeMusicButton.setFrame(1);
                 controller.setMusicEnabled(true);
@@ -48,8 +49,7 @@ class sceneSettingsMenu extends Phaser.Scene {
         backButton.addListener('pointerdown', loadScene, this);
 
         // Música del menu principal
-        music = this.add.audio ();
-        music.play();
+        var music = this.sound.add('music');
     }
     update(time, delta){
 

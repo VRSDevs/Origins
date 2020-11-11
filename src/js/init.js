@@ -28,3 +28,4 @@ const config = {
 // INICIALIZACIÓN JUEGO //
 var game = new Phaser.Game(config);
 
+export {game};

@@ -94,8 +94,9 @@ class scenePlayMenu extends Phaser.Scene {
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
         // Música del menu principal
-        music = this.add.audio ()
-        music.play();
+        var music = this.sound.add('music');
+        music.stop();
+
     }
     update(time, delta){
         if(startAnim === true && gameModeID === 1){
