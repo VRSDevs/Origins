@@ -8,6 +8,7 @@ var controlsButton;
 var settingsButton;
 var exitButton;
 var id;
+var music;
 
 class sceneMainMenu extends Phaser.Scene {
     constructor() {
@@ -70,7 +71,13 @@ class sceneMainMenu extends Phaser.Scene {
             exitButton.setFrame(1);
         }, this);
         exitButton.addListener('pointerdown', loadScene, this); 
-    }
+
+        // Música del menu principal
+
+            music = this.add.audio ()
+            music.play();
+    }        
+
     update(time, delta){
         
     }

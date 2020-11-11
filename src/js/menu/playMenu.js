@@ -9,7 +9,7 @@ var localMultiplayerButton;
 var onlineMultiplayerButton;
 var startAnim;
 var gameModeID;
-
+var music;
 class scenePlayMenu extends Phaser.Scene {
     constructor() {
         super({key: "scenePlayMenu",
@@ -93,6 +93,9 @@ class scenePlayMenu extends Phaser.Scene {
             backButton.setFrame(1);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
+        // Música del menu principal
+        music = this.add.audio ()
+        music.play();
     }
     update(time, delta){
         if(startAnim === true && gameModeID === 1){
