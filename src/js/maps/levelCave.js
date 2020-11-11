@@ -11,15 +11,15 @@ var keys
 //////////////////////////////////////////////////////////////////////
 
 
-class sceneForestLevel extends Phaser.Scene {
+class sceneCaveLevel extends Phaser.Scene {
     constructor() {
-        super({key: "sceneForestLevel",
+        super({key: "sceneCaveLevel",
             active: false
         });
     }
     create() {
         // Fondo
-        this.physics.add.image(400, 320, "forestMap");
+        this.physics.add.image(400, 320, "caveMap");
 
         // Personaje hay que hacer un if con el personaje que toque
         // Gato de aire
@@ -216,4 +216,4 @@ class sceneForestLevel extends Phaser.Scene {
     }
 }
 
-export default sceneForestLevel;
+export default sceneCaveLevel;
