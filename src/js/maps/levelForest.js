@@ -3,7 +3,9 @@
 
 var cursors
 var playerAir
+var matterAir = false;
 var playerGround
+var matterGround = false;
 var keys
 var darkMatterPosX
 var darkMatterPosY
@@ -30,9 +32,13 @@ class sceneForestLevel extends Phaser.Scene {
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
 
         // Personaje hay que hacer un if con el personaje que toque
-        // Gato de aire
+
+        //******************* Gato de aire ************************//
         
        playerAir = this.physics.add.sprite(760,80,'AirCatIdle');
+
+
+        //Gato sin la materia oscura
 
         this.anims.create({
             key: 'leftAir',
@@ -70,10 +76,50 @@ class sceneForestLevel extends Phaser.Scene {
         });
 
 
+        // Gatos con la materia oscura
+        this.anims.create({
+            key: 'leftAirMatter',
+            frames: this.anims.generateFrameNumbers('AirCatLeftMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'rightAirMatter',
+            frames: this.anims.generateFrameNumbers('AirCatRightMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'upAirMatter',
+            frames: this.anims.generateFrameNumbers('AirCatUpMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        
+        this.anims.create({
+            key: 'downAirMatter',
+            frames: this.anims.generateFrameNumbers('AirCatDownMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'idleAirMatter',
+            frames: this.anims.generateFrameNumbers('AirCatIdleMatter', { start: 0, end: 6 }),
+            frameRate: 4, 
+            repeat: -1   
+        });
+
         playerAir.anims.play('rightAir');
 
-        //Ground cat
+        //********************************  Ground cat **********************//
+
         playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
+
+        //Gato sin la materia oscura
+        
         this.anims.create({
            key: 'leftGround',
            frames: this.anims.generateFrameNumbers('GroundCatLeft', { start: 0, end: 4 }),
@@ -108,6 +154,45 @@ class sceneForestLevel extends Phaser.Scene {
            frameRate: 4, 
            repeat: -1   
         });
+
+        // Gato con la materia oscura
+
+        this.anims.create({
+            key: 'leftGroundMatter',
+            frames: this.anims.generateFrameNumbers('GroundCatLeftMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+         });
+ 
+         this.anims.create({
+            key: 'rightGroundMatter',
+            frames: this.anims.generateFrameNumbers('GroundCatRightMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+         });
+ 
+         this.anims.create({
+            key: 'upGroundMatter',
+            frames: this.anims.generateFrameNumbers('GroundCatUpMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+         });
+        
+         this.anims.create({
+            key: 'downGroundMatter',
+            frames: this.anims.generateFrameNumbers('GroundCatDownMatter', { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+         });
+ 
+         this.anims.create({
+            key: 'idleGroundMatter',
+            frames: this.anims.generateFrameNumbers('GroundCatIdleMatter', { start: 0, end: 6 }),
+            frameRate: 4, 
+            repeat: -1   
+         });
+
+
         playerGround.anims.play('rightGround');
 
 
@@ -133,30 +218,33 @@ class sceneForestLevel extends Phaser.Scene {
 
     }
     update(time, delta){
-        // Gato de aire
-        if (keys.A.isDown)
+        
+        //****************************  Gato de aire********************** //
+
+        //Gato aire sin materia oscura
+        if (keys.A.isDown && matterAir === false)
         {
             playerAir.setVelocityX(-160);
 
             playerAir.anims.play('leftAir', true);
         }
-        else if (keys.D.isDown)
+        else if (keys.D.isDown && matterAir === false)
         {
             playerAir.setVelocityX(160);
 
             playerAir.anims.play('rightAir', true);
         }
-        else if(keys.S.isDown){
+        else if(keys.S.isDown && matterAir === false){
             playerAir.setVelocityY(160);
 
             playerAir.anims.play('downAir', true);
         }
-        else if(keys.W.isDown){
+        else if(keys.W.isDown && matterAir === false){
             playerAir.setVelocityY(-160);
 
             playerAir.anims.play('upAir', true);
         }
-        else
+        else if(matterAir === false)
         {
             playerAir.setVelocityX(0);
             playerAir.setVelocityY(0);
@@ -164,30 +252,65 @@ class sceneForestLevel extends Phaser.Scene {
             playerAir.anims.play('idleAir',true);
         }
 
-        // Gato de tierra
-        if (cursors.left.isDown)
+        //gato aire con materia oscura
+        if (keys.A.isDown && matterAir === true)
+        {
+            playerAir.setVelocityX(-160);
+
+            playerAir.anims.play('leftAirMatter', true);
+        }
+        else if (keys.D.isDown && matterAir === true)
+        {
+            playerAir.setVelocityX(160);
+
+            playerAir.anims.play('rightAirMatter', true);
+        }
+        else if(keys.S.isDown && matterAir === true){
+            playerAir.setVelocityY(160);
+
+            playerAir.anims.play('downAirMatter', true);
+        }
+        else if(keys.W.isDown && matterAir === true){
+            playerAir.setVelocityY(-160);
+
+            playerAir.anims.play('upAirMatter', true);
+        }
+        else if(matterAir === true)
+        {
+            playerAir.setVelocityX(0);
+            playerAir.setVelocityY(0);
+
+            playerAir.anims.play('idleAirMatter',true);
+        }
+
+
+        //**************************  Gato de tierra ***************************//
+
+        // Gato tierra sin materia oscura
+    
+        if (cursors.left.isDown && matterGround === false)
         {
             playerGround.setVelocityX(-160);
 
             playerGround.anims.play('leftGround', true);
         }
-        else if (cursors.right.isDown)
+        else if (cursors.right.isDown && matterGround === false)
         {
             playerGround.setVelocityX(160);
 
             playerGround.anims.play('rightGround', true);
         }
-        else if(cursors.down.isDown){
+        else if(cursors.down.isDown && matterGround === false){
             playerGround.setVelocityY(160);
 
             playerGround.anims.play('downGround', true);
         }
-        else if(cursors.up.isDown){
+        else if(cursors.up.isDown && matterGround === false){
             playerGround.setVelocityY(-160);
 
             playerGround.anims.play('upGround', true);
         }
-        else
+        else if(matterGround === false)
         {
             playerGround.setVelocityX(0);
             playerGround.setVelocityY(0);
@@ -195,7 +318,37 @@ class sceneForestLevel extends Phaser.Scene {
             playerGround.anims.play('idleGround',true);
         }
 
+        // Gato tierra con matria oscura
 
+        if (cursors.left.isDown && matterGround === true)
+        {
+            playerGround.setVelocityX(-160);
+
+            playerGround.anims.play('leftGroundMatter', true);
+        }
+        else if (cursors.right.isDown && matterGround === true)
+        {
+            playerGround.setVelocityX(160);
+
+            playerGround.anims.play('rightGroundMatter', true);
+        }
+        else if(cursors.down.isDown && matterGround === true){
+            playerGround.setVelocityY(160);
+
+            playerGround.anims.play('downGroundMatter', true);
+        }
+        else if(cursors.up.isDown && matterGround === true){
+            playerGround.setVelocityY(-160);
+
+            playerGround.anims.play('upGroundMatter', true);
+        }
+        else if(matterGround === true)
+        {
+            playerGround.setVelocityX(0);
+            playerGround.setVelocityY(0);
+
+            playerGround.anims.play('idleGroundMatter',true);
+        }
 
     }
 }
@@ -213,7 +366,10 @@ function collectDarkmatterAir(playerAir, darkMatter){
 
     darkMatter.disableBody(true, true);
 
+
     // Añadir boolean de playerAir
+
+    matterAir = true;
 
 };
 
@@ -221,8 +377,10 @@ function collectDarkmatterGround(playerGround, darkMatter){
 
     darkMatter.disableBody(true, true);
 
+
     // Añadir boolean de playerAir
 
+    matterGround = true;
 };
 
 
