@@ -125,10 +125,10 @@ function getMap() {
             game.scene.start("sceneForestLevel");
             break;
         case 2:
-            game.scene.start("sceneCaveLevel");
+            game.scene.start("sceneForestLevel");
             break;
         case 3:
-            game.scene.start("sceneLabLevel");
+            game.scene.start("sceneForestLevel");
             break;
         default:
             console.log("Ups.")
