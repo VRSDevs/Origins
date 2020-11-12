@@ -12,6 +12,7 @@ import sceneCaveLevel from './maps/levelCave.js';
 import sceneLabLevel from './maps/levelLab.js';
 import {controller} from './gameController.js';
 
+
 const config = {
     width: 800,             // Tamaño en píxeles
     height: 640,
