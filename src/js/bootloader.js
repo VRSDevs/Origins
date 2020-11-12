@@ -20,15 +20,19 @@ class bootloader extends Phaser.Scene {
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
+      
     
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel_800x640.png");
+        this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
+        this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
     
         // Materia oscura
         this.load.image("darkMatter","./resources/img/DarkMatter/DarkMatter_small.png");
-
-        //
         this.load.image("back","./resources/img/DarkMatter/DarkMatter.png");
+
+        
+
 
         //***********************  Air cats ***************************/
         // Sin materia
@@ -65,6 +69,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('GroundCatLeft','./resources/img/SpriteSheet/Ground_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );
         this.load.spritesheet('GroundCatUp','./resources/img/SpriteSheet/Ground_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('GroundCatRight','./resources/img/SpriteSheet/Ground_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
+
         // Con materia
         this.load.spritesheet('GroundCatDownMatter','./resources/img/SpriteSheet/Ground_Spritesheet/downMatter.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('GroundCatIdleMatter','./resources/img/SpriteSheet/Ground_Spritesheet/idleMatter.png' , {frameWidth: 34, frameHeight: 46} );
@@ -74,6 +79,7 @@ class bootloader extends Phaser.Scene {
 
         //******************** Water cats ********************************/
         // Sin materia
+
         this.load.spritesheet('WaterCatDown','./resources/img/SpriteSheet/Water_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('WaterCatIdle','./resources/img/SpriteSheet/Water_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('WaterCatLeft','./resources/img/SpriteSheet/Water_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );

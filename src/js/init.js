@@ -8,8 +8,9 @@ import scenePlayMenu from './menu/playMenu.js';
 import sceneSettingsMenu from './menu/settingsMenu.js';
 import sceneControlsMenu from './menu/controlsMenu.js';
 import sceneForestLevel from './maps/levelForest.js';
-//import gameController from './gameController.js';
-
+import sceneCaveLevel from './maps/levelCave.js';
+import sceneLabLevel from './maps/levelLab.js';
+import {controller} from './gameController.js';
 
 
 const config = {
@@ -23,10 +24,12 @@ const config = {
     },
     scene: [
         bootloader, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
-        sceneSettingsMenu, sceneForestLevel
+        sceneSettingsMenu, sceneForestLevel, sceneCaveLevel, sceneLabLevel
     ]
 };
 
 // INICIALIZACIÓN JUEGO //
 var game = new Phaser.Game(config);
+
+export {game};
 

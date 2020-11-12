@@ -1,22 +1,26 @@
-
-//import gameController from './gameController.js';
+import {controller} from '../gameController.js';
 
 var cursors
 var playerAir
 var matterAir = false;
 var playerGround
+
 var matterGround = false;
-var keys
+
 var darkMatterPosX
 var darkMatterPosY
 var darkMatter
 
 
+var timer
+var t
+var oldT = 0;
+var diffT = controller.getTimeRound();
+
+
 //////////////////////////////////////////////////////////////////////
 //                   Clase para el nivel del campo                  //
 //////////////////////////////////////////////////////////////////////
-
-
 class sceneForestLevel extends Phaser.Scene {
     constructor() {
         super({key: "sceneForestLevel",
@@ -24,6 +28,10 @@ class sceneForestLevel extends Phaser.Scene {
         });
     }
     create() {
+        // Variables auxiliares
+        var width = this.sys.canvas.width;
+        var height = this.sys.canvas.height;
+
         // Fondo
         this.physics.add.image(400, 320, "forestMap");
 
@@ -33,10 +41,10 @@ class sceneForestLevel extends Phaser.Scene {
 
         // Personaje hay que hacer un if con el personaje que toque
 
+
         //******************* Gato de aire ************************//
         
-       playerAir = this.physics.add.sprite(760,80,'AirCatIdle');
-
+        playerAir = this.physics.add.sprite(760,80,'AirCatIdle');
 
         //Gato sin la materia oscura
 
@@ -114,12 +122,13 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerAir.anims.play('rightAir');
 
-        //********************************  Ground cat *****************************//
 
-        playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
+        //********************************  Ground cat *****************************//
 
         //Gato sin la materia oscura
         
+        playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
+
         this.anims.create({
            key: 'leftGround',
            frames: this.anims.generateFrameNumbers('GroundCatLeft', { start: 0, end: 4 }),
@@ -140,7 +149,7 @@ class sceneForestLevel extends Phaser.Scene {
            frameRate: 5,
            repeat: -1
         });
-       
+
         this.anims.create({
            key: 'downGround',
            frames: this.anims.generateFrameNumbers('GroundCatDown', { start: 0, end: 4 }),
@@ -195,7 +204,6 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerGround.anims.play('rightGround');
 
-
         //Detección del teclado
 
         cursors = this.input.keyboard.createCursorKeys();
@@ -211,15 +219,30 @@ class sceneForestLevel extends Phaser.Scene {
 
         this.physics.add.collider(playerAir, playerGround);
 
+
         // Interacción al colisionar los gatos con la materia oscura
         this.physics.add.overlap(playerAir, darkMatter, collectDarkmatterAir, null, this);
         this.physics.add.overlap(playerGround, darkMatter, collectDarkmatterGround, null, this);
 
 
+        //Texto
+        timer = this.add.text(width/2, 20, "test",{
+            fontFamily: 'origins',
+            fontSize:'32px',
+            fill: '#ffffff'
+        });
+
+        t = this.time.delayedCall(controller.getTimeRound() * 1000, onEvent, [], this);
+
+
     }
     update(time, delta){
         
-        //****************************  Gato de aire********************** //
+        controller.setTimeRound(controller.getTimeRound() - (t.getProgress() - oldT) * diffT);
+        timer.setText(Math.trunc(controller.getTimeRound()));
+        oldT = t.getProgress();
+      
+        //****************************  Gato de aire  ********************** //
 
         //Gato aire sin materia oscura
         if (keys.A.isDown && matterAir === false)
@@ -318,7 +341,7 @@ class sceneForestLevel extends Phaser.Scene {
             playerGround.anims.play('idleGround',true);
         }
 
-        // Gato tierra con matria oscura
+        // Gato tierra con materia oscura
 
         if (cursors.left.isDown && matterGround === true)
         {
@@ -384,6 +407,9 @@ function collectDarkmatterGround(playerGround, darkMatter){
 };
 
 
+function onEvent(){
+    alert('Test');
+}
 
 
 export default sceneForestLevel;

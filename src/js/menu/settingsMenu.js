@@ -1,10 +1,9 @@
 //////////////////////////////////////////////////////////////////////
 //                   Clase para el menu de ajustes                  //
 //////////////////////////////////////////////////////////////////////
-import {music} from '../gameController.js';
+import {controller} from '../gameController.js';
 
 var changeMusicButton;
-var musicEnabled = music;
 var backButton;
 
 class sceneSettingsMenu extends Phaser.Scene {
@@ -22,17 +21,19 @@ class sceneSettingsMenu extends Phaser.Scene {
         this.add.image(400, 320, "settings");
 
         // Botón de cambiar música
-        changeMusicButton = this.add.sprite(575, 290, "spriteChangeMusicButton", 1).setInteractive();
+        if(controller.getMusicEnabled() === true){
+            changeMusicButton = this.add.sprite(575, 290, "spriteChangeMusicButton", 1).setInteractive();
+        } else {
+            changeMusicButton = this.add.sprite(575, 290, "spriteChangeMusicButton", 0).setInteractive();
+        }
         changeMusicButton.addListener('pointerdown', () => {
-            if (musicEnabled === true){
+            if (controller.getMusicEnabled() === true){
                 changeMusicButton.setFrame(0);
-                musicEnabled = false;
-                console.log(musicEnabled);
+                controller.setMusicEnabled(false);
             } else {
                 changeMusicButton.setFrame(1);
-                musicEnabled = true;
+                controller.setMusicEnabled(true);
             }
-            
         }, this);
 
         // Botón de retroceder
