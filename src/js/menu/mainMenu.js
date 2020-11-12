@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
 
+
 var playButton;
 var controlsButton;
 var settingsButton;
@@ -74,7 +75,7 @@ class sceneMainMenu extends Phaser.Scene {
 
         // Música del menu principal
         var music = this.sound.add('music');
-            music.play();
+        
     }        
 
     update(time, delta){
@@ -83,14 +84,20 @@ class sceneMainMenu extends Phaser.Scene {
 }
 
 function loadScene(){
+    var music = this.sound.add('music');
     switch (id) {
         case 1:
             console.log(id);
             this.scene.start("scenePlayMenu");
+            music.play();
+
+            
             break;    
         case 2:
             console.log(id);
             this.scene.start("sceneControlsMenu");
+            music.play();
+
             break;
         case 3:
             console.log(id);
@@ -100,11 +107,14 @@ function loadScene(){
             alert("Gracias por jugar a nuestro juego.");
             console.log(id);
             window.close();
+           
             break;  
         default:
+           
 
             break;
     }   
 }
 
 export default sceneMainMenu;
+export {music};

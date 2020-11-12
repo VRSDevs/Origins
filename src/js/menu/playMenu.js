@@ -2,14 +2,15 @@
 //                     Clase para el menu Jugar                     //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
-
+import {music} from './mainMenu.js';
 var backButton;
 var singlePlayerButton;
 var localMultiplayerButton;
 var onlineMultiplayerButton;
 var startAnim;
 var gameModeID;
-var music;
+
+
 class scenePlayMenu extends Phaser.Scene {
     constructor() {
         super({key: "scenePlayMenu",
@@ -93,9 +94,6 @@ class scenePlayMenu extends Phaser.Scene {
             backButton.setFrame(1);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-        // Música del menu principal
-        var music = this.sound.add('music');
-        music.stop();
 
     }
     update(time, delta){
@@ -128,6 +126,7 @@ function loadScene(){
         alert("En progreso...");
     } else {
         this.scene.start("sceneMainMenu");
+          
     }
 }
 

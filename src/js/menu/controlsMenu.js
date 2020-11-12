@@ -4,7 +4,6 @@
 import {controller} from '../gameController.js';
 
 var backButton;
-var music;
 class sceneControlsMenu extends Phaser.Scene {
     constructor() {
         super({key: "sceneControlsMenu",
@@ -32,7 +31,6 @@ class sceneControlsMenu extends Phaser.Scene {
         backButton.addListener('pointerdown', loadScene, this);
       
         // Música del menu principal
-        var music = this.sound.add('music');
       
     }
     update(time, delta){
@@ -42,6 +40,7 @@ class sceneControlsMenu extends Phaser.Scene {
 
 function loadScene(){
     this.scene.start("sceneMainMenu");
+    
 }
 
 export default sceneControlsMenu;
