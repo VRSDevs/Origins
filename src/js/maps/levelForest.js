@@ -5,12 +5,14 @@ var playerAir
 var playerGround
 var playerGroundMatter
 var keys
+var timer
+var t
+var oldT = 0;
+var diffT = controller.getTimeRound();
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase para el nivel del campo                  //
 //////////////////////////////////////////////////////////////////////
-
-
 class sceneForestLevel extends Phaser.Scene {
     constructor() {
         super({key: "sceneForestLevel",
@@ -18,12 +20,16 @@ class sceneForestLevel extends Phaser.Scene {
         });
     }
     create() {
+        // Variables auxiliares
+        var width = this.sys.canvas.width;
+        var height = this.sys.canvas.height;
+
         // Fondo
         this.physics.add.image(400, 320, "forestMap");
 
         // Personaje hay que hacer un if con el personaje que toque
         // Gato de aire
-       playerAir = this.physics.add.sprite(90,80,'AirCatIdle');
+        playerAir = this.physics.add.sprite(90,80,'AirCatIdle');
 
         this.anims.create({
             key: 'leftAir',
@@ -150,6 +156,15 @@ class sceneForestLevel extends Phaser.Scene {
 
         this.physics.add.collider(playerAir, playerGround);
 
+        //Texto
+        timer = this.add.text(width/2, 20, "test",{
+            fontFamily: 'origins',
+            fontSize:'32px',
+            fill: '#ffffff'
+        });
+
+        t = this.time.delayedCall(controller.getTimeRound() * 1000, onEvent, [], this);
+
     }
     update(time, delta){
         // Gato de aire
@@ -213,7 +228,16 @@ class sceneForestLevel extends Phaser.Scene {
 
             playerGround.anims.play('idleGround',true);
         }
+
+        controller.setTimeRound(controller.getTimeRound() - (t.getProgress() - oldT) * diffT);
+        timer.setText(Math.trunc(controller.getTimeRound()));
+        oldT = t.getProgress();
+        
     }
+}
+
+function onEvent(){
+    alert('Pito');
 }
 
 export default sceneForestLevel;
