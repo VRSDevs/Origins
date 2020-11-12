@@ -7,6 +7,7 @@ var playerGround
 var keys
 var darkMatterPosX
 var darkMatterPosY
+var darkMatter
 
 
 //////////////////////////////////////////////////////////////////////
@@ -26,11 +27,9 @@ class sceneForestLevel extends Phaser.Scene {
 
         // Materia oscura random
         posAzar();
-        this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
+        darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
 
         // Personaje hay que hacer un if con el personaje que toque
-        
-        
         // Gato de aire
         
        playerAir = this.physics.add.sprite(760,80,'AirCatIdle');
@@ -73,73 +72,68 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerAir.anims.play('rightAir');
 
-
-
         //Ground cat
-
-       playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
-
-
-       this.anims.create({
+        playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
+        this.anims.create({
            key: 'leftGround',
            frames: this.anims.generateFrameNumbers('GroundCatLeft', { start: 0, end: 4 }),
            frameRate: 5,
            repeat: -1
-       });
+        });
 
-       this.anims.create({
+        this.anims.create({
            key: 'rightGround',
            frames: this.anims.generateFrameNumbers('GroundCatRight', { start: 0, end: 4 }),
            frameRate: 5,
            repeat: -1
-       });
+        });
 
-       this.anims.create({
+        this.anims.create({
            key: 'upGround',
            frames: this.anims.generateFrameNumbers('GroundCatUp', { start: 0, end: 4 }),
            frameRate: 5,
            repeat: -1
-       });
+        });
        
-       this.anims.create({
+        this.anims.create({
            key: 'downGround',
            frames: this.anims.generateFrameNumbers('GroundCatDown', { start: 0, end: 4 }),
            frameRate: 5,
            repeat: -1
-       });
+        });
 
-       this.anims.create({
+        this.anims.create({
            key: 'idleGround',
            frames: this.anims.generateFrameNumbers('GroundCatIdle', { start: 0, end: 6 }),
            frameRate: 4, 
            repeat: -1   
-       });
-
-
+        });
         playerGround.anims.play('rightGround');
-
 
 
         //Detección del teclado
 
         cursors = this.input.keyboard.createCursorKeys();
         keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P');
-
-
+        
         // Colisiones 
+
+        // Colisiones con los bordes
         playerAir.setCollideWorldBounds(true);
         playerGround.setCollideWorldBounds(true);
 
+        //Colisiones entre personajes 
 
         this.physics.add.collider(playerAir, playerGround);
 
+        // Interacción al colisionar los gatos con la materia oscura
+        this.physics.add.overlap(playerAir, darkMatter, collectDarkmatterAir, null, this);
+        this.physics.add.overlap(playerGround, darkMatter, collectDarkmatterGround, null, this);
+
+
     }
     update(time, delta){
-
-
-
         // Gato de aire
-
         if (keys.A.isDown)
         {
             playerAir.setVelocityX(-160);
@@ -170,13 +164,7 @@ class sceneForestLevel extends Phaser.Scene {
             playerAir.anims.play('idleAir',true);
         }
 
-    
-
-
-
         // Gato de tierra
-
-
         if (cursors.left.isDown)
         {
             playerGround.setVelocityX(-160);
@@ -221,6 +209,21 @@ function posAzar(){
 };
 
 
+function collectDarkmatterAir(playerAir, darkMatter){
+
+    darkMatter.disableBody(true, true);
+
+    // Añadir boolean de playerAir
+
+};
+
+function collectDarkmatterGround(playerGround, darkMatter){
+
+    darkMatter.disableBody(true, true);
+
+    // Añadir boolean de playerAir
+
+};
 
 
 

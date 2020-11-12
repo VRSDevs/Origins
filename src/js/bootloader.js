@@ -25,7 +25,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("forestMap","./resources/img/Maps/FieldLevel_800x640.png");
     
         // Materia oscura
-        this.load.image("darkMatter","./resources/img/DarkMatter/DarkMatter.png");
+        this.load.image("darkMatter","./resources/img/DarkMatter/DarkMatter_small.png");
 
         //
         this.load.image("back","./resources/img/DarkMatter/DarkMatter.png");
@@ -67,7 +67,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("sprite1PlayerGM", './resources/img/MenuDesign/Buttons/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("sprite2PlayerGM", './resources/img/MenuDesign/Buttons/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/MenuDesign/Buttons/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
-
+        this.load.spritesheet("spriteChangeMusicButton", './resources/img/MenuDesign/Buttons/music_SpriteSheet.png', { frameWidth: 120, frameHeight: 76 });
     }
 }
 export default bootloader;
