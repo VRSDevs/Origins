@@ -65,10 +65,11 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteSettingsButton", './resources/img/MenuDesign/Buttons/settings_SpriteSheet.png', { frameWidth: 360, frameHeight: 82 });
         this.load.spritesheet("spriteExitButton", './resources/img/MenuDesign/Buttons/exit_SpriteSheet.png', { frameWidth: 242, frameHeight: 55 });
         this.load.spritesheet("spriteBackButton", './resources/img/MenuDesign/Buttons/back_SpriteSheet.png', { frameWidth: 242, frameHeight: 55 });
-        this.load.spritesheet("sprite1PlayerGM", './resources/img/MenuDesign/Buttons/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("sprite2PlayerGM", './resources/img/MenuDesign/Buttons/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("spriteMultiplayerGM", './resources/img/MenuDesign/Buttons/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("spriteChangeMusicButton", './resources/img/MenuDesign/Buttons/music_SpriteSheet.png', { frameWidth: 120, frameHeight: 76 });
+        this.load.spritesheet("sprite1PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
+        this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
+        this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
+        this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 120, frameHeight: 76 });
+
     }
 }
 export default bootloader;
