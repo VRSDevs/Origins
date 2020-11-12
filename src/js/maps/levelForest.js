@@ -114,7 +114,7 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerAir.anims.play('rightAir');
 
-        //********************************  Ground cat **********************//
+        //********************************  Ground cat *****************************//
 
         playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
 
