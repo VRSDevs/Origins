@@ -30,7 +30,7 @@ class sceneMainMenu extends Phaser.Scene {
             playButton.setFrame(0);
         }, this);
         playButton.addListener('pointerout', () => {
-            id = 0;
+            id = 2;
             playButton.setFrame(1);
         }, this);
         playButton.addListener('pointerdown', loadScene, this);

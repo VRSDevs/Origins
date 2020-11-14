@@ -114,7 +114,7 @@ class scenePlayMenu extends Phaser.Scene {
         }
     }
 }
-
+/* 
 function getMap() {
     var max = 4;
     var min = 1;
@@ -135,12 +135,17 @@ function getMap() {
             break;
     }
 }
+*/
+
+function goNextScene(){
+    game.scene.start("sceneSelectionMenu");
+}
 
 function loadScene(){
     if(controller.getGameMode() === 1) {
         alert("En progreso...");
     } else if(controller.getGameMode() === 2){
-        getMap();
+        goNextScene();
     } else if(controller.getGameMode() === 3){
         alert("En progreso...");
     } else {

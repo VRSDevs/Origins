@@ -1,5 +1,6 @@
 import {controller} from '../gameController.js';
 
+var keys
 var cursors
 var playerAir
 var matterAir = false;
