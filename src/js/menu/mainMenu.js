@@ -87,7 +87,7 @@ class sceneMainMenu extends Phaser.Scene {
         settingsButton.addListener('pointerdown', loadScene, this);  
 
         // Botón de salir
-        exitButton = this.add.sprite(width - 242/2, 590, "spriteExitButton", 0).setInteractive();
+        exitButton = this.add.sprite(width - 301/2, 590, "spriteExitButton", 0).setInteractive();
         
         this.anims.create({
             key: 'exitButtonAnim',
