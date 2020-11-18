@@ -93,15 +93,16 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatRightMatter','./resources/img/SpriteSheet/Water_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
 
         // Carga de botones
-        this.load.spritesheet("spritePlayButton", './resources/img/MenuDesign/Buttons/play_SpriteSheet.png', { frameWidth: 360, frameHeight: 82 });
-        this.load.spritesheet("spriteControlsButton", './resources/img/MenuDesign/Buttons/controls_SpriteSheet.png', { frameWidth: 360, frameHeight: 82 });
-        this.load.spritesheet("spriteSettingsButton", './resources/img/MenuDesign/Buttons/settings_SpriteSheet.png', { frameWidth: 360, frameHeight: 82 });
-        this.load.spritesheet("spriteExitButton", './resources/img/MenuDesign/Buttons/exit_SpriteSheet.png', { frameWidth: 242, frameHeight: 55 });
-        this.load.spritesheet("spriteBackButton", './resources/img/MenuDesign/Buttons/back_SpriteSheet.png', { frameWidth: 242, frameHeight: 55 });
-        this.load.spritesheet("sprite1PlayerGM", './resources/img/MenuDesign/Buttons/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("sprite2PlayerGM", './resources/img/MenuDesign/Buttons/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("spriteMultiplayerGM", './resources/img/MenuDesign/Buttons/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("spriteChangeMusicButton", './resources/img/MenuDesign/Buttons/music_SpriteSheet.png', { frameWidth: 120, frameHeight: 76 });
+        this.load.spritesheet("spritePlayButton", './resources/img/SpriteSheet/Button_SpriteSheet/play_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
+        this.load.spritesheet("spriteControlsButton", './resources/img/SpriteSheet/Button_SpriteSheet/controls_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
+        this.load.spritesheet("spriteSettingsButton", './resources/img/SpriteSheet/Button_SpriteSheet/settings_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
+        this.load.spritesheet("spriteExitButton", './resources/img/SpriteSheet/Button_SpriteSheet/exit_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
+        this.load.spritesheet("spriteBackButton", './resources/img/SpriteSheet/Button_SpriteSheet/back_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
+        this.load.spritesheet("spriteBackButton2", './resources/img/SpriteSheet/Button_SpriteSheet/back_SpriteSheet2.png', { frameWidth: 301, frameHeight: 66 });
+        this.load.spritesheet("sprite1PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
+        this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
+        this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
+        this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 118, frameHeight: 66 });
     }
 }
 export default bootloader;
