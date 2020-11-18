@@ -37,12 +37,21 @@ class sceneSettingsMenu extends Phaser.Scene {
         }, this);
 
         // Botón de retroceder
-        backButton = this.add.sprite(width - 242/2, 539, "spriteBackButton", 1).setInteractive();
+        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 0).setInteractive();
+
+        this.anims.create({
+            key: 'backButtonAnim',
+            frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),
+            frameRate: 3,
+            repeat: 0
+        });
+
         backButton.addListener('pointerover', () => {
-            backButton.setFrame(0);
+            backButton.anims.play('backButtonAnim',true);
         }, this);
         backButton.addListener('pointerout', () => {
-            backButton.setFrame(1);
+            backButton.anims.stop();
+            backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
     }
