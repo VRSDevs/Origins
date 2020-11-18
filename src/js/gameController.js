@@ -34,6 +34,6 @@ class gameController{
 
 }
 
-var controller = new gameController(1, 2, true, 0, 30);
+var controller = new gameController(1, 2, true, 0, 60);
 
 export {controller};

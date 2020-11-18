@@ -1,25 +1,31 @@
+//////////////////////////////////////////////////////////////////////
+//                  Importaciones de otros JS                       //
+//////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
 
-var cursors
-var playerAir
+//////////////////////////////////////////////////////////////////////
+//                  Variables globales                              //
+//////////////////////////////////////////////////////////////////////
+//******************* Input teclado ************************//
+var cursors;
+var keys;
+//******************* Jugadores ************************//
+var playerAir;
 var matterAir = false;
-var playerGround
-
+var playerGround;
 var matterGround = false;
-
-var darkMatterPosX
-var darkMatterPosY
-var darkMatter
-
-
-var timer
-var t
+//******************* Materia oscura ************************//
+var darkMatterPosX;
+var darkMatterPosY;
+var darkMatter;
+//******************* Temporizador ************************//
+var timer;
+var t;
 var oldT = 0;
 var diffT = controller.getTimeRound();
 
-
 //////////////////////////////////////////////////////////////////////
-//                   Clase para el nivel del campo                  //
+//                   Clase de escena del nivel de bosque            //
 //////////////////////////////////////////////////////////////////////
 class sceneForestLevel extends Phaser.Scene {
     constructor() {
@@ -28,26 +34,24 @@ class sceneForestLevel extends Phaser.Scene {
         });
     }
     create() {
-        // Variables auxiliares
+        //******************* Variables auxiliares ************************//
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
 
-        // Fondo
+        //******************* Fondos ************************//
         this.physics.add.image(400, 320, "forestMap");
 
-        // Materia oscura random
+        //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
 
         // Personaje hay que hacer un if con el personaje que toque
 
-
-        //******************* Gato de aire ************************//
-        
+        //******************* Personajes ************************//
+        // Aire //
         playerAir = this.physics.add.sprite(760,80,'AirCatIdle');
 
-        //Gato sin la materia oscura
-
+        // Sin materia oscura
         this.anims.create({
             key: 'leftAir',
             frames: this.anims.generateFrameNumbers('AirCatLeft', { start: 0, end: 4 }),
@@ -83,8 +87,7 @@ class sceneForestLevel extends Phaser.Scene {
             repeat: -1   
         });
 
-
-        // Gatos con la materia oscura
+        // Con la materia oscura
         this.anims.create({
             key: 'leftAirMatter',
             frames: this.anims.generateFrameNumbers('AirCatLeftMatter', { start: 0, end: 4 }),
@@ -122,11 +125,8 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerAir.anims.play('rightAir');
 
-
-        //********************************  Ground cat *****************************//
-
-        //Gato sin la materia oscura
-        
+        // Tierra //
+        // Sin la materia oscura
         playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
 
         this.anims.create({
@@ -164,8 +164,7 @@ class sceneForestLevel extends Phaser.Scene {
            repeat: -1   
         });
 
-        // Gato con la materia oscura
-
+        // Con la materia oscura
         this.anims.create({
             key: 'leftGroundMatter',
             frames: this.anims.generateFrameNumbers('GroundCatLeftMatter', { start: 0, end: 4 }),
@@ -204,47 +203,40 @@ class sceneForestLevel extends Phaser.Scene {
 
         playerGround.anims.play('rightGround');
 
-        //Detección del teclado
-
+        //******************* Detección por teclado ************************//
         cursors = this.input.keyboard.createCursorKeys();
         keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P');
         
-        // Colisiones 
-
-        // Colisiones con los bordes
+        //******************* Colisiones ************************//
+        // Con los bordes
         playerAir.setCollideWorldBounds(true);
         playerGround.setCollideWorldBounds(true);
 
-        //Colisiones entre personajes 
-
+        // Entre personajes 
         this.physics.add.collider(playerAir, playerGround);
 
-
-        // Interacción al colisionar los gatos con la materia oscura
+        // Personajes con la materia oscura
         this.physics.add.overlap(playerAir, darkMatter, collectDarkmatterAir, null, this);
         this.physics.add.overlap(playerGround, darkMatter, collectDarkmatterGround, null, this);
 
-
-        //Texto
+        //******************* Temporizador ************************//
         timer = this.add.text(width/2, 20, "test",{
             fontFamily: 'origins',
             fontSize:'32px',
             fill: '#ffffff'
         });
-
         t = this.time.delayedCall(controller.getTimeRound() * 1000, onEvent, [], this);
-
-
     }
+
     update(time, delta){
-        
+        //******************* Temporizador ************************//
         controller.setTimeRound(controller.getTimeRound() - (t.getProgress() - oldT) * diffT);
         timer.setText(Math.trunc(controller.getTimeRound()));
         oldT = t.getProgress();
       
-        //****************************  Gato de aire  ********************** //
-
-        //Gato aire sin materia oscura
+        //******************* Personajes ************************//
+        // Aire //
+        // Sin materia oscura
         if (keys.A.isDown && matterAir === false)
         {
             playerAir.setVelocityX(-160);
@@ -275,7 +267,7 @@ class sceneForestLevel extends Phaser.Scene {
             playerAir.anims.play('idleAir',true);
         }
 
-        //gato aire con materia oscura
+        // Con materia oscura
         if (keys.A.isDown && matterAir === true)
         {
             playerAir.setVelocityX(-160);
@@ -306,11 +298,8 @@ class sceneForestLevel extends Phaser.Scene {
             playerAir.anims.play('idleAirMatter',true);
         }
 
-
-        //**************************  Gato de tierra ***************************//
-
-        // Gato tierra sin materia oscura
-    
+        // Tierra //
+        // Sin materia oscura
         if (cursors.left.isDown && matterGround === false)
         {
             playerGround.setVelocityX(-160);
@@ -341,8 +330,7 @@ class sceneForestLevel extends Phaser.Scene {
             playerGround.anims.play('idleGround',true);
         }
 
-        // Gato tierra con materia oscura
-
+        // Con materia oscura
         if (cursors.left.isDown && matterGround === true)
         {
             playerGround.setVelocityX(-160);
@@ -372,30 +360,27 @@ class sceneForestLevel extends Phaser.Scene {
 
             playerGround.anims.play('idleGroundMatter',true);
         }
-
     }
 }
 
-
+//////////////////////////////////////////////////////////////////////
+//                   Funciones extras                               //
+//////////////////////////////////////////////////////////////////////
+//******************* Posición aleatoria de materia oscura ************************//
 function posAzar(){
 
     darkMatterPosX = Phaser.Math.Between(20, 780)
     darkMatterPosY = Phaser.Math.Between(80, 560)
-
 };
-
-
+//******************* Recolección de materia oscura ************************//
 function collectDarkmatterAir(playerAir, darkMatter){
 
     darkMatter.disableBody(true, true);
 
-
     // Añadir boolean de playerAir
-
     matterAir = true;
 
 };
-
 function collectDarkmatterGround(playerGround, darkMatter){
 
     darkMatter.disableBody(true, true);
@@ -405,11 +390,12 @@ function collectDarkmatterGround(playerGround, darkMatter){
 
     matterGround = true;
 };
-
-
+//******************* Evento de temporizador ************************//
 function onEvent(){
     alert('Test');
 }
 
-
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
 export default sceneForestLevel;

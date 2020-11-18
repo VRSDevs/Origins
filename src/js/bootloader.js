@@ -20,7 +20,6 @@ class bootloader extends Phaser.Scene {
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
-      
     
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel_800x640.png");
@@ -30,9 +29,6 @@ class bootloader extends Phaser.Scene {
         // Materia oscura
         this.load.image("darkMatter","./resources/img/DarkMatter/DarkMatter_small.png");
         this.load.image("back","./resources/img/DarkMatter/DarkMatter.png");
-
-        
-
 
         //***********************  Air cats ***************************/
         // Sin materia

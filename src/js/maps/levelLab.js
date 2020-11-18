@@ -1,16 +1,22 @@
+//////////////////////////////////////////////////////////////////////
+//                  Importaciones de otros JS                       //
+//////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
 
-var cursors
+//////////////////////////////////////////////////////////////////////
+//                  Variables globales                              //
+//////////////////////////////////////////////////////////////////////
+//******************* Input teclado ************************//
+var cursors;
+var keys;
+//******************* Jugadores ************************//
 var playerAir
 var playerGround
 var playerGroundMatter
-var keys
 
 //////////////////////////////////////////////////////////////////////
-//                   Clase para el nivel del campo                  //
+//                Clase de escena del nivel de laboratorio          //
 //////////////////////////////////////////////////////////////////////
-
-
 class sceneLabLevel extends Phaser.Scene {
     constructor() {
         super({key: "sceneLabLevel",
@@ -18,12 +24,14 @@ class sceneLabLevel extends Phaser.Scene {
         });
     }
     create() {
-        // Fondo
+        //******************* Fondos ************************//
         this.physics.add.image(400, 320, "labMap");
 
         // Personaje hay que hacer un if con el personaje que toque
-        // Gato de aire
-       playerAir = this.physics.add.sprite(90,80,'AirCatIdle');
+
+        //******************* Personajes ************************//
+        // Aire //
+        playerAir = this.physics.add.sprite(90,80,'AirCatIdle');
 
         this.anims.create({
             key: 'leftAir',
@@ -63,7 +71,8 @@ class sceneLabLevel extends Phaser.Scene {
 
         playerAir.anims.play('rightAir');
 
-        //Ground cat
+        // Tierra //
+        // Sin la materia oscura
         playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
         this.anims.create({
            key: 'leftGround',
@@ -101,7 +110,7 @@ class sceneLabLevel extends Phaser.Scene {
         });
         playerGround.anims.play('rightGround');
 
-        //
+        // Con la materia oscura
         playerGroundMatter = this.physics.add.sprite(20, 560, 'GroundCatMatterIdle');
 
         this.anims.create({
@@ -141,18 +150,21 @@ class sceneLabLevel extends Phaser.Scene {
 
         playerGroundMatter.anims.play('idleMatterGround');
 
-        //Detección del teclado
+        //******************* Detección por teclado ************************//
         cursors = this.input.keyboard.createCursorKeys();
         keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P');
-        // Colisiones 
+
+        //******************* Colisiones ************************//
+        // Con los bordes
         playerAir.setCollideWorldBounds(true);
         playerGround.setCollideWorldBounds(true);
-
+        // Entre personajes 
         this.physics.add.collider(playerAir, playerGround);
-
     }
+
     update(time, delta){
-        // Gato de aire
+        //******************* Personajes ************************//
+        // Aire //
         if (keys.A.isDown)
         {
             playerAir.setVelocityX(-160);
@@ -183,7 +195,7 @@ class sceneLabLevel extends Phaser.Scene {
             playerAir.anims.play('idleAir',true);
         }
 
-        // Gato de tierra
+        // Tierra //
         if (cursors.left.isDown)
         {
             playerGround.setVelocityX(-160);
@@ -216,4 +228,7 @@ class sceneLabLevel extends Phaser.Scene {
     }
 }
 
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
 export default sceneLabLevel;
