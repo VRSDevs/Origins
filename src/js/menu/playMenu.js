@@ -11,6 +11,7 @@ var startAnim;
 var gameModeID;
 
 
+
 class scenePlayMenu extends Phaser.Scene {
     constructor() {
         super({key: "scenePlayMenu",
@@ -126,8 +127,11 @@ function loadScene(){
         alert("En progreso...");
     } else {
         this.scene.start("sceneMainMenu");
-          
+        var music;
+        var music = this.sound.add('music');
+        music.play()
     }
 }
 
 export default scenePlayMenu;
+export {music}

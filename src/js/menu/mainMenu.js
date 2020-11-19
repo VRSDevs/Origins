@@ -84,20 +84,15 @@ class sceneMainMenu extends Phaser.Scene {
 }
 
 function loadScene(){
-    var music = this.sound.add('music');
     switch (id) {
         case 1:
             console.log(id);
             this.scene.start("scenePlayMenu");
-            music.play();
-
-            
+     
             break;    
         case 2:
             console.log(id);
             this.scene.start("sceneControlsMenu");
-            music.play();
-
             break;
         case 3:
             console.log(id);
