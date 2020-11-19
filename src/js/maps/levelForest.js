@@ -14,6 +14,9 @@ var playerAir;
 var matterAir = false;
 var playerGround;
 var matterGround = false;
+var distanceX
+var distanceY
+var distanceBool = false;
 //******************* Materia oscura ************************//
 var darkMatterPosX;
 var darkMatterPosY;
@@ -249,15 +252,22 @@ class sceneForestLevel extends Phaser.Scene {
 
             playerAir.anims.play('rightAir', true);
         }
-        else if(keys.S.isDown && matterAir === false){
+        else if(keys.S.isDown && matterAir === false)
+        {
             playerAir.setVelocityY(160);
 
             playerAir.anims.play('downAir', true);
         }
-        else if(keys.W.isDown && matterAir === false){
+        else if(keys.W.isDown && matterAir === false)
+        {
             playerAir.setVelocityY(-160);
 
             playerAir.anims.play('upAir', true);
+        }
+        else if(keys.C.isDown && distance() == true && matterGround == true)
+        {           
+            matterGround = false;
+            matterAir = true;
         }
         else if(matterAir === false)
         {
@@ -322,6 +332,11 @@ class sceneForestLevel extends Phaser.Scene {
 
             playerGround.anims.play('upGround', true);
         }
+        else if(keys.P.isDown && distance() == true && matterAir == true)
+        {           
+            matterAir = false;
+            matterGround = true;
+        }
         else if(matterGround === false)
         {
             playerGround.setVelocityX(0);
@@ -343,12 +358,14 @@ class sceneForestLevel extends Phaser.Scene {
 
             playerGround.anims.play('rightGroundMatter', true);
         }
-        else if(cursors.down.isDown && matterGround === true){
+        else if(cursors.down.isDown && matterGround === true)
+        {
             playerGround.setVelocityY(160);
 
             playerGround.anims.play('downGroundMatter', true);
         }
-        else if(cursors.up.isDown && matterGround === true){
+        else if(cursors.up.isDown && matterGround === true)
+        {
             playerGround.setVelocityY(-160);
 
             playerGround.anims.play('upGroundMatter', true);
@@ -377,7 +394,6 @@ function collectDarkmatterAir(playerAir, darkMatter){
 
     darkMatter.disableBody(true, true);
 
-    // Añadir boolean de playerAir
     matterAir = true;
 
 };
@@ -385,14 +401,29 @@ function collectDarkmatterGround(playerGround, darkMatter){
 
     darkMatter.disableBody(true, true);
 
-
-    // Añadir boolean de playerAir
-
     matterGround = true;
 };
 //******************* Evento de temporizador ************************//
 function onEvent(){
     alert('Test');
+}
+
+//******************  Calcular distancia entre gatos ****************//
+function distance(){
+
+    var aux = false;
+
+    distanceX = playerGround.x - playerAir.x;
+    distanceY = playerGround.y - playerAir.y;
+
+    if(distanceX >= -50 && distanceX <= 50){
+        aux = true;
+        if(aux == true && distanceY >= -50 && distanceY <= 50){
+            distanceBool = true;
+        }
+    }
+    return distanceBool;
+
 }
 
 //////////////////////////////////////////////////////////////////////
