@@ -19,6 +19,8 @@ class scenePlayMenu extends Phaser.Scene {
         });
     }
     create() {
+
+
         // Variables auxiliares
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
@@ -96,6 +98,7 @@ class scenePlayMenu extends Phaser.Scene {
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
 
+
     }
     update(time, delta){
         if(startAnim === true && gameModeID === 1){
@@ -111,6 +114,7 @@ class scenePlayMenu extends Phaser.Scene {
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', true);
         } else {
+       
             singlePlayerButton.anims.play('singlePlayerAnim', false);
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
@@ -127,9 +131,6 @@ function loadScene(){
         alert("En progreso...");
     } else {
         this.scene.start("sceneMainMenu");
-        var music;
-        var music = this.sound.add('music');
-        music.play()
     }
 }
 

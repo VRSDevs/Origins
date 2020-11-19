@@ -59,7 +59,10 @@ class sceneMainMenu extends Phaser.Scene {
             id = 0;
             settingsButton.setFrame(1);
         }, this);
+        
         settingsButton.addListener('pointerdown', loadScene, this);  
+        let music = this.sound.add("music");
+        music.play();
 
         // Botón de salir
         exitButton = this.add.sprite(width - 242/2, 590, "spriteExitButton", 1).setInteractive();
@@ -74,8 +77,11 @@ class sceneMainMenu extends Phaser.Scene {
         exitButton.addListener('pointerdown', loadScene, this); 
 
         // Música del menu principal
-        var music = this.sound.add('music');
-        
+        // var music = this.sound.add('music');
+        // music.play();
+
+
+
     }        
 
     update(time, delta){
@@ -88,15 +94,17 @@ function loadScene(){
         case 1:
             console.log(id);
             this.scene.start("scenePlayMenu");
-     
+
             break;    
         case 2:
             console.log(id);
             this.scene.start("sceneControlsMenu");
+
             break;
         case 3:
             console.log(id);
             this.scene.start("sceneSettingsMenu");
+
             break;
         case 4:
             alert("Gracias por jugar a nuestro juego.");
