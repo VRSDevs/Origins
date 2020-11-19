@@ -22,7 +22,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
     
         // Carga de mapas
-        this.load.image("forestMap","./resources/img/Maps/FieldLevel_800x640.png");
+        this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
         this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
     
@@ -98,7 +98,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("sprite1PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
-        this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 118, frameHeight: 66 });
+        this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
     }
 }
 export default bootloader;
