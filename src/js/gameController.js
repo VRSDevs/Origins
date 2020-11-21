@@ -3,6 +3,7 @@ class gameController{
         this.player1 = player1;
         this.player2 = player2;
         this.musicEnabled = music;
+        musicPlaying = true;
     }
 
     getMusicEnabled(){
