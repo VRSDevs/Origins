@@ -19,6 +19,8 @@ var matterGround = false;
 var darkMatterPosX;
 var darkMatterPosY;
 var darkMatter;
+var collidedP1 = players[0].getHasMatter();
+var collidedP2 = players[1].getHasMatter();
 //******************* Temporizador ************************//
 var timer;
 var t;
@@ -249,13 +251,8 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(players[0], players[1]);
 
         // Personajes con la materia oscura
-        this.physics.add.overlap(players[0], darkMatter, () => {
-            players[0].collectDarkMatter;
-        }, null, this);
-        this.physics.add.overlap(players[1], darkMatter, () => {
-            //players[1].collectDarkMatter.arguments[0] = darkMatter;
-            players[1].collectDarkMatter;
-        }, null, this);
+        this.physics.add.overlap(players[0], darkMatter, collectP1DarkMatter, null, this);
+        this.physics.add.overlap(players[1], darkMatter, collectP2DarkMatter, null, this);
 
         //******************* Temporizador ************************//
         timer = this.add.text(width/2, 20, "test",{
@@ -264,6 +261,8 @@ class sceneForestLevel extends Phaser.Scene {
             fill: '#ffffff'
         });
         t = this.time.delayedCall(controller.getTimeRound() * 1000, onEvent, [], this);
+
+        
     }
 
     update(time, delta){
@@ -275,7 +274,7 @@ class sceneForestLevel extends Phaser.Scene {
         //******************* Personajes ************************//
         // Jugador //
         // Sin materia oscura
-        if(players[0].getHasMatter !== false){
+        if(collidedP1 === false){
             switch (true) {
                 case keys.A.isDown:
                     players[0].setVelocityX(-160);
@@ -327,7 +326,7 @@ class sceneForestLevel extends Phaser.Scene {
 
         // Jugador 2 //
         // Sin materia oscura
-        if(players[1].getHasMatter !== false){
+        if(collidedP2 === false){
             switch (true) {
                 case cursors.left.isDown:
                     players[1].setVelocityX(-160);
@@ -394,8 +393,20 @@ function onEvent(){
     alert('Test');
 }
 
+//******************* Colisiones con materia ************************//
+function collectP1DarkMatter(){
+    darkMatter.disableBody(true, true);
+    console.log(1);
+    collidedP1 = true;
+}
+
+function collectP2DarkMatter(){
+    darkMatter.disableBody(true, true);
+    console.log(1);
+    collidedP2 = true;
+}
+
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
 //////////////////////////////////////////////////////////////////////
-export {darkMatter};
 export default sceneForestLevel;

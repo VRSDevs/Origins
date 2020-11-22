@@ -1,5 +1,3 @@
-import {darkMatter} from './maps/levelForest.js';
-
 class cat{
     constructor(type, score, hasMatter){
         this.type = type;
@@ -20,15 +18,10 @@ class cat{
         this.type = value;
     }
 
-    setDarkMatter(obj){
-        this.darkMatter = obj;
+    setHasMatter(value){
+        this.hasMatter = value;
     }
 
-}
-
-cat.prototype.collectDarkMatter = function(){
-    darkMatter.disableBody(true, true);
-    this.hasMatter = true;
 }
 
 var player1 = new cat(0,0,false);
@@ -36,3 +29,4 @@ var player2 = new cat(0,0,false);
 var players = [player1, player2];
 
 export {players};
+export default cat;
