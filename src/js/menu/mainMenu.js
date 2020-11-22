@@ -20,6 +20,8 @@ class sceneMainMenu extends Phaser.Scene {
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
 
+        console.log("MainMenu: " + controller.getMusicEnabled());
+
         // Fondo
         this.add.image(400, 320, "mainMenu");
         

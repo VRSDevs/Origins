@@ -1,7 +1,5 @@
 class gameController{
-    constructor(player1, player2, music, gameMode, timeRound){
-        this.player1 = player1;
-        this.player2 = player2;
+    constructor(music, gameMode, timeRound){
         this.musicEnabled = music;
         this.gameMode = gameMode;
         this.timeRound = timeRound;
@@ -34,6 +32,6 @@ class gameController{
 
 }
 
-var controller = new gameController(1, 2, true, 0, 60);
+var controller = new gameController(true, 0, 60);
 
 export {controller};
