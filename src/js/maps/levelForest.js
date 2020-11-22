@@ -407,7 +407,7 @@ function collectP2DarkMatter(){
     darkMatter.disableBody(true, true);
     console.log(1);
     collidedP2 = true;
-
+}
 //******************  Calcular distancia entre gatos ****************//
 function distance(){
 
