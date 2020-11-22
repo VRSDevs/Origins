@@ -15,6 +15,18 @@ class bootloader extends Phaser.Scene {
             this.scene.start("sceneMainMenu");
         });
 
+        this.load.image("selection","./resources/img/MenuDesign/Selection/selectionMenu_noButtons.png");
+        this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
+        this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
+        this.load.spritesheet('AirCatIdle2','./resources/img/SpriteSheet/Air_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
+        this.load.spritesheet('AirCatIdleMatter2','./resources/img/SpriteSheet/Air_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
+        this.load.spritesheet('FireCatIdle2','./resources/img/SpriteSheet/Fire_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
+        this.load.spritesheet('FireCatIdleMatter2','./resources/img/SpriteSheet/Fire_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
+        this.load.spritesheet('GroundCatIdle2','./resources/img/SpriteSheet/Ground_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
+        this.load.spritesheet('GroundCatIdleMatter2','./resources/img/SpriteSheet/Ground_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
+        this.load.spritesheet('WaterCatIdle2','./resources/img/SpriteSheet/Water_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
+        this.load.spritesheet('WaterCatIdleMatter2','./resources/img/SpriteSheet/Water_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
+
         // Carga de fondos
         this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
@@ -44,7 +56,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('AirCatUpMatter','./resources/img/SpriteSheet/Air_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('AirCatRightMatter','./resources/img/SpriteSheet/Air_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
 
-        //*********************  Fire cats ******************************/
+        //********************* Fire cats ******************************/
         // Sin materia
         this.load.spritesheet('FireCatDown','./resources/img/SpriteSheet/Fire_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('FireCatIdle','./resources/img/SpriteSheet/Fire_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
@@ -75,7 +87,6 @@ class bootloader extends Phaser.Scene {
 
         //******************** Water cats ********************************/
         // Sin materia
-
         this.load.spritesheet('WaterCatDown','./resources/img/SpriteSheet/Water_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('WaterCatIdle','./resources/img/SpriteSheet/Water_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('WaterCatLeft','./resources/img/SpriteSheet/Water_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );

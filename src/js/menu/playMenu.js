@@ -19,7 +19,7 @@ class scenePlayMenu extends Phaser.Scene {
     create() {
         // Variables auxiliares
         var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
+        var height = this.sys.canvas.height;        
 
         // Fondo
         this.add.image(400, 320, "play");
@@ -130,14 +130,14 @@ function getMap() {
     var level = Math.floor(Math.random() * (max - min) + min);
     switch (level) {
         case 1:
-            console.log(this)
-            game.scene.start("sceneForestLevel");
+            console.log(level)
+            game.scene.start("sceneSelectionMenu");
             break;
         case 2:
-            game.scene.start("sceneForestLevel");
+            game.scene.start("sceneSelectionMenu");
             break;
         case 3:
-            game.scene.start("sceneForestLevel");
+            game.scene.start("sceneSelectionMenu");
             break;
         default:
             console.log("Ups.")

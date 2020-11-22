@@ -2,6 +2,7 @@
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import { players } from '../cats.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -21,6 +22,8 @@ var distanceBool = false;
 var darkMatterPosX;
 var darkMatterPosY;
 var darkMatter;
+var collidedP1 = players[0].getHasMatter();
+var collidedP2 = players[1].getHasMatter();
 //******************* Temporizador ************************//
 var timer;
 var t;
@@ -49,162 +52,194 @@ class sceneForestLevel extends Phaser.Scene {
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
 
         // Personaje hay que hacer un if con el personaje que toque
+        var skinP1;
+        var skinP2;
+        switch (players[0].getType()) {
+            case 1:
+                skinP1 = "GroundCat";
+                break;
+            case 2:
+                skinP1 = "WaterCat";
+                break;
+            case 3:
+                skinP1 = "AirCat";
+                break;
+            case 4:
+                skinP1 = "FireCat";
+                break;
+            
+        }
+
+        switch (players[1].getType()) {
+            case 1:
+                skinP2 = "GroundCat";
+                break;
+            case 2:
+                skinP2 = "WaterCat";
+                break;
+            case 3:
+                skinP2 = "AirCat";
+                break;
+            case 4:
+                skinP2 = "FireCat";
+                break;
+            
+        }
 
         //******************* Personajes ************************//
-        // Aire //
-        playerAir = this.physics.add.sprite(760,80,'AirCatIdle');
+        // Jugador 1 //
+        players[0] = this.physics.add.sprite(70,80,(skinP1 + 'Idle'));
 
         // Sin materia oscura
         this.anims.create({
-            key: 'leftAir',
-            frames: this.anims.generateFrameNumbers('AirCatLeft', { start: 0, end: 4 }),
+            key: 'leftP1',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'Left'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'rightAir',
-            frames: this.anims.generateFrameNumbers('AirCatRight', { start: 0, end: 4 }),
+            key: 'rightP1',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'Right'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'upAir',
-            frames: this.anims.generateFrameNumbers('AirCatUp', { start: 0, end: 4 }),
+            key: 'upP1',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'Up'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
         
         this.anims.create({
-            key: 'downAir',
-            frames: this.anims.generateFrameNumbers('AirCatDown', { start: 0, end: 4 }),
+            key: 'downP1',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'Down'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'idleAir',
-            frames: this.anims.generateFrameNumbers('AirCatIdle', { start: 0, end: 6 }),
+            key: 'idleP1',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'Idle'), { start: 0, end: 6 }),
             frameRate: 4, 
             repeat: -1   
         });
 
         // Con la materia oscura
         this.anims.create({
-            key: 'leftAirMatter',
-            frames: this.anims.generateFrameNumbers('AirCatLeftMatter', { start: 0, end: 4 }),
+            key: 'leftP1Matter',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'LeftMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'rightAirMatter',
-            frames: this.anims.generateFrameNumbers('AirCatRightMatter', { start: 0, end: 4 }),
+            key: 'rightP1Matter',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'RightMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'upAirMatter',
-            frames: this.anims.generateFrameNumbers('AirCatUpMatter', { start: 0, end: 4 }),
+            key: 'upP1Matter',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'UpMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
         
         this.anims.create({
-            key: 'downAirMatter',
-            frames: this.anims.generateFrameNumbers('AirCatDownMatter', { start: 0, end: 4 }),
+            key: 'downP1Matter',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'DownMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'idleAirMatter',
-            frames: this.anims.generateFrameNumbers('AirCatIdleMatter', { start: 0, end: 6 }),
+            key: 'idleP1Matter',
+            frames: this.anims.generateFrameNumbers((skinP1 + 'IdleMatter'), { start: 0, end: 6 }),
             frameRate: 4, 
             repeat: -1   
         });
 
-        playerAir.anims.play('rightAir');
+        players[0].anims.play('rightP1');
 
-        // Tierra //
-        // Sin la materia oscura
-        playerGround = this.physics.add.sprite(50,80,'GroundCatIdle');
+        // Jugador 2 //
+        players[1] = this.physics.add.sprite(600,400,(skinP2 + 'Idle'));
 
+        // Sin materia oscura
         this.anims.create({
-           key: 'leftGround',
-           frames: this.anims.generateFrameNumbers('GroundCatLeft', { start: 0, end: 4 }),
-           frameRate: 5,
-           repeat: -1
+            key: 'leftP2',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'Left'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
         });
 
         this.anims.create({
-           key: 'rightGround',
-           frames: this.anims.generateFrameNumbers('GroundCatRight', { start: 0, end: 4 }),
-           frameRate: 5,
-           repeat: -1
+            key: 'rightP2',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'Right'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
         });
 
         this.anims.create({
-           key: 'upGround',
-           frames: this.anims.generateFrameNumbers('GroundCatUp', { start: 0, end: 4 }),
-           frameRate: 5,
-           repeat: -1
+            key: 'upP2',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'Up'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        
+        this.anims.create({
+            key: 'downP2',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'Down'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
         });
 
         this.anims.create({
-           key: 'downGround',
-           frames: this.anims.generateFrameNumbers('GroundCatDown', { start: 0, end: 4 }),
-           frameRate: 5,
-           repeat: -1
-        });
-
-        this.anims.create({
-           key: 'idleGround',
-           frames: this.anims.generateFrameNumbers('GroundCatIdle', { start: 0, end: 6 }),
-           frameRate: 4, 
-           repeat: -1   
+            key: 'idleP2',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'Idle'), { start: 0, end: 6 }),
+            frameRate: 4, 
+            repeat: -1   
         });
 
         // Con la materia oscura
         this.anims.create({
-            key: 'leftGroundMatter',
-            frames: this.anims.generateFrameNumbers('GroundCatLeftMatter', { start: 0, end: 4 }),
+            key: 'leftP2Matter',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'LeftMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
-         });
- 
-         this.anims.create({
-            key: 'rightGroundMatter',
-            frames: this.anims.generateFrameNumbers('GroundCatRightMatter', { start: 0, end: 4 }),
+        });
+
+        this.anims.create({
+            key: 'rightP1Matter',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'RightMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
-         });
- 
-         this.anims.create({
-            key: 'upGroundMatter',
-            frames: this.anims.generateFrameNumbers('GroundCatUpMatter', { start: 0, end: 4 }),
+        });
+
+        this.anims.create({
+            key: 'upP2Matter',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'UpMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
-         });
+        });
         
-         this.anims.create({
-            key: 'downGroundMatter',
-            frames: this.anims.generateFrameNumbers('GroundCatDownMatter', { start: 0, end: 4 }),
+        this.anims.create({
+            key: 'downP2Matter',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'DownMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
-         });
- 
-         this.anims.create({
-            key: 'idleGroundMatter',
-            frames: this.anims.generateFrameNumbers('GroundCatIdleMatter', { start: 0, end: 6 }),
+        });
+
+        this.anims.create({
+            key: 'idleP2Matter',
+            frames: this.anims.generateFrameNumbers((skinP2 + 'IdleMatter'), { start: 0, end: 6 }),
             frameRate: 4, 
             repeat: -1   
-         });
+        });
 
-
-        playerGround.anims.play('rightGround');
+        players[1].anims.play('rightP1');
 
         //******************* Detección por teclado ************************//
         cursors = this.input.keyboard.createCursorKeys();
@@ -212,15 +247,15 @@ class sceneForestLevel extends Phaser.Scene {
         
         //******************* Colisiones ************************//
         // Con los bordes
-        playerAir.setCollideWorldBounds(true);
-        playerGround.setCollideWorldBounds(true);
+        players[0].setCollideWorldBounds(true);
+        players[1].setCollideWorldBounds(true);
 
         // Entre personajes 
-        this.physics.add.collider(playerAir, playerGround);
+        this.physics.add.collider(players[0], players[1]);
 
         // Personajes con la materia oscura
-        this.physics.add.overlap(playerAir, darkMatter, collectDarkmatterAir, null, this);
-        this.physics.add.overlap(playerGround, darkMatter, collectDarkmatterGround, null, this);
+        this.physics.add.overlap(players[0], darkMatter, collectP1DarkMatter, null, this);
+        this.physics.add.overlap(players[1], darkMatter, collectP2DarkMatter, null, this);
 
         //******************* Temporizador ************************//
         timer = this.add.text(width/2, 20, "test",{
@@ -229,6 +264,8 @@ class sceneForestLevel extends Phaser.Scene {
             fill: '#ffffff'
         });
         t = this.time.delayedCall(controller.getTimeRound() * 1000, onEvent, [], this);
+
+        
     }
 
     update(time, delta){
@@ -238,144 +275,108 @@ class sceneForestLevel extends Phaser.Scene {
         oldT = t.getProgress();
       
         //******************* Personajes ************************//
-        // Aire //
+        // Jugador //
         // Sin materia oscura
-        if (keys.A.isDown && matterAir === false)
-        {
-            playerAir.setVelocityX(-160);
-
-            playerAir.anims.play('leftAir', true);
-        }
-        else if (keys.D.isDown && matterAir === false)
-        {
-            playerAir.setVelocityX(160);
-
-            playerAir.anims.play('rightAir', true);
-        }
-        else if(keys.S.isDown && matterAir === false)
-        {
-            playerAir.setVelocityY(160);
-
-            playerAir.anims.play('downAir', true);
-        }
-        else if(keys.W.isDown && matterAir === false)
-        {
-            playerAir.setVelocityY(-160);
-
-            playerAir.anims.play('upAir', true);
-        }
-        else if(keys.C.isDown && distance() == true && matterGround == true)
-        {           
-            matterGround = false;
-            matterAir = true;
-        }
-        else if(matterAir === false)
-        {
-            playerAir.setVelocityX(0);
-            playerAir.setVelocityY(0);
-
-            playerAir.anims.play('idleAir',true);
-        }
-
-        // Con materia oscura
-        if (keys.A.isDown && matterAir === true)
-        {
-            playerAir.setVelocityX(-160);
-
-            playerAir.anims.play('leftAirMatter', true);
-        }
-        else if (keys.D.isDown && matterAir === true)
-        {
-            playerAir.setVelocityX(160);
-
-            playerAir.anims.play('rightAirMatter', true);
-        }
-        else if(keys.S.isDown && matterAir === true){
-            playerAir.setVelocityY(160);
-
-            playerAir.anims.play('downAirMatter', true);
-        }
-        else if(keys.W.isDown && matterAir === true){
-            playerAir.setVelocityY(-160);
-
-            playerAir.anims.play('upAirMatter', true);
-        }
-        else if(matterAir === true)
-        {
-            playerAir.setVelocityX(0);
-            playerAir.setVelocityY(0);
-
-            playerAir.anims.play('idleAirMatter',true);
+        if(collidedP1 === false){
+            switch (true) {
+                case keys.A.isDown:
+                    players[0].setVelocityX(-160);
+                    players[0].anims.play('leftP1', true);
+                    break;
+                case keys.D.isDown:
+                    players[0].setVelocityX(160);
+                    players[0].anims.play('rightP1', true);
+                    break;
+                case keys.S.isDown:
+                    players[0].setVelocityY(160);
+                    players[0].anims.play('downP1', true);
+                    break;
+                case keys.W.isDown:
+                    players[0].setVelocityY(-160);
+                    players[0].anims.play('upP1', true);
+                    break;
+                default:
+                    players[0].setVelocityX(0);
+                    players[0].setVelocityY(0);
+                    players[0].anims.play('idleP1',true);
+                    break;
+            }
+        } else {
+            switch (true) {
+                case keys.A.isDown:
+                    players[0].setVelocityX(-160);
+                    players[0].anims.play('leftP1Matter', true);
+                    break;
+                case keys.D.isDown:
+                    players[0].setVelocityX(160);
+                    players[0].anims.play('rightP1Matter', true);
+                    break;
+                case keys.S.isDown:
+                    players[0].setVelocityY(160);
+                    players[0].anims.play('downP1Matter', true);
+                    break;
+                case keys.W.isDown:
+                    players[0].setVelocityY(-160);
+                    players[0].anims.play('upP1Matter', true);
+                    break;
+                default:
+                    players[0].setVelocityX(0);
+                    players[0].setVelocityY(0);
+                    players[0].anims.play('idleP1Matter',true);
+                    break;  
+            }
         }
 
-        // Tierra //
+        // Jugador 2 //
         // Sin materia oscura
-        if (cursors.left.isDown && matterGround === false)
-        {
-            playerGround.setVelocityX(-160);
-
-            playerGround.anims.play('leftGround', true);
-        }
-        else if (cursors.right.isDown && matterGround === false)
-        {
-            playerGround.setVelocityX(160);
-
-            playerGround.anims.play('rightGround', true);
-        }
-        else if(cursors.down.isDown && matterGround === false){
-            playerGround.setVelocityY(160);
-
-            playerGround.anims.play('downGround', true);
-        }
-        else if(cursors.up.isDown && matterGround === false){
-            playerGround.setVelocityY(-160);
-
-            playerGround.anims.play('upGround', true);
-        }
-        else if(keys.P.isDown && distance() == true && matterAir == true)
-        {           
-            matterAir = false;
-            matterGround = true;
-        }
-        else if(matterGround === false)
-        {
-            playerGround.setVelocityX(0);
-            playerGround.setVelocityY(0);
-
-            playerGround.anims.play('idleGround',true);
-        }
-
-        // Con materia oscura
-        if (cursors.left.isDown && matterGround === true)
-        {
-            playerGround.setVelocityX(-160);
-
-            playerGround.anims.play('leftGroundMatter', true);
-        }
-        else if (cursors.right.isDown && matterGround === true)
-        {
-            playerGround.setVelocityX(160);
-
-            playerGround.anims.play('rightGroundMatter', true);
-        }
-        else if(cursors.down.isDown && matterGround === true)
-        {
-            playerGround.setVelocityY(160);
-
-            playerGround.anims.play('downGroundMatter', true);
-        }
-        else if(cursors.up.isDown && matterGround === true)
-        {
-            playerGround.setVelocityY(-160);
-
-            playerGround.anims.play('upGroundMatter', true);
-        }
-        else if(matterGround === true)
-        {
-            playerGround.setVelocityX(0);
-            playerGround.setVelocityY(0);
-
-            playerGround.anims.play('idleGroundMatter',true);
+        if(collidedP2 === false){
+            switch (true) {
+                case cursors.left.isDown:
+                    players[1].setVelocityX(-160);
+                    players[1].anims.play('leftP2', true);
+                    break;
+                case cursors.right.isDown:
+                    players[1].setVelocityX(160);
+                    players[1].anims.play('rightP2', true);
+                    break;
+                case cursors.down.isDown:
+                    players[1].setVelocityY(160);
+                    players[1].anims.play('downP2', true);
+                    break;
+                case cursors.up.isDown:
+                    players[1].setVelocityY(-160);
+                    players[1].anims.play('upP2', true);
+                    break;
+                default:
+                    players[1].setVelocityX(0);
+                    players[1].setVelocityY(0);
+                    players[1].anims.play('idleP2',true);
+                    break;
+            }
+        } else {
+            switch (true) {
+                case cursors.left.isDown:
+                    players[1].setVelocityX(-160);
+                    players[1].anims.play('leftP2Matter', true);
+                    break;
+                case cursors.right.isDown:
+                    players[1].setVelocityX(160);
+                    players[1].anims.play('rightP2Matter', true);
+                    break;
+                case cursors.down.isDown:
+                    players[1].setVelocityY(160);
+                    players[1].anims.play('downP2Matter', true);
+                    break;
+                case cursors.up.isDown:
+                    players[1].setVelocityY(-160);
+                    players[1].anims.play('upP2Matter', true);
+                    break;
+                default:
+                    players[1].setVelocityX(0);
+                    players[1].setVelocityY(0);
+                    players[1].anims.play('idleP2Matter',true);
+                    break;  
+            }
         }
     }
 }
@@ -385,28 +386,27 @@ class sceneForestLevel extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Posición aleatoria de materia oscura ************************//
 function posAzar(){
-
     darkMatterPosX = Phaser.Math.Between(20, 780)
     darkMatterPosY = Phaser.Math.Between(80, 560)
 };
-//******************* Recolección de materia oscura ************************//
-function collectDarkmatterAir(playerAir, darkMatter){
 
-    darkMatter.disableBody(true, true);
-
-    matterAir = true;
-
-};
-function collectDarkmatterGround(playerGround, darkMatter){
-
-    darkMatter.disableBody(true, true);
-
-    matterGround = true;
-};
 //******************* Evento de temporizador ************************//
 function onEvent(){
     alert('Test');
 }
+
+
+//******************* Colisiones con materia ************************//
+function collectP1DarkMatter(){
+    darkMatter.disableBody(true, true);
+    console.log(1);
+    collidedP1 = true;
+}
+
+function collectP2DarkMatter(){
+    darkMatter.disableBody(true, true);
+    console.log(1);
+    collidedP2 = true;
 
 //******************  Calcular distancia entre gatos ****************//
 function distance(){
@@ -423,7 +423,6 @@ function distance(){
         }
     }
     return distanceBool;
-
 }
 
 //////////////////////////////////////////////////////////////////////
