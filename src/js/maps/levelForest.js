@@ -15,6 +15,9 @@ var playerAir;
 var matterAir = false;
 var playerGround;
 var matterGround = false;
+var distanceX
+var distanceY
+var distanceBool = false;
 //******************* Materia oscura ************************//
 var darkMatterPosX;
 var darkMatterPosY;
@@ -383,7 +386,6 @@ class sceneForestLevel extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Posición aleatoria de materia oscura ************************//
 function posAzar(){
-
     darkMatterPosX = Phaser.Math.Between(20, 780)
     darkMatterPosY = Phaser.Math.Between(80, 560)
 };
@@ -392,6 +394,7 @@ function posAzar(){
 function onEvent(){
     alert('Test');
 }
+
 
 //******************* Colisiones con materia ************************//
 function collectP1DarkMatter(){
@@ -404,6 +407,22 @@ function collectP2DarkMatter(){
     darkMatter.disableBody(true, true);
     console.log(1);
     collidedP2 = true;
+
+//******************  Calcular distancia entre gatos ****************//
+function distance(){
+
+    var aux = false;
+
+    distanceX = playerGround.x - playerAir.x;
+    distanceY = playerGround.y - playerAir.y;
+
+    if(distanceX >= -50 && distanceX <= 50){
+        aux = true;
+        if(aux == true && distanceY >= -50 && distanceY <= 50){
+            distanceBool = true;
+        }
+    }
+    return distanceBool;
 }
 
 //////////////////////////////////////////////////////////////////////
