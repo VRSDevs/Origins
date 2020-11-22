@@ -47,6 +47,13 @@ class sceneForestLevel extends Phaser.Scene {
         //******************* Fondos ************************//
         this.physics.add.image(400, 320, "forestMap");
 
+
+        //****************** Colisiones*********************//
+        var col1 = this.physics.add.image(70, 36,"forestCol1");
+        col1.setImmovable(true);
+
+        //var col2 = this.physics.add.image(200, 200,"forestCol2");
+        //col2.setImmovable(true);
         //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
@@ -253,6 +260,12 @@ class sceneForestLevel extends Phaser.Scene {
         // Entre personajes 
         this.physics.add.collider(players[0], players[1]);
 
+        // Entre personajes y muros
+        this.physics.add.collider(col1, players[1]);
+        this.physics.add.collider(col1, players[0]);
+       // this.physics.add.collider(col2, players[1]);
+       // this.physics.add.collider(col2, players[0]);
+
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0], darkMatter, collectP1DarkMatter, null, this);
         this.physics.add.overlap(players[1], darkMatter, collectP2DarkMatter, null, this);
@@ -295,6 +308,12 @@ class sceneForestLevel extends Phaser.Scene {
                     players[0].setVelocityY(-160);
                     players[0].anims.play('upP1', true);
                     break;
+                case keys.P.isDown:
+                    if(distance() === true){
+                        collidedP1 = true;
+                        collidedP2 = false;
+                    }    
+                    break;    
                 default:
                     players[0].setVelocityX(0);
                     players[0].setVelocityY(0);
@@ -346,6 +365,12 @@ class sceneForestLevel extends Phaser.Scene {
                 case cursors.up.isDown:
                     players[1].setVelocityY(-160);
                     players[1].anims.play('upP2', true);
+                    break;
+                case keys.V.isDown:
+                    if(distance() === true){
+                        collidedP2 = true;
+                        collidedP1 = false;                        
+                    }    
                     break;
                 default:
                     players[1].setVelocityX(0);
@@ -413,8 +438,8 @@ function distance(){
 
     var aux = false;
 
-    distanceX = playerGround.x - playerAir.x;
-    distanceY = playerGround.y - playerAir.y;
+    distanceX = players[0].x - players[1].x;
+    distanceY = players[0].y - players[1].y;
 
     if(distanceX >= -50 && distanceX <= 50){
         aux = true;
