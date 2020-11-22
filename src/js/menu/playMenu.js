@@ -19,7 +19,7 @@ class scenePlayMenu extends Phaser.Scene {
     create() {
         // Variables auxiliares
         var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
+        var height = this.sys.canvas.height;        
 
         // Fondo
         this.add.image(400, 320, "play");
@@ -85,12 +85,21 @@ class scenePlayMenu extends Phaser.Scene {
         onlineMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Botón de retroceder
-        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 1).setInteractive();
+        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 0).setInteractive();
+
+        this.anims.create({
+            key: 'backButtonAnim',
+            frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),
+            frameRate: 3,
+            repeat: 0
+        });
+
         backButton.addListener('pointerover', () => {
-            backButton.setFrame(0);
+            backButton.anims.play('backButtonAnim',true);
         }, this);
         backButton.addListener('pointerout', () => {
-            backButton.setFrame(1);
+            backButton.anims.stop();
+            backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
     }
@@ -121,14 +130,14 @@ function getMap() {
     var level = Math.floor(Math.random() * (max - min) + min);
     switch (level) {
         case 1:
-            console.log(this)
-            game.scene.start("sceneForestLevel");
+            console.log(level)
+            game.scene.start("sceneSelectionMenu");
             break;
         case 2:
-            game.scene.start("sceneForestLevel");
+            game.scene.start("sceneSelectionMenu");
             break;
         case 3:
-            game.scene.start("sceneForestLevel");
+            game.scene.start("sceneSelectionMenu");
             break;
         default:
             console.log("Ups.")
