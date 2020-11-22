@@ -212,7 +212,7 @@ class sceneForestLevel extends Phaser.Scene {
         });
 
         this.anims.create({
-            key: 'rightP1Matter',
+            key: 'rightP2Matter',
             frames: this.anims.generateFrameNumbers((skinP2 + 'RightMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1

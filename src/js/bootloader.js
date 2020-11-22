@@ -15,15 +15,12 @@ class bootloader extends Phaser.Scene {
             this.scene.start("sceneMainMenu");
         });
 
-        this.load.image("selection","./resources/img/MenuDesign/Selection/selectionMenu_noButtons.png");
-        this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
-        this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
         this.load.spritesheet('AirCatIdle2','./resources/img/SpriteSheet/Air_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
         this.load.spritesheet('AirCatIdleMatter2','./resources/img/SpriteSheet/Air_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
         this.load.spritesheet('FireCatIdle2','./resources/img/SpriteSheet/Fire_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
         this.load.spritesheet('FireCatIdleMatter2','./resources/img/SpriteSheet/Fire_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
         this.load.spritesheet('GroundCatIdle2','./resources/img/SpriteSheet/Ground_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
-        this.load.spritesheet('GroundCatIdleMatter2','./resources/img/SpriteSheet/Ground_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
+        this.load.spritesheet('GroundCatIdleMatter2','./resources/img/SpriteSheet/Ground_Spritesheet/idleMatter_x2.png' , {frameWidth: 82, frameHeight: 112} );
         this.load.spritesheet('WaterCatIdle2','./resources/img/SpriteSheet/Water_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
         this.load.spritesheet('WaterCatIdleMatter2','./resources/img/SpriteSheet/Water_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
 
@@ -32,6 +29,9 @@ class bootloader extends Phaser.Scene {
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
+        this.load.image("selection","./resources/img/MenuDesign/Selection/selectionMenu_noButtons.png");
+        this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
+        this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
     
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
@@ -99,7 +99,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatUpMatter','./resources/img/SpriteSheet/Water_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('WaterCatRightMatter','./resources/img/SpriteSheet/Water_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
 
-        // Carga de botones
+        //******************** Botones ********************************/
         this.load.spritesheet("spritePlayButton", './resources/img/SpriteSheet/Button_SpriteSheet/play_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteControlsButton", './resources/img/SpriteSheet/Button_SpriteSheet/controls_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteSettingsButton", './resources/img/SpriteSheet/Button_SpriteSheet/settings_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });

@@ -31,7 +31,7 @@ class sceneMainMenu extends Phaser.Scene {
         this.anims.create({
             key: 'playButtonAnim',
             frames: this.anims.generateFrameNumbers('spritePlayButton', {start: 1, end: 4}),
-            frameRate: 3,
+            frameRate: 6,
             repeat: 0
         });
 
@@ -52,7 +52,7 @@ class sceneMainMenu extends Phaser.Scene {
         this.anims.create({
             key: 'controlButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteControlsButton', {start: 1, end: 8}),
-            frameRate: 3,
+            frameRate: 6,
             repeat: 0
         });
 
@@ -73,7 +73,7 @@ class sceneMainMenu extends Phaser.Scene {
         this.anims.create({
             key: 'settingsButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteSettingsButton', {start: 1, end: 8}),
-            frameRate: 3,
+            frameRate: 6,
             repeat: 0
         });
 
@@ -94,7 +94,7 @@ class sceneMainMenu extends Phaser.Scene {
         this.anims.create({
             key: 'exitButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteExitButton', {start: 1, end: 4}),
-            frameRate: 3,
+            frameRate: 6,
             repeat: 0
         });
         
