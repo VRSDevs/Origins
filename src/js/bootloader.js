@@ -105,6 +105,12 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatRightMatter','./resources/img/SpriteSheet/Water_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
 
         //******************** Botones ********************************/
+        this.load.spritesheet("spriteWButton", './resources/img/SpriteSheet/Button_SpriteSheet/wButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteAButton", './resources/img/SpriteSheet/Button_SpriteSheet/aButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteSButton", './resources/img/SpriteSheet/Button_SpriteSheet/sButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteDButton", './resources/img/SpriteSheet/Button_SpriteSheet/dButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteVButton", './resources/img/SpriteSheet/Button_SpriteSheet/vButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spritePButton", './resources/img/SpriteSheet/Button_SpriteSheet/pButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spritePlayButton", './resources/img/SpriteSheet/Button_SpriteSheet/play_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteControlsButton", './resources/img/SpriteSheet/Button_SpriteSheet/controls_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteSettingsButton", './resources/img/SpriteSheet/Button_SpriteSheet/settings_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
@@ -117,4 +123,5 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
     }
 }
+
 export default bootloader;
