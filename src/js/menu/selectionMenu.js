@@ -117,15 +117,22 @@ class sceneSelectionMenu extends Phaser.Scene {
         fireCatButton.addListener('pointerdown', loadScene, this);
 
         // Retroceso //
-        backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2", 1).setInteractive();
+        backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2", 0).setInteractive();
+        this.anims.create({
+            key: 'backButton2Anim',
+            frames: this.anims.generateFrameNumbers('spriteBackButton2', {start: 1, end: 4}),
+            frameRate: 6,
+            repeat: 0
+        });
+
         backButton.addListener('pointerover', () => {
-            backButton.setFrame(0);
+            backButton.anims.play('backButton2Anim',true);
         }, this);
         backButton.addListener('pointerout', () => {
-            backButton.setFrame(1);
+            backButton.anims.stop();
+            backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-
     }
     update(time, delta) {
         //******************* Animaciones botones ************************//

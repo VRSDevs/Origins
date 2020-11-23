@@ -42,7 +42,7 @@ class sceneSettingsMenu extends Phaser.Scene {
         this.anims.create({
             key: 'backButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),
-            frameRate: 3,
+            frameRate: 6,
             repeat: 0
         });
 

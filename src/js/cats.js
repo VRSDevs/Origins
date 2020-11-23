@@ -29,4 +29,3 @@ var player2 = new cat(0,0,false);
 var players = [player1, player2];
 
 export {players};
-export default cat;
