@@ -11,13 +11,13 @@ import { players } from '../cats.js';
 var cursors;
 var keys;
 //******************* Jugadores ************************//
-var playerAir;
-var matterAir = false;
-var playerGround;
-var matterGround = false;
 var distanceX
 var distanceY
 var distanceBool = false;
+var textPtsP1;
+var textPtsP2;
+var pointsP1 = 0;
+var pointsP2 = 0;
 //******************* Materia oscura ************************//
 var darkMatterPosX;
 var darkMatterPosY;
@@ -278,7 +278,13 @@ class sceneForestLevel extends Phaser.Scene {
         });
         t = this.time.delayedCall(controller.getTimeRound() * 1000, onEvent, [], this);
 
-        
+        //******************* Puntos ************************//
+        textPtsP1 = this.add.text(width/8, 20, "test",{
+            fontFamily: 'origins',
+            fontSize:'32px',
+            fill: '#ffffff'
+        });
+       
     }
 
     update(time, delta){
@@ -344,6 +350,12 @@ class sceneForestLevel extends Phaser.Scene {
                     players[0].anims.play('idleP1Matter',true);
                     break;  
             }
+        }
+
+        // Puntos
+        if(collidedP1 === true){
+            pointsP1 += 1;
+            textPtsP1.setText(Math.trunc(pointsP1/diffT));
         }
 
         // Jugador 2 //

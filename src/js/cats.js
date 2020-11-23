@@ -9,6 +9,10 @@ class cat{
         return this.type;
     }
 
+    getScore(){
+        return this.score;
+    }
+
     getHasMatter(){
         return this.hasMatter;
     }
@@ -16,6 +20,10 @@ class cat{
     // Setters
     setType(value){
         this.type = value;
+    }
+
+    setScore(value){
+        this.score = value;
     }
 
     setHasMatter(value){

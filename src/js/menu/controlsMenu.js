@@ -13,9 +13,11 @@ var wButton;
 var aButton;
 var sButton;
 var dButton;
+// Interacción
 var vButton;
+// Jugador 2 //
+// Interacción
 var pButton;
-
 // Retroceso //
 var backButton;
 
