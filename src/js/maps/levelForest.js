@@ -48,7 +48,7 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.image(400, 320, "forestMap");
 
 
-        //****************** Colisiones*********************//
+        //****************** Colisiones *********************//
         var col1 = this.physics.add.image(70, 36,"forestCol1");
         col1.setImmovable(true);
 
