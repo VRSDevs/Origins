@@ -36,7 +36,14 @@ class bootloader extends Phaser.Scene {
 
         //Carga de colisiones 
         this.load.image("forestCol1","./resources/img/Maps/fieldColisions/1.png");
-        this.load.image("forestCol2","./resources/img/Maps/fieldColisions/2.png");
+        this.load.image("forestCol2","./resources/img/Maps/fieldColisions/2.2.png");
+        this.load.image("forestCol3","./resources/img/Maps/fieldColisions/2.1.png");
+        this.load.image("forestCol4","./resources/img/Maps/fieldColisions/3.png");
+        this.load.image("forestCol5","./resources/img/Maps/fieldColisions/4.3.png");
+        this.load.image("forestCol6","./resources/img/Maps/fieldColisions/4.2.png");
+        this.load.image("forestCol7","./resources/img/Maps/fieldColisions/4.1.png");
+        this.load.image("forestCol8","./resources/img/Maps/fieldColisions/10.1.png");
+        this.load.image("forestCol9","./resources/img/Maps/fieldColisions/7.png");
 
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
