@@ -43,6 +43,10 @@ class bootloader extends Phaser.Scene {
         this.load.image("forestCol7","./resources/img/Maps/fieldColisions/4.1.png");
         this.load.image("forestCol8","./resources/img/Maps/fieldColisions/10.1.png");
         this.load.image("forestCol9","./resources/img/Maps/fieldColisions/7.png");
+        this.load.image("forestCol10","./resources/img/Maps/fieldColisions/10.8.png");
+        this.load.image("forestCol11","./resources/img/Maps/fieldColisions/10.2.png");
+        this.load.image("forestCol12","./resources/img/Maps/fieldColisions/10.4.png");
+        this.load.image("forestCol13","./resources/img/Maps/fieldColisions/10.6.png");
 
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
@@ -75,7 +79,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('FireCatUp','./resources/img/SpriteSheet/Fire_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('FireCatRight','./resources/img/SpriteSheet/Fire_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
         // Con materia
-        this.load.spritesheet('FireCatDowMatter','./resources/img/SpriteSheet/Fire_Spritesheet/downMatter.png' , {frameWidth: 30, frameHeight: 38} );
+        this.load.spritesheet('FireCatDownMatter','./resources/img/SpriteSheet/Fire_Spritesheet/downMatter.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('FireCatIdleMatter','./resources/img/SpriteSheet/Fire_Spritesheet/idleMatter.png' , {frameWidth: 34, frameHeight: 46} );
         this.load.spritesheet('FireCatLeftMatter','./resources/img/SpriteSheet/Fire_Spritesheet/leftMatter.png' , {frameWidth: 42, frameHeight: 44} );
         this.load.spritesheet('FireCatUpMatter','./resources/img/SpriteSheet/Fire_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
