@@ -46,11 +46,46 @@ class sceneForestLevel extends Phaser.Scene {
 
 
         //****************** Colisiones *********************//
-        var col1 = this.physics.add.image(70, 36,"forestCol1");
+        var col1 = this.physics.add.image(65, 20,"forestCol1");
+        col1.setVisible(false);
         col1.setImmovable(true);
 
-        //var col2 = this.physics.add.image(200, 200,"forestCol2");
-        //col2.setImmovable(true);
+        var col2 = this.physics.add.image(438, 20,"forestCol2");
+        col2.setVisible(false);
+        col2.setImmovable(true);
+
+        var col3 = this.physics.add.image(373, 40,"forestCol3");
+        col3.setVisible(false);
+        col3.setImmovable(true);
+
+        var col4 = this.physics.add.image(755, 20,"forestCol4");
+        col4.setVisible(false);
+        col4.setImmovable(true);
+
+        var col5 = this.physics.add.image(64, 290,"forestCol5");
+        col5.scaleX = 0.9;
+        col5.setVisible(false);
+        col5.setImmovable(true);
+
+        var col6 = this.physics.add.image(106, 198,"forestCol6");
+        col6.scaleY = 0.9;
+        col6.setVisible(false);
+        col6.setImmovable(true);
+
+        var col7 = this.physics.add.image(140, 172,"forestCol7");
+        col7.scaleY = 0.9;
+        col7.setVisible(false);
+        col7.setImmovable(true);
+
+        var col8 = this.physics.add.image(400, 626,"forestCol8");
+        col8.setVisible(false);
+        col8.setImmovable(true);
+
+        var col9 = this.physics.add.image(784, 182,"forestCol9");
+        col9.scaleY = 0.8;
+        col9.setVisible(false);
+        col9.setImmovable(true);
+
         //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
@@ -92,7 +127,7 @@ class sceneForestLevel extends Phaser.Scene {
         //******************* Personajes ************************//
         // Jugador 1 //
         players[0].setObject(this.physics.add.sprite(70,80,(skinP1 + 'Idle')));
-        
+
         // Sin materia oscura
         this.anims.create({
             key: 'leftP1',
@@ -259,8 +294,22 @@ class sceneForestLevel extends Phaser.Scene {
         // Entre personajes y muros
         this.physics.add.collider(col1, players[1].getObject());
         this.physics.add.collider(col1, players[0].getObject());
-        // this.physics.add.collider(col2, players[1]);
-        // this.physics.add.collider(col2, players[0]);
+        this.physics.add.collider(col2, players[1].getObject());
+        this.physics.add.collider(col2, players[0].getObject());
+        this.physics.add.collider(col3, players[1].getObject());
+        this.physics.add.collider(col3, players[0].getObject());
+        this.physics.add.collider(col4, players[1].getObject());
+        this.physics.add.collider(col4, players[0].getObject());
+        this.physics.add.collider(col5, players[1].getObject());
+        this.physics.add.collider(col5, players[0].getObject());
+        this.physics.add.collider(col6, players[1].getObject());
+        this.physics.add.collider(col6, players[0].getObject());
+        this.physics.add.collider(col7, players[1].getObject());
+        this.physics.add.collider(col7, players[0].getObject());
+        this.physics.add.collider(col8, players[1].getObject());
+        this.physics.add.collider(col8, players[0].getObject());
+        this.physics.add.collider(col9, players[1].getObject());
+        this.physics.add.collider(col9, players[0].getObject());
 
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
@@ -323,7 +372,7 @@ class sceneForestLevel extends Phaser.Scene {
                     players[0].getObject().setVelocityY(-160);
                     players[0].getObject().anims.play('upP1', true);
                     break;
-                case keys.P.isDown:
+                case keys.V.isDown:
                     if(distance() === true){
                         players[0].setHasMatter(true);
                         players[1].setHasMatter(false);
@@ -381,7 +430,7 @@ class sceneForestLevel extends Phaser.Scene {
                     players[1].getObject().setVelocityY(-160);
                     players[1].getObject().anims.play('upP2', true);
                     break;
-                case keys.V.isDown:
+                case keys.P.isDown:
                     if(distance() === true){
                         players[1].setHasMatter(true);
                         players[0].setHasMatter(false);                        
@@ -441,6 +490,7 @@ function onEvent(){
 //******************  Calcular distancia entre gatos ****************//
 function distance(){
     var aux = false;
+    distanceBool = false;
 
     distanceX = players[0].getObject().x - players[1].getObject().x;
     distanceY = players[0].getObject().y - players[1].getObject().y;
