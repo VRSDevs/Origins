@@ -124,6 +124,36 @@ class sceneForestLevel extends Phaser.Scene {
         col17.setVisible(false);
         col17.setImmovable(true);
 
+        var col18 = this.physics.add.image(708, 478,"forestCol11");
+        col18.scaleX = 0.4; 
+        col18.setVisible(false);
+        col18.setImmovable(true);
+
+        var col19 = this.physics.add.image(400, 410,"forestCol11");
+        col19.scaleY = 0.6;
+        col19.scaleX = 0.5; 
+        col19.setVisible(false);
+        col19.setImmovable(true);
+
+        var col20 = this.physics.add.image(612, 376,"forestCol11");
+        col20.scaleX = 0.6;
+        col20.scaleY = 1.1;
+        col20.setVisible(false);
+        col20.setImmovable(true);
+
+        var col21 = this.physics.add.image(686, 346,"forestCol11");
+        col21.scaleX = 0.4;
+        col21.scaleY = 0.9;
+        col21.setVisible(false);
+        col21.setImmovable(true);
+
+        var col22 = this.physics.add.image(710, 356,"forestCol11");
+        col22.scaleY = 0.6;
+        col22.setVisible(false);
+        col22.setImmovable(true);
+
+
+
         //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
@@ -364,6 +394,21 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(col16, players[0].getObject());
         this.physics.add.collider(col17, players[1].getObject());
         this.physics.add.collider(col17, players[0].getObject());
+        this.physics.add.collider(col18, players[1].getObject());
+        this.physics.add.collider(col18, players[0].getObject());
+        this.physics.add.collider(col19, players[1].getObject());
+        this.physics.add.collider(col19, players[0].getObject());   
+        this.physics.add.collider(col20, players[1].getObject());
+        this.physics.add.collider(col20, players[0].getObject());
+        this.physics.add.collider(col21, players[1].getObject());
+        this.physics.add.collider(col21, players[0].getObject());
+        this.physics.add.collider(col22, players[1].getObject());
+        this.physics.add.collider(col22, players[0].getObject());
+        //this.physics.add.collider(col23, players[1].getObject());
+        //this.physics.add.collider(col23, players[0].getObject());
+
+
+
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
