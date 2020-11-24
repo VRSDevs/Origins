@@ -1,7 +1,8 @@
+"use strict";
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import {controller} from '../gameController.js';
+import { controller } from '../gameController.js';
 import { players } from '../cats.js';
 
 //////////////////////////////////////////////////////////////////////
@@ -11,19 +12,15 @@ import { players } from '../cats.js';
 var cursors;
 var keys;
 //******************* Jugadores ************************//
-var playerAir;
-var matterAir = false;
-var playerGround;
-var matterGround = false;
 var distanceX
 var distanceY
 var distanceBool = false;
+var textPtsP1;
+var textPtsP2;
 //******************* Materia oscura ************************//
 var darkMatterPosX;
 var darkMatterPosY;
 var darkMatter;
-var collidedP1 = players[0].getHasMatter();
-var collidedP2 = players[1].getHasMatter();
 //******************* Temporizador ************************//
 var timer;
 var t;
@@ -109,7 +106,6 @@ class sceneForestLevel extends Phaser.Scene {
             case 4:
                 skinP1 = "FireCat";
                 break;
-            
         }
 
         switch (players[1].getType()) {
@@ -127,10 +123,10 @@ class sceneForestLevel extends Phaser.Scene {
                 break;
             
         }
-
+        
         //******************* Personajes ************************//
         // Jugador 1 //
-        players[0] = this.physics.add.sprite(100,100,(skinP1 + 'Idle'));
+        players[0].setObject(this.physics.add.sprite(70,80,(skinP1 + 'Idle')));
 
         // Sin materia oscura
         this.anims.create({
@@ -204,10 +200,10 @@ class sceneForestLevel extends Phaser.Scene {
             repeat: -1   
         });
 
-        players[0].anims.play('rightP1');
+        players[0].getObject().anims.play('rightP1');
 
         // Jugador 2 //
-        players[1] = this.physics.add.sprite(700,100,(skinP2 + 'Idle'));
+        players[1].setObject(this.physics.add.sprite(600,400,(skinP2 + 'Idle')));
 
         // Sin materia oscura
         this.anims.create({
@@ -281,7 +277,7 @@ class sceneForestLevel extends Phaser.Scene {
             repeat: -1   
         });
 
-        players[1].anims.play('rightP1');
+        players[1].getObject().anims.play('rightP1');
 
         //******************* Detección por teclado ************************//
         cursors = this.input.keyboard.createCursorKeys();
@@ -289,46 +285,64 @@ class sceneForestLevel extends Phaser.Scene {
         
         //******************* Colisiones ************************//
         // Con los bordes
-        players[0].setCollideWorldBounds(true);
-        players[1].setCollideWorldBounds(true);
+        players[0].getObject().setCollideWorldBounds(true);
+        players[1].getObject().setCollideWorldBounds(true);
 
         // Entre personajes 
-        this.physics.add.collider(players[0], players[1]);
+        this.physics.add.collider(players[0].getObject(), players[1].getObject());
 
         // Entre personajes y muros
-        this.physics.add.collider(col1, players[1]);
-        this.physics.add.collider(col1, players[0]);
-        this.physics.add.collider(col2, players[1]);
-        this.physics.add.collider(col2, players[0]);
-        this.physics.add.collider(col3, players[1]);
-        this.physics.add.collider(col3, players[0]);
-        this.physics.add.collider(col4, players[1]);
-        this.physics.add.collider(col4, players[0]);
-        this.physics.add.collider(col5, players[1]);
-        this.physics.add.collider(col5, players[0]);
-        this.physics.add.collider(col6, players[1]);
-        this.physics.add.collider(col6, players[0]);
-        this.physics.add.collider(col7, players[1]);
-        this.physics.add.collider(col7, players[0]);
-        this.physics.add.collider(col8, players[1]);
-        this.physics.add.collider(col8, players[0]);
-        this.physics.add.collider(col9, players[1]);
-        this.physics.add.collider(col9, players[0]);
-
+        this.physics.add.collider(col1, players[1].getObject());
+        this.physics.add.collider(col1, players[0].getObject());
+        this.physics.add.collider(col2, players[1].getObject());
+        this.physics.add.collider(col2, players[0].getObject());
+        this.physics.add.collider(col3, players[1].getObject());
+        this.physics.add.collider(col3, players[0].getObject());
+        this.physics.add.collider(col4, players[1].getObject());
+        this.physics.add.collider(col4, players[0].getObject());
+        this.physics.add.collider(col5, players[1].getObject());
+        this.physics.add.collider(col5, players[0].getObject());
+        this.physics.add.collider(col6, players[1].getObject());
+        this.physics.add.collider(col6, players[0].getObject());
+        this.physics.add.collider(col7, players[1].getObject());
+        this.physics.add.collider(col7, players[0].getObject());
+        this.physics.add.collider(col8, players[1].getObject());
+        this.physics.add.collider(col8, players[0].getObject());
+        this.physics.add.collider(col9, players[1].getObject());
+        this.physics.add.collider(col9, players[0].getObject());
 
         // Personajes con la materia oscura
-        this.physics.add.overlap(players[0], darkMatter, collectP1DarkMatter, null, this);
-        this.physics.add.overlap(players[1], darkMatter, collectP2DarkMatter, null, this);
+        this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
+            darkMatter.disableBody(true, true);
+            players[0].setHasMatter(true);
+        }, null, this);
+        this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
+            darkMatter.disableBody(true, true);
+            players[1].setHasMatter(true);
+        }, null, this);
 
         //******************* Temporizador ************************//
-        timer = this.add.text(width/2, 20, "test",{
+        timer = this.add.text(width/2, 20, "time",{
             fontFamily: 'origins',
             fontSize:'32px',
             fill: '#ffffff'
         });
         t = this.time.delayedCall(controller.getTimeRound() * 1000, onEvent, [], this);
 
-        
+        //******************* Puntos ************************//
+        // Jugador 1 //
+        textPtsP1 = this.add.text(width/8, 20, "0",{
+            fontFamily: 'origins',
+            fontSize:'32px',
+            fill: '#ffffff'
+        });
+        // Jugador 2 //
+        textPtsP2 = this.add.text(width - 80, 20, "0",{
+            fontFamily: 'origins',
+            fontSize:'32px',
+            fill: '#ffffff'
+        });
+       
     }
 
     update(time, delta){
@@ -338,121 +352,124 @@ class sceneForestLevel extends Phaser.Scene {
         oldT = t.getProgress();
       
         //******************* Personajes ************************//
-        // Jugador //
+        // Jugador 1 //
         // Sin materia oscura
-        if(collidedP1 === false){
+        if(!players[0].getHasMatter()){
             switch (true) {
                 case keys.A.isDown:
-                    players[0].setVelocityX(-160);
-                    players[0].anims.play('leftP1', true);
+                    players[0].getObject().setVelocityX(-160);
+                    players[0].getObject().anims.play('leftP1', true);
                     break;
                 case keys.D.isDown:
-                    players[0].setVelocityX(160);
-                    players[0].anims.play('rightP1', true);
+                    players[0].getObject().setVelocityX(160);
+                    players[0].getObject().anims.play('rightP1', true);
                     break;
                 case keys.S.isDown:
-                    players[0].setVelocityY(160);
-                    players[0].anims.play('downP1', true);
+                    players[0].getObject().setVelocityY(160);
+                    players[0].getObject().anims.play('downP1', true);
                     break;
                 case keys.W.isDown:
-                    players[0].setVelocityY(-160);
-                    players[0].anims.play('upP1', true);
+                    players[0].getObject().setVelocityY(-160);
+                    players[0].getObject().anims.play('upP1', true);
                     break;
                 case keys.V.isDown:
-                    if(distance() == true){
-                        collidedP1 = true;
-                        collidedP2 = false;
+                    if(distance() === true){
+                        players[0].setHasMatter(true);
+                        players[1].setHasMatter(false);
                     }    
                     break;    
                 default:
-                    players[0].setVelocityX(0);
-                    players[0].setVelocityY(0);
-                    players[0].anims.play('idleP1',true);
+                    players[0].getObject().setVelocityX(0);
+                    players[0].getObject().setVelocityY(0);
+                    players[0].getObject().anims.play('idleP1',true);
                     break;
             }
         } else {
             switch (true) {
                 case keys.A.isDown:
-                    players[0].setVelocityX(-160);
-                    players[0].anims.play('leftP1Matter', true);
+                    players[0].getObject().setVelocityX(-160);
+                    players[0].getObject().anims.play('leftP1Matter', true);
                     break;
                 case keys.D.isDown:
-                    players[0].setVelocityX(160);
-                    players[0].anims.play('rightP1Matter', true);
+                    players[0].getObject().setVelocityX(160);
+                    players[0].getObject().anims.play('rightP1Matter', true);
                     break;
                 case keys.S.isDown:
-                    players[0].setVelocityY(160);
-                    players[0].anims.play('downP1Matter', true);
+                    players[0].getObject().setVelocityY(160);
+                    players[0].getObject().anims.play('downP1Matter', true);
                     break;
                 case keys.W.isDown:
-                    players[0].setVelocityY(-160);
-                    players[0].anims.play('upP1Matter', true);
+                    players[0].getObject().setVelocityY(-160);
+                    players[0].getObject().anims.play('upP1Matter', true);
                     break;
                 default:
-                    players[0].setVelocityX(0);
-                    players[0].setVelocityY(0);
-                    players[0].anims.play('idleP1Matter',true);
+                    players[0].getObject().setVelocityX(0);
+                    players[0].getObject().setVelocityY(0);
+                    players[0].getObject().anims.play('idleP1Matter',true);
                     break;  
             }
         }
 
         // Jugador 2 //
         // Sin materia oscura
-        if(collidedP2 === false){
+        if(!players[1].getHasMatter()){
             switch (true) {
                 case cursors.left.isDown:
-                    players[1].setVelocityX(-160);
-                    players[1].anims.play('leftP2', true);
+                    players[1].getObject().setVelocityX(-160);
+                    players[1].getObject().anims.play('leftP2', true);
                     break;
                 case cursors.right.isDown:
-                    players[1].setVelocityX(160);
-                    players[1].anims.play('rightP2', true);
+                    players[1].getObject().setVelocityX(160);
+                    players[1].getObject().anims.play('rightP2', true);
                     break;
                 case cursors.down.isDown:
-                    players[1].setVelocityY(160);
-                    players[1].anims.play('downP2', true);
+                    players[1].getObject().setVelocityY(160);
+                    players[1].getObject().anims.play('downP2', true);
                     break;
                 case cursors.up.isDown:
-                    players[1].setVelocityY(-160);
-                    players[1].anims.play('upP2', true);
+                    players[1].getObject().setVelocityY(-160);
+                    players[1].getObject().anims.play('upP2', true);
                     break;
                 case keys.P.isDown:
-                    if(distance() == true){
-                        collidedP2 = true;
-                        collidedP1 = false;                        
+                    if(distance() === true){
+                        players[1].setHasMatter(true);
+                        players[0].setHasMatter(false);                        
                     }    
                     break;
                 default:
-                    players[1].setVelocityX(0);
-                    players[1].setVelocityY(0);
-                    players[1].anims.play('idleP2',true);
+                    players[1].getObject().setVelocityX(0);
+                    players[1].getObject().setVelocityY(0);
+                    players[1].getObject().anims.play('idleP2',true);
                     break;
             }
         } else {
             switch (true) {
                 case cursors.left.isDown:
-                    players[1].setVelocityX(-160);
-                    players[1].anims.play('leftP2Matter', true);
+                    players[1].getObject().setVelocityX(-160);
+                    players[1].getObject().anims.play('leftP2Matter', true);
                     break;
                 case cursors.right.isDown:
-                    players[1].setVelocityX(160);
-                    players[1].anims.play('rightP2Matter', true);
+                    players[1].getObject().setVelocityX(160);
+                    players[1].getObject().anims.play('rightP2Matter', true);
                     break;
                 case cursors.down.isDown:
-                    players[1].setVelocityY(160);
-                    players[1].anims.play('downP2Matter', true);
+                    players[1].getObject().setVelocityY(160);
+                    players[1].getObject().anims.play('downP2Matter', true);
                     break;
                 case cursors.up.isDown:
-                    players[1].setVelocityY(-160);
-                    players[1].anims.play('upP2Matter', true);
+                    players[1].getObject().setVelocityY(-160);
+                    players[1].getObject().anims.play('upP2Matter', true);
                     break;
                 default:
-                    players[1].setVelocityX(0);
-                    players[1].setVelocityY(0);
-                    players[1].anims.play('idleP2Matter',true);
+                    players[1].getObject().setVelocityX(0);
+                    players[1].getObject().setVelocityY(0);
+                    players[1].getObject().anims.play('idleP2Matter',true);
                     break;  
             }
         }
+
+        // Puntuación
+        updatePoints();
     }
 }
 
@@ -467,30 +484,16 @@ function posAzar(){
 
 //******************* Evento de temporizador ************************//
 function onEvent(){
-    alert('Test');
+    console.log(players[0].getType());
 }
 
-
-//******************* Colisiones con materia ************************//
-function collectP1DarkMatter(){
-    darkMatter.disableBody(true, true);
-    console.log(1);
-    collidedP1 = true;
-}
-
-function collectP2DarkMatter(){
-    darkMatter.disableBody(true, true);
-    console.log(1);
-    collidedP2 = true;
-}
 //******************  Calcular distancia entre gatos ****************//
 function distance(){
-
     var aux = false;
     distanceBool = false;
 
-    distanceX = players[0].x - players[1].x;
-    distanceY = players[0].y - players[1].y;
+    distanceX = players[0].getObject().x - players[1].getObject().x;
+    distanceY = players[0].getObject().y - players[1].getObject().y;
 
     if(distanceX >= -50 && distanceX <= 50){
         aux = true;
@@ -499,6 +502,20 @@ function distance(){
         }
     }
     return distanceBool;
+}
+
+//******************  Actualización puntuación de jugadores ****************//
+function updatePoints(){
+    // Jugador 1 //
+    if(players[0].getHasMatter()){
+        players[0].setScore(players[0].getScore() + 1);
+        textPtsP1.setText(Math.trunc(players[0].getScore()/diffT));
+    }
+    // Jugador 2 //
+    if(players[1].getHasMatter()){
+        players[1].setScore(players[1].getScore() + 1);
+        textPtsP2.setText(Math.trunc(players[1].getScore()/diffT));
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
