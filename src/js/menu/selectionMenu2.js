@@ -41,7 +41,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
         switch (aux) {
             case 1:
                 // Gato tierra //
-                groundCatButton = this.add.sprite(132, 305, "GroundCatIdleMatter2", 0).setInteractive();
+                groundCatButton = this.add.sprite(132, 305, "GroundCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'groundMenuAnim2',
                     frames: this.anims.generateFrameNumbers('GroundCatIdleMatter2', {start: 0, end: 6}),
@@ -127,7 +127,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 groundCatButton.addListener('pointerdown', loadScene, this);
                 
                 // Gato agua //
-                waterCatButton = this.add.sprite(352, 305, "WaterCatIdleMatter2", 0).setInteractive();
+                waterCatButton = this.add.sprite(352, 305, "WaterCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'waterMenuAnim2',
                     frames: this.anims.generateFrameNumbers('WaterCatIdleMatter2', { start: 0, end: 6 }),
@@ -213,7 +213,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 waterCatButton.addListener('pointerdown', loadScene, this); 
 
                 // Gato aire //
-                airCatButton = this.add.sprite(530, 305, "AirCatIdleMatter2", 0).setInteractive();
+                airCatButton = this.add.sprite(530, 305, "AirCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'airMenuAnim2',
                     frames: this.anims.generateFrameNumbers('AirCatIdleMatter2', { start: 0, end: 6 }),
@@ -299,7 +299,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 airCatButton.addListener('pointerdown', loadScene, this);
 
                 // Gato fuego //
-                fireCatButton = this.add.sprite(705, 305, "FireCatIdleMatter2", 0).setInteractive();
+                fireCatButton = this.add.sprite(705, 305, "FireCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'fireMenuAnim2',
                     frames: this.anims.generateFrameNumbers('FireCatIdleMatter2', { start: 0, end: 6 }),

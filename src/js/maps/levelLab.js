@@ -2,6 +2,7 @@
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import { players } from '../cats.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
