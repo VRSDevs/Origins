@@ -124,6 +124,96 @@ class sceneForestLevel extends Phaser.Scene {
         col17.setVisible(false);
         col17.setImmovable(true);
 
+        var col18 = this.physics.add.image(708, 478,"forestCol11");
+        col18.scaleX = 0.4; 
+        col18.setVisible(false);
+        col18.setImmovable(true);
+
+        var col19 = this.physics.add.image(400, 410,"forestCol11");
+        col19.scaleY = 0.6;
+        col19.scaleX = 0.5; 
+        col19.setVisible(false);
+        col19.setImmovable(true);
+
+        var col20 = this.physics.add.image(612, 376,"forestCol11");
+        col20.scaleX = 0.6;
+        col20.scaleY = 1.1;
+        col20.setVisible(false);
+        col20.setImmovable(true);
+
+        var col21 = this.physics.add.image(686, 346,"forestCol11");
+        col21.scaleX = 0.4;
+        col21.scaleY = 0.9;
+        col21.setVisible(false);
+        col21.setImmovable(true);
+
+        var col22 = this.physics.add.image(710, 356,"forestCol11");
+        col22.scaleY = 0.6;
+        col22.setVisible(false);
+        col22.setImmovable(true);
+
+        var col23 = this.physics.add.image(270, 150,"forestCol11");
+        col23.scaleY = 0.6;
+        col23.scaleX = 0.5;
+        col23.setVisible(false);
+        col23.setImmovable(true);
+
+        var col24 = this.physics.add.image(310, 180,"forestCol11");
+        col24.scaleY = 0.6;
+        col24.scaleX = 0.7;
+        col24.setVisible(false);
+        col24.setImmovable(true);
+
+        var col25 = this.physics.add.image(346, 236,"forestCol11");
+        col25.scaleY = 0.8;
+        col25.scaleX = 0.4;
+        col25.setVisible(false);
+        col25.setImmovable(true);
+
+        var col26 = this.physics.add.image(320, 210,"forestCol11");
+        col26.scaleY = 0.8;
+        col26.scaleX = 0.4;
+        col26.setVisible(false);
+        col26.setImmovable(true);
+
+        var col27 = this.physics.add.image(382, 264,"forestCol11");
+        col27.scaleY = 0.8;
+        col27.scaleX = 0.2;
+        col27.setVisible(false);
+        col27.setImmovable(true);
+
+        var col28 = this.physics.add.image(444, 282,"forestCol11");
+        col28.scaleY = 1.3;
+        col28.scaleX = 0.2;
+        col28.setVisible(false);
+        col28.setImmovable(true);
+
+        var col29 = this.physics.add.image(474, 246,"forestCol11");
+        col29.scaleY = 0.9;
+        col29.scaleX = 0.4;
+        col29.setVisible(false);
+        col29.setImmovable(true);
+
+        var col30 = this.physics.add.image(526, 236,"forestCol11");
+        col30.scaleY = 0.9;
+        col30.scaleX = 0.5;
+        col30.setVisible(false);
+        col30.setImmovable(true);
+
+        var col31 = this.physics.add.image(580, 210,"forestCol11");
+        col31.scaleY = 0.8;
+        col31.scaleX = 0.9;
+        col31.setVisible(false);
+        col31.setImmovable(true);
+
+        var col32 = this.physics.add.image(630, 160,"forestCol11");
+        col32.scaleY = 0.8;
+        col32.scaleX = 0.85;
+        col32.setVisible(false);
+        col32.setImmovable(true);
+
+
+
         //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
@@ -364,6 +454,38 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(col16, players[0].getObject());
         this.physics.add.collider(col17, players[1].getObject());
         this.physics.add.collider(col17, players[0].getObject());
+        this.physics.add.collider(col18, players[1].getObject());
+        this.physics.add.collider(col18, players[0].getObject());
+        this.physics.add.collider(col19, players[1].getObject());
+        this.physics.add.collider(col19, players[0].getObject());   
+        this.physics.add.collider(col20, players[1].getObject());
+        this.physics.add.collider(col20, players[0].getObject());
+        this.physics.add.collider(col21, players[1].getObject());
+        this.physics.add.collider(col21, players[0].getObject());
+        this.physics.add.collider(col22, players[1].getObject());
+        this.physics.add.collider(col22, players[0].getObject());
+        this.physics.add.collider(col23, players[1].getObject());
+        this.physics.add.collider(col23, players[0].getObject());
+        this.physics.add.collider(col24, players[1].getObject());
+        this.physics.add.collider(col24, players[0].getObject());
+        this.physics.add.collider(col25, players[1].getObject());
+        this.physics.add.collider(col25, players[0].getObject());
+        this.physics.add.collider(col26, players[1].getObject());
+        this.physics.add.collider(col26, players[0].getObject());
+        this.physics.add.collider(col27, players[1].getObject());
+        this.physics.add.collider(col27, players[0].getObject());
+        this.physics.add.collider(col28, players[1].getObject());
+        this.physics.add.collider(col28, players[0].getObject());
+        this.physics.add.collider(col29, players[1].getObject());
+        this.physics.add.collider(col29, players[0].getObject());
+        this.physics.add.collider(col30, players[1].getObject());
+        this.physics.add.collider(col30, players[0].getObject());
+        this.physics.add.collider(col31, players[1].getObject());
+        this.physics.add.collider(col31, players[0].getObject());
+        this.physics.add.collider(col32, players[1].getObject());
+        this.physics.add.collider(col32, players[0].getObject());
+
+
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
