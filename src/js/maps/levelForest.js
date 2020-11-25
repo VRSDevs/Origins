@@ -209,7 +209,7 @@ class sceneForestLevel extends Phaser.Scene {
         var col32 = this.physics.add.image(630, 160,"forestCol11");
         col32.scaleY = 0.8;
         col32.scaleX = 0.85;
-        //col32.setVisible(false);
+        col32.setVisible(false);
         col32.setImmovable(true);
 
 
