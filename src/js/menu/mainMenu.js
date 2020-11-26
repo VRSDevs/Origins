@@ -2,6 +2,7 @@
 //                    Clase para el menu principal                  //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import {globalMusic} from '../gameController.js';
 
 
 var playButton;
@@ -9,7 +10,7 @@ var controlsButton;
 var settingsButton;
 var exitButton;
 var id;
-var music;
+
 
 class sceneMainMenu extends Phaser.Scene {
     constructor() {
@@ -74,7 +75,7 @@ class sceneMainMenu extends Phaser.Scene {
         exitButton.addListener('pointerdown', loadScene, this); 
 
         // Música del menu principal
-         music = this.sound.add('music');
+         globalMusic = this.sound.add('music');
         
 
     }        
@@ -82,11 +83,11 @@ class sceneMainMenu extends Phaser.Scene {
     update(time, delta){
         if (controller.getMusicEnabled()){
             if(!controller.getMusicPlaying()){
-                music.play();
+                globalMusic.play();
                 controller.setMusicPlaying(true);
             }
         }else{
-            music.stop();
+            globalMusic.stop();
         }   
         
 
@@ -126,4 +127,3 @@ function loadScene(){
 }
 
 export default sceneMainMenu;
-export {music};

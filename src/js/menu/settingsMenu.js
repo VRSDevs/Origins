@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
 import {game} from '../init.js';
-import {music} from './mainMenu.js';
+
 
 var changeMusicButton;
 var backButton;

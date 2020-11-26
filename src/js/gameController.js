@@ -35,3 +35,4 @@ class gameController{
 var controller = new gameController(1, 2, true,false, undefined);
 
 export {controller};
+export {globalMusic};
