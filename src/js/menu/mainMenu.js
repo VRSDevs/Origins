@@ -9,6 +9,7 @@ var controlsButton;
 var settingsButton;
 var exitButton;
 var id;
+var music;
 
 class sceneMainMenu extends Phaser.Scene {
     constructor() {
