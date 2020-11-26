@@ -114,6 +114,9 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatUpMatter','./resources/img/SpriteSheet/Water_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('WaterCatRightMatter','./resources/img/SpriteSheet/Water_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
 
+
+        // Carga de música
+        this.load.audio("music",[ './resources/music/MainMenu.mp3']);
         //******************** Botones ********************************/
         this.load.spritesheet("spriteWButton", './resources/img/SpriteSheet/Button_SpriteSheet/wButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteAButton", './resources/img/SpriteSheet/Button_SpriteSheet/aButton.png', { frameWidth: 45, frameHeight: 45});
@@ -131,6 +134,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
+
     }
 }
 

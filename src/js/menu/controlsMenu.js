@@ -121,6 +121,7 @@ class sceneControlsMenu extends Phaser.Scene {
 //******************* Carga de escena ************************//
 function loadScene(){
     this.scene.start("sceneMainMenu");
+    
 }
 
 //////////////////////////////////////////////////////////////////////

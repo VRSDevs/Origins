@@ -2,12 +2,15 @@
 //                    Clase para el menu principal                  //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import { game } from '../init.js';
+
 
 var playButton;
 var controlsButton;
 var settingsButton;
 var exitButton;
 var id;
+
 
 class sceneMainMenu extends Phaser.Scene {
     constructor() {
@@ -86,8 +89,8 @@ class sceneMainMenu extends Phaser.Scene {
             settingsButton.anims.stop();
             settingsButton.setFrame(0);
         }, this);
-        settingsButton.addListener('pointerdown', loadScene, this);  
-
+        
+        settingsButton.addListener('pointerdown', loadScene, this); 
         // Botón de salir
         exitButton = this.add.sprite(width - 301/2, 590, "spriteExitButton", 0).setInteractive();
         
@@ -108,10 +111,28 @@ class sceneMainMenu extends Phaser.Scene {
             exitButton.setFrame(0);
         }, this);
         exitButton.addListener('pointerdown', loadScene, this); 
-    }
-    update(time, delta){
+
+        // Música del menu principal
+        controller.setMusic(this.sound.add("music"));
         
-    }
+        
+
+    }        
+
+    update(time, delta){
+        if (controller.getMusicEnabled()){
+            if(!controller.getMusicPlaying()){
+                controller.getMusic().play();
+                controller.setMusicPlaying(true);
+            }
+        }else{
+           controller.getMusic().stop();
+        }   
+        
+
+   }  
+    
+   
 }
 
 function loadScene(){
@@ -119,21 +140,26 @@ function loadScene(){
         case 1:
             console.log(id);
             this.scene.start("scenePlayMenu");
+
             break;    
         case 2:
             console.log(id);
             this.scene.start("sceneControlsMenu");
+
             break;
         case 3:
             console.log(id);
             this.scene.start("sceneSettingsMenu");
+
             break;
         case 4:
             alert("Gracias por jugar a nuestro juego.");
             console.log(id);
             window.close();
+           
             break;  
         default:
+           
 
             break;
     }   

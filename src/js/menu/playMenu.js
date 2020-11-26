@@ -10,6 +10,8 @@ var localMultiplayerButton;
 var onlineMultiplayerButton;
 var startAnim;
 
+
+
 class scenePlayMenu extends Phaser.Scene {
     constructor() {
         super({key: "scenePlayMenu",
@@ -17,6 +19,8 @@ class scenePlayMenu extends Phaser.Scene {
         });
     }
     create() {
+
+
         // Variables auxiliares
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;        
@@ -102,6 +106,8 @@ class scenePlayMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
+
+
     }
     update(time, delta){
         if(startAnim === true && controller.getGameMode() === 1){
@@ -117,6 +123,7 @@ class scenePlayMenu extends Phaser.Scene {
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', true);
         } else {
+       
             singlePlayerButton.anims.play('singlePlayerAnim', false);
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
