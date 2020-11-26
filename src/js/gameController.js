@@ -19,8 +19,8 @@ class gameController{
         return this.music;
     }
 
-    setMusic(value){
-        this.music = value;
+    setMusic(obj){
+        this.music = obj;
     }
     
     getMusicPlaying(){
@@ -32,7 +32,6 @@ class gameController{
     }
 }
 
-var controller = new gameController(1, 2, true,false, undefined);
+var controller = new gameController(1, 2, true,false, null);
 
 export {controller};
-export {globalMusic};

@@ -2,7 +2,7 @@
 //                     Clase para el menu Jugar                     //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
-import {music} from './mainMenu.js';
+
 var backButton;
 var singlePlayerButton;
 var localMultiplayerButton;
@@ -135,4 +135,3 @@ function loadScene(){
 }
 
 export default scenePlayMenu;
-export {music}
