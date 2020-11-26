@@ -1,20 +1,34 @@
 class gameController{
-    constructor(player1, player2, music, mp, globalMusic){
-        this.player1 = player1;
-        this.player2 = player2;
+    constructor(music, mp, globalMusic, gameMode, timeRound){
         this.musicEnabled = music;
         this.musicPlaying = mp;
         this.music = globalMusic;
+        this.gameMode = gameMode;
+        this.timeRound = timeRound;
+    }
+    // Getters
+    getGameMode(){
+        return this.gameMode;
+
     }
 
     getMusicEnabled(){
         return this.musicEnabled;
     }
 
+    getTimeRound(){
+        return this.timeRound;
+    }
+
+    // Setters
+    setGameMode(value){
+        this.gameMode = value;
+    }
+
     setMusicEnabled(value){
         this.musicEnabled = value;
     }
-
+  
     getMusic(){
         return this.music;
     }
@@ -30,8 +44,10 @@ class gameController{
     setMusicPlaying(value){
         this.musicPlaying = value;
     }
+    setTimeRound(value){
+        this.timeRound = value;
+    }
 }
 
-var controller = new gameController(1, 2, true,false, null);
-
+var controller = new gameController(true, false, undefined, 0, 60);
 export {controller};

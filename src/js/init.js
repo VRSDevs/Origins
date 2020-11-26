@@ -1,3 +1,4 @@
+"use strict";
 //////////////////////////////////////////////////////////////////////
 //                 Clase para inicializar el juego                  //
 //////////////////////////////////////////////////////////////////////
@@ -7,8 +8,13 @@ import sceneMainMenu from './menu/mainMenu.js';
 import scenePlayMenu from './menu/playMenu.js';
 import sceneSettingsMenu from './menu/settingsMenu.js';
 import sceneControlsMenu from './menu/controlsMenu.js';
+import sceneSelectionMenu from './menu/selectionMenu.js';
+import sceneSelectionMenu2 from './menu/selectionMenu2.js';
 import sceneForestLevel from './maps/levelForest.js';
+import sceneCaveLevel from './maps/levelCave.js';
+import sceneLabLevel from './maps/levelLab.js';
 import {controller} from './gameController.js';
+
 
 const config = {
     width: 800,             // Tamaño en píxeles
@@ -21,7 +27,8 @@ const config = {
     },
     scene: [
         bootloader, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
-        sceneSettingsMenu, sceneForestLevel
+        sceneSettingsMenu, sceneSelectionMenu, sceneSelectionMenu2,
+        sceneForestLevel, sceneCaveLevel, sceneLabLevel
     ]
 };
 

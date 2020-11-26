@@ -1,6 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 //                     Clase para el menu Jugar                     //
 //////////////////////////////////////////////////////////////////////
+import {game} from '../init.js';
 import {controller} from '../gameController.js';
 
 var backButton;
@@ -8,7 +9,6 @@ var singlePlayerButton;
 var localMultiplayerButton;
 var onlineMultiplayerButton;
 var startAnim;
-var gameModeID;
 
 
 
@@ -23,7 +23,7 @@ class scenePlayMenu extends Phaser.Scene {
 
         // Variables auxiliares
         var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
+        var height = this.sys.canvas.height;        
 
         // Fondo
         this.add.image(400, 320, "play");
@@ -40,11 +40,11 @@ class scenePlayMenu extends Phaser.Scene {
 
         singlePlayerButton.addListener('pointerover', () => {
             startAnim = true;
-            gameModeID = 1;
+            controller.setGameMode(1);
         }, this);
         singlePlayerButton.addListener('pointerout', () => {
             startAnim = false;
-            gameModeID = 0;
+            controller.setGameMode(0);
         }, this);
         singlePlayerButton.addListener('pointerdown', loadScene, this);
 
@@ -60,11 +60,11 @@ class scenePlayMenu extends Phaser.Scene {
 
         localMultiplayerButton.addListener('pointerover', () => {
             startAnim = true;
-            gameModeID = 2;
+            controller.setGameMode(2);
         }, this);
         localMultiplayerButton.addListener('pointerout', () => {
             startAnim = false;
-            gameModeID = 0;
+            controller.setGameMode(0);
         }, this);
         localMultiplayerButton.addListener('pointerdown', loadScene, this);
 
@@ -80,36 +80,45 @@ class scenePlayMenu extends Phaser.Scene {
 
         onlineMultiplayerButton.addListener('pointerover', () => {
             startAnim = true;
-            gameModeID = 3;
+            controller.setGameMode(3);
         }, this);
         onlineMultiplayerButton.addListener('pointerout', () => {
             startAnim = false;
-            gameModeID = 0;
+            controller.setGameMode(0);
         }, this);
         onlineMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Botón de retroceder
-        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 1).setInteractive();
+        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 0).setInteractive();
+
+        this.anims.create({
+            key: 'backButtonAnim',
+            frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),
+            frameRate: 3,
+            repeat: 0
+        });
+
         backButton.addListener('pointerover', () => {
-            backButton.setFrame(0);
+            backButton.anims.play('backButtonAnim',true);
         }, this);
         backButton.addListener('pointerout', () => {
-            backButton.setFrame(1);
+            backButton.anims.stop();
+            backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
 
 
     }
     update(time, delta){
-        if(startAnim === true && gameModeID === 1){
+        if(startAnim === true && controller.getGameMode() === 1){
             singlePlayerButton.anims.play('singlePlayerAnim', true);
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
-        } else if (startAnim === true && gameModeID === 2){
+        } else if (startAnim === true && controller.getGameMode() === 2){
             singlePlayerButton.anims.play('singlePlayerAnim', false);
             localMultiplayerButton.anims.play('localMultiplayerAnim', true);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
-        } else if (startAnim === true && gameModeID === 3){
+        } else if (startAnim === true && controller.getGameMode() === 3){
             singlePlayerButton.anims.play('singlePlayerAnim', false);
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', true);
@@ -122,12 +131,33 @@ class scenePlayMenu extends Phaser.Scene {
     }
 }
 
+function getMap() {
+    var max = 4;
+    var min = 1;
+    var level = Math.floor(Math.random() * (max - min) + min);
+    switch (level) {
+        case 1:
+            console.log(level)
+            game.scene.start("sceneSelectionMenu");
+            break;
+        case 2:
+            game.scene.start("sceneSelectionMenu");
+            break;
+        case 3:
+            game.scene.start("sceneSelectionMenu");
+            break;
+        default:
+            console.log("Ups.")
+            break;
+    }
+}
+
 function loadScene(){
-    if(gameModeID === 1) {
+    if(controller.getGameMode() === 1) {
         alert("En progreso...");
-    } else if(gameModeID === 2){
-        this.scene.start("sceneForestLevel");
-    } else if(gameModeID === 3){
+    } else if(controller.getGameMode() === 2){
+        getMap();
+    } else if(controller.getGameMode() === 3){
         alert("En progreso...");
     } else {
         this.scene.start("sceneMainMenu");

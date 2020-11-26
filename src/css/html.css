@@ -1,5 +1,11 @@
+@font-face{
+    font-family: 'origins';
+    src: url('/resources/fonts/origins.ttf');
+}
+
 #container{
     /*width: 100%;*/
+    font-family: origins;
     text-align: center;
     margin-top: 25px;
     /*margin-left: 300px;
