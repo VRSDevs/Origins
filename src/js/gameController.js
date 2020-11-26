@@ -24,6 +24,6 @@ class gameController{
     }
 }
 
-var controller = new gameController(1, 2, true,true);
+var controller = new gameController(1, 2, true,false);
 
 export {controller};

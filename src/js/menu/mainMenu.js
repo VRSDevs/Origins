@@ -74,21 +74,25 @@ class sceneMainMenu extends Phaser.Scene {
         exitButton.addListener('pointerdown', loadScene, this); 
 
         // Música del menu principal
-         var music = this.sound.add('music');
-        if(controller.getMusicPlaying()){
-            if(controller.getMusicEnabled() === true){
-                music.play();
-             }else{
-                music.stop();
-             }
-        }
+         music = this.sound.add('music');
         
 
     }        
 
     update(time, delta){
+        if (controller.getMusicEnabled()){
+            if(!controller.getMusicPlaying()){
+                music.play();
+                controller.setMusicPlaying(true);
+            }
+        }else{
+            music.stop();
+        }   
         
-    }
+
+   }  
+    
+   
 }
 
 function loadScene(){
