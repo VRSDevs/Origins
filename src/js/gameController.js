@@ -1,9 +1,10 @@
 class gameController{
-    constructor(player1, player2, music,mp){
+    constructor(player1, player2, music, mp, globalMusic){
         this.player1 = player1;
         this.player2 = player2;
         this.musicEnabled = music;
         this.musicPlaying = mp;
+        this.music = globalMusic;
     }
 
     getMusicEnabled(){
@@ -14,6 +15,13 @@ class gameController{
         this.musicEnabled = value;
     }
 
+    getMusic(){
+        return this.music;
+    }
+
+    setMusic(value){
+        this.music = value;
+    }
     
     getMusicPlaying(){
         return this.musicPlaying;
@@ -24,6 +32,6 @@ class gameController{
     }
 }
 
-var controller = new gameController(1, 2, true,false);
+var controller = new gameController(1, 2, true,false, undefined);
 
 export {controller};
