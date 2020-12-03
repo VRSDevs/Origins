@@ -8,7 +8,6 @@ import {game} from '../init.js';
 var changeMusicButton;
 var backButton;
 
-
 class sceneSettingsMenu extends Phaser.Scene {
     constructor() {
         super({key: "sceneSettingsMenu",

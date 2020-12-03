@@ -18,6 +18,8 @@ var fireCatButton;
 var selectedCat;
 var startAnim;
 
+var a;
+
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú selección P1           //
 //////////////////////////////////////////////////////////////////////
@@ -39,14 +41,14 @@ class sceneSelectionMenu extends Phaser.Scene {
 
         //******************* Botones ************************//
         // Gato tierra //
-        groundCatButton = this.add.sprite(132, 305, "GroundCatIdle2", 0).setInteractive();
-
+        groundCatButton = this.add.sprite(518, 268, "GroundCatIdle2", 0).setInteractive();
         this.anims.create({
             key: 'groundMenuAnim',
             frames: this.anims.generateFrameNumbers('GroundCatIdle2', { start: 0, end: 6 }),
             frameRate: 4,
             repeat: -1
         });
+
         groundCatButton.addListener('pointerover', () => {
             startAnim = true;
             selectedCat = 1;
@@ -58,8 +60,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         groundCatButton.addListener('pointerdown', loadScene, this);
 
         // Gato agua //
-        waterCatButton = this.add.sprite(352, 305, "WaterCatIdle2", 0).setInteractive();
-
+        waterCatButton = this.add.sprite(133, 268, "WaterCatIdle2", 0).setInteractive();
         this.anims.create({
             key: 'waterMenuAnim',
             frames: this.anims.generateFrameNumbers('WaterCatIdle2', { start: 0, end: 6 }),
@@ -78,8 +79,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         waterCatButton.addListener('pointerdown', loadScene, this);
 
         // Gato aire //
-        airCatButton = this.add.sprite(530, 305, "AirCatIdle2", 0).setInteractive();
-
+        airCatButton = this.add.sprite(333, 268, "AirCatIdle2", 0).setInteractive();
         this.anims.create({
             key: 'airMenuAnim',
             frames: this.anims.generateFrameNumbers('AirCatIdle2', { start: 0, end: 6 }),
@@ -98,8 +98,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         airCatButton.addListener('pointerdown', loadScene, this);
 
         // Gato fuego //
-        fireCatButton = this.add.sprite(705, 305, "FireCatIdle2", 0).setInteractive();
-
+        fireCatButton = this.add.sprite(697, 268, "FireCatIdle2", 0).setInteractive();
         this.anims.create({
             key: 'fireMenuAnim',
             frames: this.anims.generateFrameNumbers('FireCatIdle2', { start: 0, end: 6 }),
@@ -134,34 +133,46 @@ class sceneSelectionMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
+
+        a = this.add.text(400, 350, "", {
+            fontFamily: 'origins',
+            fontSize: '20px',
+            align: "center",
+            fill: '#000000'
+        });
     }
     update(time, delta) {
         //******************* Animaciones botones ************************//
         if (startAnim === true && selectedCat === 1) {
             groundCatButton.anims.play('groundMenuAnim', true);
+            a.setText("Tommy");
             waterCatButton.anims.play('waterMenuAnim', false);
             airCatButton.anims.play('airMenuAnim', false);
             fireCatButton.anims.play('fireMenuAnim', false);
         } else if (startAnim === true && selectedCat === 2) {
             groundCatButton.anims.play('groundMenuAnim', false);
             waterCatButton.anims.play('waterMenuAnim', true);
+            a.setText("Michi");
             airCatButton.anims.play('airMenuAnim', false);
             fireCatButton.anims.play('fireMenuAnim', false);
         } else if (startAnim === true && selectedCat === 3) {
             groundCatButton.anims.play('groundMenuAnim', false);
             waterCatButton.anims.play('waterMenuAnim', false);
             airCatButton.anims.play('airMenuAnim', true);
+            a.setText("Wiskas");
             fireCatButton.anims.play('fireMenuAnim', false);
         } else if (startAnim === true && selectedCat === 4) {
             groundCatButton.anims.play('groundMenuAnim', false);
             waterCatButton.anims.play('waterMenuAnim', false);
             airCatButton.anims.play('airMenuAnim', false);
             fireCatButton.anims.play('fireMenuAnim', true);
+            a.setText("Levi");
         } else {
             groundCatButton.anims.play('groundMenuAnim', false);
             waterCatButton.anims.play('waterMenuAnim', false);
             airCatButton.anims.play('airMenuAnim', false);
             fireCatButton.anims.play('fireMenuAnim', false);
+            a.setText("");
         }
     }
 }
