@@ -4,6 +4,7 @@
 //////////////////////////////////////////////////////////////////////
 import { controller } from '../gameController.js';
 import { players } from '../cats.js';
+import { Scene } from 'phaser';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -26,6 +27,7 @@ var timer;
 var t;
 var oldT = 0;
 var diffT = controller.getTimeRound();
+
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
