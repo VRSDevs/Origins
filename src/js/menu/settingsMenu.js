@@ -19,7 +19,6 @@ class sceneSettingsMenu extends Phaser.Scene {
         // Variables auxiliares
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
-        // Música
 
         // Fondo
         this.add.image(400, 320, "settings");
@@ -35,10 +34,12 @@ class sceneSettingsMenu extends Phaser.Scene {
                 changeMusicButton.setFrame(1);
                 controller.setMusicEnabled(false);
                 controller.getMusic().stop();
+
             } else {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
                 controller.getMusic().play();
+
             }
         }, this);
 
