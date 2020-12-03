@@ -28,7 +28,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             active: false
         });
     }
-    create() {
+    create() {      
         //******************* Variables auxiliares ************************//
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
@@ -365,15 +365,18 @@ function getMap() {
     var max = 4;
     var min = 1;
     var level = Math.floor(Math.random() * (max - min) + min);
+    selectedCat = 0;
     switch (level) {
         case 1:
-            console.log(this)
+            game.scene.stop("sceneSelectionMenu2");
             game.scene.start("sceneForestLevel");
             break;
         case 2:
+            game.scene.stop("sceneSelectionMenu2");
             game.scene.start("sceneForestLevel");
             break;
         case 3:
+            game.scene.stop("sceneSelectionMenu2");
             game.scene.start("sceneForestLevel");
             break;
         default:

@@ -30,8 +30,13 @@ class gameController{
         this.timeRound = value;
     }
 
+    // Otros
+    reset(){
+        
+    }
+
 }
 
-var controller = new gameController(true, 0, 60);
+var controller = new gameController(true, 0, 10);
 
 export {controller};

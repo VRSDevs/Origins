@@ -29,6 +29,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         });
     }
     create() {
+        console.log("sceneSelectionMenu1 load");
         //******************* Variables auxiliares ************************//
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
@@ -169,6 +170,7 @@ class sceneSelectionMenu extends Phaser.Scene {
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
 function goNextScene() {
+    game.scene.stop("sceneSelectionMenu");
     game.scene.start("sceneSelectionMenu2");
 }
 
@@ -192,7 +194,7 @@ function loadScene() {
             goNextScene();
             break;
         default:
-            this.scene.start("sceneMainMenu");
+            this.scene.start("scenePlayMenu");
             break;
     }
 }

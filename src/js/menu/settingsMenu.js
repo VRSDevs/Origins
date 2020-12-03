@@ -61,6 +61,7 @@ class sceneSettingsMenu extends Phaser.Scene {
 }
 
 function loadScene(){
+    this.scene.stop("sceneSettingsMenu");
     this.scene.start("sceneMainMenu");
 }
 
