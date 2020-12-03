@@ -335,7 +335,7 @@ class sceneForestLevel extends Phaser.Scene {
         players[0].getObject().anims.play('rightP1');
 
         // Jugador 2 //
-        players[1].setObject(this.physics.add.sprite(600, 400, (skinP2 + 'Idle')));
+        players[1].setObject(this.physics.add.sprite(700, 80, (skinP2 + 'Idle')));
 
         // Sin materia oscura
         this.anims.create({
@@ -658,8 +658,30 @@ class sceneForestLevel extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Posición aleatoria de materia oscura ************************//
 function posAzar() {
-    darkMatterPosX = Phaser.Math.Between(20, 780)
-    darkMatterPosY = Phaser.Math.Between(80, 560)
+
+    var rand = Phaser.Math.Between(1,4)
+
+    switch(rand){
+        case 1:
+            darkMatterPosX = 200;
+            darkMatterPosY = 500;
+            break;
+        case 2:
+            darkMatterPosX = 400;
+            darkMatterPosY = 120;
+            break;
+        case 3:
+            darkMatterPosX = 530;
+            darkMatterPosY = 460;
+            break;
+        case 4: 
+            darkMatterPosX = 400;
+            darkMatterPosY = 530;
+            break;    
+
+    }
+
+
 };
 
 //******************* Evento de temporizador ************************//
