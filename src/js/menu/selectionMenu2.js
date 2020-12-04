@@ -15,7 +15,7 @@ var waterCatButton;
 var airCatButton;
 var fireCatButton;
 //******************* Control ************************//
-var startAnim;
+var startAnim = 0;
 var selectedCat = 0;
 
 var a;

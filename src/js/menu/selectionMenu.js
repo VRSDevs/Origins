@@ -15,8 +15,8 @@ var waterCatButton;
 var airCatButton;
 var fireCatButton;
 //******************* Control ************************//
-var selectedCat;
-var startAnim;
+var selectedCat = 0;
+var startAnim = 0;
 
 var a;
 
@@ -137,7 +137,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         a = this.add.text(400, 350, "", {
             fontFamily: 'origins',
             fontSize: '20px',
-            align: "center",
+            align: 'center',
             fill: '#000000'
         });
     }
@@ -145,7 +145,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         //******************* Animaciones botones ************************//
         if (startAnim === true && selectedCat === 1) {
             groundCatButton.anims.play('groundMenuAnim', true);
-            a.setText("Tommy");
+            a.setText("Tommy\nASD");
             waterCatButton.anims.play('waterMenuAnim', false);
             airCatButton.anims.play('airMenuAnim', false);
             fireCatButton.anims.play('fireMenuAnim', false);
