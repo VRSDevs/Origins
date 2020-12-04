@@ -66,8 +66,6 @@ class sceneSettingsMenu extends Phaser.Scene {
     }
     update(time, delta){  
         
-   
-    
         
      
     }
