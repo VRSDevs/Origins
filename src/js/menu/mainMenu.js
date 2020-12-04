@@ -148,6 +148,7 @@ function loadScene(){
         case 3:
             console.log(id);
             this.scene.start("sceneSettingsMenu");
+            
 
             break;
         case 4:

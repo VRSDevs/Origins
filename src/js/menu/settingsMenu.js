@@ -62,11 +62,14 @@ class sceneSettingsMenu extends Phaser.Scene {
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
        
-        // Música del menu principal
 
     }
-    update(time, delta){
-
+    update(time, delta){  
+        
+   
+    
+        
+     
     }
 }
 
