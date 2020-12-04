@@ -47,6 +47,16 @@ class gameController{
     setTimeRound(value){
         this.timeRound = value;
     }
+
+    getMusic(){
+        return this.music;
+    }
+
+    setMusic(obj){
+        this.music = obj;
+    }
+
+
 }
 
 var controller = new gameController(true, false, undefined, 0, 60);

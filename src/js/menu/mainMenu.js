@@ -129,10 +129,8 @@ class sceneMainMenu extends Phaser.Scene {
 
         }   
         
-
    }  
-    
-   
+      
 }
 
 function loadScene(){
