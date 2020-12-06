@@ -14,8 +14,11 @@ var groundCatButton;
 var waterCatButton;
 var airCatButton;
 var fireCatButton;
+//******************* Textos ************************//
+var description;
+var ADescription;
 //******************* Control ************************//
-var startAnim;
+var startAnim = 0;
 var selectedCat = 0;
 
 //////////////////////////////////////////////////////////////////////
@@ -28,20 +31,21 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             active: false
         });
     }
-    create() {
+    create() {      
+        controller.setCurrentScene(this);
+        console.log(selectedCat);
         //******************* Variables auxiliares ************************//
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
-        var aux = players[0].getType();
 
         //******************* Fondos ************************//
         this.add.image(400, 320, "selectionPl2");
-        
+
         //******************* Botones ************************//
-        switch (aux) {
+        switch (players[0].getType()) {
             case 1:
                 // Gato tierra //
-                groundCatButton = this.add.sprite(132, 305, "GroundCatIdleMatter2", 3).setInteractive();
+                groundCatButton = this.add.sprite(518, 268, "GroundCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'groundMenuAnim2',
                     frames: this.anims.generateFrameNumbers('GroundCatIdleMatter2', {start: 0, end: 6}),
@@ -50,7 +54,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 });
                 
                 // Gato agua //
-                waterCatButton = this.add.sprite(352, 305, "WaterCatIdle2", 0).setInteractive();
+                waterCatButton = this.add.sprite(133, 268, "WaterCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'waterMenuAnim2',
                     frames: this.anims.generateFrameNumbers('WaterCatIdle2', { start: 0, end: 6 }),
@@ -69,7 +73,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 waterCatButton.addListener('pointerdown', loadScene, this);                
 
                 // Gato aire //
-                airCatButton = this.add.sprite(530, 305, "AirCatIdle2", 0).setInteractive();
+                airCatButton = this.add.sprite(333, 268, "AirCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'airMenuAnim2',
                     frames: this.anims.generateFrameNumbers('AirCatIdle2', { start: 0, end: 6 }),
@@ -88,7 +92,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 airCatButton.addListener('pointerdown', loadScene, this);
 
                 // Gato fuego //
-                fireCatButton = this.add.sprite(705, 305, "FireCatIdle2", 0).setInteractive();
+                fireCatButton = this.add.sprite(697, 268, "FireCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'fireMenuAnim2',
                     frames: this.anims.generateFrameNumbers('FireCatIdle2', { start: 0, end: 6 }),
@@ -108,7 +112,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 break;
             case 2:
                 // Gato tierra //
-                groundCatButton = this.add.sprite(132, 305, "GroundCatIdle2", 0).setInteractive();
+                groundCatButton = this.add.sprite(518, 268, "GroundCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'groundMenuAnim2',
                     frames: this.anims.generateFrameNumbers('GroundCatIdle2', {start: 0, end: 6}),
@@ -127,7 +131,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 groundCatButton.addListener('pointerdown', loadScene, this);
                 
                 // Gato agua //
-                waterCatButton = this.add.sprite(352, 305, "WaterCatIdleMatter2", 3).setInteractive();
+                waterCatButton = this.add.sprite(133, 268, "WaterCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'waterMenuAnim2',
                     frames: this.anims.generateFrameNumbers('WaterCatIdleMatter2', { start: 0, end: 6 }),
@@ -136,7 +140,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 });              
 
                 // Gato aire //
-                airCatButton = this.add.sprite(530, 305, "AirCatIdle2", 0).setInteractive();
+                airCatButton = this.add.sprite(333, 268, "AirCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'airMenuAnim2',
                     frames: this.anims.generateFrameNumbers('AirCatIdle2', { start: 0, end: 6 }),
@@ -155,7 +159,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 airCatButton.addListener('pointerdown', loadScene, this);
 
                 // Gato fuego //
-                fireCatButton = this.add.sprite(705, 305, "FireCatIdle2", 0).setInteractive();
+                fireCatButton = this.add.sprite(697, 268, "FireCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'fireMenuAnim2',
                     frames: this.anims.generateFrameNumbers('FireCatIdle2', { start: 0, end: 6 }),
@@ -175,7 +179,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 break;
             case 3:
                 // Gato tierra //
-                groundCatButton = this.add.sprite(132, 305, "GroundCatIdle2", 0).setInteractive();
+                groundCatButton = this.add.sprite(518, 268, "GroundCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'groundMenuAnim2',
                     frames: this.anims.generateFrameNumbers('GroundCatIdle2', {start: 0, end: 6}),
@@ -194,7 +198,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 groundCatButton.addListener('pointerdown', loadScene, this);
                 
                 // Gato agua //
-                waterCatButton = this.add.sprite(352, 305, "WaterCatIdle2", 0).setInteractive();
+                waterCatButton = this.add.sprite(133, 268, "WaterCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'waterMenuAnim2',
                     frames: this.anims.generateFrameNumbers('WaterCatIdle2', { start: 0, end: 6 }),
@@ -213,7 +217,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 waterCatButton.addListener('pointerdown', loadScene, this); 
 
                 // Gato aire //
-                airCatButton = this.add.sprite(530, 305, "AirCatIdleMatter2", 3).setInteractive();
+                airCatButton = this.add.sprite(333, 268, "AirCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'airMenuAnim2',
                     frames: this.anims.generateFrameNumbers('AirCatIdleMatter2', { start: 0, end: 6 }),
@@ -222,7 +226,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 });
 
                 // Gato fuego //
-                fireCatButton = this.add.sprite(705, 305, "FireCatIdle2", 0).setInteractive();
+                fireCatButton = this.add.sprite(697, 268, "FireCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'fireMenuAnim2',
                     frames: this.anims.generateFrameNumbers('FireCatIdle2', { start: 0, end: 6 }),
@@ -242,7 +246,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 break;
             case 4:
                 // Gato tierra //
-                groundCatButton = this.add.sprite(132, 305, "GroundCatIdle2", 0).setInteractive();
+                groundCatButton = this.add.sprite(518, 268, "GroundCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'groundMenuAnim2',
                     frames: this.anims.generateFrameNumbers('GroundCatIdle2', {start: 0, end: 6}),
@@ -261,7 +265,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 groundCatButton.addListener('pointerdown', loadScene, this);
                 
                 // Gato agua //
-                waterCatButton = this.add.sprite(352, 305, "WaterCatIdle2", 0).setInteractive();
+                waterCatButton = this.add.sprite(133, 268, "WaterCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'waterMenuAnim2',
                     frames: this.anims.generateFrameNumbers('WaterCatIdle2', { start: 0, end: 6 }),
@@ -280,7 +284,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 waterCatButton.addListener('pointerdown', loadScene, this); 
 
                 // Gato aire //
-                airCatButton = this.add.sprite(530, 305, "AirCatIdle2", 0).setInteractive();
+                airCatButton = this.add.sprite(333, 268, "AirCatIdle2", 0).setInteractive();
                 this.anims.create({
                     key: 'airMenuAnim2',
                     frames: this.anims.generateFrameNumbers('AirCatIdle2', { start: 0, end: 6 }),
@@ -299,7 +303,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
                 airCatButton.addListener('pointerdown', loadScene, this);
 
                 // Gato fuego //
-                fireCatButton = this.add.sprite(705, 305, "FireCatIdleMatter2", 3).setInteractive();
+                fireCatButton = this.add.sprite(697, 268, "FireCatIdleMatter2", 3).setInteractive();
                 this.anims.create({
                     key: 'fireMenuAnim2',
                     frames: this.anims.generateFrameNumbers('FireCatIdleMatter2', { start: 0, end: 6 }),
@@ -326,34 +330,61 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
+
+        //******************* Texto ************************//
+        // Normal //
+        description = this.add.text(115, 334, "", {
+            fontFamily: 'origins',
+            fontSize: '16px',
+            align: 'center',
+            fill: '#000000'
+        });
+
+        // Alienígena //
+        ADescription = this.add.text(90, 430, "", {
+            fontFamily: 'alien',
+            fontSize: '16px',
+            align: 'center',
+            fill: '#000000'
+        });
     }
     update(time, delta) {
         //******************* Animaciones botones ************************//
         if (startAnim === true && selectedCat === 1) {
             groundCatButton.anims.play('groundMenuAnim2', true);
+            description.setText(""+"\nHe's the Ground Cat. His breed is very jealous, \nand he feels  that his powers are a bull shit. They \nare the original human. He have weakness for videogames.");
+            ADescription.setText("he's the ground cat. his breed is very jealous, \nand he feels  that his powers are a bull shit. they \nare the original human. he have weakness for videogames.");
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 2) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', true);
+            description.setText(""+"\nHe's the Water Cat. His breed is very peacefull, \nso they hate the war. He lives in a wet enviroment and he loves \nbubbles. He hates fish (he is vegan).");
+            ADescription.setText("he's the water cat. his breed is very peacefull, \nso they hate the war. he lives in a wet enviroment and\n he loves bubbles. he hates fish (he is vegan).");
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 3) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', true);
+            description.setText(""+"\nShe's the Air Cat. Her breed its like the group's \nmother, very serious and she will do the impossible to get the \ndark matter. Her greatest weakness is fluffys clouds.");
+            ADescription.setText("she's the air cat. her breed its like the group's mother, \nvery serious and she will do the impossible to get the \ndark matter. her greatest weakness is fluffys clouds.");
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 4) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', true);
+            description.setText(""+"\nHe's the Fire Cat. His breed is really aggresive. \nHe is always doing his own thing, but if u give him a reason to \nfight, he will ignite. He love the scorched galactic tuna.");
+            ADescription.setText("he's the Fire Cat. his breed is really aggresive. he is al-\nways doing his own thing, but if u give him a reason to \nfight, he will ignite. he love the scorched galactic tuna.");
         } else {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
+            description.setText("");
+            ADescription.setText("");
         }   
     }
 }
@@ -367,17 +398,22 @@ function getMap() {
     var level = Math.floor(Math.random() * (max - min) + min);
     switch (level) {
         case 1:
-            console.log(this)
-            game.scene.start("sceneForestLevel");
+            console.log(controller.getCurrentScene());
+            controller.getCurrentScene().scene.restart();
+            var nextScene = game.scene.getScene("sceneForestLevel");
+            nextScene.scene.start();
             break;
         case 2:
-            game.scene.start("sceneForestLevel");
+            console.log(controller.getCurrentScene());
+            controller.getCurrentScene().scene.restart();
+            var nextScene = game.scene.getScene("sceneForestLevel");
+            nextScene.scene.start();
             break;
         case 3:
-            game.scene.start("sceneForestLevel");
-            break;
-        default:
-            console.log("Ups.")
+            console.log(controller.getCurrentScene());
+            controller.getCurrentScene().scene.restart();
+            var nextScene = game.scene.getScene("sceneForestLevel");
+            nextScene.scene.start();
             break;
     }
 }
@@ -401,7 +437,8 @@ function loadScene() {
             getMap();
             break;
         default:
-            this.scene.start("sceneMainMenu");
+            game.scene.stop("sceneSelectionMenu2");
+            this.scene.start("sceneSelectionMenu");
             break;
     }
 }

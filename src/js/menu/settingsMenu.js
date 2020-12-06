@@ -2,6 +2,8 @@
 //                   Clase para el menu de ajustes                  //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import {game} from '../init.js';
+
 
 var changeMusicButton;
 var backButton;
@@ -16,7 +18,7 @@ class sceneSettingsMenu extends Phaser.Scene {
         // Variables auxiliares
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
-        
+
         // Fondo
         this.add.image(400, 320, "settings");
 
@@ -30,9 +32,13 @@ class sceneSettingsMenu extends Phaser.Scene {
             if (controller.getMusicEnabled() === true){
                 changeMusicButton.setFrame(1);
                 controller.setMusicEnabled(false);
+                controller.getMusic().stop();
+
             } else {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
+                controller.getMusic().play();
+
             }
         }, this);
 
@@ -54,13 +60,18 @@ class sceneSettingsMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-    }
-    update(time, delta){
+       
 
+    }
+    update(time, delta){  
+        
+        
+     
     }
 }
 
 function loadScene(){
+    this.scene.stop("sceneSettingsMenu");
     this.scene.start("sceneMainMenu");
 }
 

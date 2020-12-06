@@ -2,12 +2,16 @@
 //                    Clase para el menu principal                  //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import { players } from '../cats.js';
+import { game } from '../init.js';
+
 
 var playButton;
 var controlsButton;
 var settingsButton;
 var exitButton;
-var id;
+var id = 0;
+
 
 class sceneMainMenu extends Phaser.Scene {
     constructor() {
@@ -16,18 +20,17 @@ class sceneMainMenu extends Phaser.Scene {
     }
 
     create() {
+        console.log(players[0].getType());
+        console.log(players[1].getType());
         // Variables auxiliares
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;
-
-        console.log("MainMenu: " + controller.getMusicEnabled());
 
         // Fondo
         this.add.image(400, 320, "mainMenu");
         
         // Botón de jugar
         playButton = this.add.sprite(width - 350/2, 296, "spritePlayButton", 0).setInteractive();
-
         this.anims.create({
             key: 'playButtonAnim',
             frames: this.anims.generateFrameNumbers('spritePlayButton', {start: 1, end: 4}),
@@ -48,7 +51,6 @@ class sceneMainMenu extends Phaser.Scene {
 
         // Botón de menú de controles
         controlsButton = this.add.sprite(width - 350/2, 398, "spriteControlsButton", 0).setInteractive();
-
         this.anims.create({
             key: 'controlButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteControlsButton', {start: 1, end: 8}),
@@ -69,7 +71,6 @@ class sceneMainMenu extends Phaser.Scene {
                
         // Botón de menú de ajustes
         settingsButton = this.add.sprite(width - 350/2, 501, "spriteSettingsButton", 0).setInteractive();
-
         this.anims.create({
             key: 'settingsButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteSettingsButton', {start: 1, end: 8}),
@@ -86,11 +87,10 @@ class sceneMainMenu extends Phaser.Scene {
             settingsButton.anims.stop();
             settingsButton.setFrame(0);
         }, this);
-        settingsButton.addListener('pointerdown', loadScene, this);  
-
+        
+        settingsButton.addListener('pointerdown', loadScene, this); 
         // Botón de salir
         exitButton = this.add.sprite(width - 301/2, 590, "spriteExitButton", 0).setInteractive();
-        
         this.anims.create({
             key: 'exitButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteExitButton', {start: 1, end: 4}),
@@ -108,34 +108,50 @@ class sceneMainMenu extends Phaser.Scene {
             exitButton.setFrame(0);
         }, this);
         exitButton.addListener('pointerdown', loadScene, this); 
-    }
+
+        // Música del menu principal
+        controller.setMusic(this.sound.add("music"));
+
+    }        
+
     update(time, delta){
+        if (controller.getMusicEnabled()){
+            if(!controller.getMusicPlaying()){
+                controller.getMusic().play();
+                controller.setMusicPlaying(true);
+            }
+        }else{
+           controller.getMusic().stop();
+           controller.setMusicPlaying(false);
+
+        }   
         
-    }
+   }  
+      
 }
 
 function loadScene(){
     switch (id) {
         case 1:
-            console.log(id);
+            this.scene.stop("sceneMainMenu");
             this.scene.start("scenePlayMenu");
+
             break;    
         case 2:
-            console.log(id);
+            this.scene.stop("sceneMainMenu");
             this.scene.start("sceneControlsMenu");
+
             break;
         case 3:
-            console.log(id);
+            this.scene.stop("sceneMainMenu");
             this.scene.start("sceneSettingsMenu");
+            
+
             break;
         case 4:
             alert("Gracias por jugar a nuestro juego.");
-            console.log(id);
             window.close();
             break;  
-        default:
-
-            break;
     }   
 }
 
