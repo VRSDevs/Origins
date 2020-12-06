@@ -108,8 +108,6 @@ class sceneMainMenu extends Phaser.Scene {
 
         // Música del menu principal
         controller.setMusic(this.sound.add("music"));
-        
-        
 
     }        
 
@@ -121,12 +119,12 @@ class sceneMainMenu extends Phaser.Scene {
             }
         }else{
            controller.getMusic().stop();
+           controller.setMusicPlaying(false);
+
         }   
         
-
    }  
-    
-   
+      
 }
 
 function loadScene(){
@@ -144,6 +142,7 @@ function loadScene(){
         case 3:
             this.scene.stop("sceneMainMenu");
             this.scene.start("sceneSettingsMenu");
+            
 
             break;
         case 4:

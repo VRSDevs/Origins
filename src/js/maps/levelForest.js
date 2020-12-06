@@ -489,11 +489,14 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(col32, players[1].getObject());
         this.physics.add.collider(col32, players[0].getObject());
 
+        //var musicEffect1 = this.sound.add("musicEffect1");
 
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[0].setHasMatter(true);
+            //musicEffect1.play();
+
         }, null, this);
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
@@ -521,6 +524,15 @@ class sceneForestLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff'
         });
+
+
+        //Música del nivel
+        controller.getMusic().stop();
+        controller.setMusic(undefined);
+        controller.setMusic(this.sound.add("music2"));
+        controller.getMusic().play();
+
+    
 
     }
 
