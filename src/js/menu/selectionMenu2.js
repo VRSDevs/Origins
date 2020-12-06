@@ -14,12 +14,13 @@ var groundCatButton;
 var waterCatButton;
 var airCatButton;
 var fireCatButton;
+//******************* Textos ************************//
+var description;
+var ADescription;
 //******************* Control ************************//
 var startAnim = 0;
 var selectedCat = 0;
 
-var description;
-var b = true;
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú selección P2           //
 //////////////////////////////////////////////////////////////////////
