@@ -1,12 +1,15 @@
 class gameController{
-    constructor(music, gameMode, timeRound){
+    constructor(music, mp, globalMusic, gameMode, timeRound){
         this.musicEnabled = music;
+        this.musicPlaying = mp;
+        this.music = globalMusic;
         this.gameMode = gameMode;
         this.timeRound = timeRound;
     }
     // Getters
     getGameMode(){
         return this.gameMode;
+
     }
 
     getMusicEnabled(){
@@ -25,13 +28,27 @@ class gameController{
     setMusicEnabled(value){
         this.musicEnabled = value;
     }
+  
+    getMusic(){
+        return this.music;
+    }
 
+    setMusic(obj){
+        this.music = obj;
+    }
+    
+    getMusicPlaying(){
+        return this.musicPlaying;
+    }
+
+    setMusicPlaying(value){
+        this.musicPlaying = value;
+    }
     setTimeRound(value){
         this.timeRound = value;
     }
-
 }
 
-var controller = new gameController(true, 0, 60);
-
+var controller = new gameController(true, false, undefined, 0, 10);
 export {controller};
+

@@ -15,28 +15,38 @@ class bootloader extends Phaser.Scene {
             this.scene.start("sceneMainMenu");
         });
 
-        this.load.spritesheet('AirCatIdle2','./resources/img/SpriteSheet/Air_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
-        this.load.spritesheet('AirCatIdleMatter2','./resources/img/SpriteSheet/Air_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
-        this.load.spritesheet('FireCatIdle2','./resources/img/SpriteSheet/Fire_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
-        this.load.spritesheet('FireCatIdleMatter2','./resources/img/SpriteSheet/Fire_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
-        this.load.spritesheet('GroundCatIdle2','./resources/img/SpriteSheet/Ground_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
-        this.load.spritesheet('GroundCatIdleMatter2','./resources/img/SpriteSheet/Ground_Spritesheet/idleMatter_x2.png' , {frameWidth: 82, frameHeight: 112} );
-        this.load.spritesheet('WaterCatIdle2','./resources/img/SpriteSheet/Water_Spritesheet/idle_x2.png' , {frameWidth: 84, frameHeight: 90} );
-        this.load.spritesheet('WaterCatIdleMatter2','./resources/img/SpriteSheet/Water_Spritesheet/idleMatter_x2.png' , {frameWidth: 83, frameHeight: 112} );
+        this.load.spritesheet('AirCatIdle2','./resources/img/SpriteSheet/Air_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('AirCatIdleMatter2','./resources/img/SpriteSheet/Air_Spritesheet/idleMatter_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('FireCatIdle2','./resources/img/SpriteSheet/Fire_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('FireCatIdleMatter2','./resources/img/SpriteSheet/Fire_Spritesheet/idleMatter_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('GroundCatIdle2','./resources/img/SpriteSheet/Ground_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('GroundCatIdleMatter2','./resources/img/SpriteSheet/Ground_Spritesheet/idleMatter_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('WaterCatIdle2','./resources/img/SpriteSheet/Water_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('WaterCatIdleMatter2','./resources/img/SpriteSheet/Water_Spritesheet/idleMatter_x2.png' , {frameWidth: 124, frameHeight: 124} );
 
         // Carga de fondos
         this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
-        this.load.image("selection","./resources/img/MenuDesign/Selection/selectionMenu_noButtons.png");
         this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
 
 
         //Carga de colisiones 
         this.load.image("forestCol1","./resources/img/Maps/fieldColisions/1.png");
-        this.load.image("forestCol2","./resources/img/Maps/fieldColisions/2.png");
+        this.load.image("forestCol2","./resources/img/Maps/fieldColisions/2.2.png");
+        this.load.image("forestCol3","./resources/img/Maps/fieldColisions/2.1.png");
+        this.load.image("forestCol4","./resources/img/Maps/fieldColisions/3.png");
+        this.load.image("forestCol5","./resources/img/Maps/fieldColisions/4.3.png");
+        this.load.image("forestCol6","./resources/img/Maps/fieldColisions/4.2.png");
+        this.load.image("forestCol7","./resources/img/Maps/fieldColisions/4.1.png");
+        this.load.image("forestCol8","./resources/img/Maps/fieldColisions/10.1.png");
+        this.load.image("forestCol9","./resources/img/Maps/fieldColisions/7.png");
+        this.load.image("forestCol10","./resources/img/Maps/fieldColisions/10.8.png");
+        this.load.image("forestCol11","./resources/img/Maps/fieldColisions/10.2.png");
+        this.load.image("forestCol12","./resources/img/Maps/fieldColisions/10.4.png");
+        this.load.image("forestCol13","./resources/img/Maps/fieldColisions/10.6.png");
 
         // Carga de mapas
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
@@ -69,7 +79,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('FireCatUp','./resources/img/SpriteSheet/Fire_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('FireCatRight','./resources/img/SpriteSheet/Fire_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
         // Con materia
-        this.load.spritesheet('FireCatDowMatter','./resources/img/SpriteSheet/Fire_Spritesheet/downMatter.png' , {frameWidth: 30, frameHeight: 38} );
+        this.load.spritesheet('FireCatDownMatter','./resources/img/SpriteSheet/Fire_Spritesheet/downMatter.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('FireCatIdleMatter','./resources/img/SpriteSheet/Fire_Spritesheet/idleMatter.png' , {frameWidth: 34, frameHeight: 46} );
         this.load.spritesheet('FireCatLeftMatter','./resources/img/SpriteSheet/Fire_Spritesheet/leftMatter.png' , {frameWidth: 42, frameHeight: 44} );
         this.load.spritesheet('FireCatUpMatter','./resources/img/SpriteSheet/Fire_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
@@ -104,7 +114,15 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatUpMatter','./resources/img/SpriteSheet/Water_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('WaterCatRightMatter','./resources/img/SpriteSheet/Water_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
 
+        // Carga de música
+        this.load.audio("music",[ './resources/music/MainMenu.mp3']);
         //******************** Botones ********************************/
+        this.load.spritesheet("spriteWButton", './resources/img/SpriteSheet/Button_SpriteSheet/wButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteAButton", './resources/img/SpriteSheet/Button_SpriteSheet/aButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteSButton", './resources/img/SpriteSheet/Button_SpriteSheet/sButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteDButton", './resources/img/SpriteSheet/Button_SpriteSheet/dButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spriteVButton", './resources/img/SpriteSheet/Button_SpriteSheet/vButton.png', { frameWidth: 45, frameHeight: 45});
+        this.load.spritesheet("spritePButton", './resources/img/SpriteSheet/Button_SpriteSheet/pButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spritePlayButton", './resources/img/SpriteSheet/Button_SpriteSheet/play_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteControlsButton", './resources/img/SpriteSheet/Button_SpriteSheet/controls_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteSettingsButton", './resources/img/SpriteSheet/Button_SpriteSheet/settings_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
@@ -115,6 +133,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
+
     }
 }
+
 export default bootloader;
