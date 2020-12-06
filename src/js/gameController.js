@@ -61,3 +61,4 @@ class gameController{
 
 var controller = new gameController(true, false, undefined, 0, 60);
 export {controller};
+
