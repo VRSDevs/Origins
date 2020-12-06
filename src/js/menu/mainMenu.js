@@ -2,6 +2,7 @@
 //                    Clase para el menu principal                  //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
+import { players } from '../cats.js';
 import { game } from '../init.js';
 
 
@@ -19,6 +20,8 @@ class sceneMainMenu extends Phaser.Scene {
     }
 
     create() {
+        console.log(players[0].getType());
+        console.log(players[1].getType());
         // Variables auxiliares
         var width = this.sys.canvas.width;
         var height = this.sys.canvas.height;

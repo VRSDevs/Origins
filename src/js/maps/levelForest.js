@@ -1,4 +1,3 @@
-"use strict";
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
@@ -48,8 +47,7 @@ class sceneForestLevel extends Phaser.Scene {
         //******************* Fondos ************************//
         this.physics.add.image(400, 320, "forestMap");
 
-
-        //****************** Colisiones *********************//
+        //****************** Gráficos de colisiones *********************//
         var col1 = this.physics.add.image(65, 20, "forestCol1");
         col1.setVisible(false);
         col1.setImmovable(true);
@@ -216,15 +214,13 @@ class sceneForestLevel extends Phaser.Scene {
         col32.setVisible(false);
         col32.setImmovable(true);
 
-
-
         //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
 
-        // Personaje hay que hacer un if con el personaje que toque
-        var skinP1;
-        var skinP2;
+        //******************* Personajes ************************//
+        var skinP1 = undefined;
+        var skinP2 = undefined;
         switch (players[0].getType()) {
             case 1:
                 skinP1 = "GroundCat";
@@ -253,13 +249,9 @@ class sceneForestLevel extends Phaser.Scene {
             case 4:
                 skinP2 = "FireCat";
                 break;
-
         }
-
-        //******************* Personajes ************************//
         // Jugador 1 //
         players[0].setObject(this.physics.add.sprite(70, 80, (skinP1 + 'Idle')));
-
         // Sin materia oscura
         this.anims.create({
             key: 'leftP1',
@@ -267,35 +259,30 @@ class sceneForestLevel extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'rightP1',
             frames: this.anims.generateFrameNumbers((skinP1 + 'Right'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'upP1',
             frames: this.anims.generateFrameNumbers((skinP1 + 'Up'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'downP1',
             frames: this.anims.generateFrameNumbers((skinP1 + 'Down'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'idleP1',
             frames: this.anims.generateFrameNumbers((skinP1 + 'Idle'), { start: 0, end: 6 }),
             frameRate: 4,
             repeat: -1
         });
-
         // Con la materia oscura
         this.anims.create({
             key: 'leftP1Matter',
@@ -303,40 +290,34 @@ class sceneForestLevel extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'rightP1Matter',
             frames: this.anims.generateFrameNumbers((skinP1 + 'RightMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'upP1Matter',
             frames: this.anims.generateFrameNumbers((skinP1 + 'UpMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'downP1Matter',
             frames: this.anims.generateFrameNumbers((skinP1 + 'DownMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'idleP1Matter',
             frames: this.anims.generateFrameNumbers((skinP1 + 'IdleMatter'), { start: 0, end: 6 }),
             frameRate: 4,
             repeat: -1
         });
-
         players[0].getObject().anims.play('rightP1');
 
         // Jugador 2 //
         players[1].setObject(this.physics.add.sprite(700, 80, (skinP2 + 'Idle')));
-
         // Sin materia oscura
         this.anims.create({
             key: 'leftP2',
@@ -344,35 +325,30 @@ class sceneForestLevel extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'rightP2',
             frames: this.anims.generateFrameNumbers((skinP2 + 'Right'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'upP2',
             frames: this.anims.generateFrameNumbers((skinP2 + 'Up'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'downP2',
             frames: this.anims.generateFrameNumbers((skinP2 + 'Down'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'idleP2',
             frames: this.anims.generateFrameNumbers((skinP2 + 'Idle'), { start: 0, end: 6 }),
             frameRate: 4,
             repeat: -1
         });
-
         // Con la materia oscura
         this.anims.create({
             key: 'leftP2Matter',
@@ -380,35 +356,30 @@ class sceneForestLevel extends Phaser.Scene {
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'rightP2Matter',
             frames: this.anims.generateFrameNumbers((skinP2 + 'RightMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'upP2Matter',
             frames: this.anims.generateFrameNumbers((skinP2 + 'UpMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'downP2Matter',
             frames: this.anims.generateFrameNumbers((skinP2 + 'DownMatter'), { start: 0, end: 4 }),
             frameRate: 5,
             repeat: -1
         });
-
         this.anims.create({
             key: 'idleP2Matter',
             frames: this.anims.generateFrameNumbers((skinP2 + 'IdleMatter'), { start: 0, end: 6 }),
             frameRate: 4,
             repeat: -1
         });
-
         players[1].getObject().anims.play('rightP1');
 
         //******************* Detección por teclado ************************//
@@ -489,8 +460,6 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(col32, players[1].getObject());
         this.physics.add.collider(col32, players[0].getObject());
 
-        //var musicEffect1 = this.sound.add("musicEffect1");
-
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
@@ -509,6 +478,7 @@ class sceneForestLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff'
         });
+        // Evento de finalización de ronda
         t = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
 
         //******************* Puntos ************************//
@@ -524,18 +494,13 @@ class sceneForestLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff'
         });
-
-
-        //Música del nivel
+      
+        //******************* Música del nivel ************************//
         controller.getMusic().stop();
         controller.setMusic(undefined);
         controller.setMusic(this.sound.add("music2"));
         controller.getMusic().play();
-
-    
-
     }
-
     update(time, delta) {
         if (!stopUpdating) {
             //******************* Temporizador ************************//
@@ -670,9 +635,7 @@ class sceneForestLevel extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Posición aleatoria de materia oscura ************************//
 function posAzar() {
-
     var rand = Phaser.Math.Between(1,4)
-
     switch(rand){
         case 1:
             darkMatterPosX = 200;
@@ -690,10 +653,7 @@ function posAzar() {
             darkMatterPosX = 400;
             darkMatterPosY = 530;
             break;    
-
     }
-
-
 };
 
 //******************* Evento de temporizador ************************//
@@ -711,14 +671,14 @@ function endRound() {
         players[0].reset();
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
-        //this.scene.swapPosition("scenePlayMenu", "sceneSelectionMenu");
+        this.scene.stop("sceneForestLevel");
         this.scene.start("sceneMainMenu");
     } else if (players[1].getRoundsWon() === 2){
         alert("Ganó el jugador 2");
         players[0].reset();
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
-        //this.scene.swapPosition("scenePlayMenu", "sceneSelectionMenu");
+        this.scene.stop("sceneForestLevel");
         this.scene.start("sceneMainMenu");
     }
 
