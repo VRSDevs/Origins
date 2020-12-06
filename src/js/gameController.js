@@ -23,7 +23,9 @@ class gameController{
     getMusicPlaying(){
         return this.musicPlaying;
     }
-
+    getMusic(){
+        return this.music;
+    }
     // Setters
     setGameMode(value){
         this.gameMode = value;
@@ -45,6 +47,9 @@ class gameController{
     }
     setCurrentScene(obj){
         this.currentScene = obj;
+    }
+    setMusic(obj){
+        this.music = obj;
     }
 }
 
