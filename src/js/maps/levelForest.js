@@ -672,14 +672,19 @@ function endRound() {
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
         this.scene.stop("sceneForestLevel");
+        controller.getMusic().stop();
         this.scene.start("sceneMainMenu");
+    
+
     } else if (players[1].getRoundsWon() === 2){
         alert("Ganó el jugador 2");
         players[0].reset();
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
         this.scene.stop("sceneForestLevel");
+        controller.getMusic().stop();
         this.scene.start("sceneMainMenu");
+
     }
 
     players.forEach(element => {

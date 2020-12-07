@@ -258,6 +258,14 @@ class sceneLabLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff'
         });
+
+
+        //******************* Música del nivel ************************//
+        controller.getMusic().stop();
+        controller.setMusic(undefined);
+        controller.setMusic(this.sound.add("music4"));
+        controller.getMusic().play();
+
     }
     update(time, delta){
         if (!stopUpdating) {

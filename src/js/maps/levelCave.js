@@ -248,7 +248,11 @@ class sceneCaveLevel extends Phaser.Scene {
         });
         // Evento de finalización de ronda
         t = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
-
+        //******************* Música del nivel ************************//
+        controller.getMusic().stop();
+        controller.setMusic(undefined);
+        controller.setMusic(this.sound.add("music3"));
+        controller.getMusic().play();
 
     }
     update(time, delta) {
