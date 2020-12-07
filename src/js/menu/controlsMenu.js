@@ -1,25 +1,29 @@
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import {controller} from '../gameController.js';
+import { game } from '../init.js';
+import { controller } from '../gameController.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
+//******************* Dimensiones lienzo ************************//
+var width = 0;      // Ancho (px)
+var height = 0;     // Alto (px)
 //****************** Botones *********************//
 // Jugador 1 //
 // Movimiento
-var wButton;
-var aButton;
-var sButton;
-var dButton;
+var wButton = undefined;
+var aButton = undefined;
+var sButton = undefined;
+var dButton = undefined;
 // Interacción
-var vButton;
+var vButton = undefined;
 // Jugador 2 //
 // Interacción
-var pButton;
+var pButton = undefined;
 // Retroceso //
-var backButton;
+var backButton = undefined;
 
 //////////////////////////////////////////////////////////////////////
 //                  Clase de escena de menu de controles            //
@@ -31,9 +35,12 @@ class sceneControlsMenu extends Phaser.Scene {
         });
     }
     create() {
+        //******************* Asignación escena ************************//       
+        controller.setCurrentScene(this);
+
         //******************* Variables auxiliares ************************//
-        var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
+        width = this.sys.canvas.width;
+        height = this.sys.canvas.height;
 
         //******************* Fondos ************************//
         this.add.image(400, 320, "controls");
@@ -80,9 +87,9 @@ class sceneControlsMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Carga de escena ************************//
 function loadScene(){
-    this.scene.stop("sceneControlsMenu");
-    this.scene.start("sceneMainMenu");
-    
+    controller.getCurrentScene().scene.stop();
+    var nextScene = game.scene.getScene("sceneMainMenu");
+    nextScene.scene.start();
 }
 
 //////////////////////////////////////////////////////////////////////
