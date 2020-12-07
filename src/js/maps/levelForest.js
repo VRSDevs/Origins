@@ -35,7 +35,8 @@ var darkMatterPosX;
 var darkMatterPosY;
 var darkMatter;
 //******************* Temporizador ************************//
-var t;
+var tEvent;
+var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();
 //******************* Auxiliares ************************//
@@ -54,7 +55,7 @@ class sceneForestLevel extends Phaser.Scene {
     create() {
         //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
-        
+
         //******************* Dimensiones del canvas ************************//
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
@@ -66,36 +67,36 @@ class sceneForestLevel extends Phaser.Scene {
         this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3);
         switch (players[0].getType()) {
             case 1:
-                this.add.image(50, 41,"GroundCatFace");
+                this.add.image(50, 41, "GroundCatFace");
                 break;
             case 2:
-                this.add.image(50, 41,"WaterCatFace");
+                this.add.image(50, 41, "WaterCatFace");
                 break;
             case 3:
-                this.add.image(50, 41,"AirCatFace");
+                this.add.image(50, 41, "AirCatFace");
                 break;
             case 4:
-                this.add.image(50, 41,"FireCatFace");
+                this.add.image(50, 41, "FireCatFace");
                 break;
         }
         // Jugador 2
         this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3);
         switch (players[1].getType()) {
             case 1:
-                this.add.image(width - 130, 41,"GroundCatFace");
+                this.add.image(width - 130, 41, "GroundCatFace");
                 break;
             case 2:
-                this.add.image(width - 130, 41,"WaterCatFace");
+                this.add.image(width - 130, 41, "WaterCatFace");
                 break;
             case 3:
-                this.add.image(width - 130, 41,"AirCatFace");
+                this.add.image(width - 130, 41, "AirCatFace");
                 break;
             case 4:
-                this.add.image(width - 130, 41,"FireCatFace");
+                this.add.image(width - 130, 41, "FireCatFace");
                 break;
         }
         // Temporizador //
-        this.add.rectangle(width/2, 41, 100, 50, 0x000000, 0.3);
+        this.add.rectangle(width / 2, 41, 100, 50, 0x000000, 0.3);
 
         //****************** Gráficos de colisiones *********************//
         var col1 = this.physics.add.image(65, 20, "forestCol1");
@@ -529,7 +530,7 @@ class sceneForestLevel extends Phaser.Scene {
             fill: '#ffffff'
         });
         // Evento de finalización de ronda
-        t = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
+        tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
 
         //******************* Puntos ************************//
         // Jugador 1 //
@@ -544,7 +545,7 @@ class sceneForestLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff'
         });
-      
+
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
         controller.setMusic(undefined);
@@ -552,11 +553,12 @@ class sceneForestLevel extends Phaser.Scene {
         controller.getMusic().play();
     }
     update(time, delta) {
+        // No actualizar solo puntos a ver
         if (!stopUpdating) {
             //******************* Temporizador ************************//
-            controller.setTimeRound(controller.getTimeRound() - (t.getProgress() - oldT) * diffT);
-            timer.setText(Math.trunc(controller.getTimeRound()));
-            oldT = t.getProgress();
+            t = t - (tEvent.getProgress() - oldT) * diffT;
+            timer.setText(Math.trunc(t));
+            oldT = tEvent.getProgress();
 
             //******************* Personajes ************************//
             // Jugador 1 //
@@ -685,8 +687,8 @@ class sceneForestLevel extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Posición aleatoria de materia oscura ************************//
 function posAzar() {
-    var rand = Phaser.Math.Between(1,4)
-    switch(rand){
+    var rand = Phaser.Math.Between(1, 4)
+    switch (rand) {
         case 1:
             darkMatterPosX = 200;
             darkMatterPosY = 500;
@@ -699,104 +701,112 @@ function posAzar() {
             darkMatterPosX = 530;
             darkMatterPosY = 460;
             break;
-        case 4: 
+        case 4:
             darkMatterPosX = 400;
             darkMatterPosY = 530;
-            break;    
+            break;
     }
 };
 
 //******************* Evento final de ronda ************************//
 function endRound() {
     stopUpdating = true;
-    
-    if(players[0].getScore() < players[1].getScore()){
+
+    if (players[0].getScore() < players[1].getScore()) {
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
-        if(players[1].getRoundsWon() < 2){
-            textEndRound = this.add.text(width + 100, height/2, "Ha ganado el jugador 2 la ronda.", {
+        if (players[1].getRoundsWon() < 2) {
+            textEndRound = this.add.text(width + 100, height / 2, "Ha ganado el jugador 2 la ronda.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
             });
             this.tweens.add({
                 targets: textEndRound,
-                x: width/2 - 300,
+                x: width / 2 - 300,
                 duration: 2000,
                 ease: 'Power2',
                 yoyo: true,
             });
-            this.time.delayedCall(2200, endRound2, [], this); 
+            this.time.delayedCall(4200, endRound2, [], this);
         } else {
-            textEndMatch = this.add.text(width + 100, height/2, "El jugador 2 gana la partida.", {
+            textEndMatch = this.add.text(width + 100, height / 2, "El jugador 2 gana la partida.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
             });
             this.tweens.add({
                 targets: textEndMatch,
-                x: width/2 - 300,
+                x: width / 2 - 300,
                 duration: 2000,
                 ease: 'Power2',
                 yoyo: true,
             });
-            this.time.delayedCall(2200, endRound2, [], this); 
+            this.time.delayedCall(4200, endMatch, [], this);
         }
     } else if (players[0].getScore() > players[1].getScore()) {
         players[0].setRoundsWon(players[0].getRoundsWon() + 1);
-        if(players[0].getRoundsWon() < 2){
-            textEndRound = this.add.text(width + 100, height/2, "Ha ganado el jugador 1 la ronda.", {
+        if (players[0].getRoundsWon() < 2) {
+            textEndRound = this.add.text(width + 100, height / 2, "Ha ganado el jugador 1 la ronda.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
             });
             this.tweens.add({
                 targets: textEndRound,
-                x: width/2 - 300,
+                x: width / 2 - 300,
                 duration: 2000,
                 ease: 'Power2',
                 yoyo: true,
             });
-            this.time.delayedCall(2200, endRound2, [], this);
+            this.time.delayedCall(4200, endRound2, [], this);
         } else {
-            textEndMatch = this.add.text(width + 100, height/2, "El jugador 1 gana la partida.", {
+            textEndMatch = this.add.text(width + 100, height / 2, "El jugador 1 gana la partida.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
             });
             this.tweens.add({
                 targets: textEndMatch,
-                x: width/2 - 300,
+                x: width / 2 - 300,
                 duration: 2000,
                 ease: 'Power2',
                 yoyo: true,
             });
-            this.time.delayedCall(2200, endRound2, [], this); 
+            this.time.delayedCall(4200, endMatch, [], this);
         }
     }
 }
 
-function endRound2(){
-    if(players[0].getRoundsWon() === 2){
-        players[0].reset();
-        players[1].reset();
-        this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
-        this.scene.stop("sceneForestLevel");
-        this.scene.start("sceneMainMenu");
-    } else if (players[1].getRoundsWon() === 2){
-        players[0].reset();
-        players[1].reset();
-        this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
-        this.scene.stop("sceneForestLevel");
-        this.scene.start("sceneMainMenu");
-    }
-
+function endRound2() {
     players.forEach(property => {
         property.setHasMatter(false);
         property.setScore(0);
     });
-    
+
     stopUpdating = false;
-    game.scene.start("sceneForestLevel");
+    controller.getCurrentScene().scene.restart();
+}
+
+function endMatch() {
+    if (players[0].getRoundsWon() === 2) {
+        /*
+        players[0] = players[0].reset();
+        players[1] = players[1].reset();
+        var nextScene = game.scene.getScene("sceneMainMenu");
+        controller.getCurrentScene().scene.stop();
+        nextScene.scene.start();
+        */
+        controller.reset();
+    } else if (players[1].getRoundsWon() === 2) {
+        /*
+        players[0] = players[0].reset();
+        players[1] = players[1].reset();
+        var nextScene = game.scene.getScene("sceneMainMenu");
+        controller.getCurrentScene().scene.stop();
+        nextScene.scene.start();
+        */
+        controller.reset();
+    }
 }
 
 //******************  Calcular distancia entre gatos ****************//

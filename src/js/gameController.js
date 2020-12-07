@@ -1,3 +1,5 @@
+import {game, resetGame} from './init.js';
+
 class gameController{
     constructor(scene, music, mp, globalMusic, gameMode, timeRound){
         this.currentScene = scene;
@@ -50,6 +52,10 @@ class gameController{
     }
     setMusic(obj){
         this.music = obj;
+    }
+
+    reset(){
+        resetGame();
     }
 }
 

@@ -50,11 +50,8 @@ class Cat{
 
     // Otros
     reset(){
-        this.object = undefined;
-        this.type = 0;
-        this.score = 0;
-        this.roundsWon = 0;
-        this.hasMatter = false;        
+        var newPlayer = new Cat(undefined, 0, 0, 0, false);
+        return newPlayer;   
     }
 }
 

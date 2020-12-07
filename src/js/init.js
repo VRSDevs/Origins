@@ -14,7 +14,6 @@ import sceneCaveLevel from './maps/levelCave.js';
 import sceneLabLevel from './maps/levelLab.js';
 import {controller} from './gameController.js';
 
-
 const config = {
     width: 800,             // Tamaño en píxeles
     height: 640,
@@ -33,5 +32,9 @@ const config = {
 
 // INICIALIZACIÓN JUEGO //
 var game = new Phaser.Game(config);
+
+export function resetGame(){
+    game = new Phaser.Game(config);
+}
 
 export {game};
