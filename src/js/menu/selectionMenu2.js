@@ -8,21 +8,24 @@ import { players } from '../cats.js';
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
-//******************* Dimensiones ************************//
-var width;
-var height;
+//******************* Dimensiones lienzo ************************//
+var width = 0;      // Ancho (px)
+var height = 0;     // Alto (px)
 //******************* Botones ************************//
-var backButton;
-var groundCatButton;
-var waterCatButton;
-var airCatButton;
-var fireCatButton;
+var backButton = undefined;
+var groundCatButton = undefined;
+var waterCatButton = undefined;
+var airCatButton = undefined;
+var fireCatButton = undefined;
 //******************* Textos ************************//
-var description;
-var ADescription;
+// Descripción de los gatos //
+var description = "";
+var ADescription = "";
 //******************* Control ************************//
-var startAnim = 0;
+// Selección de gato //
 var selectedCat = 0;
+// Animaciones //
+var startAnim = 0;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú selección P2           //
@@ -37,7 +40,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
     create() {
         //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
-        console.log(selectedCat);
+
         //******************* Dimensiones del canvas ************************//
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
@@ -336,7 +339,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
         backButton.addListener('pointerdown', loadScene, this);
 
         //******************* Texto ************************//
-        // Normal //
+        // Descripción normal //
         description = this.add.text(115, 334, "", {
             fontFamily: 'origins',
             fontSize: '16px',
@@ -344,7 +347,7 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             fill: '#000000'
         });
 
-        // Alienígena //
+        // Descripción alienígena //
         ADescription = this.add.text(90, 430, "", {
             fontFamily: 'alien',
             fontSize: '16px',
@@ -396,25 +399,23 @@ class sceneSelectionMenu2 extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
+//******************* Obtención mapa de juego ************************//
 function getMap() {
     var max = 4;
     var min = 1;
     var level = Math.floor(Math.random() * (max - min) + min);
     switch (level) {
         case 1:
-            console.log(controller.getCurrentScene());
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneForestLevel");
             nextScene.scene.start();
             break;
         case 2:
-            console.log(controller.getCurrentScene());
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneForestLevel");
             nextScene.scene.start();
             break;
         case 3:
-            console.log(controller.getCurrentScene());
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneForestLevel");
             nextScene.scene.start();
@@ -422,6 +423,7 @@ function getMap() {
     }
 }
 
+//******************* Carga de escena ************************//
 function loadScene() {
     switch (selectedCat) {
         case 1:
@@ -441,8 +443,9 @@ function loadScene() {
             getMap();
             break;
         default:
-            game.scene.stop("sceneSelectionMenu2");
-            this.scene.start("sceneSelectionMenu");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneSelectionMenu");
+            nextScene.scene.start();
             break;
     }
 }

@@ -1,15 +1,19 @@
-import {game, resetGame} from './init.js';
-
+//////////////////////////////////////////////////////////////////////
+//                     Clase controlador de juego                   //
+//////////////////////////////////////////////////////////////////////
 class gameController{
+    //******************* Constructor clase ************************//
     constructor(scene, music, mp, globalMusic, gameMode, timeRound){
-        this.currentScene = scene;
-        this.musicEnabled = music;
-        this.musicPlaying = mp;
-        this.music = globalMusic;
-        this.gameMode = gameMode;
-        this.timeRound = timeRound;
+        this.currentScene = scene;      // Escena actual
+        this.musicEnabled = music;      // ¿Está habilitada la música?
+        this.musicPlaying = mp;         // ¿Se está reproduciendo la música?
+        this.music = globalMusic;       // Objeto de música
+        this.gameMode = gameMode;       // Modo de juego:   1 -> Un jugador (vs. IA)
+                                        //                  2 -> Dos jugadores (J vs. J)
+                                        //                  3 -> Multijugador
+        this.timeRound = timeRound;     // Tiempo de ronda
     }
-    // Getters
+    //******************* Getters ************************//
     getGameMode(){
         return this.gameMode;
     }
@@ -28,7 +32,7 @@ class gameController{
     getMusic(){
         return this.music;
     }
-    // Setters
+    //******************* Setters ************************//
     setGameMode(value){
         this.gameMode = value;
     }
@@ -53,12 +57,28 @@ class gameController{
     setMusic(obj){
         this.music = obj;
     }
-
-    reset(){
-        resetGame();
+    //******************* Otros ************************//
+    // Reseteo escenas del juego //
+    resetScenes(game){
+        console.log(game);
+        game.scene.scenes.forEach(scene => {
+            if(scene.scene.key !== "bootloader" && scene.scene.key !== "sceneCaveLevel" && scene.scene.key !== "sceneLabLevel") 
+                console.log(scene.scene.key);
+                scene.scene.restart();
+                scene.scene.stop();
+        });
+        var nextScene = game.scene.getScene("sceneMainMenu");
+        nextScene.scene.start();
     }
 }
 
+//////////////////////////////////////////////////////////////////////
+//                      Creación del controlador                    //
+//////////////////////////////////////////////////////////////////////
 var controller = new gameController(undefined, true, false, undefined, 0, 10);
+
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
 export {controller};
 

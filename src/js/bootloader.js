@@ -1,8 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-//                 Clase para cargar todos los recursos             //
+//                       Clase de carga de recursos                 //
 //////////////////////////////////////////////////////////////////////
-
-//Clase para implementar todos los recursos
 class bootloader extends Phaser.Scene {
     constructor() {
         super({

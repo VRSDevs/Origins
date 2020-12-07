@@ -1,7 +1,6 @@
 //////////////////////////////////////////////////////////////////////
-//                 Clase para inicializar el juego                  //
+//                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-
 import bootloader from './bootloader.js';
 import sceneMainMenu from './menu/mainMenu.js';
 import scenePlayMenu from './menu/playMenu.js';
@@ -14,27 +13,31 @@ import sceneCaveLevel from './maps/levelCave.js';
 import sceneLabLevel from './maps/levelLab.js';
 import {controller} from './gameController.js';
 
+//////////////////////////////////////////////////////////////////////
+//                      Configuración del juego                     //
+//////////////////////////////////////////////////////////////////////
 const config = {
-    width: 800,             // Tamaño en píxeles
+    width: 800,                 // Tamaño lienzo (px.)
     height: 640,
-    parent: "container",    // Contenedor
-    type: Phaser.AUTO,      // Tipo - AUTO hace que Phaser detecte por sí solo si el navegador puede correr WebGL o Canvas
-    pixelArt: true,
-    physics: {
+    parent: "container",        // Contenedor
+    type: Phaser.AUTO,          // Tipo - AUTO hace que Phaser detecte por sí solo si el navegador puede correr WebGL o Canvas
+    pixelArt: true,         
+    physics: {                  // Físicas
         default : "arcade"
     },
-    scene: [
+    scene: [                    // Lista de escenas
         bootloader, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
         sceneSettingsMenu, sceneSelectionMenu, sceneSelectionMenu2,
         sceneForestLevel, sceneCaveLevel, sceneLabLevel
     ]
 };
 
-// INICIALIZACIÓN JUEGO //
+//////////////////////////////////////////////////////////////////////
+//                      Inicialización del juego                    //
+//////////////////////////////////////////////////////////////////////
 var game = new Phaser.Game(config);
 
-export function resetGame(){
-    game = new Phaser.Game(config);
-}
-
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
 export {game};
