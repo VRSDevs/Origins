@@ -514,6 +514,8 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[0].setHasMatter(true);
+            //musicEffect1.play();
+
         }, null, this);
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
@@ -542,6 +544,12 @@ class sceneForestLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff'
         });
+      
+        //******************* Música del nivel ************************//
+        controller.getMusic().stop();
+        controller.setMusic(undefined);
+        controller.setMusic(this.sound.add("music2"));
+        controller.getMusic().play();
     }
     update(time, delta) {
         if (!stopUpdating) {
