@@ -112,12 +112,17 @@ class sceneMainMenu extends Phaser.Scene {
         // Música del menu principal
         controller.setMusic(this.sound.add("music"));
 
+        controller.getMusic().stop("music2");
+        controller.setMusic(undefined);
+        controller.setMusic(this.sound.add("music"));
+        controller.getMusic().play();
+
     }        
 
     update(time, delta){
         if (controller.getMusicEnabled()){
             if(!controller.getMusicPlaying()){
-                controller.getMusic().play();
+                controller.getMusic().play("music");
                 controller.setMusicPlaying(true);
             }
         }else{

@@ -671,8 +671,7 @@ function endRound() {
         players[0].reset();
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
-        this.scene.stop("sceneForestLevel");
-        controller.getMusic().stop();
+        this.scene.stop("sceneForestLevel");      
         this.scene.start("sceneMainMenu");
     
 
@@ -682,7 +681,6 @@ function endRound() {
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
         this.scene.stop("sceneForestLevel");
-        controller.getMusic().stop();
         this.scene.start("sceneMainMenu");
 
     }
