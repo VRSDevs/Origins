@@ -58,8 +58,8 @@ class Cat{
     }
 }
 
-var player1 = new Cat(undefined, 0, 0, 1, false);
-var player2 = new Cat(undefined, 0, 0, 1, false);
+var player1 = new Cat(undefined, 0, 0, 0, false);
+var player2 = new Cat(undefined, 0, 0, 0, false);
 var players = [player1, player2];
 
 export {players};

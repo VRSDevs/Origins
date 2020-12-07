@@ -10,8 +10,6 @@ var localMultiplayerButton;
 var onlineMultiplayerButton;
 var startAnim = false;
 
-
-
 class scenePlayMenu extends Phaser.Scene {
     constructor() {
         super({key: "scenePlayMenu",

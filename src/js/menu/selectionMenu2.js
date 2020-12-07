@@ -8,6 +8,9 @@ import { players } from '../cats.js';
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
+//******************* Dimensiones ************************//
+var width;
+var height;
 //******************* Botones ************************//
 var backButton;
 var groundCatButton;
@@ -31,12 +34,13 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             active: false
         });
     }
-    create() {      
+    create() {
+        //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
         console.log(selectedCat);
-        //******************* Variables auxiliares ************************//
-        var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
+        //******************* Dimensiones del canvas ************************//
+        width = this.sys.canvas.width;
+        height = this.sys.canvas.height;
 
         //******************* Fondos ************************//
         this.add.image(400, 320, "selectionPl2");

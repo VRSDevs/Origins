@@ -8,26 +8,38 @@ import { game } from '../init.js';
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
+//******************* Dimensiones ************************//
+var width;
+var height;
 //******************* Input teclado ************************//
 var cursors;
 var keys;
 //******************* Jugadores ************************//
-var distanceX
-var distanceY
+var distanceX;
+var distanceY;
 var distanceBool = false;
+//******************* Texto ************************//
+// Final de ronda //
+var textEndRound;
+var textEndMatch;
+// Jugador 1 //
 var textPtsP1;
+var textRndsP1;
+// Jugador 2 //
 var textPtsP2;
+var textRndsP2;
+// Temporizador //
+var timer;
 //******************* Materia oscura ************************//
 var darkMatterPosX;
 var darkMatterPosY;
 var darkMatter;
 //******************* Temporizador ************************//
-var timer;
 var t;
 var oldT = 0;
 var diffT = controller.getTimeRound();
 //******************* Auxiliares ************************//
-var stopUpdating = false;
+var stopUpdating = false;;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
@@ -40,12 +52,50 @@ class sceneForestLevel extends Phaser.Scene {
         });
     }
     create() {
-        //******************* Variables auxiliares ************************//
-        var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
-
+        //******************* Asignación escena ************************//       
+        controller.setCurrentScene(this);
+        
+        //******************* Dimensiones del canvas ************************//
+        width = this.sys.canvas.width;
+        height = this.sys.canvas.height;
         //******************* Fondos ************************//
+        // Mapa //
         this.physics.add.image(400, 320, "forestMap");
+        // Puntuaciones //
+        // Jugador 1
+        this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3);
+        switch (players[0].getType()) {
+            case 1:
+                this.add.image(50, 41,"GroundCatFace");
+                break;
+            case 2:
+                this.add.image(50, 41,"WaterCatFace");
+                break;
+            case 3:
+                this.add.image(50, 41,"AirCatFace");
+                break;
+            case 4:
+                this.add.image(50, 41,"FireCatFace");
+                break;
+        }
+        // Jugador 2
+        this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3);
+        switch (players[1].getType()) {
+            case 1:
+                this.add.image(width - 130, 41,"GroundCatFace");
+                break;
+            case 2:
+                this.add.image(width - 130, 41,"WaterCatFace");
+                break;
+            case 3:
+                this.add.image(width - 130, 41,"AirCatFace");
+                break;
+            case 4:
+                this.add.image(width - 130, 41,"FireCatFace");
+                break;
+        }
+        // Temporizador //
+        this.add.rectangle(width/2, 41, 100, 50, 0x000000, 0.3);
 
         //****************** Gráficos de colisiones *********************//
         var col1 = this.physics.add.image(65, 20, "forestCol1");
@@ -487,7 +537,7 @@ class sceneForestLevel extends Phaser.Scene {
             fill: '#ffffff'
         });
         // Jugador 2 //
-        textPtsP2 = this.add.text(width - 80, 20, "0", {
+        textPtsP2 = this.add.text(width - 100, 20, "0", {
             fontFamily: 'origins',
             fontSize: '32px',
             fill: '#ffffff'
@@ -648,25 +698,83 @@ function posAzar() {
     }
 };
 
-//******************* Evento de temporizador ************************//
+//******************* Evento final de ronda ************************//
 function endRound() {
     stopUpdating = true;
     
     if(players[0].getScore() < players[1].getScore()){
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
+        if(players[1].getRoundsWon() < 2){
+            textEndRound = this.add.text(width + 100, height/2, "Ha ganado el jugador 2 la ronda.", {
+                fontFamily: 'origins',
+                fontSize: '32px',
+                fill: '#ffffff'
+            });
+            this.tweens.add({
+                targets: textEndRound,
+                x: width/2 - 300,
+                duration: 2000,
+                ease: 'Power2',
+                yoyo: true,
+            });
+            this.time.delayedCall(2200, endRound2, [], this); 
+        } else {
+            textEndMatch = this.add.text(width + 100, height/2, "El jugador 2 gana la partida.", {
+                fontFamily: 'origins',
+                fontSize: '32px',
+                fill: '#ffffff'
+            });
+            this.tweens.add({
+                targets: textEndMatch,
+                x: width/2 - 300,
+                duration: 2000,
+                ease: 'Power2',
+                yoyo: true,
+            });
+            this.time.delayedCall(2200, endRound2, [], this); 
+        }
     } else if (players[0].getScore() > players[1].getScore()) {
         players[0].setRoundsWon(players[0].getRoundsWon() + 1);
+        if(players[0].getRoundsWon() < 2){
+            textEndRound = this.add.text(width + 100, height/2, "Ha ganado el jugador 1 la ronda.", {
+                fontFamily: 'origins',
+                fontSize: '32px',
+                fill: '#ffffff'
+            });
+            this.tweens.add({
+                targets: textEndRound,
+                x: width/2 - 300,
+                duration: 2000,
+                ease: 'Power2',
+                yoyo: true,
+            });
+            this.time.delayedCall(2200, endRound2, [], this);
+        } else {
+            textEndMatch = this.add.text(width + 100, height/2, "El jugador 1 gana la partida.", {
+                fontFamily: 'origins',
+                fontSize: '32px',
+                fill: '#ffffff'
+            });
+            this.tweens.add({
+                targets: textEndMatch,
+                x: width/2 - 300,
+                duration: 2000,
+                ease: 'Power2',
+                yoyo: true,
+            });
+            this.time.delayedCall(2200, endRound2, [], this); 
+        }
     }
+}
 
+function endRound2(){
     if(players[0].getRoundsWon() === 2){
-        alert("Ganó el jugador 1");
         players[0].reset();
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
         this.scene.stop("sceneForestLevel");
         this.scene.start("sceneMainMenu");
     } else if (players[1].getRoundsWon() === 2){
-        alert("Ganó el jugador 2");
         players[0].reset();
         players[1].reset();
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
@@ -674,13 +782,13 @@ function endRound() {
         this.scene.start("sceneMainMenu");
     }
 
-    players.forEach(element => {
-        element.setHasMatter(false);
-        element.setScore(0);
+    players.forEach(property => {
+        property.setHasMatter(false);
+        property.setScore(0);
     });
-
-    game.scene.start("sceneForestLevel");
+    
     stopUpdating = false;
+    game.scene.start("sceneForestLevel");
 }
 
 //******************  Calcular distancia entre gatos ****************//
