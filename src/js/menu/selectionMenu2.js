@@ -400,19 +400,19 @@ function getMap() {
         case 1:
             console.log(controller.getCurrentScene());
             controller.getCurrentScene().scene.restart();
-            var nextScene = game.scene.getScene("sceneForestLevel");
+            var nextScene = game.scene.getScene("sceneCaveLevel");
             nextScene.scene.start();
             break;
         case 2:
             console.log(controller.getCurrentScene());
             controller.getCurrentScene().scene.restart();
-            var nextScene = game.scene.getScene("sceneForestLevel");
+            var nextScene = game.scene.getScene("sceneCaveLevel");
             nextScene.scene.start();
             break;
         case 3:
             console.log(controller.getCurrentScene());
             controller.getCurrentScene().scene.restart();
-            var nextScene = game.scene.getScene("sceneForestLevel");
+            var nextScene = game.scene.getScene("sceneCaveLevel");
             nextScene.scene.start();
             break;
     }
