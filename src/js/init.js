@@ -11,6 +11,7 @@ import sceneSelectionMenu2 from './menu/selectionMenu2.js';
 import sceneForestLevel from './maps/levelForest.js';
 import sceneCaveLevel from './maps/levelCave.js';
 import sceneLabLevel from './maps/levelLab.js';
+import sceneEndGame from './menu/endGame.js';
 import {controller} from './gameController.js';
 
 //////////////////////////////////////////////////////////////////////
@@ -28,7 +29,7 @@ const config = {
     scene: [                    // Lista de escenas
         bootloader, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
         sceneSettingsMenu, sceneSelectionMenu, sceneSelectionMenu2,
-        sceneForestLevel, sceneCaveLevel, sceneLabLevel
+        sceneForestLevel, sceneCaveLevel, sceneLabLevel, sceneEndGame
     ]
 };
 

@@ -809,26 +809,29 @@ function endRound2() {
 }
 
 function endMatch() {
-    if (players[0].getRoundsWon() === 2) {
-        /*
+    /*if (players[0].getRoundsWon() === 2) {
+        
         players[0] = players[0].reset();
         players[1] = players[1].reset();
         var nextScene = game.scene.getScene("sceneMainMenu");
         nextScene.scene.start();
-        */
+        
         controller.getCurrentScene().scene.stop();
         controller.resetScenes(game);
     } else if (players[1].getRoundsWon() === 2) {
-        /*
+        
         players[0] = players[0].reset();
         players[1] = players[1].reset();
         var nextScene = game.scene.getScene("sceneMainMenu");
         controller.getCurrentScene().scene.stop();
         nextScene.scene.start();
-        */
+        
         controller.getCurrentScene().scene.stop();
         controller.resetScenes(game);
-    }
+    }*/
+    controller.getCurrentScene().scene.stop();
+    var nextScene = game.scene.getScene("sceneEndGame");
+    nextScene.scene.start();
 }
 
 //******************  Calcular distancia entre gatos ****************//
