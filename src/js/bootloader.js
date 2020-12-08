@@ -21,6 +21,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
         this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
+        this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/Button_Spritesheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
         // Mapas //
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
@@ -51,6 +52,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('AirCatDown','./resources/img/SpriteSheet/Air_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('AirCatIdle','./resources/img/SpriteSheet/Air_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('AirCatIdle2','./resources/img/SpriteSheet/Air_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('AirCatIdle3','./resources/img/SpriteSheet/Air_Spritesheet/idle_b.png' , {frameWidth: 85, frameHeight: 90} );
         this.load.spritesheet('AirCatLeft','./resources/img/SpriteSheet/Air_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );
         this.load.spritesheet('AirCatUp','./resources/img/SpriteSheet/Air_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('AirCatRight','./resources/img/SpriteSheet/Air_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
@@ -67,6 +69,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('FireCatDown','./resources/img/SpriteSheet/Fire_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('FireCatIdle','./resources/img/SpriteSheet/Fire_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('FireCatIdle2','./resources/img/SpriteSheet/Fire_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('FireCatIdle3','./resources/img/SpriteSheet/Fire_Spritesheet/idle_b.png' , {frameWidth: 85, frameHeight: 90} );
         this.load.spritesheet('FireCatLeft','./resources/img/SpriteSheet/Fire_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );
         this.load.spritesheet('FireCatUp','./resources/img/SpriteSheet/Fire_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('FireCatRight','./resources/img/SpriteSheet/Fire_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
@@ -83,6 +86,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('GroundCatDown','./resources/img/SpriteSheet/Ground_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('GroundCatIdle','./resources/img/SpriteSheet/Ground_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('GroundCatIdle2','./resources/img/SpriteSheet/Ground_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('GroundCatIdle3','./resources/img/SpriteSheet/Ground_Spritesheet/idle_b.png' , {frameWidth: 85, frameHeight: 90} );
         this.load.spritesheet('GroundCatLeft','./resources/img/SpriteSheet/Ground_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );
         this.load.spritesheet('GroundCatUp','./resources/img/SpriteSheet/Ground_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('GroundCatRight','./resources/img/SpriteSheet/Ground_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
@@ -99,6 +103,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatDown','./resources/img/SpriteSheet/Water_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('WaterCatIdle','./resources/img/SpriteSheet/Water_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('WaterCatIdle2','./resources/img/SpriteSheet/Water_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
+        this.load.spritesheet('WaterCatIdle3','./resources/img/SpriteSheet/Water_Spritesheet/idle_b.png' , {frameWidth: 85, frameHeight: 90} );
         this.load.spritesheet('WaterCatLeft','./resources/img/SpriteSheet/Water_Spritesheet/left.png' , {frameWidth: 42, frameHeight: 36} );
         this.load.spritesheet('WaterCatUp','./resources/img/SpriteSheet/Water_Spritesheet/up.png' , {frameWidth: 30, frameHeight: 44} );
         this.load.spritesheet('WaterCatRight','./resources/img/SpriteSheet/Water_Spritesheet/right.png' , {frameWidth: 42, frameHeight: 36} );
@@ -119,6 +124,7 @@ class bootloader extends Phaser.Scene {
         this.load.audio("music2",[ './resources/music/LevelForest.mp3']);
         this.load.audio("music3", ['./resources/music/LevelCave.mp3']);
         this.load.audio("music4", ['./resources/music/levelLab.mp3']);
+        this.load.audio("musicVictory", ['./resources/music/victory.mp3']);
         this.load.audio("musicEffect1", ['./resources/music/TakingDarkMatter.mp3']);
         this.load.audio("musicEffect2", ['./resources/music/Meow.mp3']);
 
@@ -139,7 +145,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
-
+        this.load.spritesheet("spriteRestart", './resources/img/SpriteSheet/Button_SpriteSheet/restart_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
+        this.load.spritesheet("spriteMainMenu", './resources/img/SpriteSheet/Button_SpriteSheet/mainMenu_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
     }
 }
 

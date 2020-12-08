@@ -55,17 +55,25 @@ class Cat {
     }
     //******************* Otros ************************//
     // Reseteo de jugadores //
-    reset() {
-        var newPlayer = new Cat(undefined, 0, 0, 0, false);
-        return newPlayer;
+    reset(bool) {
+        if(bool){
+            var newPlayer = new Cat(undefined, 0, 0, 0, false);
+            return newPlayer;
+        } else {
+            this.score = 0;
+            this.roundsWon = 0;
+            this.hasMatter = false;
+        }
+        
     }
+
 }
 
 //////////////////////////////////////////////////////////////////////
 //                         Creación de jugadores                    //
 //////////////////////////////////////////////////////////////////////
 // Jugador 1 //
-var player1 = new Cat(undefined, 0, 0, 0, false);
+var player1 = new Cat(undefined, 0, 0, 1, false);
 // Jugador 2 //
 var player2 = new Cat(undefined, 0, 0, 0, false);
 // Lista de jugadores //
