@@ -48,7 +48,7 @@ class sceneEndGame extends Phaser.Scene {
                 this.anims.create({
                     key: 'victoryPlayerAnim',
                     frames: this.anims.generateFrameNumbers('AirCatIdle3', {start: 0, end: 5}),
-                    frameRate: 6,
+                    frameRate: 4,
                     repeat: -1
                 });
                 victoryPlayer.anims.play("victoryPlayerAnim");
@@ -56,12 +56,16 @@ class sceneEndGame extends Phaser.Scene {
         }
 
         //******************* Texto ************************//
-
-        victoryText = this.add.text(width/2, height/6 - 180, "Player 1 won!", {
+        victoryText = this.add.text(width/2 - 135, height/6, "Player 1 won!", {
             fontFamily: 'origins',
             fontSize: '32px',
             fill: '#3380ff'
         });
+
+        //******************* Música del nivel ************************//
+        controller.getMusic().stop();
+        controller.setMusic(undefined);
+        
     }
 
 

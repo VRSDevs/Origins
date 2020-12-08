@@ -65,7 +65,7 @@ class Cat {
 //                         Creación de jugadores                    //
 //////////////////////////////////////////////////////////////////////
 // Jugador 1 //
-var player1 = new Cat(undefined, 0, 0, 0, false);
+var player1 = new Cat(undefined, 0, 0, 1, false);
 // Jugador 2 //
 var player2 = new Cat(undefined, 0, 0, 0, false);
 // Lista de jugadores //
