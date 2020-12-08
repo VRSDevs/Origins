@@ -8,17 +8,23 @@ import { players } from '../cats.js';
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
+//******************* Dimensiones lienzo ************************//
+var width = 0;      // Ancho (px)
+var height = 0;     // Alto (px)
 //******************* Botones ************************//
-var backButton;
-var groundCatButton;
-var waterCatButton;
-var airCatButton;
-var fireCatButton;
+var backButton = undefined;
+var groundCatButton = undefined;
+var waterCatButton = undefined;
+var airCatButton = undefined;
+var fireCatButton = undefined;
 //******************* Textos ************************//
-var description;
-var ADescription;
+// Descripción de los gatos //
+var description = "";
+var ADescription = "";
 //******************* Control ************************//
+// Selección de gato //
 var selectedCat = 0;
+// Animaciones //
 var startAnim = 0;
 
 //////////////////////////////////////////////////////////////////////
@@ -32,10 +38,12 @@ class sceneSelectionMenu extends Phaser.Scene {
         });
     }
     create() {
-        console.log("sceneSelectionMenu1 load");
+        //******************* Asignación escena ************************//       
+        controller.setCurrentScene(this);
+
         //******************* Variables auxiliares ************************//
-        var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
+        width = this.sys.canvas.width;
+        height = this.sys.canvas.height;
 
         //******************* Fondos ************************//
         this.add.image(400, 320, "selectionPl1");
@@ -136,7 +144,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         backButton.addListener('pointerdown', loadScene, this);
 
         //******************* Texto ************************//
-        // Normal //
+        // Descripción normal //
         description = this.add.text(115, 334, "", {
             fontFamily: 'origins',
             fontSize: '16px',
@@ -144,7 +152,7 @@ class sceneSelectionMenu extends Phaser.Scene {
             fill: '#000000'
         });
 
-        // Alienígena //
+        // Descripción alienígena //
         ADescription = this.add.text(90, 430, "", {
             fontFamily: 'alien',
             fontSize: '16px',
@@ -196,17 +204,19 @@ class sceneSelectionMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
+//******************* Ir a la siguiente escena ************************//
 function goNextScene() {
     selectedCat = 0;
-    game.scene.stop("sceneSelectionMenu");
-    game.scene.start("sceneSelectionMenu2");
+    controller.getCurrentScene().scene.stop();
+    var nextScene = game.scene.getScene("sceneSelectionMenu2");
+    nextScene.scene.start();
 }
 
+//******************* Carga de escena ************************//
 function loadScene() {
     switch (selectedCat) {
         case 1:
             players[0].setType(1);
-            console.log(players[0].getType());
             goNextScene();
             break;
         case 2:
@@ -222,7 +232,9 @@ function loadScene() {
             goNextScene();
             break;
         default:
-            this.scene.start("scenePlayMenu");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("scenePlayMenu");
+            nextScene.scene.start();
             break;
     }
 }
