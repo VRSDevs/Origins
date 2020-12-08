@@ -29,15 +29,14 @@ class sceneSettingsMenu extends Phaser.Scene {
             changeMusicButton = this.add.sprite(570, 275, "spriteChangeMusicButton", 1).setInteractive();
         }
         changeMusicButton.addListener('pointerdown', () => {
-            if (controller.getMusicEnabled() === true){
-                changeMusicButton.setFrame(1);
-                controller.setMusicEnabled(false);
-                controller.getMusic().pause();
-
+            if (controller.getMusicEnabled() === true){     
+                    changeMusicButton.setFrame(1);
+                    controller.setMusicEnabled(false);
+                    controller.getMusic().stop();
             } else {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
-                controller.getMusic().resume();
+                controller.getMusic().play();
 
             }
         }, this);

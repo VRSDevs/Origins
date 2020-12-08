@@ -113,10 +113,11 @@ class sceneMainMenu extends Phaser.Scene {
         controller.setMusic(this.sound.add("music"));
         controller.setMusicLevelForest(this.sound.add ("music2"));
         
+
+        
     }        
 
     update(time, delta){
-
         if (controller.getMusicEnabled()){
             if(!controller.getMusicPlaying()){
                 controller.getMusic().play();

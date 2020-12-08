@@ -28,6 +28,7 @@ var oldT = 0;
 var diffT = controller.getTimeRound();
 //******************* Auxiliares ************************//
 var stopUpdating = false;
+var musicEffect1;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
@@ -464,7 +465,6 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[0].setHasMatter(true);
-            //musicEffect1.play();
 
         }, null, this);
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
@@ -496,6 +496,7 @@ class sceneForestLevel extends Phaser.Scene {
         });
       
         //******************* Música del nivel ************************//
+        
         controller.getMusic().stop();
         controller.getMusicLevelForest().play();
 
@@ -658,7 +659,6 @@ function posAzar() {
 //******************* Evento de temporizador ************************//
 function endRound() {
     stopUpdating = true;
-    controller.getMusicLevelForest().stop();
     if(players[0].getScore() < players[1].getScore()){
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
     } else if (players[0].getScore() > players[1].getScore()) {
@@ -681,7 +681,6 @@ function endRound() {
         this.scene.swapPosition("sceneMainMenu", "sceneSelectionMenu2");
         this.scene.stop("sceneForestLevel");
         this.scene.start("sceneMainMenu");
-
     }
 
     players.forEach(element => {
@@ -691,6 +690,7 @@ function endRound() {
 
     game.scene.start("sceneForestLevel");
     stopUpdating = false;
+    controller.getMusicLevelForest().stop();
     controller.getMusic().play();
 
 }
