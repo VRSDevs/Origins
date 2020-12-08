@@ -482,7 +482,7 @@ class sceneForestLevel extends Phaser.Scene {
             fill: '#ffffff'
         });
         // Evento de finalización de ronda
-        t = this.time.delayedCall(controller.getTimeRound() * 2000, endRound, [], this);
+        t = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
 
         //******************* Puntos ************************//
         // Jugador 1 //

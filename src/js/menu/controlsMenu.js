@@ -69,6 +69,10 @@ class sceneControlsMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
+
+        controller.getMusic().resume();
+
+
     }
     update(time, delta){
 
@@ -80,8 +84,10 @@ class sceneControlsMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Carga de escena ************************//
 function loadScene(){
+    controller.getMusic().pause();
     this.scene.stop("sceneControlsMenu");
     this.scene.start("sceneMainMenu");
+
     
 }
 

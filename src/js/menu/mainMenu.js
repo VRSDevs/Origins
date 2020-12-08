@@ -116,21 +116,21 @@ class sceneMainMenu extends Phaser.Scene {
         controller.setMusicLevelLab(this.sound.add("music4"));
         controller.setMusicEffect1(this.sound.add("musicEffect1"));
         controller.setMusicEffect2(this.sound.add("musicEffect2"));
-        
+
+        if(controller.getMusic().play());{
+            controller.getMusicPlaying() === true;
+
+            if(controller.getMusicPlaying() === true){
+                controller.setMusic(undefined);
+                controller.setMusic(this.sound.add("music"));
+                controller.getmusic().resume();
+            }
+        }
+
     }        
 
     update(time, delta){
-        if (controller.getMusicEnabled()){
-            if(!controller.getMusicPlaying()){
-                controller.getMusic().play();
-                controller.setMusicPlaying(true);
-
-            }
-        }else{
-           controller.getMusic().stop();
-           controller.setMusicPlaying(false);    
-        }
-        
+      
    }  
 
    
@@ -142,17 +142,21 @@ function loadScene(){
         case 1:
             this.scene.stop("sceneMainMenu");
             this.scene.start("scenePlayMenu");
+            controller.getMusic().pause();
+
 
             break;    
         case 2:
             this.scene.stop("sceneMainMenu");
             this.scene.start("sceneControlsMenu");
+            controller.getMusic().pause();
 
             break;
         case 3:
             this.scene.stop("sceneMainMenu");
             this.scene.start("sceneSettingsMenu");
-            
+            controller.getMusic().pause();
+
 
             break;
         case 4:

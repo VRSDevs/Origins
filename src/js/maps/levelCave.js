@@ -234,10 +234,14 @@ class sceneCaveLevel extends Phaser.Scene {
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[0].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
         }, null, this);
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[1].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
         }, null, this);
 
         //******************* Temporizador ************************//
@@ -251,7 +255,10 @@ class sceneCaveLevel extends Phaser.Scene {
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
         controller.getMusicLevelCave().play();
+        controller.getmusicEffect1(this.sound.add("musicEffect1"));
+        controller.getmusicEffect2(this.sound.add("musicEffect2"));
     }
+
     update(time, delta) {
         if (!stopUpdating) {
             //******************* Temporizador ************************//
@@ -282,6 +289,8 @@ class sceneCaveLevel extends Phaser.Scene {
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[0].setHasMatter(true);
                             players[1].setHasMatter(false);
                         }
@@ -340,6 +349,8 @@ class sceneCaveLevel extends Phaser.Scene {
                         break;
                     case keys.P.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[1].setHasMatter(true);
                             players[0].setHasMatter(false);
                         }

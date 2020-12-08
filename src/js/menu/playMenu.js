@@ -102,7 +102,7 @@ class scenePlayMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-
+        controller.getMusic().resume();
 
     }
     update(time, delta){
@@ -124,13 +124,15 @@ class scenePlayMenu extends Phaser.Scene {
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
         }
-    }
+    }    
+
 }
 
 function loadScene(){
     if(controller.getGameMode() === 1) {
         controller.setGameMode(0);
         alert("En progreso...");
+
     } else if(controller.getGameMode() === 2){
         controller.setGameMode(0);
         game.scene.stop("scenePlayMenu");
@@ -139,7 +141,9 @@ function loadScene(){
         controller.setGameMode(0);
         alert("En progreso...");
     } else {
+        controller.getMusic().pause();
         this.scene.start("sceneMainMenu");
+
     }
 }
 
