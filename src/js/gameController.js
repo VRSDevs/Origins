@@ -75,7 +75,7 @@ class gameController{
 //////////////////////////////////////////////////////////////////////
 //                      Creación del controlador                    //
 //////////////////////////////////////////////////////////////////////
-var controller = new gameController(undefined, true, false, undefined, 0, 10);
+var controller = new gameController(undefined, true, false, undefined, 0, 60);
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //

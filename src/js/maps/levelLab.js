@@ -59,44 +59,8 @@ class sceneLabLevel extends Phaser.Scene {
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
 
-        //******************* Fondos ************************//
-        // Mapa //
+        //******************* Mapa ************************//
         this.physics.add.image(400, 320, "labMap");
-        // Puntuaciones //
-        // Jugador 1
-        this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3).depth = 1;
-        switch (players[0].getType()) {
-            case 1:
-                this.add.image(50, 41, "GroundCatFace").depth = 2;
-                break;
-            case 2:
-                this.add.image(50, 41, "WaterCatFace").depth = 2;
-                break;
-            case 3:
-                this.add.image(50, 41, "AirCatFace").depth = 2;
-                break;
-            case 4:
-                this.add.image(50, 41, "FireCatFace").depth = 2;
-                break;
-        }
-        // Jugador 2
-        this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3).depth = 1;
-        switch (players[1].getType()) {
-            case 1:
-                this.add.image(width - 130, 41, "GroundCatFace").depth = 2;
-                break;
-            case 2:
-                this.add.image(width - 130, 41, "WaterCatFace").depth = 2;
-                break;
-            case 3:
-                this.add.image(width - 130, 41, "AirCatFace").depth = 2;
-                break;
-            case 4:
-                this.add.image(width - 130, 41, "FireCatFace").depth = 2;
-                break;
-        }
-        // Temporizador //
-        this.add.rectangle(width / 2, 41, 100, 50, 0x000000, 0.3).depth = 1;
 
         //****************** Gráficos de colisiones *********************//
 
@@ -287,6 +251,47 @@ class sceneLabLevel extends Phaser.Scene {
             darkMatter.disableBody(true, true);
             players[1].setHasMatter(true);
         }, null, this);
+
+        //******************* HUD ************************//
+        // Puntuaciones //
+        // Jugador 1
+        this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3);
+        switch (players[0].getType()) {
+            case 1:
+                this.add.image(50, 41, "GroundCatFace");
+                break;
+            case 2:
+                this.add.image(50, 41, "WaterCatFace");
+                break;
+            case 3:
+                this.add.image(50, 41, "AirCatFace");
+                break;
+            case 4:
+                this.add.image(50, 41, "FireCatFace");
+                break;
+        }
+        // Jugador 2
+        this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3);
+        switch (players[1].getType()) {
+            case 1:
+                this.add.image(width - 130, 41, "GroundCatFace");
+                break;
+            case 2:
+                this.add.image(width - 130, 41, "WaterCatFace");
+                break;
+            case 3:
+                this.add.image(width - 130, 41, "AirCatFace");
+                break;
+            case 4:
+                this.add.image(width - 130, 41, "FireCatFace");
+                break;
+        }
+
+        // Temporizador //
+        this.add.rectangle(width / 2, 41, 100, 50, 0x000000, 0.3);
+        var clock = this.physics.add.image((width / 2) - 35, 41, "clock");
+        clock.scaleX = 1.7;
+        clock.scaleY = 1.7;
 
         //******************* Temporizador ************************//
         // Texto //
