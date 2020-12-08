@@ -497,9 +497,8 @@ class sceneForestLevel extends Phaser.Scene {
       
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
-        controller.setMusic(undefined);
-        controller.setMusic(this.sound.add("music2"));
-        controller.getMusic().play();
+        controller.getMusicLevelForest().play();
+
     }
     update(time, delta) {
         if (!stopUpdating) {
@@ -659,7 +658,7 @@ function posAzar() {
 //******************* Evento de temporizador ************************//
 function endRound() {
     stopUpdating = true;
-    
+    controller.getMusicLevelForest().stop();
     if(players[0].getScore() < players[1].getScore()){
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
     } else if (players[0].getScore() > players[1].getScore()) {
@@ -692,6 +691,8 @@ function endRound() {
 
     game.scene.start("sceneForestLevel");
     stopUpdating = false;
+    controller.getMusic().play();
+
 }
 
 //******************  Calcular distancia entre gatos ****************//

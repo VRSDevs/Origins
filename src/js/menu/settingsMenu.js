@@ -32,12 +32,12 @@ class sceneSettingsMenu extends Phaser.Scene {
             if (controller.getMusicEnabled() === true){
                 changeMusicButton.setFrame(1);
                 controller.setMusicEnabled(false);
-                controller.getMusic().stop();
+                controller.getMusic().pause();
 
             } else {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
-                controller.getMusic().play();
+                controller.getMusic().resume();
 
             }
         }, this);

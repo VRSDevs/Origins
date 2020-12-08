@@ -1,11 +1,12 @@
 class gameController{
-    constructor(scene, music, mp, globalMusic, gameMode, timeRound){
+    constructor(scene, music, mp, globalMusic, gameMode, timeRound, musicForest){
         this.currentScene = scene;
         this.musicEnabled = music;
         this.musicPlaying = mp;
         this.music = globalMusic;
         this.gameMode = gameMode;
         this.timeRound = timeRound;
+        this.musicLevelForest = musicForest;
     }
     // Getters
     getGameMode(){
@@ -36,6 +37,9 @@ class gameController{
     getMusic(){
         return this.music;
     }
+    getMusicLevelForest(){
+        return this.musicLevelForest;
+    }
     setMusic(obj){
         this.music = obj;
     }
@@ -51,8 +55,11 @@ class gameController{
     setMusic(obj){
         this.music = obj;
     }
+    setMusicLevelForest(obj){
+        this.musicLevelForest = obj;
+    }
 }
 
-var controller = new gameController(undefined, true, false, undefined, 0, 10);
+var controller = new gameController(undefined, true, false, undefined, 0, 10, undefined);
 export {controller};
 
