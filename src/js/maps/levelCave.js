@@ -634,7 +634,7 @@ function posAzar() {
         case 4: 
             darkMatterPosX = 400;
             darkMatterPosY = 530;
-            break;     
+            break;    
     }
 };
 
