@@ -1,13 +1,22 @@
 //////////////////////////////////////////////////////////////////////
-//                   Clase para el menu de ajustes                  //
+//                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
 import {game} from '../init.js';
 
+//////////////////////////////////////////////////////////////////////
+//                  Variables globales                              //
+//////////////////////////////////////////////////////////////////////
+//******************* Dimensiones lienzo ************************//
+var width = 0;      // Ancho (px)
+var height = 0;     // Alto (px)
+//****************** Botones *********************//
+var changeMusicButton = undefined;
+var backButton = undefined;
 
-var changeMusicButton;
-var backButton;
-
+//////////////////////////////////////////////////////////////////////
+//                  Clase de escena de menu de ajustes              //
+//////////////////////////////////////////////////////////////////////
 class sceneSettingsMenu extends Phaser.Scene {
     constructor() {
         super({key: "sceneSettingsMenu",
@@ -15,15 +24,18 @@ class sceneSettingsMenu extends Phaser.Scene {
         });
     }
     create() {
-        // Variables auxiliares
-        var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
-        // Música
+        //******************* Asignación escena ************************//       
+        controller.setCurrentScene(this);
 
-        // Fondo
+        //******************* Variables auxiliares ************************//
+        width = this.sys.canvas.width;
+        height = this.sys.canvas.height;
+
+        //******************* Fondos ************************//
         this.add.image(400, 320, "settings");
 
-        // Botón de cambiar música
+        //****************** Botones *********************//
+        // Cambio de música //
         if(controller.getMusicEnabled() === true){
             changeMusicButton = this.add.sprite(570, 275, "spriteChangeMusicButton", 0).setInteractive();
         } else {
@@ -34,16 +46,17 @@ class sceneSettingsMenu extends Phaser.Scene {
                 changeMusicButton.setFrame(1);
                 controller.setMusicEnabled(false);
                 controller.getMusic().stop();
+
             } else {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
                 controller.getMusic().play();
+
             }
         }, this);
 
-        // Botón de retroceder
+        // Retroceso //
         backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 0).setInteractive();
-
         this.anims.create({
             key: 'backButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),
@@ -59,18 +72,23 @@ class sceneSettingsMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-       
-        // Música del menu principal
-
     }
-    update(time, delta){
-
+    update(time, delta){  
+             
     }
 }
 
+//////////////////////////////////////////////////////////////////////
+//                   Funciones extras                               //
+//////////////////////////////////////////////////////////////////////
+//******************* Carga de escena ************************//
 function loadScene(){
-    this.scene.stop("sceneSettingsMenu");
-    this.scene.start("sceneMainMenu");
+    controller.getCurrentScene().scene.stop();
+    var nextScene = game.scene.getScene("sceneMainMenu");
+    nextScene.scene.start();
 }
 
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
 export default sceneSettingsMenu;

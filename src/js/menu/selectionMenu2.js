@@ -8,17 +8,24 @@ import { players } from '../cats.js';
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
+//******************* Dimensiones lienzo ************************//
+var width = 0;      // Ancho (px)
+var height = 0;     // Alto (px)
 //******************* Botones ************************//
-var backButton;
-var groundCatButton;
-var waterCatButton;
-var airCatButton;
-var fireCatButton;
+var backButton = undefined;
+var groundCatButton = undefined;
+var waterCatButton = undefined;
+var airCatButton = undefined;
+var fireCatButton = undefined;
+//******************* Textos ************************//
+// Descripción de los gatos //
+var description = "";
+var ADescription = "";
 //******************* Control ************************//
-var startAnim = 0;
+// Selección de gato //
 var selectedCat = 0;
-
-var a;
+// Animaciones //
+var startAnim = 0;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú selección P2           //
@@ -30,17 +37,19 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             active: false
         });
     }
-    create() {      
-        //******************* Variables auxiliares ************************//
-        var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
-        var aux = players[0].getType();
+    create() {
+        //******************* Asignación escena ************************//       
+        controller.setCurrentScene(this);
+
+        //******************* Dimensiones del canvas ************************//
+        width = this.sys.canvas.width;
+        height = this.sys.canvas.height;
 
         //******************* Fondos ************************//
         this.add.image(400, 320, "selectionPl2");
-        
+
         //******************* Botones ************************//
-        switch (aux) {
+        switch (players[0].getType()) {
             case 1:
                 // Gato tierra //
                 groundCatButton = this.add.sprite(518, 268, "GroundCatIdleMatter2", 3).setInteractive();
@@ -329,10 +338,20 @@ class sceneSelectionMenu2 extends Phaser.Scene {
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
 
-        a = this.add.text(400, 350, "", {
+        //******************* Texto ************************//
+        // Descripción normal //
+        description = this.add.text(115, 334, "", {
             fontFamily: 'origins',
-            fontSize: '20px',
-            align: "center",
+            fontSize: '16px',
+            align: 'center',
+            fill: '#000000'
+        });
+
+        // Descripción alienígena //
+        ADescription = this.add.text(90, 430, "", {
+            fontFamily: 'alien',
+            fontSize: '16px',
+            align: 'center',
             fill: '#000000'
         });
     }
@@ -340,34 +359,39 @@ class sceneSelectionMenu2 extends Phaser.Scene {
         //******************* Animaciones botones ************************//
         if (startAnim === true && selectedCat === 1) {
             groundCatButton.anims.play('groundMenuAnim2', true);
-            a.setText("Tommy");
+            description.setText(""+"\nHe's the Ground Cat. His breed is very jealous, \nand he feels  that his powers are a bull shit. They \nare the original human. He have weakness for videogames.");
+            ADescription.setText("he's the ground cat. his breed is very jealous, \nand he feels  that his powers are a bull shit. they \nare the original human. he have weakness for videogames.");
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 2) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', true);
-            a.setText("Michi");
+            description.setText(""+"\nHe's the Water Cat. His breed is very peacefull, \nso they hate the war. He lives in a wet enviroment and he loves \nbubbles. He hates fish (he is vegan).");
+            ADescription.setText("he's the water cat. his breed is very peacefull, \nso they hate the war. he lives in a wet enviroment and\n he loves bubbles. he hates fish (he is vegan).");
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 3) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', true);
-            a.setText("Wiskas");
+            description.setText(""+"\nShe's the Air Cat. Her breed its like the group's \nmother, very serious and she will do the impossible to get the \ndark matter. Her greatest weakness is fluffys clouds.");
+            ADescription.setText("she's the air cat. her breed its like the group's mother, \nvery serious and she will do the impossible to get the \ndark matter. her greatest weakness is fluffys clouds.");
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 4) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', true);
-            a.setText("Levi");
+            description.setText(""+"\nHe's the Fire Cat. His breed is really aggresive. \nHe is always doing his own thing, but if u give him a reason to \nfight, he will ignite. He love the scorched galactic tuna.");
+            ADescription.setText("he's the Fire Cat. his breed is really aggresive. he is al-\nways doing his own thing, but if u give him a reason to \nfight, he will ignite. he love the scorched galactic tuna.");
         } else {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
-            a.setText("");
+            description.setText("");
+            ADescription.setText("");
         }   
     }
 }
@@ -375,30 +399,31 @@ class sceneSelectionMenu2 extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
+//******************* Obtención mapa de juego ************************//
 function getMap() {
     var max = 4;
     var min = 1;
     var level = Math.floor(Math.random() * (max - min) + min);
-    selectedCat = 0;
     switch (level) {
         case 1:
-            game.scene.stop("sceneSelectionMenu2");
-            game.scene.start("sceneForestLevel");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneForestLevel");
+            nextScene.scene.start();
             break;
         case 2:
-            game.scene.stop("sceneSelectionMenu2");
-            game.scene.start("sceneForestLevel");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneForestLevel");
+            nextScene.scene.start();
             break;
         case 3:
-            game.scene.stop("sceneSelectionMenu2");
-            game.scene.start("sceneForestLevel");
-            break;
-        default:
-            console.log("Ups.")
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneForestLevel");
+            nextScene.scene.start();
             break;
     }
 }
 
+//******************* Carga de escena ************************//
 function loadScene() {
     switch (selectedCat) {
         case 1:
@@ -418,8 +443,9 @@ function loadScene() {
             getMap();
             break;
         default:
-            game.scene.stop("sceneSelectionMenu2");
-            this.scene.start("sceneSelectionMenu");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneSelectionMenu");
+            nextScene.scene.start();
             break;
     }
 }
