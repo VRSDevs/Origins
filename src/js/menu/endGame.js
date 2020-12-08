@@ -11,10 +11,16 @@ import { game } from '../init.js';
 //******************* Dimensiones lienzo ************************//
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
+//******************* Fondo ************************//
+var bg = undefined;
 //******************* Ganador ************************//
 var victoryPlayer = undefined;
 //******************* Texto ************************//
 var victoryText = "";
+//******************* Efectos ************************//
+// Fade in //
+var layer = undefined;
+var fadeInEvent = undefined;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del fin del juego              //
@@ -30,6 +36,16 @@ class sceneEndGame extends Phaser.Scene {
         //******************* Dimensiones del canvas ************************//
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
+
+        //******************* Fondo ************************//
+        bg = this.add.sprite(width/2, height/2, "bgVictory",0);
+        this.anims.create({
+            key: 'bgVictoryAnim',
+            frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 2}),
+            frameRate: 10,
+            repeat: 0
+        });
+        bg.anims.play('bgVictoryAnim');
 
         //******************* Personaje victorioso ************************//
         switch (2) {
@@ -65,7 +81,12 @@ class sceneEndGame extends Phaser.Scene {
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
         controller.setMusic(undefined);
-        
+
+        //******************* Efectos ************************//
+        // Fade in //
+        layer = this.add.rectangle(width/2, height/2, 800, 640, 0x000000, 1);
+        console.log(layer.alpha)
+        fadeInEvent = this.time.delayedCall(0, fadeIn, [], this);
     }
 
 
@@ -77,6 +98,12 @@ class sceneEndGame extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
+//******************* Animación fadeIn ************************//
+function fadeIn(){
+    while(layer.alpha !== 0) {
+        layer.setAlpha(layer.alpha - 0.0001);
+    }
+}
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
