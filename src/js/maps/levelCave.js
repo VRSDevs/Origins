@@ -250,10 +250,7 @@ class sceneCaveLevel extends Phaser.Scene {
         t = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
-        controller.setMusic(undefined);
-        controller.setMusic(this.sound.add("music3"));
-        controller.getMusic().play();
-
+        controller.getMusicLevelCave().play();
     }
     update(time, delta) {
         if (!stopUpdating) {
@@ -448,6 +445,8 @@ function endRound() {
 
     game.scene.start("sceneForestLevel");
     stopUpdating = false;
+    controller.getMusicLevelCave().stop();
+    controller.getMusic().play();
 }
 
 //******************  Calcular distancia entre gatos ****************//

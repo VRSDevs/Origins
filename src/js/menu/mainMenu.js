@@ -112,8 +112,10 @@ class sceneMainMenu extends Phaser.Scene {
         // Música del menu principal
         controller.setMusic(this.sound.add("music"));
         controller.setMusicLevelForest(this.sound.add ("music2"));
-        
-
+        controller.setMusicLevelCave(this.sound.add("music3"));
+        controller.setMusicLevelLab(this.sound.add("music4"));
+        controller.setMusicEffect1(this.sound.add("musicEffect1"));
+        controller.setMusicEffect2(this.sound.add("musicEffect2"));
         
     }        
 

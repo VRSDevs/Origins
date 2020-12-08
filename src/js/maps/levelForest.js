@@ -28,7 +28,7 @@ var oldT = 0;
 var diffT = controller.getTimeRound();
 //******************* Auxiliares ************************//
 var stopUpdating = false;
-var musicEffect1;
+
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
@@ -479,7 +479,7 @@ class sceneForestLevel extends Phaser.Scene {
             fill: '#ffffff'
         });
         // Evento de finalización de ronda
-        t = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
+        t = this.time.delayedCall(controller.getTimeRound() * 2000, endRound, [], this);
 
         //******************* Puntos ************************//
         // Jugador 1 //
@@ -499,6 +499,9 @@ class sceneForestLevel extends Phaser.Scene {
         
         controller.getMusic().stop();
         controller.getMusicLevelForest().play();
+        controller.getmusicEffect1(this.sound.add("musicEffect1"));
+        controller.getmusicEffect2(this.sound.add("musicEffect2"));
+
 
     }
     update(time, delta) {
@@ -531,8 +534,11 @@ class sceneForestLevel extends Phaser.Scene {
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[0].setHasMatter(true);
                             players[1].setHasMatter(false);
+
                         }
                         break;
                     default:
@@ -589,6 +595,8 @@ class sceneForestLevel extends Phaser.Scene {
                         break;
                     case keys.P.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[1].setHasMatter(true);
                             players[0].setHasMatter(false);
                         }
