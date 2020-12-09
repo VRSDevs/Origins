@@ -172,6 +172,7 @@ class sceneEndGame extends Phaser.Scene {
             });
             controller.getCurrentScene().scene.sleep();
             var nextScene = game.scene.getScene(level.scene.key);
+            resetVariables();
             controller.setStopUpdateLevel(false);
             nextScene.scene.wake();
             nextScene.scene.restart();
@@ -213,6 +214,19 @@ function buttonsAnimation(){
         ease: 'Power2',
         yoyo: false,
     });
+}
+
+//******************* Reset de variables ************************//
+function resetVariables(){
+    width = 0;
+    height = 0;
+    bg = undefined;
+    victoryPlayer = undefined;
+    buttonsAnim = undefined;
+    mainMenuButton = undefined;
+    restartButton = undefined;
+    victoryText = "";
+    level = undefined;
 }
 
 //////////////////////////////////////////////////////////////////////
