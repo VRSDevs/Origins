@@ -125,11 +125,15 @@ La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha m
 #### 5.1 Enlaces de música
 [Música Menú Principal](https://opengameart.org/content/crystal-cave-mysterious-ambience-seamless-loop)
 
-[Música Nivel Bosque](https://opengameart.org/content/is-this-supposed-to-be-here)
+[Música Nivel Bosque](https://opengameart.org/content/in-the-forest)
 
 [Música Nivel Cueva](https://opengameart.org/content/attack-of-the-enormous-mutant-badgers-music)
 
 [Música Nivel Laboratorio](https://opengameart.org/content/high-tech-lab)
+
+[Efecto de sonido 1](https://opengameart.org/content/meow)
+
+[Efecto de sonido 2](https://opengameart.org/content/epic-amulet-item)
 
 #### 5.2 Enlaces de referencia artística:
 https://www.pinterest.es/pin/188166090660008827/
