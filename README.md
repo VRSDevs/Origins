@@ -96,7 +96,7 @@ Figura 4
 ------------- | -------------
 ![Figura 5](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/1player.png?raw=true) Figura 5 | ![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 6
 
-6. **Pantalla de victoria:** pantalla con el gato vencedor y unas opciones para poder volver a jugar o volver al menú de inicio.
+5. **Pantalla de victoria:** pantalla con el gato vencedor y unas opciones para poder volver a jugar o volver al menú de inicio.
 ![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/win.png?raw=true)
 Figura 7
 6. **Menú Controles:** menú donde el jugador podrá consultar los controles del juego.
@@ -154,9 +154,9 @@ https://www.pinterest.es/pin/188166090660008827/
 
 [Letra logo](https://www.dafont.com/es/a-alloy-ink.font)
 
-[Letra alienigena](https://fontstruct.com/fontstructions/show/1844199/alien-210) Creación propia
+[Letra alienigena](https://fontstruct.com/fontstructions/show/1844199/alien-210) (Creación propia).
 
-[Letra origins](https://fontstruct.com/fontstructions/show/1843803/origins-6) Creación propia
+[Letra origins](https://fontstruct.com/fontstructions/show/1843803/origins-6) (Creación propia).
 
 #### 5.3 Software empleado:
 [Software de dibujo](https://krita.org/es/)
