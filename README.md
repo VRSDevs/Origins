@@ -87,18 +87,24 @@ Figura 2
 2. **Menú Jugar:** compuesto por los tipos de modo de juego que se podrán elegir.
 ![Figura 3](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/GameMenu.png?raw=true)
 Figura 3
-3. **Pantalla  de  juego:**  tendrá  a  los  personajes,  el  número  de  rondas ganadas,  la puntuación de los personajes y el tiempo restante.
+3. **Menú de selección:** se podrán elegir los personajes a gusto del usuario.
+![Figura 4](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/selection.png?raw=true)
+Figura 4
+4. **Pantalla  de  juego:**  tendrá  a  los  personajes,  el  número  de  rondas ganadas,  la puntuación de los personajes y el tiempo restante.
 
 1 Jugador | 2 Jugadores
 ------------- | -------------
-![Figura 4](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/1player.png?raw=true) Figura 4 | ![Figura 5](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 5
+![Figura 5](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/1player.png?raw=true) Figura 5 | ![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 6
 
-4. **Menú Controles:** menú donde el jugador podrá consultar los controles del juego.
-![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/Controls.png?raw=true)
-Figura 6
-5. **Menú Ajustes:** menú donde se podrá cambiar algunos ajustes del juego (como la música).
-![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/Settings.png?raw=true)
+6. **Pantalla de victoria:** pantalla con el gato vencedor y unas opciones para poder volver a jugar o volver al menú de inicio.
+![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/win.png?raw=true)
 Figura 7
+6. **Menú Controles:** menú donde el jugador podrá consultar los controles del juego.
+![Figura 8](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/Controls.png?raw=true)
+Figura 8
+7. **Menú Ajustes:** menú donde se podrá cambiar algunos ajustes del juego (como la música).
+![Figura 9](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/Settings.png?raw=true)
+Figura 9
 
 #### 2.6 Instrucciones de juego
 El juego comienza con un menú principal, donde el jugador podrá elegir jugar, ver los controles,modificar los ajustes y o salir del juego. Tras pulsar el modo de un jugador dentro del menú jugar, el juego comenzará con un personaje a elegir por el jugador, y deberá buscar la materia oscura antes que las IAs y mantenerla el tiempo necesario para ganar. Por tanto, la condición de victoria en el modo un jugador será obtener la materia durante el mayor tiempo posible.
@@ -113,11 +119,11 @@ En ambos modos, la condición que define la derrota es tener menos puntos que el
 _NOTA_: Para una preview de las canciones, vea apartado 5.1 (Anexos y referencias - Enlaces de música).
 
 ### 4. Arte
-Base de los personajes principales (véase figura 8).
+Base de los personajes principales (véase figura 10).
 
-Diseño de escenario (véase figura 9).
+Diseño de escenario (véase figura 11).
 
-La forma del mapa será algo similar a esto (véase figura 10).
+La forma del mapa será algo similar a esto (véase figura 12).
 
 ### 5. Anexos y referencias
 La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha modificado para poder cumplir las características pedidas para este trabajo.
@@ -138,11 +144,11 @@ La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha m
 #### 5.2 Enlaces de referencia artística:
 https://www.pinterest.es/pin/188166090660008827/
 
-[Figura 8](https://www.pinterest.es/pin/331577591312078256/)
+[Figura 10](https://www.pinterest.es/pin/331577591312078256/)
 
-[Figura 9](https://www.pinterest.es/pin/244883298474322218/)
+[Figura 11](https://www.pinterest.es/pin/244883298474322218/)
 
-[Figura 10](http://www.onlinemania.es/juego/8356/Pokemon-Perla-Version-8GBA9.html)
+[Figura 12](http://www.onlinemania.es/juego/8356/Pokemon-Perla-Version-8GBA9.html)
 
 [Letra logo](https://www.dafont.com/es/a-alloy-ink.font)
 
