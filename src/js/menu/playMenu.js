@@ -16,7 +16,7 @@ var singlePlayerButton = undefined;
 var localMultiplayerButton = undefined;
 var onlineMultiplayerButton = undefined;
 //******************* Control ************************//
-// Animaciones
+// Animaciones //
 var startAnim = false;
 
 //////////////////////////////////////////////////////////////////////
@@ -59,7 +59,7 @@ class scenePlayMenu extends Phaser.Scene {
         }, this);
         singlePlayerButton.addListener('pointerdown', loadScene, this);
 
-        // Modo 2 Jugador (local)//
+        // Modo 2 Jugador (local) //
         localMultiplayerButton = this.add.sprite(405, 251, "sprite2PlayerGM", 0).setInteractive();
         this.anims.create({
             key: 'localMultiplayerAnim',
@@ -114,9 +114,8 @@ class scenePlayMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-        controller.getMusic().resume();
-
     }
+
     update(time, delta){
         //****************** Animaciones *********************//
         if(startAnim === true && controller.getGameMode() === 1){
@@ -135,6 +134,13 @@ class scenePlayMenu extends Phaser.Scene {
             singlePlayerButton.anims.play('singlePlayerAnim', false);
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
+        }
+        
+        //****************** Música *********************//
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().pause();
+        } else {
+            controller.getMusic().resume();
         }
     }    
 

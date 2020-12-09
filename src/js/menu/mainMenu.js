@@ -122,30 +122,24 @@ class sceneMainMenu extends Phaser.Scene {
         exitButton.addListener('pointerdown', loadScene, this); 
 
         //****************** Música *********************//
-        controller.setMusic(this.sound.add("music"));
-        controller.setMusicLevelForest(this.sound.add ("music2"));
-        controller.setMusicLevelCave(this.sound.add("music3"));
-        controller.setMusicLevelLab(this.sound.add("music4"));
-        controller.setMusicEffect1(this.sound.add("musicEffect1"));
-        controller.setMusicEffect2(this.sound.add("musicEffect2"));
-
-        if(controller.getMusic().play());{
-            controller.getMusicPlaying() === true;
-
-            if(controller.getMusicPlaying() === true){
-                controller.setMusic(undefined);
-                controller.setMusic(this.sound.add("music"));
-                controller.getmusic().resume();
-            }
-        }
-      
-        if(controller.getMusicEnabled() === false){
-            controller.getMusic().stop();
+        if(controller.getMusicPlaying() === false){
+            controller.setMusic(this.sound.add("music"));
+            controller.setMusicLevelForest(this.sound.add ("music2"));
+            controller.setMusicLevelCave(this.sound.add("music3"));
+            controller.setMusicLevelLab(this.sound.add("music4"));
+            controller.setMusicEffect1(this.sound.add("musicEffect1"));
+            controller.setMusicEffect2(this.sound.add("musicEffect2"));
+            controller.getMusic().play();
+            controller.setMusicPlaying(true);
         }
     }        
 
     update(time, delta){
-      
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().pause();
+        } else {
+            controller.getMusic().resume();
+        }
     }       
 }  
 
@@ -159,19 +153,16 @@ function loadScene(){
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("scenePlayMenu");
             nextScene.scene.start();
-            controller.getMusic().pause();
             break;    
         case 2:
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneControlsMenu");
             nextScene.scene.start();
-            controller.getMusic().pause();
             break;
         case 3:
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneSettingsMenu");
             nextScene.scene.start();
-            controller.getMusic().pause();
             break;
         case 4:
             alert("Gracias por jugar a nuestro juego.");

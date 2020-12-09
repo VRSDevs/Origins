@@ -50,7 +50,6 @@ class sceneSettingsMenu extends Phaser.Scene {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
                 controller.getMusic().play();
-
             }
         }, this);
 
@@ -71,10 +70,15 @@ class sceneSettingsMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);       
-        controller.getMusic().resume();
     }
+
     update(time, delta){  
-             
+        //****************** Música *********************//
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().pause();
+        } else {
+            controller.getMusic().resume();
+        }
     }
 }
 
@@ -83,7 +87,6 @@ class sceneSettingsMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Carga de escena ************************//
 function loadScene(){
-    controller.getMusic().pause();
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneMainMenu");
     nextScene.scene.start();
