@@ -227,6 +227,7 @@ function resetVariables(){
     restartButton = undefined;
     victoryText = "";
     level = undefined;
+    controller.getCurrentScene().anims.remove('victoryPlayerAnim');
 }
 
 //////////////////////////////////////////////////////////////////////
