@@ -154,9 +154,9 @@ https://www.pinterest.es/pin/188166090660008827/
 
 [Letra logo](https://www.dafont.com/es/a-alloy-ink.font)
 
-[Letra alienigena] Creación propia(https://fontstruct.com/fontstructions/show/1844199/alien-210)
+[Letra alienigena](https://fontstruct.com/fontstructions/show/1844199/alien-210) Creación propia
 
-[Letra origins] Creación propia(https://fontstruct.com/fontstructions/show/1843803/origins-6)
+[Letra origins](https://fontstruct.com/fontstructions/show/1843803/origins-6) Creación propia
 
 #### 5.3 Software empleado:
 [Software de dibujo](https://krita.org/es/)
