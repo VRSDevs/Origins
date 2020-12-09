@@ -406,10 +406,14 @@ class sceneCaveLevel extends Phaser.Scene {
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[0].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
         }, null, this);
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[1].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
         }, null, this);
 
         //******************* HUD ************************//
@@ -460,7 +464,13 @@ class sceneCaveLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff',
         });
-        
+
+        //******************* Música del nivel ************************//
+        controller.getMusic().stop();
+        controller.getMusicLevelCave().play();
+        controller.getmusicEffect1(this.sound.add("musicEffect1"));
+        controller.getmusicEffect2(this.sound.add("musicEffect2"));
+
         // Evento de finalización de ronda //
         tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
 
@@ -509,6 +519,8 @@ class sceneCaveLevel extends Phaser.Scene {
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[0].setHasMatter(true);
                             players[1].setHasMatter(false);
                         }
@@ -567,6 +579,8 @@ class sceneCaveLevel extends Phaser.Scene {
                         break;
                     case keys.P.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[1].setHasMatter(true);
                             players[0].setHasMatter(false);
                         }
@@ -731,6 +745,7 @@ function endMatch() {
     var nextScene = game.scene.getScene("sceneEndGame");
     nextScene.scene.wake();
     nextScene.scene.restart();
+    controller.getMusicLevelCave().stop();
 }
 
 //******************  Calcular distancia entre gatos ****************//

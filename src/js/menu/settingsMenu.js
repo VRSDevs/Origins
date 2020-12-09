@@ -42,11 +42,10 @@ class sceneSettingsMenu extends Phaser.Scene {
             changeMusicButton = this.add.sprite(570, 275, "spriteChangeMusicButton", 1).setInteractive();
         }
         changeMusicButton.addListener('pointerdown', () => {
-            if (controller.getMusicEnabled() === true){
-                changeMusicButton.setFrame(1);
-                controller.setMusicEnabled(false);
-                controller.getMusic().stop();
-
+            if (controller.getMusicEnabled() === true){     
+                    changeMusicButton.setFrame(1);
+                    controller.setMusicEnabled(false);
+                    controller.getMusic().stop();
             } else {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
@@ -71,7 +70,8 @@ class sceneSettingsMenu extends Phaser.Scene {
             backButton.anims.stop();
             backButton.setFrame(0);
         }, this);
-        backButton.addListener('pointerdown', loadScene, this);
+        backButton.addListener('pointerdown', loadScene, this);       
+        controller.getMusic().resume();
     }
     update(time, delta){  
              
@@ -83,6 +83,7 @@ class sceneSettingsMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //******************* Carga de escena ************************//
 function loadScene(){
+    controller.getMusic().pause();
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneMainMenu");
     nextScene.scene.start();
