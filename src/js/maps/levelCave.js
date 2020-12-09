@@ -471,6 +471,11 @@ class sceneCaveLevel extends Phaser.Scene {
         controller.getmusicEffect1(this.sound.add("musicEffect1"));
         controller.getmusicEffect2(this.sound.add("musicEffect2"));
 
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().stop();
+            controller.getMusicLevelCave().stop();
+        }
+
         // Evento de finalización de ronda //
         tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
 

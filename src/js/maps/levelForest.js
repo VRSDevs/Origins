@@ -562,7 +562,10 @@ class sceneForestLevel extends Phaser.Scene {
         controller.getMusicLevelForest().play();
         controller.getmusicEffect1(this.sound.add("musicEffect1"));
         controller.getmusicEffect2(this.sound.add("musicEffect2"));
-
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().stop();
+            controller.getMusicLevelForest().stop();
+        }
 
     }
     update(time, delta) {
