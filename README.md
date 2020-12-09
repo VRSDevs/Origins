@@ -66,7 +66,7 @@ Origins presenta tres mapas queno se considerarán niveles ya que aparecen de ma
 #### 2.3 Controles
 Para el movimiento del jugador 1, se usarán las teclas ‘W’, ‘A’, ‘S’, ‘D’; mientras que para el jugador 2 se usarán las flechas del teclado.
 
-La interacción para poder robar la materia del otro jugador, en el jugador 1 será la ‘V’, mientras que para el segundo jugador será la ‘P’.
+La interacción para poder robar la materia del otro jugador, en el jugador 1 será la ‘V’, mientras que para el jugador 2 será la ‘P’.
 
 #### 2.4 Modo de juego
 - **Modo 1 Jugador.** El jugador aprenderá los controles y la movilidad por el juego. Tendrá que buscar la materia y enfrentarse a una IA para alzarse con la victoria.
