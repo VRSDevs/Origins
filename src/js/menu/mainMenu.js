@@ -138,7 +138,6 @@ class sceneMainMenu extends Phaser.Scene {
                 controller.getmusic().resume();
             }
         }
-
     }        
 
     update(time, delta){

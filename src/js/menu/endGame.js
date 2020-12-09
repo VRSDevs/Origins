@@ -85,7 +85,7 @@ class sceneEndGame extends Phaser.Scene {
                 // Texto //
                 victoryText = this.add.text(width/2 - 135, height/6, "Player 1 won!", {
                     fontFamily: 'origins',
-                    fontSize: '32px',
+                    fontSize: '40px',
                     fill: '#3380ff'
                 });
                 break;
@@ -118,7 +118,7 @@ class sceneEndGame extends Phaser.Scene {
                 // Texto //
                 victoryText = this.add.text(width/2 - 135, height/6, "Player 2 won!", {
                     fontFamily: 'origins',
-                    fontSize: '32px',
+                    fontSize: '40px',
                     fill: '#3380ff'
                 });
                 break;

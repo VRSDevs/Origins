@@ -4,20 +4,20 @@
 class gameController{
     //******************* Constructor clase ************************//
     constructor(scene, music, mp, globalMusic, gameMode, timeRound,musicForest, musicCave, musicLab, musicEffect1,musicEffect2, up){
-        this.currentScene = scene;      // Escena actual
-        this.musicEnabled = music;      // ¿Está habilitada la música?
-        this.musicPlaying = mp;         // ¿Se está reproduciendo la música?
-        this.music = globalMusic;       // Objeto de música
-        this.gameMode = gameMode;       // Modo de juego:   1 -> Un jugador (vs. IA)
-                                        //                  2 -> Dos jugadores (J vs. J)
-                                        //                  3 -> Multijugador
-        this.timeRound = timeRound;     // Tiempo de ronda
-        this.stopUpdateLevel = up;
+        this.currentScene = scene;              // Escena actual
+        this.musicEnabled = music;              // ¿Está habilitada la música?
+        this.musicPlaying = mp;                 // ¿Se está reproduciendo la música?
+        this.music = globalMusic;               // Objetos de música
         this.musicLevelForest = musicForest;
         this.musicLevelCave = musicCave;
         this.musicLevelLab = musicLab;
-        this.musicEffect1 = musicEffect1;
+        this.musicEffect1 = musicEffect1;       // Objetos de efectos de sonido  
         this.musicEffect2 = musicEffect2;
+        this.gameMode = gameMode;               // Modo de juego:   1 -> Un jugador (vs. IA)
+                                                //                  2 -> Dos jugadores (J vs. J)
+                                                //                  3 -> Multijugador
+        this.timeRound = timeRound;             // Tiempo de ronda
+        this.stopUpdateLevel = up;
     }
 
     //******************* Getters ************************//
@@ -59,7 +59,6 @@ class gameController{
     }
 
     //******************* Setters ************************//
-
     setGameMode(value){
         this.gameMode = value;
     }
