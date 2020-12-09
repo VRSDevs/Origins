@@ -2,7 +2,7 @@
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
 //******************* Control ************************//
-var loadedResoruces = false; 
+var loadedResoruces = false;    // ¿Se cargaron los recursos?
 
 //////////////////////////////////////////////////////////////////////
 //                       Clase de carga de recursos                 //
@@ -11,7 +11,7 @@ class bootloader extends Phaser.Scene {
     constructor() {
         super({
             key: "bootloader",
-            active: false
+            active: true
         });
     }
     preload() {

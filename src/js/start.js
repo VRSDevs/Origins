@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import {loadedResoruces} from './bootloader.js';
+import { loadedResoruces } from './bootloader.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -10,11 +10,12 @@ import {loadedResoruces} from './bootloader.js';
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //******************* Vídeo ************************//
-var video = undefined;
-var videoEvent = undefined;
-var videoCompleted = false;
-//******************* Gráficos ************************//
-var graphics = undefined;
+var video = undefined;          // Objeto de vídeo
+var videoEvent = undefined;     // Evento de vídeo
+var videoCompleted = false;     // ¿Se ha reproducido el vídeo?
+//******************* Barra de progreso ************************//
+var progressBar = undefined;    // Objeto
+var scaleX = 0;                 // Escala en eje
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena inicial del juego              //
@@ -44,13 +45,14 @@ class sceneStart extends Phaser.Scene {
         }, [], this);
 
         //******************* Barra de progreso ************************//
-        graphics = this.add.graphics({ x: width, y: height});
+        progressBar = this.add.rectangle(60, height - 90, 680, 20, 0x52a4b3);
+        progressBar.setOrigin(0, 0.5);
     }
 
     update(time, delta) {
         //******************* Barra de progreso ************************//
-        graphics.fillStyle("#FF0000", 1);
-        graphics.fillRect(50 , height - 50, 500 * videoEvent.getProgress(), 8);
+        scaleX = videoEvent.getProgress();
+        progressBar.setScale(scaleX, 1);
 
         //******************* Inicio del juego ************************//
         if(videoCompleted && loadedResoruces) {

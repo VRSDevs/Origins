@@ -49,7 +49,7 @@ class sceneEndGame extends Phaser.Scene {
         this.anims.create({
             key: 'bgVictoryAnim',
             frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 14}),
-            frameRate: 15,
+            frameRate: 6,
             repeat: 0
         });
         bg.anims.play('bgVictoryAnim');
@@ -77,7 +77,7 @@ class sceneEndGame extends Phaser.Scene {
                 this.anims.create({
                     key: 'victoryPlayerAnim',
                     frames: this.anims.generateFrameNumbers(textureID, {start: 0, end: 5}),
-                    frameRate: 6,
+                    frameRate: 4,
                     repeat: -1
                 });
                 victoryPlayer.anims.play("victoryPlayerAnim");
