@@ -48,8 +48,8 @@ class sceneEndGame extends Phaser.Scene {
         bg = this.add.sprite(width/2, height/2, "bgVictory",0);
         this.anims.create({
             key: 'bgVictoryAnim',
-            frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 2}),
-            frameRate: 10,
+            frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 14}),
+            frameRate: 15,
             repeat: 0
         });
         bg.anims.play('bgVictoryAnim');
@@ -85,7 +85,7 @@ class sceneEndGame extends Phaser.Scene {
                 // Texto //
                 victoryText = this.add.text(width/2 - 135, height/6, "Player 1 won!", {
                     fontFamily: 'origins',
-                    fontSize: '32px',
+                    fontSize: '40px',
                     fill: '#3380ff'
                 });
                 break;
@@ -118,7 +118,7 @@ class sceneEndGame extends Phaser.Scene {
                 // Texto //
                 victoryText = this.add.text(width/2 - 135, height/6, "Player 2 won!", {
                     fontFamily: 'origins',
-                    fontSize: '32px',
+                    fontSize: '40px',
                     fill: '#3380ff'
                 });
                 break;
