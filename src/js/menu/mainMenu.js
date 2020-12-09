@@ -139,6 +139,10 @@ class sceneMainMenu extends Phaser.Scene {
             }
         }
 
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().stop();
+        }
+
     }        
 
     update(time, delta){

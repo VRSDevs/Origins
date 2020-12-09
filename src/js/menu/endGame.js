@@ -185,6 +185,10 @@ class sceneEndGame extends Phaser.Scene {
         controller.setMusic(undefined);
         controller.setMusic(this.sound.add("musicVictory"));
         controller.getMusic().play();
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().stop();
+
+        }
 
         //******************* Efectos ************************//
         // Fade in //

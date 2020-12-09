@@ -321,6 +321,10 @@ class sceneLabLevel extends Phaser.Scene {
         controller.getmusicLevelLab().play();
         controller.getmusicEffect1(this.sound.add("musicEffect1"));
         controller.getmusicEffect2(this.sound.add("musicEffect2"));
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().stop();
+            controller.getMusicLevelLab().stop();
+        }
     }
     update(time, delta){
         if (!stopUpdating) {
