@@ -15,11 +15,13 @@ var height = 0;     // Alto (px)
 var cursors = undefined;
 var keys = undefined;
 //******************* Jugadores ************************//
+// Iconos //
 var player1Face = undefined;
 var player2Face = undefined;
+// Distancias entre jugadores //
 var distanceX = 0;
 var distanceY = 0;
-var distanceBool = false;
+var distanceBool = false;   // ¿Se están tocando los jugadores?
 //******************* Texto ************************//
 // Final de ronda //
 var textEndRound = "";
@@ -33,11 +35,15 @@ var textRndsP2 = "";
 // Temporizador //
 var timer = "";
 //******************* Materia oscura ************************//
+// Posiciones //
 var darkMatterPosX = 0;
 var darkMatterPosY = 0;
+// Objeto //
 var darkMatter = undefined;
 //******************* Temporizador ************************//
+// Evento //
 var tEvent = undefined;
+// Tiempos //
 var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();

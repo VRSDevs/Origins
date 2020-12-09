@@ -49,7 +49,7 @@ class sceneEndGame extends Phaser.Scene {
         this.anims.create({
             key: 'bgVictoryAnim',
             frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 14}),
-            frameRate: 15,
+            frameRate: 12,
             repeat: 0
         });
         bg.anims.play('bgVictoryAnim');
@@ -77,16 +77,23 @@ class sceneEndGame extends Phaser.Scene {
                 this.anims.create({
                     key: 'victoryPlayerAnim',
                     frames: this.anims.generateFrameNumbers(textureID, {start: 0, end: 5}),
-                    frameRate: 6,
+                    frameRate: 4,
                     repeat: -1
                 });
                 victoryPlayer.anims.play("victoryPlayerAnim");
 
                 // Texto //
-                victoryText = this.add.text(width/2 - 135, height/6, "Player 1 won!", {
+                victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     fill: '#3380ff'
+                });
+                this.tweens.add({
+                    targets: victoryText,
+                    y: height/6,
+                    duration: 2000,
+                    ease: 'Power2',
+                    yoyo: false,
                 });
                 break;
             case players[1].getRoundsWon():
@@ -116,10 +123,17 @@ class sceneEndGame extends Phaser.Scene {
                 victoryPlayer.anims.play("victoryPlayerAnim");
 
                 // Texto //
-                victoryText = this.add.text(width/2 - 135, height/6, "Player 2 won!", {
+                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     fill: '#3380ff'
+                });
+                this.tweens.add({
+                    targets: victoryText,
+                    y: height/6,
+                    duration: 2000,
+                    ease: 'Power2',
+                    yoyo: false,
                 });
                 break;
         }
@@ -149,6 +163,10 @@ class sceneEndGame extends Phaser.Scene {
             var nextScene = game.scene.getScene("sceneMainMenu");
             resetVariables();
             controller.setStopUpdateLevel(false);
+            controller.getMusic().stop();
+            controller.setMusic(undefined);
+            controller.setMusic(this.sound.add("music"));
+            controller.getMusic().play();
             nextScene.scene.wake();
             nextScene.scene.restart();
         }, this);
@@ -191,7 +209,6 @@ class sceneEndGame extends Phaser.Scene {
         controller.getMusic().play();
         if(controller.getMusicEnabled() === false){
             controller.getMusic().stop();
-
         }
 
         //******************* Efectos ************************//

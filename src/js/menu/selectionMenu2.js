@@ -392,7 +392,14 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             fireCatButton.anims.play('fireMenuAnim2', false);
             description.setText("");
             ADescription.setText("");
-        }   
+        }
+        
+        //****************** Música *********************//
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().pause();
+        } else {
+            controller.getMusic().resume();
+        }
     }
 }
 

@@ -60,7 +60,7 @@ class Cat {
             this.object = undefined;
             this.type = 0;
             this.score = 0;  
-            this.roundsWon = 1;
+            this.roundsWon = 0;
             this.hasMatter = false;
         } else {
             this.score = 0;
@@ -74,7 +74,7 @@ class Cat {
 //                         Creación de jugadores                    //
 //////////////////////////////////////////////////////////////////////
 // Jugador 1 //
-var player1 = new Cat(undefined, 0, 0, 1, false);
+var player1 = new Cat(undefined, 0, 0, 0, false);
 // Jugador 2 //
 var player2 = new Cat(undefined, 0, 0, 0, false);
 // Lista de jugadores //

@@ -1,19 +1,26 @@
 //////////////////////////////////////////////////////////////////////
+//                  Variables globales                              //
+//////////////////////////////////////////////////////////////////////
+//******************* Control ************************//
+var loadedResoruces = false;    // ¿Se cargaron los recursos?
+
+//////////////////////////////////////////////////////////////////////
 //                       Clase de carga de recursos                 //
 //////////////////////////////////////////////////////////////////////
 class bootloader extends Phaser.Scene {
     constructor() {
         super({
-            key: "bootloader"
+            key: "bootloader",
+            active: true
         });
     }
     preload() {
         // Cargar el menú principal cuando se complete toda la carga de recursos
         this.load.on("complete", () => {
-            this.scene.start("sceneMainMenu");
+            loadedResoruces = true;
         });
 
-        //***********************  Fondos ***************************/
+        //***********************  Fondos ***************************//
         // Menús //
         this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
@@ -29,7 +36,7 @@ class bootloader extends Phaser.Scene {
         // Iconos //
         this.load.image("clock","./resources/img/CatFace/clock.png");
 
-        //***********************  Colisiones ***************************/
+        //***********************  Colisiones ***************************//
         // Nivel de bosque //
         this.load.image("forestCol1","./resources/img/Maps/fieldColisions/1.png");
         this.load.image("forestCol2","./resources/img/Maps/fieldColisions/2.2.png");
@@ -45,7 +52,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("forestCol12","./resources/img/Maps/fieldColisions/10.4.png");
         this.load.image("forestCol13","./resources/img/Maps/fieldColisions/10.6.png");
 
-        //***********************  Gatos ***************************/
+        //***********************  Gatos ***************************//
         // Aire //
         this.load.image("AirCatFace","./resources/img/CatFace/Wiskas.png");
         // Sin materia
@@ -115,11 +122,11 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatUpMatter','./resources/img/SpriteSheet/Water_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('WaterCatRightMatter','./resources/img/SpriteSheet/Water_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
 
-        //******************** Materia oscura ********************************/
+        //******************** Materia oscura ********************************//
         this.load.image("darkMatter","./resources/img/DarkMatter/DarkMatter_small.png");
         this.load.image("back","./resources/img/DarkMatter/DarkMatter.png");
 
-        //******************** Música ********************************/
+        //******************** Música ********************************//
         this.load.audio("music",[ './resources/music/MainMenu.mp3']);
         this.load.audio("music2",[ './resources/music/LevelForest.mp3']);
         this.load.audio("music3", ['./resources/music/LevelCave.mp3']);
@@ -128,7 +135,7 @@ class bootloader extends Phaser.Scene {
         this.load.audio("musicEffect1", ['./resources/music/TakingDarkMatter.mp3']);
         this.load.audio("musicEffect2", ['./resources/music/Meow.mp3']);
 
-        //******************** Botones ********************************/
+        //******************** Botones ********************************//
         this.load.spritesheet("spriteWButton", './resources/img/SpriteSheet/Button_SpriteSheet/wButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteAButton", './resources/img/SpriteSheet/Button_SpriteSheet/aButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteSButton", './resources/img/SpriteSheet/Button_SpriteSheet/sButton.png', { frameWidth: 45, frameHeight: 45});
@@ -150,4 +157,8 @@ class bootloader extends Phaser.Scene {
     }
 }
 
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
+export { loadedResoruces };
 export default bootloader;
