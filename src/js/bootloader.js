@@ -21,6 +21,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
         this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
+        this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/Button_Spritesheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
         // Mapas //
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
@@ -123,6 +124,7 @@ class bootloader extends Phaser.Scene {
         this.load.audio("music2",[ './resources/music/LevelForest.mp3']);
         this.load.audio("music3", ['./resources/music/LevelCave.mp3']);
         this.load.audio("music4", ['./resources/music/levelLab.mp3']);
+        this.load.audio("musicVictory", ['./resources/music/victory.mp3']);
         this.load.audio("musicEffect1", ['./resources/music/TakingDarkMatter.mp3']);
         this.load.audio("musicEffect2", ['./resources/music/Meow.mp3']);
 
@@ -143,7 +145,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
-
+        this.load.spritesheet("spriteRestart", './resources/img/SpriteSheet/Button_SpriteSheet/restart_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
+        this.load.spritesheet("spriteMainMenu", './resources/img/SpriteSheet/Button_SpriteSheet/mainMenu_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
     }
 }
 

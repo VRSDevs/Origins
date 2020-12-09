@@ -39,8 +39,6 @@ var tEvent = undefined;
 var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();
-//******************* Auxiliares ************************//
-var stopUpdating = false;
 
 //////////////////////////////////////////////////////////////////////
 //                Clase de escena del nivel de laboratorio          //
@@ -327,7 +325,7 @@ class sceneLabLevel extends Phaser.Scene {
             //******************* Personajes ************************//
             // Jugador 1 //
             // Sin materia oscura
-            if (!players[0].getHasMatter()) {
+            if (!controller.getStopUpdateLevel()) {
                 switch (true) {
                     case keys.A.isDown:
                         players[0].getObject().setVelocityX(-160);
@@ -474,7 +472,7 @@ function posAzar() {
 
 //******************* Evento de temporizador ************************//
 function endRound() {
-    stopUpdating = true;
+    controller.setStopUpdateLevel(true);
 
     if (players[0].getScore() < players[1].getScore()) {
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
@@ -561,32 +559,15 @@ function endRound2() {
         property.setHasMatter(false);
         property.setScore(0);
     });
-
-    stopUpdating = false;
+    controller.setStopUpdateLevel(false);
     controller.getCurrentScene().scene.restart();
 }
 
 function endMatch() {
-    if (players[0].getRoundsWon() === 2) {
-        /*
-        players[0] = players[0].reset();
-        players[1] = players[1].reset();
-        var nextScene = game.scene.getScene("sceneMainMenu");
-        nextScene.scene.start();
-        */
-        controller.getCurrentScene().scene.stop();
-        controller.resetScenes(game);
-    } else if (players[1].getRoundsWon() === 2) {
-        /*
-        players[0] = players[0].reset();
-        players[1] = players[1].reset();
-        var nextScene = game.scene.getScene("sceneMainMenu");
-        controller.getCurrentScene().scene.stop();
-        nextScene.scene.start();
-        */
-        controller.getCurrentScene().scene.stop();
-        controller.resetScenes(game);
-    }
+    controller.getCurrentScene().scene.sleep();
+    var nextScene = game.scene.getScene("sceneEndGame");
+    nextScene.scene.wake();
+    nextScene.scene.restart();
 }
 
 //******************  Calcular distancia entre gatos ****************//
