@@ -141,6 +141,8 @@ La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha m
 
 [Efecto de sonido 2](https://opengameart.org/content/epic-amulet-item)
 
+[Efecto de sonido para la victoria](https://www.youtube.com/watch?v=LQ_2IrYD9gI)
+
 #### 5.2 Enlaces de referencia artística:
 https://www.pinterest.es/pin/188166090660008827/
 
@@ -152,7 +154,9 @@ https://www.pinterest.es/pin/188166090660008827/
 
 [Letra logo](https://www.dafont.com/es/a-alloy-ink.font)
 
-[Letra juego](https://www.dafont.com/es/search.php?q=gelio)
+[Letra alienigena] Creación propia(https://fontstruct.com/fontstructions/show/1844199/alien-210)
+
+[Letra origins] Creación propia(https://fontstruct.com/fontstructions/show/1843803/origins-6)
 
 #### 5.3 Software empleado:
 [Software de dibujo](https://krita.org/es/)
