@@ -57,16 +57,17 @@ class Cat {
     // Reseteo de jugadores //
     reset(bool) {
         if(bool){
-            var newPlayer = new Cat(undefined, 0, 0, 0, false);
-            return newPlayer;
+            this.object = undefined;
+            this.type = 0;
+            this.score = 0;  
+            this.roundsWon = 1;
+            this.hasMatter = false;
         } else {
             this.score = 0;
             this.roundsWon = 0;
             this.hasMatter = false;
         }
-        
     }
-
 }
 
 //////////////////////////////////////////////////////////////////////

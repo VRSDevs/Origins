@@ -406,19 +406,25 @@ function getMap() {
     var level = Math.floor(Math.random() * (max - min) + min);
     switch (level) {
         case 1:
-            controller.getCurrentScene().scene.stop();
+            controller.getCurrentScene().scene.sleep();
+            resetVariables();
             var nextScene = game.scene.getScene("sceneForestLevel");
-            nextScene.scene.start();
+            nextScene.scene.wake();
+            nextScene.scene.restart();
             break;
         case 2:
-            controller.getCurrentScene().scene.stop();
+            controller.getCurrentScene().scene.sleep();
+            resetVariables();
             var nextScene = game.scene.getScene("sceneForestLevel");
-            nextScene.scene.start();
+            nextScene.scene.wake();
+            nextScene.scene.restart();
             break;
         case 3:
-            controller.getCurrentScene().scene.stop();
+            controller.getCurrentScene().scene.sleep();
+            resetVariables();
             var nextScene = game.scene.getScene("sceneForestLevel");
-            nextScene.scene.start();
+            nextScene.scene.wake();
+            nextScene.scene.restart();
             break;
     }
 }
@@ -443,11 +449,23 @@ function loadScene() {
             getMap();
             break;
         default:
-            controller.getCurrentScene().scene.stop();
+            controller.getCurrentScene().scene.sleep();
+            resetVariables();
             var nextScene = game.scene.getScene("sceneSelectionMenu");
-            nextScene.scene.start();
+            nextScene.scene.wake();
+            nextScene.scene.restart();
             break;
     }
+}
+
+//******************* Reseteo de variables ************************//
+function resetVariables(){
+    // Reseteo de animaciones //
+    // Botones
+    controller.getCurrentScene().anims.remove('groundMenuAnim2');
+    controller.getCurrentScene().anims.remove('waterMenuAnim2');
+    controller.getCurrentScene().anims.remove('airMenuAnim2');
+    controller.getCurrentScene().anims.remove('fireMenuAnim2');
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -15,6 +15,8 @@ var height = 0;     // Alto (px)
 var cursors = undefined;
 var keys = undefined;
 //******************* Jugadores ************************//
+var player1Face = undefined;
+var player2Face = undefined;
 var distanceX = 0;
 var distanceY = 0;
 var distanceBool = false;
@@ -495,35 +497,35 @@ class sceneForestLevel extends Phaser.Scene {
         this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3);
         switch (players[0].getType()) {
             case 1:
-                this.add.image(50, 41, "GroundCatFace");
+                player1Face = this.add.image(50, 41, "GroundCatFace");
                 break;
             case 2:
-                this.add.image(50, 41, "WaterCatFace");
+                player1Face = this.add.image(50, 41, "WaterCatFace");
                 break;
             case 3:
-                this.add.image(50, 41, "AirCatFace");
+                player1Face = this.add.image(50, 41, "AirCatFace");
                 break;
             case 4:
-                this.add.image(50, 41, "FireCatFace");
+                player1Face = this.add.image(50, 41, "FireCatFace");
                 break;
         }
         // Jugador 2
         this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3);
         switch (players[1].getType()) {
             case 1:
-                this.add.image(width - 130, 41, "GroundCatFace");
+                player2Face = this.add.image(width - 130, 41, "GroundCatFace");
                 break;
             case 2:
-                this.add.image(width - 130, 41, "WaterCatFace");
+                player2Face = this.add.image(width - 130, 41, "WaterCatFace");
                 break;
             case 3:
-                this.add.image(width - 130, 41, "AirCatFace");
+                player2Face = this.add.image(width - 130, 41, "AirCatFace");
                 break;
             case 4:
-                this.add.image(width - 130, 41, "FireCatFace");
+                player2Face = this.add.image(width - 130, 41, "FireCatFace");
                 break;
         }
-        
+
         // Temporizador //
         this.add.rectangle(width / 2, 41, 100, 50, 0x000000, 0.3);
         var clock = this.physics.add.image((width / 2) - 35, 41, "clock");
@@ -821,6 +823,7 @@ function endRound2() {
 
 function endMatch() {
     controller.getCurrentScene().scene.sleep();
+    resetVariables();
     var nextScene = game.scene.getScene("sceneEndGame");
     nextScene.scene.wake();
     nextScene.scene.restart();
@@ -856,6 +859,33 @@ function updatePoints() {
         players[1].setScore(players[1].getScore() + 1);
         textPtsP2.setText(Math.trunc(players[1].getScore() / diffT));
     }
+}
+
+//******************* Reseteo de variables ************************//
+function resetVariables(){
+    // Reseteo de animaciones //
+    // Jugador 1
+    controller.getCurrentScene().anims.remove('leftP1');
+    controller.getCurrentScene().anims.remove('rightP1');
+    controller.getCurrentScene().anims.remove('upP1');
+    controller.getCurrentScene().anims.remove('downP1');
+    controller.getCurrentScene().anims.remove('idleP1');
+    controller.getCurrentScene().anims.remove('leftP1Matter');
+    controller.getCurrentScene().anims.remove('rightP1Matter');
+    controller.getCurrentScene().anims.remove('upP1Matter');
+    controller.getCurrentScene().anims.remove('downP1Matter');
+    controller.getCurrentScene().anims.remove('idleP1Matter');
+    // Jugador 2
+    controller.getCurrentScene().anims.remove('leftP2');
+    controller.getCurrentScene().anims.remove('rightP2');
+    controller.getCurrentScene().anims.remove('upP2');
+    controller.getCurrentScene().anims.remove('downP2');
+    controller.getCurrentScene().anims.remove('idleP2');
+    controller.getCurrentScene().anims.remove('leftP2Matter');
+    controller.getCurrentScene().anims.remove('rightP2Matter');
+    controller.getCurrentScene().anims.remove('upP2Matter');
+    controller.getCurrentScene().anims.remove('downP2Matter');
+    controller.getCurrentScene().anims.remove('idleP2Matter');
 }
 
 //////////////////////////////////////////////////////////////////////
