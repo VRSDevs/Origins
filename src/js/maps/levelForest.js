@@ -42,6 +42,7 @@ var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();
 
+
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
 //////////////////////////////////////////////////////////////////////
@@ -481,11 +482,13 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[0].setHasMatter(true);
-            //musicEffect1.play();
+            controller.getmusicEffect1().play();
         }, null, this);
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[1].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
         }, null, this);
 
         //******************* HUD ************************//
@@ -554,10 +557,13 @@ class sceneForestLevel extends Phaser.Scene {
         });
 
         //******************* Música del nivel ************************//
+        
         controller.getMusic().stop();
-        controller.setMusic(undefined);
-        controller.setMusic(this.sound.add("music2"));
-        controller.getMusic().play();
+        controller.getMusicLevelForest().play();
+        controller.getmusicEffect1(this.sound.add("musicEffect1"));
+        controller.getmusicEffect2(this.sound.add("musicEffect2"));
+
+
     }
     update(time, delta) {
         // No actualizar solo puntos a ver
@@ -590,8 +596,11 @@ class sceneForestLevel extends Phaser.Scene {
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[0].setHasMatter(true);
                             players[1].setHasMatter(false);
+
                         }
                         break;
                     default:
@@ -648,6 +657,8 @@ class sceneForestLevel extends Phaser.Scene {
                         break;
                     case keys.P.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[1].setHasMatter(true);
                             players[0].setHasMatter(false);
                         }
@@ -718,7 +729,6 @@ function posAzar() {
 //******************* Evento final de ronda ************************//
 function endRound() {
     controller.setStopUpdateLevel(true);
-
     if (players[0].getScore() < players[1].getScore()) {
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
         if (players[1].getRoundsWon() < 2) {
@@ -814,6 +824,7 @@ function endMatch() {
     var nextScene = game.scene.getScene("sceneEndGame");
     nextScene.scene.wake();
     nextScene.scene.restart();
+    controller.getMusicLevelForest().stop();
 }
 
 //******************  Calcular distancia entre gatos ****************//
