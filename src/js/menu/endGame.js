@@ -145,9 +145,12 @@ class sceneEndGame extends Phaser.Scene {
             players.forEach(cat => {
                 cat = cat.reset(true);
             });
-            controller.getCurrentScene().scene.stop();
+            controller.getCurrentScene().scene.sleep();
             var nextScene = game.scene.getScene("sceneMainMenu");
-            nextScene.scene.start();
+            resetVariables();
+            controller.setStopUpdateLevel(false);
+            nextScene.scene.wake();
+            nextScene.scene.restart();
         }, this);
 
         // Reinicio de partida //
@@ -216,17 +219,9 @@ function buttonsAnimation(){
     });
 }
 
-//******************* Reset de variables ************************//
+//******************* Reseteo de variables ************************//
 function resetVariables(){
-    width = 0;
-    height = 0;
-    bg = undefined;
-    victoryPlayer = undefined;
-    buttonsAnim = undefined;
-    mainMenuButton = undefined;
-    restartButton = undefined;
-    victoryText = "";
-    level = undefined;
+    // Reseteo de animaciones //
     controller.getCurrentScene().anims.remove('victoryPlayerAnim');
 }
 
