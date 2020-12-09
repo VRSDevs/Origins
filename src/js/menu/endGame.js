@@ -48,8 +48,8 @@ class sceneEndGame extends Phaser.Scene {
         bg = this.add.sprite(width/2, height/2, "bgVictory",0);
         this.anims.create({
             key: 'bgVictoryAnim',
-            frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 2}),
-            frameRate: 10,
+            frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 14}),
+            frameRate: 15,
             repeat: 0
         });
         bg.anims.play('bgVictoryAnim');
