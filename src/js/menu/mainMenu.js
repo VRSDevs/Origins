@@ -1,18 +1,27 @@
 //////////////////////////////////////////////////////////////////////
-//                    Clase para el menu principal                  //
+//                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import {controller} from '../gameController.js';
-import { players } from '../cats.js';
 import { game } from '../init.js';
 
-
-var playButton;
-var controlsButton;
-var settingsButton;
-var exitButton;
+//////////////////////////////////////////////////////////////////////
+//                  Variables globales                              //
+//////////////////////////////////////////////////////////////////////
+//******************* Dimensiones lienzo ************************//
+var width = 0;      // Ancho (px)
+var height = 0;     // Alto (px)
+//******************* Botones ************************//
+var playButton = undefined;
+var controlsButton = undefined;
+var settingsButton = undefined;
+var exitButton = undefined;
+//******************* Control ************************//
+// Selección de submenú //
 var id = 0;
 
-
+//////////////////////////////////////////////////////////////////////
+//                   Clase de escena de menú principal              //
+//////////////////////////////////////////////////////////////////////
 class sceneMainMenu extends Phaser.Scene {
     constructor() {
         super({key: "sceneMainMenu",
@@ -20,16 +29,18 @@ class sceneMainMenu extends Phaser.Scene {
     }
 
     create() {
-        console.log(players[0].getType());
-        console.log(players[1].getType());
-        // Variables auxiliares
-        var width = this.sys.canvas.width;
-        var height = this.sys.canvas.height;
+        //******************* Asignación escena ************************//       
+        controller.setCurrentScene(this);
 
-        // Fondo
+        //******************* Variables auxiliares ************************//
+        width = this.sys.canvas.width;
+        height = this.sys.canvas.height;
+
+        //******************* Fondos ************************//
         this.add.image(400, 320, "mainMenu");
         
-        // Botón de jugar
+        //****************** Botones *********************//
+        // Jugar //
         playButton = this.add.sprite(width - 350/2, 296, "spritePlayButton", 0).setInteractive();
         this.anims.create({
             key: 'playButtonAnim',
@@ -49,7 +60,7 @@ class sceneMainMenu extends Phaser.Scene {
         }, this);
         playButton.addListener('pointerdown', loadScene, this);
 
-        // Botón de menú de controles
+        // Controles //
         controlsButton = this.add.sprite(width - 350/2, 398, "spriteControlsButton", 0).setInteractive();
         this.anims.create({
             key: 'controlButtonAnim',
@@ -69,7 +80,7 @@ class sceneMainMenu extends Phaser.Scene {
         }, this);
         controlsButton.addListener('pointerdown', loadScene, this);     
                
-        // Botón de menú de ajustes
+        // Ajustes //
         settingsButton = this.add.sprite(width - 350/2, 501, "spriteSettingsButton", 0).setInteractive();
         this.anims.create({
             key: 'settingsButtonAnim',
@@ -89,7 +100,8 @@ class sceneMainMenu extends Phaser.Scene {
         }, this);
         
         settingsButton.addListener('pointerdown', loadScene, this); 
-        // Botón de salir
+
+        // Salir //
         exitButton = this.add.sprite(width - 301/2, 590, "spriteExitButton", 0).setInteractive();
         this.anims.create({
             key: 'exitButtonAnim',
@@ -109,7 +121,7 @@ class sceneMainMenu extends Phaser.Scene {
         }, this);
         exitButton.addListener('pointerdown', loadScene, this); 
 
-        // Música del menu principal
+        //****************** Música *********************//
         controller.setMusic(this.sound.add("music"));
         controller.setMusicLevelForest(this.sound.add ("music2"));
         controller.setMusicLevelCave(this.sound.add("music3"));
@@ -131,33 +143,32 @@ class sceneMainMenu extends Phaser.Scene {
 
     update(time, delta){
       
-   }  
+    }       
+}  
 
-   
-      
-}
-
+//////////////////////////////////////////////////////////////////////
+//                   Funciones extras                               //
+//////////////////////////////////////////////////////////////////////
+//******************* Carga de escena ************************//
 function loadScene(){
     switch (id) {
         case 1:
-            this.scene.stop("sceneMainMenu");
-            this.scene.start("scenePlayMenu");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("scenePlayMenu");
+            nextScene.scene.start();
             controller.getMusic().pause();
-
-
             break;    
         case 2:
-            this.scene.stop("sceneMainMenu");
-            this.scene.start("sceneControlsMenu");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneControlsMenu");
+            nextScene.scene.start();
             controller.getMusic().pause();
-
             break;
         case 3:
-            this.scene.stop("sceneMainMenu");
-            this.scene.start("sceneSettingsMenu");
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneSettingsMenu");
+            nextScene.scene.start();
             controller.getMusic().pause();
-
-
             break;
         case 4:
             alert("Gracias por jugar a nuestro juego.");
@@ -166,4 +177,7 @@ function loadScene(){
     }   
 }
 
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
 export default sceneMainMenu;

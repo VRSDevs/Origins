@@ -1,18 +1,26 @@
+//////////////////////////////////////////////////////////////////////
+//                     Clase controlador de juego                   //
+//////////////////////////////////////////////////////////////////////
 class gameController{
-    constructor(scene, music, mp, globalMusic, gameMode, timeRound, musicForest, musicCave, musicLab, musicEffect1,musicEffect2){
-        this.currentScene = scene;
-        this.musicEnabled = music;
-        this.musicPlaying = mp;
-        this.music = globalMusic;
-        this.gameMode = gameMode;
-        this.timeRound = timeRound;
+    //******************* Constructor clase ************************//
+    constructor(scene, music, mp, globalMusic, gameMode, timeRound,musicForest, musicCave, musicLab, musicEffect1,musicEffect2, up){
+        this.currentScene = scene;      // Escena actual
+        this.musicEnabled = music;      // ¿Está habilitada la música?
+        this.musicPlaying = mp;         // ¿Se está reproduciendo la música?
+        this.music = globalMusic;       // Objeto de música
+        this.gameMode = gameMode;       // Modo de juego:   1 -> Un jugador (vs. IA)
+                                        //                  2 -> Dos jugadores (J vs. J)
+                                        //                  3 -> Multijugador
+        this.timeRound = timeRound;     // Tiempo de ronda
+        this.stopUpdateLevel = up;
         this.musicLevelForest = musicForest;
         this.musicLevelCave = musicCave;
         this.musicLevelLab = musicLab;
         this.musicEffect1 = musicEffect1;
         this.musicEffect2 = musicEffect2;
     }
-    // Getters
+
+    //******************* Getters ************************//
     getGameMode(){
         return this.gameMode;
     }
@@ -31,7 +39,9 @@ class gameController{
     getMusic(){
         return this.music;
     }
-
+    getStopUpdateLevel(){
+        return this.stopUpdateLevel;
+    }
     getMusicLevelForest(){
         return this.musicLevelForest;
     }
@@ -47,7 +57,9 @@ class gameController{
     getmusicEffect2(){
         return this.musicEffect2;
     }
-    // Setters
+
+    //******************* Setters ************************//
+
     setGameMode(value){
         this.gameMode = value;
     }
@@ -81,8 +93,19 @@ class gameController{
     setMusicEffect2(obj){
         this.musicEffect2 = obj;
     }
+    setStopUpdateLevel(value){
+        this.stopUpdateLevel = value;
+    }
 }
 
-var controller = new gameController(undefined, true, false, undefined, 0, 10, undefined, undefined, undefined, undefined, undefined);
+
+//////////////////////////////////////////////////////////////////////
+//                      Creación del controlador                    //
+//////////////////////////////////////////////////////////////////////
+var controller = new gameController(undefined, true, false, undefined, 0, 10,undefined, undefined, undefined, undefined, undefined, false);
+
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
 export {controller};
 
