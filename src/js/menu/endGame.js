@@ -145,9 +145,12 @@ class sceneEndGame extends Phaser.Scene {
             players.forEach(cat => {
                 cat = cat.reset(true);
             });
-            controller.getCurrentScene().scene.stop();
+            controller.getCurrentScene().scene.sleep();
             var nextScene = game.scene.getScene("sceneMainMenu");
-            nextScene.scene.start();
+            resetVariables();
+            controller.setStopUpdateLevel(false);
+            nextScene.scene.wake();
+            nextScene.scene.restart();
         }, this);
 
         // Reinicio de partida //
@@ -172,6 +175,7 @@ class sceneEndGame extends Phaser.Scene {
             });
             controller.getCurrentScene().scene.sleep();
             var nextScene = game.scene.getScene(level.scene.key);
+            resetVariables();
             controller.setStopUpdateLevel(false);
             nextScene.scene.wake();
             nextScene.scene.restart();
@@ -213,6 +217,12 @@ function buttonsAnimation(){
         ease: 'Power2',
         yoyo: false,
     });
+}
+
+//******************* Reseteo de variables ************************//
+function resetVariables(){
+    // Reseteo de animaciones //
+    controller.getCurrentScene().anims.remove('victoryPlayerAnim');
 }
 
 //////////////////////////////////////////////////////////////////////
