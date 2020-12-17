@@ -533,14 +533,17 @@ class sceneForestLevel extends Phaser.Scene {
         }
 
         // Temporizador //
-        this.add.rectangle(width / 2, 41, 100, 50, 0x000000, 0.3);
-        var clock = this.physics.add.image((width / 2) - 35, 41, "clock");
+        this.add.rectangle(width / 2, 71, 100, 50, 0x000000, 0.3);
+        var clock = this.physics.add.image((width / 2) - 35, 71, "clock");
         clock.scaleX = 1.7;
         clock.scaleY = 1.7;
 
+        // Rondas //
+        this.add.rectangle(width / 2, 22, 84, 35, 0x000000, 0.3);
+
         //******************* Temporizador ************************//
         // Texto //
-        timer = this.add.text(width / 2 - 10, 20, "time", {
+        timer = this.add.text(width / 2 - 10, 50, "time", {
             fontFamily: 'origins',
             fontSize: '32px',
             fill: '#ffffff',
@@ -550,16 +553,31 @@ class sceneForestLevel extends Phaser.Scene {
 
         //******************* Puntos ************************//
         // Jugador 1 //
+        // Puntos
         textPtsP1 = this.add.text(80, 20, "0", {
             fontFamily: 'origins',
             fontSize: '32px',
             fill: '#ffffff'
         });
+        // Rondas
+        textRndsP1 = this.add.text((width / 2) - 32, 5, players[0].getRoundsWon(), {
+            fontFamily: 'origins',
+            fontSize: '26px',
+            fill: '#ffffff',
+        });
+
         // Jugador 2 //
-        textPtsP2 = this.add.text(width - 100, 20, "0", {
+        // Puntos
+        textPtsP2 = this.add.text(width - 100, 20, players[1].getRoundsWon(), {
             fontFamily: 'origins',
             fontSize: '32px',
             fill: '#ffffff'
+        });
+        // Rondas
+        textRndsP2 = this.add.text((width / 2) + 16, 5, "0", {
+            fontFamily: 'origins',
+            fontSize: '26px',
+            fill: '#ffffff',
         });
 
         //******************* Música del nivel ************************//
@@ -740,6 +758,7 @@ function endRound() {
     controller.setStopUpdateLevel(true);
     if (players[0].getScore() < players[1].getScore()) {
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
+        textRndsP2.setText(players[1].getRoundsWon());
         if (players[1].getRoundsWon() < 2) {
             textEndRound = this.add.text(width + 100, height / 2, "Player 2 won the round.", {
                 fontFamily: 'origins',
@@ -771,6 +790,7 @@ function endRound() {
         }
     } else if (players[0].getScore() > players[1].getScore()) {
         players[0].setRoundsWon(players[0].getRoundsWon() + 1);
+        textRndsP1.setText(players[0].getRoundsWon());
         if (players[0].getRoundsWon() < 2) {
             textEndRound = this.add.text(width + 100, height / 2, "Player 1 won the round.", {
                 fontFamily: 'origins',
