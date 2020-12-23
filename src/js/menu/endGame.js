@@ -44,35 +44,40 @@ class sceneEndGame extends Phaser.Scene {
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
 
-        //******************* Fondo ************************//
-        bg = this.add.sprite(width/2, height/2, "bgVictory",0);
-        this.anims.create({
-            key: 'bgVictoryAnim',
-            frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 14}),
-            frameRate: 12,
-            repeat: 0
-        });
-        bg.anims.play('bgVictoryAnim');
-
         //******************* Ganador ************************//
         switch (2) {
             case players[0].getRoundsWon():
-                // Personaje //
                 var textureID = "";
+                var catColor = "";
                 switch (players[0].getType()) {
                     case 1:
                         textureID = "GroundCatIdle3";
+                        catColor = "ground";
                         break;
                     case 2:
                         textureID = "WaterCatIdle3";
+                        catColor = "water";
                         break;
                     case 3:
                         textureID = "AirCatIdle3";
+                        catColor = "air";
                         break;
                     case 4:
                         textureID = "FireCatIdle3";
+                        catColor = "fire";
                         break;
                 }
+                // Fondo //
+                bg = this.add.sprite(width/2, height/2, (catColor + "BgVictory"), 0);
+                this.anims.create({
+                    key: 'bgVictoryAnim',
+                    frames: this.anims.generateFrameNumbers((catColor + "BgVictory"), {start: 0, end: 14}),
+                    frameRate: 12,
+                    repeat: 0
+                });
+                bg.anims.play('bgVictoryAnim');
+                
+                // Personaje //
                 victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
                 this.anims.create({
                     key: 'victoryPlayerAnim',
@@ -97,22 +102,37 @@ class sceneEndGame extends Phaser.Scene {
                 });
                 break;
             case players[1].getRoundsWon():
-                // Personaje //
                 var textureID = "";
+                var catColor = "";
                 switch (players[1].getType()) {
                     case 1:
                         textureID = "GroundCatIdle3";
+                        catColor = "ground";
                         break;
                     case 2:
                         textureID = "WaterCatIdle3";
+                        catColor = "water";
                         break;
                     case 3:
                         textureID = "AirCatIdle3";
+                        catColor = "air";
                         break;
                     case 4:
                         textureID = "FireCatIdle3";
+                        catColor = "fire";
                         break;
                 }
+                // Fondo //
+                bg = this.add.sprite(width/2, height/2, (catColor + "BgVictory"), 0);
+                this.anims.create({
+                    key: 'bgVictoryAnim',
+                    frames: this.anims.generateFrameNumbers((catColor + "BgVictory"), {start: 0, end: 14}),
+                    frameRate: 12,
+                    repeat: 0
+                });
+                bg.anims.play('bgVictoryAnim');
+
+                // Personajes //
                 victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
                 this.anims.create({
                     key: 'victoryPlayerAnim',

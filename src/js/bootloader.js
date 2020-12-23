@@ -28,7 +28,11 @@ class bootloader extends Phaser.Scene {
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
         this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
-        this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/Button_Spritesheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        // Pantallas de victoria //
+        this.load.spritesheet('waterBgVictory','./resources/img/SpriteSheet/Button_Spritesheet/VictoryWater_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('groundBgVictory','./resources/img/SpriteSheet/Button_Spritesheet/VictoryGround_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('fireBgVictory','./resources/img/SpriteSheet/Button_Spritesheet/VictoryFire_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('airBgVictory','./resources/img/SpriteSheet/Button_Spritesheet/VictoryWater_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
         // Mapas //
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
