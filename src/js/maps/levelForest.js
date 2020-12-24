@@ -16,9 +16,13 @@ var height = 0;     // Alto (px)
 var cursors = undefined;
 var keys = undefined;
 //******************* Jugadores ************************//
+// Iconos //
+var player1Face = undefined;
+var player2Face = undefined;
+// Distancias entre jugadores //
 var distanceX = 0;
 var distanceY = 0;
-var distanceBool = false;
+var distanceBool = false;   // ¿Se están tocando los jugadores?
 //******************* Texto ************************//
 // Final de ronda //
 var textEndRound = "";
@@ -32,16 +36,19 @@ var textRndsP2 = "";
 // Temporizador //
 var timer = "";
 //******************* Materia oscura ************************//
+// Posiciones //
 var darkMatterPosX = 0;
 var darkMatterPosY = 0;
+// Objeto //
 var darkMatter = undefined;
 //******************* Temporizador ************************//
+// Evento //
 var tEvent = undefined;
+// Tiempos //
 var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();
-//******************* Auxiliares ************************//
-var stopUpdating = false;
+
 
 
 //////////////////////////////////////////////////////////////////////
@@ -483,11 +490,13 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[0].setHasMatter(true);
-            //musicEffect1.play();
+            controller.getmusicEffect1().play();
         }, null, this);
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[1].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
         }, null, this);
 
         //******************* HUD ************************//
@@ -496,34 +505,35 @@ class sceneForestLevel extends Phaser.Scene {
         this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3);
         switch (players[0].getType()) {
             case 1:
-                this.add.image(50, 41, "GroundCatFace");
+                player1Face = this.add.image(50, 41, "GroundCatFace");
                 break;
             case 2:
-                this.add.image(50, 41, "WaterCatFace");
+                player1Face = this.add.image(50, 41, "WaterCatFace");
                 break;
             case 3:
-                this.add.image(50, 41, "AirCatFace");
+                player1Face = this.add.image(50, 41, "AirCatFace");
                 break;
             case 4:
-                this.add.image(50, 41, "FireCatFace");
+                player1Face = this.add.image(50, 41, "FireCatFace");
                 break;
         }
         // Jugador 2
         this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3);
         switch (players[1].getType()) {
             case 1:
-                this.add.image(width - 130, 41, "GroundCatFace");
+                player2Face = this.add.image(width - 130, 41, "GroundCatFace");
                 break;
             case 2:
-                this.add.image(width - 130, 41, "WaterCatFace");
+                player2Face = this.add.image(width - 130, 41, "WaterCatFace");
                 break;
             case 3:
-                this.add.image(width - 130, 41, "AirCatFace");
+                player2Face = this.add.image(width - 130, 41, "AirCatFace");
                 break;
             case 4:
-                this.add.image(width - 130, 41, "FireCatFace");
+                player2Face = this.add.image(width - 130, 41, "FireCatFace");
                 break;
         }
+
         // Temporizador //
         this.add.rectangle(width / 2, 41, 100, 50, 0x000000, 0.3);
         var clock = this.physics.add.image((width / 2) - 35, 41, "clock");
@@ -555,14 +565,20 @@ class sceneForestLevel extends Phaser.Scene {
         });
 
         //******************* Música del nivel ************************//
+        
         controller.getMusic().stop();
-        controller.setMusic(undefined);
-        controller.setMusic(this.sound.add("music2"));
-        controller.getMusic().play();
+        controller.getMusicLevelForest().play();
+        controller.getmusicEffect1(this.sound.add("musicEffect1"));
+        controller.getmusicEffect2(this.sound.add("musicEffect2"));
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().stop();
+            controller.getMusicLevelForest().stop();
+        }
+
     }
     update(time, delta) {
         // No actualizar solo puntos a ver
-        if (!stopUpdating) {
+        if (!controller.getStopUpdateLevel()) {
             //******************* Temporizador ************************//
             t = t - (tEvent.getProgress() - oldT) * diffT;
             timer.setText(Math.trunc(t));
@@ -591,8 +607,11 @@ class sceneForestLevel extends Phaser.Scene {
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[0].setHasMatter(true);
                             players[1].setHasMatter(false);
+
                         }
                         break;
                     default:
@@ -649,6 +668,8 @@ class sceneForestLevel extends Phaser.Scene {
                         break;
                     case keys.P.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[1].setHasMatter(true);
                             players[0].setHasMatter(false);
                         }
@@ -718,8 +739,7 @@ function posAzar() {
 
 //******************* Evento final de ronda ************************//
 function endRound() {
-    stopUpdating = true;
-
+    controller.setStopUpdateLevel(true);
     if (players[0].getScore() < players[1].getScore()) {
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
         if (players[1].getRoundsWon() < 2) {
@@ -737,7 +757,7 @@ function endRound() {
             });
             this.time.delayedCall(4200, endRound2, [], this);
         } else {
-            textEndMatch = this.add.text(width + 100, height / 2, "Player 2 won the match.", {
+            textEndMatch = this.add.text(width + 100, height / 2, "Player 2 won the round.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
@@ -768,7 +788,7 @@ function endRound() {
             });
             this.time.delayedCall(4200, endRound2, [], this);
         } else {
-            textEndMatch = this.add.text(width + 100, height / 2, "Player 1 won the match.", {
+            textEndMatch = this.add.text(width + 100, height / 2, "Player 1 won the round.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
@@ -805,32 +825,17 @@ function endRound2() {
         property.setHasMatter(false);
         property.setScore(0);
     });
-
-    stopUpdating = false;
+    controller.setStopUpdateLevel(false);
     controller.getCurrentScene().scene.restart();
 }
 
 function endMatch() {
-    if (players[0].getRoundsWon() === 2) {
-        /*
-        players[0] = players[0].reset();
-        players[1] = players[1].reset();
-        var nextScene = game.scene.getScene("sceneMainMenu");
-        nextScene.scene.start();
-        */
-        controller.getCurrentScene().scene.stop();
-        controller.resetScenes(game);
-    } else if (players[1].getRoundsWon() === 2) {
-        /*
-        players[0] = players[0].reset();
-        players[1] = players[1].reset();
-        var nextScene = game.scene.getScene("sceneMainMenu");
-        controller.getCurrentScene().scene.stop();
-        nextScene.scene.start();
-        */
-        controller.getCurrentScene().scene.stop();
-        controller.resetScenes(game);
-    }
+    controller.getCurrentScene().scene.sleep();
+    resetVariables();
+    var nextScene = game.scene.getScene("sceneEndGame");
+    nextScene.scene.wake();
+    nextScene.scene.restart();
+    controller.getMusicLevelForest().stop();
 }
 
 //******************  Calcular distancia entre gatos ****************//
@@ -862,6 +867,33 @@ function updatePoints() {
         players[1].setScore(players[1].getScore() + 1);
         textPtsP2.setText(Math.trunc(players[1].getScore() / diffT));
     }
+}
+
+//******************* Reseteo de variables ************************//
+function resetVariables(){
+    // Reseteo de animaciones //
+    // Jugador 1
+    controller.getCurrentScene().anims.remove('leftP1');
+    controller.getCurrentScene().anims.remove('rightP1');
+    controller.getCurrentScene().anims.remove('upP1');
+    controller.getCurrentScene().anims.remove('downP1');
+    controller.getCurrentScene().anims.remove('idleP1');
+    controller.getCurrentScene().anims.remove('leftP1Matter');
+    controller.getCurrentScene().anims.remove('rightP1Matter');
+    controller.getCurrentScene().anims.remove('upP1Matter');
+    controller.getCurrentScene().anims.remove('downP1Matter');
+    controller.getCurrentScene().anims.remove('idleP1Matter');
+    // Jugador 2
+    controller.getCurrentScene().anims.remove('leftP2');
+    controller.getCurrentScene().anims.remove('rightP2');
+    controller.getCurrentScene().anims.remove('upP2');
+    controller.getCurrentScene().anims.remove('downP2');
+    controller.getCurrentScene().anims.remove('idleP2');
+    controller.getCurrentScene().anims.remove('leftP2Matter');
+    controller.getCurrentScene().anims.remove('rightP2Matter');
+    controller.getCurrentScene().anims.remove('upP2Matter');
+    controller.getCurrentScene().anims.remove('downP2Matter');
+    controller.getCurrentScene().anims.remove('idleP2Matter');
 }
 
 //////////////////////////////////////////////////////////////////////

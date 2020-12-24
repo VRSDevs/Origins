@@ -55,9 +55,18 @@ class Cat {
     }
     //******************* Otros ************************//
     // Reseteo de jugadores //
-    reset() {
-        var newPlayer = new Cat(undefined, 0, 0, 0, false);
-        return newPlayer;
+    reset(bool) {
+        if(bool){
+            this.object = undefined;
+            this.type = 0;
+            this.score = 0;  
+            this.roundsWon = 0;
+            this.hasMatter = false;
+        } else {
+            this.score = 0;
+            this.roundsWon = 0;
+            this.hasMatter = false;
+        }
     }
 }
 

@@ -160,6 +160,7 @@ class sceneSelectionMenu extends Phaser.Scene {
             fill: '#000000'
         });
     }
+    
     update(time, delta) {
         //******************* Animaciones botones ************************//
         if (startAnim === true && selectedCat === 1) {
@@ -197,6 +198,13 @@ class sceneSelectionMenu extends Phaser.Scene {
             fireCatButton.anims.play('fireMenuAnim', false);
             description.setText("");
             ADescription.setText("");
+        }
+
+        //****************** Música *********************//
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().pause();
+        } else {
+            controller.getMusic().resume();
         }
     }
 }

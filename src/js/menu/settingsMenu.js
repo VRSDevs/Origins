@@ -42,16 +42,14 @@ class sceneSettingsMenu extends Phaser.Scene {
             changeMusicButton = this.add.sprite(570, 275, "spriteChangeMusicButton", 1).setInteractive();
         }
         changeMusicButton.addListener('pointerdown', () => {
-            if (controller.getMusicEnabled() === true){
-                changeMusicButton.setFrame(1);
-                controller.setMusicEnabled(false);
-                controller.getMusic().stop();
-
+            if (controller.getMusicEnabled() === true){     
+                    changeMusicButton.setFrame(1);
+                    controller.setMusicEnabled(false);
+                    controller.getMusic().stop();
             } else {
                 changeMusicButton.setFrame(0);
                 controller.setMusicEnabled(true);
                 controller.getMusic().play();
-
             }
         }, this);
 
@@ -71,10 +69,16 @@ class sceneSettingsMenu extends Phaser.Scene {
             backButton.anims.stop();
             backButton.setFrame(0);
         }, this);
-        backButton.addListener('pointerdown', loadScene, this);
+        backButton.addListener('pointerdown', loadScene, this);       
     }
+
     update(time, delta){  
-             
+        //****************** Música *********************//
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().pause();
+        } else {
+            controller.getMusic().resume();
+        }
     }
 }
 

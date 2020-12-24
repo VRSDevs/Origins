@@ -122,22 +122,26 @@ class sceneMainMenu extends Phaser.Scene {
         exitButton.addListener('pointerdown', loadScene, this); 
 
         //****************** Música *********************//
-        controller.setMusic(this.sound.add("music"));
+        if(controller.getMusicPlaying() === false){
+            controller.setMusic(this.sound.add("music"));
+            controller.setMusicLevelForest(this.sound.add ("music2"));
+            controller.setMusicLevelCave(this.sound.add("music3"));
+            controller.setMusicLevelLab(this.sound.add("music4"));
+            controller.setMusicEffect1(this.sound.add("musicEffect1"));
+            controller.setMusicEffect2(this.sound.add("musicEffect2"));
+            controller.getMusic().play();
+            controller.setMusicPlaying(true);
+        }
     }        
 
     update(time, delta){
-        //****************** Reproducción música *********************//
-        if (controller.getMusicEnabled()){
-            if(!controller.getMusicPlaying()){
-                controller.getMusic().play();
-                controller.setMusicPlaying(true);
-            }
-        }else{
-           controller.getMusic().stop();
-           controller.setMusicPlaying(false);
-        }     
-   }  
-}
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().pause();
+        } else {
+            controller.getMusic().resume();
+        }
+    }       
+}  
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //

@@ -1,4 +1,7 @@
 //////////////////////////////////////////////////////////////////////
+//                          ¡EN DESARROLLO!                         //
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import { controller } from '../gameController.js';
@@ -39,8 +42,6 @@ var tEvent = undefined;
 var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();
-//******************* Auxiliares ************************//
-var stopUpdating = false;
 
 //////////////////////////////////////////////////////////////////////
 //                Clase de escena del nivel de laboratorio          //
@@ -316,6 +317,17 @@ class sceneLabLevel extends Phaser.Scene {
             fontSize: '32px',
             fill: '#ffffff'
         });
+
+
+        //******************* Música del nivel ************************//
+        controller.getMusic().stop();
+        controller.getmusicLevelLab().play();
+        controller.getmusicEffect1(this.sound.add("musicEffect1"));
+        controller.getmusicEffect2(this.sound.add("musicEffect2"));
+        if(controller.getMusicEnabled() === false){
+            controller.getMusic().stop();
+            controller.getMusicLevelLab().stop();
+        }
     }
     update(time, delta){
         if (!stopUpdating) {
@@ -327,7 +339,7 @@ class sceneLabLevel extends Phaser.Scene {
             //******************* Personajes ************************//
             // Jugador 1 //
             // Sin materia oscura
-            if (!players[0].getHasMatter()) {
+            if (!controller.getStopUpdateLevel()) {
                 switch (true) {
                     case keys.A.isDown:
                         players[0].getObject().setVelocityX(-160);
@@ -347,6 +359,8 @@ class sceneLabLevel extends Phaser.Scene {
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[0].setHasMatter(true);
                             players[1].setHasMatter(false);
                         }
@@ -405,6 +419,8 @@ class sceneLabLevel extends Phaser.Scene {
                         break;
                     case keys.P.isDown:
                         if (distance() === true) {
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
                             players[1].setHasMatter(true);
                             players[0].setHasMatter(false);
                         }
@@ -474,7 +490,7 @@ function posAzar() {
 
 //******************* Evento de temporizador ************************//
 function endRound() {
-    stopUpdating = true;
+    controller.setStopUpdateLevel(true);
 
     if (players[0].getScore() < players[1].getScore()) {
         players[1].setRoundsWon(players[1].getRoundsWon() + 1);
@@ -561,32 +577,16 @@ function endRound2() {
         property.setHasMatter(false);
         property.setScore(0);
     });
-
-    stopUpdating = false;
+    controller.setStopUpdateLevel(false);
     controller.getCurrentScene().scene.restart();
 }
 
 function endMatch() {
-    if (players[0].getRoundsWon() === 2) {
-        /*
-        players[0] = players[0].reset();
-        players[1] = players[1].reset();
-        var nextScene = game.scene.getScene("sceneMainMenu");
-        nextScene.scene.start();
-        */
-        controller.getCurrentScene().scene.stop();
-        controller.resetScenes(game);
-    } else if (players[1].getRoundsWon() === 2) {
-        /*
-        players[0] = players[0].reset();
-        players[1] = players[1].reset();
-        var nextScene = game.scene.getScene("sceneMainMenu");
-        controller.getCurrentScene().scene.stop();
-        nextScene.scene.start();
-        */
-        controller.getCurrentScene().scene.stop();
-        controller.resetScenes(game);
-    }
+    controller.getCurrentScene().scene.sleep();
+    var nextScene = game.scene.getScene("sceneEndGame");
+    nextScene.scene.wake();
+    nextScene.scene.restart();
+    controller.getmusicLevelLab().stop();
 }
 
 //******************  Calcular distancia entre gatos ****************//
