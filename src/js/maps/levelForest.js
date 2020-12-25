@@ -68,9 +68,17 @@ class sceneForestLevel extends Phaser.Scene {
         height = this.sys.canvas.height;
         
         //******************* Mapa ************************//
-        this.physics.add.image(400, 320, "forestMap");
+        var map = this.make.tilemap({ key: 'map' });
+        var tileset = map.addTilesetImage("Pradera", "tiles");
+
+        var belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
+        var worldLayer = map.createStaticLayer("World", tileset, 0, 0);
+        var aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
+        
+        //this.physics.add.image(400, 320, "forestMap");
 
         //****************** Gráficos de colisiones *********************//
+        /*
         var col1 = this.physics.add.image(65, 20, "forestCol1");
         col1.setVisible(false);
         col1.setImmovable(true);
@@ -236,7 +244,7 @@ class sceneForestLevel extends Phaser.Scene {
         col32.scaleX = 0.85;
         col32.setVisible(false);
         col32.setImmovable(true);
-
+*/
         //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
@@ -419,6 +427,7 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(players[0].getObject(), players[1].getObject());
 
         // Entre personajes y muros
+        /*
         this.physics.add.collider(col1, players[1].getObject());
         this.physics.add.collider(col1, players[0].getObject());
         this.physics.add.collider(col2, players[1].getObject());
@@ -483,7 +492,15 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(col31, players[0].getObject());
         this.physics.add.collider(col32, players[1].getObject());
         this.physics.add.collider(col32, players[0].getObject());
+        */
 
+       worldLayer.setCollisionByProperty({ collides: true });
+       var debugGraphics = this.add.graphics().setAlpha(0.75);
+       worldLayer.renderDebug(debugGraphics, {
+         tileColor: null, // Color of non-colliding tiles
+         collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+         faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+       });
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
