@@ -165,8 +165,9 @@ function loadScene(){
             nextScene.scene.start();
             break;
         case 4:
-            alert("Gracias por jugar a nuestro juego.");
-            window.close();
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneServer");
+            nextScene.scene.start();
             break;  
     }   
 }
