@@ -20,6 +20,8 @@ class bootloader extends Phaser.Scene {
             loadedResoruces = true;
         });
 
+        this.load.html('messagesCode','src/html/sendMessage.html');
+
         //***********************  Fondos ***************************//
         // Menús //
         this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
