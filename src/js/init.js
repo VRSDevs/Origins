@@ -2,7 +2,8 @@
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import bootloader from './bootloader.js';
-import sceneStart from './start.js'
+import sceneStart from './start.js';
+import sceneServer from './server.js';
 import sceneMainMenu from './menu/mainMenu.js';
 import scenePlayMenu from './menu/playMenu.js';
 import sceneSettingsMenu from './menu/settingsMenu.js';
@@ -28,7 +29,7 @@ const config = {
         default : "arcade"
     },
     scene: [                    // Lista de escenas
-        bootloader, sceneStart, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
+        bootloader, sceneStart, sceneServer, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
         sceneSettingsMenu, sceneSelectionMenu, sceneSelectionMenu2,
         sceneForestLevel, sceneCaveLevel, sceneLabLevel, sceneEndGame
     ]
