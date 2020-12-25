@@ -1,21 +1,9 @@
-@font-face{
-    font-family: 'origins';
-    src: url('/resources/fonts/origins.ttf');
-}
-
-@font-face{
-    font-family: 'alien';
-    src: url('/resources/fonts/alien.ttf');
-}
-
-html{
-    background-color: #b8c9cb;
-}
-
 #container{
-    font-family: alien;
+    /*width: 100%;*/
     text-align: center;
     margin-top: 25px;
+    /*margin-left: 300px;
+    margin-right: 300px;*/
     padding: 5px;
-    border: 1px solid white;
+    border: 1px solid black;
 }

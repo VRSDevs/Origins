@@ -1,27 +1,13 @@
 //////////////////////////////////////////////////////////////////////
-//                  Importaciones de otros JS                       //
+//                    Clase para el menu principal                  //
 //////////////////////////////////////////////////////////////////////
-import {controller} from '../gameController.js';
-import { game } from '../init.js';
 
-//////////////////////////////////////////////////////////////////////
-//                  Variables globales                              //
-//////////////////////////////////////////////////////////////////////
-//******************* Dimensiones lienzo ************************//
-var width = 0;      // Ancho (px)
-var height = 0;     // Alto (px)
-//******************* Botones ************************//
-var playButton = undefined;
-var controlsButton = undefined;
-var settingsButton = undefined;
-var exitButton = undefined;
-//******************* Control ************************//
-// Selección de submenú //
-var id = 0;
+var playButton;
+var controlsButton;
+var settingsButton;
+var exitButton;
+var id;
 
-//////////////////////////////////////////////////////////////////////
-//                   Clase de escena de menú principal              //
-//////////////////////////////////////////////////////////////////////
 class sceneMainMenu extends Phaser.Scene {
     constructor() {
         super({key: "sceneMainMenu",
@@ -29,149 +15,89 @@ class sceneMainMenu extends Phaser.Scene {
     }
 
     create() {
-        //******************* Asignación escena ************************//       
-        controller.setCurrentScene(this);
+        // Variables auxiliares
+        var width = this.sys.canvas.width;
+        var height = this.sys.canvas.height;
 
-        //******************* Variables auxiliares ************************//
-        width = this.sys.canvas.width;
-        height = this.sys.canvas.height;
-
-        //******************* Fondos ************************//
+        // Fondo
         this.add.image(400, 320, "mainMenu");
         
-        //****************** Botones *********************//
-        // Jugar //
-        playButton = this.add.sprite(width - 350/2, 296, "spritePlayButton", 0).setInteractive();
-        this.anims.create({
-            key: 'playButtonAnim',
-            frames: this.anims.generateFrameNumbers('spritePlayButton', {start: 1, end: 4}),
-            frameRate: 6,
-            repeat: 0
-        });
-
+        // Botón de jugar
+        playButton = this.add.sprite(width - 360/2, 296, "spritePlayButton", 1).setInteractive();
         playButton.addListener('pointerover', () => {
             id = 1;
-            playButton.anims.play('playButtonAnim',true);
+            playButton.setFrame(0);
         }, this);
         playButton.addListener('pointerout', () => {
             id = 0;
-            playButton.anims.stop();
-            playButton.setFrame(0);
+            playButton.setFrame(1);
         }, this);
         playButton.addListener('pointerdown', loadScene, this);
 
-        // Controles //
-        controlsButton = this.add.sprite(width - 350/2, 398, "spriteControlsButton", 0).setInteractive();
-        this.anims.create({
-            key: 'controlButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteControlsButton', {start: 1, end: 8}),
-            frameRate: 6,
-            repeat: 0
-        });
-
+        // Botón de menú de controles
+        controlsButton = this.add.sprite(width - 360/2, 398, "spriteControlsButton", 1).setInteractive();
         controlsButton.addListener('pointerover', () => {
             id = 2;
-            controlsButton.anims.play('controlButtonAnim',true);
+            controlsButton.setFrame(0);
         }, this);
         controlsButton.addListener('pointerout', () => {
             id = 0;
-            controlsButton.anims.stop();
-            controlsButton.setFrame(0);
+            controlsButton.setFrame(1);
         }, this);
         controlsButton.addListener('pointerdown', loadScene, this);     
                
-        // Ajustes //
-        settingsButton = this.add.sprite(width - 350/2, 501, "spriteSettingsButton", 0).setInteractive();
-        this.anims.create({
-            key: 'settingsButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteSettingsButton', {start: 1, end: 8}),
-            frameRate: 6,
-            repeat: 0
-        });
-
+        // Botón de menú de ajustes
+        settingsButton = this.add.sprite(width - 360/2, 501, "spriteSettingsButton", 1).setInteractive();
         settingsButton.addListener('pointerover', () => {
             id = 3;
-            settingsButton.anims.play('settingsButtonAnim',true);
+            settingsButton.setFrame(0);
         }, this);
         settingsButton.addListener('pointerout', () => {
             id = 0;
-            settingsButton.anims.stop();
-            settingsButton.setFrame(0);
+            settingsButton.setFrame(1);
         }, this);
-        
-        settingsButton.addListener('pointerdown', loadScene, this); 
+        settingsButton.addListener('pointerdown', loadScene, this);  
 
-        // Salir //
-        exitButton = this.add.sprite(width - 301/2, 590, "spriteExitButton", 0).setInteractive();
-        this.anims.create({
-            key: 'exitButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteExitButton', {start: 1, end: 4}),
-            frameRate: 6,
-            repeat: 0
-        });
-        
+        // Botón de salir
+        exitButton = this.add.sprite(width - 242/2, 590, "spriteExitButton", 1).setInteractive();
         exitButton.addListener('pointerover', () => {
             id = 4;
-            exitButton.anims.play('exitButtonAnim',true);
+            exitButton.setFrame(0);
         }, this);
         exitButton.addListener('pointerout', () => {
             id = 0;
-            exitButton.anims.stop();
-            exitButton.setFrame(0);
+            exitButton.setFrame(1);
         }, this);
         exitButton.addListener('pointerdown', loadScene, this); 
-
-        //****************** Música *********************//
-        if(controller.getMusicPlaying() === false){
-            controller.setMusic(this.sound.add("music"));
-            controller.setMusicLevelForest(this.sound.add ("music2"));
-            controller.setMusicLevelCave(this.sound.add("music3"));
-            controller.setMusicLevelLab(this.sound.add("music4"));
-            controller.setMusicEffect1(this.sound.add("musicEffect1"));
-            controller.setMusicEffect2(this.sound.add("musicEffect2"));
-            controller.getMusic().play();
-            controller.setMusicPlaying(true);
-        }
-    }        
-
+    }
     update(time, delta){
-        if(controller.getMusicEnabled() === false){
-            controller.getMusic().pause();
-        } else {
-            controller.getMusic().resume();
-        }
-    }       
-}  
+        
+    }
+}
 
-//////////////////////////////////////////////////////////////////////
-//                   Funciones extras                               //
-//////////////////////////////////////////////////////////////////////
-//******************* Carga de escena ************************//
 function loadScene(){
     switch (id) {
         case 1:
-            controller.getCurrentScene().scene.stop();
-            var nextScene = game.scene.getScene("scenePlayMenu");
-            nextScene.scene.start();
+            console.log(id);
+            this.scene.start("scenePlayMenu");
             break;    
         case 2:
-            controller.getCurrentScene().scene.stop();
-            var nextScene = game.scene.getScene("sceneControlsMenu");
-            nextScene.scene.start();
+            console.log(id);
+            this.scene.start("sceneControlsMenu");
             break;
         case 3:
-            controller.getCurrentScene().scene.stop();
-            var nextScene = game.scene.getScene("sceneSettingsMenu");
-            nextScene.scene.start();
+            console.log(id);
+            this.scene.start("sceneSettingsMenu");
             break;
         case 4:
             alert("Gracias por jugar a nuestro juego.");
+            console.log(id);
             window.close();
             break;  
+        default:
+
+            break;
     }   
 }
 
-//////////////////////////////////////////////////////////////////////
-//                          Exportaciones                           //
-//////////////////////////////////////////////////////////////////////
 export default sceneMainMenu;
