@@ -10,7 +10,7 @@ class sceneServer extends Phaser.Scene{
 //Load items from server
 function loadItems(callback) {
     $.ajax({
-        url: 'http://localhost:8080/items'
+        url: 'http://localhost:8080/messages'
     }).done(function (items) {
         console.log('Items loaded: ' + JSON.stringify(items));
         callback(items);
@@ -21,7 +21,7 @@ function loadItems(callback) {
 function createItem(item, callback) {
     $.ajax({
         method: "POST",
-        url: 'http://localhost:8080/items',
+        url: 'http://localhost:8080/messages',
         data: JSON.stringify(item),
         processData: false,
         headers: {
@@ -37,7 +37,7 @@ function createItem(item, callback) {
 function updateItem(item) {
     $.ajax({
         method: 'PUT',
-        url: 'http://localhost:8080/items/' + item.id,
+        url: 'http://localhost:8080/messages' + item.id,
         data: JSON.stringify(item),
         processData: false,
         headers: {
@@ -52,7 +52,7 @@ function updateItem(item) {
 function deleteItem(itemId) {
     $.ajax({
         method: 'DELETE',
-        url: 'http://localhost:8080/items/' + itemId
+        url: 'http://localhost:8080/messages' + itemId
     }).done(function (item) {
         console.log("Deleted item " + itemId)
     })
@@ -70,7 +70,7 @@ function showItem(item) {
     }
 
     $('#info').append(
-        '<div id="item-' + item.id + '"><input type="checkbox" ' + checked + '><span ' + style + '>' + item.description +
+        '<div id="item-' + item.id + '"><span ' + style + '>' + item.description +
         '</span> <button>Delete</button></div>')
 }
 
@@ -107,12 +107,12 @@ $(document).ready(function () {
 
         //Read item info from elements
         var itemDescription = textSpan.text();
-        var itemChecked = checkbox.prop('checked');
         var itemId = itemDiv.attr('id').split('-')[1];
 
         //Create updated item
         var updatedItem = {
             id: itemId,
+            user: "Antho",
             description: itemDescription,
             checked: itemChecked
         }
@@ -132,12 +132,12 @@ $(document).ready(function () {
         var value = input.val();
         input.val('');
 
-        var item = {
-            description: value,
-            checked: false
+        var message = {
+            user: "Antho",
+            body: value,
         }
 
-        createItem(item, function (itemWithId) {
+        createItem(message, function (itemWithId) {
             //When item with id is returned from server
             showItem(itemWithId);
         });
