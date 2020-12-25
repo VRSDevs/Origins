@@ -33,6 +33,9 @@ class bootloader extends Phaser.Scene {
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
         this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
+        // Tile //
+        this.load.image("tiles","./resources/img/Tileset/Tilemap.png");
+        this.load.tilemapTiledJSON("map","./resources/img/Tileset/TileMapForest.json");
         // Iconos //
         this.load.image("clock","./resources/img/CatFace/clock.png");
 
