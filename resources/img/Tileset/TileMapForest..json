@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"TileMap1..json"
-        }
-    },
  "height":64,
  "infinite":false,
  "layers":[
@@ -60,17 +52,8 @@
  "tileheight":10,
  "tilesets":[
         {
-         "columns":8,
          "firstgid":1,
-         "image":"Proyecto juegos en Red\/Origins\/resources\/img\/Tileset\/Tilemap.png",
-         "imageheight":100,
-         "imagewidth":80,
-         "margin":0,
-         "name":"Pradera",
-         "spacing":0,
-         "tilecount":80,
-         "tileheight":10,
-         "tilewidth":10
+         "source":"Pradera.tsx"
         }],
  "tilewidth":10,
  "type":"map",
