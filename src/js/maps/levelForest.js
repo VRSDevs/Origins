@@ -3,7 +3,6 @@
 //////////////////////////////////////////////////////////////////////
 import { controller } from '../gameController.js';
 import { players } from '../cats.js';
-import { Scene } from 'phaser';
 import { game } from '../init.js';
 
 //////////////////////////////////////////////////////////////////////
@@ -23,12 +22,6 @@ var player2Face = undefined;
 var distanceX = 0;
 var distanceY = 0;
 var distanceBool = false;   // ¿Se están tocando los jugadores?
-//******************* Mapa ************************//
-var map = this.make.tilemap({ key:"map"});
-var tileset = map.addTilesetImage("Tilemap", "tiles");
-var belowLayer = map.createStaticLayer("Below Player", tileset, 0, 0);
-var worldLayer = map.createStaticLayer("World", tileset, 0, 0);
-var aboveLayer = map.createStaticLayer("Above Player", tileset, 0, 0);
 //******************* Texto ************************//
 // Final de ronda //
 var textEndRound = "";
@@ -56,7 +49,6 @@ var oldT = 0;
 var diffT = controller.getTimeRound();
 
 
-
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
 //////////////////////////////////////////////////////////////////////
@@ -76,10 +68,10 @@ class sceneForestLevel extends Phaser.Scene {
         height = this.sys.canvas.height;
         
         //******************* Mapa ************************//
-        //this.physics.add.image(400, 320, "forestMap");
+        this.physics.add.image(400, 320, "forestMap");
 
         //****************** Gráficos de colisiones *********************//
-        /*var col1 = this.physics.add.image(65, 20, "forestCol1");
+        var col1 = this.physics.add.image(65, 20, "forestCol1");
         col1.setVisible(false);
         col1.setImmovable(true);
 
@@ -244,7 +236,7 @@ class sceneForestLevel extends Phaser.Scene {
         col32.scaleX = 0.85;
         col32.setVisible(false);
         col32.setImmovable(true);
-*/
+
         //******************* Materia oscura ************************//
         posAzar();
         darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
@@ -427,7 +419,6 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(players[0].getObject(), players[1].getObject());
 
         // Entre personajes y muros
-        /*
         this.physics.add.collider(col1, players[1].getObject());
         this.physics.add.collider(col1, players[0].getObject());
         this.physics.add.collider(col2, players[1].getObject());
@@ -492,7 +483,7 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(col31, players[0].getObject());
         this.physics.add.collider(col32, players[1].getObject());
         this.physics.add.collider(col32, players[0].getObject());
-*/
+
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
