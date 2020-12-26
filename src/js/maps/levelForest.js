@@ -179,7 +179,7 @@ class sceneForestLevel extends Phaser.Scene {
         players[0].getObject().anims.play('rightP1');
 
         // Jugador 2 //
-        players[1].setObject(this.physics.add.sprite(700, 80, (skinP2 + 'Idle')));
+        players[1].setObject(this.physics.add.sprite(720, 80, (skinP2 + 'Idle')));
         // Sin materia oscura
         this.anims.create({
             key: 'leftP2',
@@ -482,6 +482,10 @@ class sceneForestLevel extends Phaser.Scene {
                         break;
                 }
             }
+
+            //Normalizar vectores
+            players[1].getObject().body.velocity.normalize().scale(160);
+            players[0].getObject().body.velocity.normalize().scale(160);
             // Puntuación
             updatePoints();
         }
