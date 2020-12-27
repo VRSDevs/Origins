@@ -37,7 +37,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
         this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
         // Iconos //
-        this.load.image("clock","./resources/img/CatFace/clock.png");
+        this.load.image("clock","./resources/img/Icons/clock.png");
 
         //***********************  Colisiones ***************************//
         // Nivel de bosque //
@@ -57,7 +57,7 @@ class bootloader extends Phaser.Scene {
 
         //***********************  Gatos ***************************//
         // Aire //
-        this.load.image("AirCatFace","./resources/img/CatFace/Wiskas.png");
+        this.load.image("AirCatFace","./resources/img/Icons/Wiskas.png");
         // Sin materia
         this.load.spritesheet('AirCatDown','./resources/img/SpriteSheet/Air_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('AirCatIdle','./resources/img/SpriteSheet/Air_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
@@ -74,7 +74,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('AirCatUpMatter','./resources/img/SpriteSheet/Air_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('AirCatRightMatter','./resources/img/SpriteSheet/Air_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
         // Fuego //
-        this.load.image("FireCatFace","./resources/img/CatFace/Levi.png");
+        this.load.image("FireCatFace","./resources/img/Icons/Levi.png");
         // Sin materia
         this.load.spritesheet('FireCatDown','./resources/img/SpriteSheet/Fire_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('FireCatIdle','./resources/img/SpriteSheet/Fire_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
@@ -91,7 +91,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('FireCatUpMatter','./resources/img/SpriteSheet/Fire_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('FireCatRightMatter','./resources/img/SpriteSheet/Fire_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
         // Tierra //
-        this.load.image("GroundCatFace","./resources/img/CatFace/Tommy.png");
+        this.load.image("GroundCatFace","./resources/img/Icons/Tommy.png");
         // Sin materia
         this.load.spritesheet('GroundCatDown','./resources/img/SpriteSheet/Ground_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('GroundCatIdle','./resources/img/SpriteSheet/Ground_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
@@ -108,7 +108,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('GroundCatUpMatter','./resources/img/SpriteSheet/Ground_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('GroundCatRightMatter','./resources/img/SpriteSheet/Ground_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
         // Agua //
-        this.load.image("WaterCatFace","./resources/img/CatFace/Michi.png");
+        this.load.image("WaterCatFace","./resources/img/Icons/Michi.png");
         // Sin materia
         this.load.spritesheet('WaterCatDown','./resources/img/SpriteSheet/Water_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('WaterCatIdle','./resources/img/SpriteSheet/Water_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
