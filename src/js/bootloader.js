@@ -21,6 +21,7 @@ class bootloader extends Phaser.Scene {
         });
 
         this.load.html('messagesCode','src/html/sendMessage.html');
+        this.load.html('loginCode', 'src/html/login.html');
 
         //***********************  Fondos ***************************//
         // Menús //

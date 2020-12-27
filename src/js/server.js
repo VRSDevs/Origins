@@ -1,6 +1,12 @@
 //////////////////////////////////////////////////////////////////////
+//                  Importaciones de otros JS                       //
+//////////////////////////////////////////////////////////////////////
+import User from './user.js';
+
+//////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
+var user = undefined;
 //******************* Mensajes ************************//
 var messagesFromDB = [];    // Array de almacenamiento de mensajes de la base de datos
 var text = "";              // Texto para mostrar los mensajes
@@ -27,10 +33,10 @@ class sceneServer extends Phaser.Scene{
             if(event.target.name === 'sendMessage') {
                 //  Elemento HTML donde se introduce el texto
                 var elementHTML = this.getChildByName('messageField');
-                if(elementHTML !== '') {
+                if(elementHTML.value !== '') {
                     // Objeto de mensaje
                     var message = {
-                        username: "Antho",
+                        username: user.getUsername(),
                         body: elementHTML.value,
                     }
 
@@ -77,6 +83,36 @@ class sceneServer extends Phaser.Scene{
                 text.y = Phaser.Math.Clamp(text.y, -300, 400);
             }
         });
+
+        //******************* Usuarios ************************//
+        var loginHTML = this.add.dom(400,200).createFromCache('loginCode');
+        loginHTML.addListener('click');
+        loginHTML.on('click', function (event) {
+            if(event.target.name === 'loginButton') {
+                var usernameLog = this.getChildByName('usernameField');
+                var passwordLog = this.getChildByName('passwordField');
+
+                if(usernameLog.value !== '' && passwordLog.value !== '') {
+                    // Objeto de usuario
+                    user = new User(usernameLog.value, passwordLog.value, "Online");
+
+                    var userToCreate = {
+                        username: user.getUsername(),
+                        password: user.getPassword(),
+                        status: true,
+                    }
+
+                    //
+                    postUser(userToCreate);
+
+                    //
+                    usernameLog.value = '';
+                    passwordLog.value = '';
+                } else {
+                    console.log("Nope");
+                }
+            }
+        })
     }
 
     update() {
@@ -107,6 +143,21 @@ function postMessage(message) {
         method: "POST",
         url: 'http://localhost:8080/messages',
         data: JSON.stringify(message),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function (item) {
+        console.log("Item created: " + JSON.stringify(item));
+    })
+}
+
+//******************* Usuarios ************************//
+function postUser(user) {
+    $.ajax({
+        method: "POST",
+        url: 'http://localhost:8080/users',
+        data: JSON.stringify(user),
         processData: false,
         headers: {
             "Content-Type": "application/json"
