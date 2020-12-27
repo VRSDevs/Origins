@@ -139,6 +139,8 @@ class bootloader extends Phaser.Scene {
         this.load.audio("musicEffect2", ['./resources/music/Meow.mp3']);
 
         //******************** Botones ********************************//
+        this.load.spritesheet("spriteSUButton", './resources/img/SpriteSheet/Button_SpriteSheet/signup_SpriteSheet.png', { frameWidth: 399, frameHeight: 67});
+        this.load.spritesheet("spriteSUButton", './resources/img/SpriteSheet/Button_SpriteSheet/login_SpriteSheet.png', { frameWidth: 399, frameHeight: 67});
         this.load.spritesheet("spriteWButton", './resources/img/SpriteSheet/Button_SpriteSheet/wButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteAButton", './resources/img/SpriteSheet/Button_SpriteSheet/aButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteSButton", './resources/img/SpriteSheet/Button_SpriteSheet/sButton.png', { frameWidth: 45, frameHeight: 45});
