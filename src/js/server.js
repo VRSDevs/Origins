@@ -1,18 +1,22 @@
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import User from './user.js';
+//import { user } from '../user.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
-var user = undefined;
+//var user = undefined;
 //******************* Mensajes ************************//
 var messagesFromDB = [];    // Array de almacenamiento de mensajes de la base de datos
 var text = "";              // Texto para mostrar los mensajes
+//
+var cntSrv = "";
+var connectionToServer = undefined;
+var connectedUsers = 0;
 
 //////////////////////////////////////////////////////////////////////
-//                   Clase de escena del servidor     s              //
+//                   Clase de escena del servidor                   //
 //////////////////////////////////////////////////////////////////////
 class sceneServer extends Phaser.Scene{
     constructor() {
@@ -71,7 +75,11 @@ class sceneServer extends Phaser.Scene{
         var mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
 
         // Texto contenedor de los mensajes
-        text = this.add.text(xChat + 6, yChat + 130, messagesFromDB, { fontFamily: 'Consolas', color: '#00ff00', wordWrap: { width: 310 } }).setOrigin(0);
+        text = this.add.text(xChat + 6, yChat + 130, messagesFromDB, { 
+            fontFamily: 'Consolas', 
+            color: '#00ff00', 
+            wordWrap: { width: 310 } 
+        }).setOrigin(0);
         text.setMask(mask);
 
         // Zona
@@ -99,7 +107,7 @@ class sceneServer extends Phaser.Scene{
                     var userToCreate = {
                         username: user.getUsername(),
                         password: user.getPassword(),
-                        status: true,
+                        status: false,
                     }
 
                     //
@@ -113,12 +121,23 @@ class sceneServer extends Phaser.Scene{
                 }
             }
         })
+
+        //******************* Conexión al servidor ************************//
+        cntSrv = this.add.text(600, 500, "Holi", {
+            fontFamily: 'Consolas', 
+            color: '#00ff00', 
+        });
+
+        a(connectionToServer);
+        getConnectedUsers();
     }
 
     update() {
         //******************* Actualización de mensajes mostrados ************************//
-        loadMessagesFromDB();
-        text.setText(messagesFromDB);
+        if(connectionToServer){
+            loadMessagesFromDB();
+            text.setText(messagesFromDB);
+        }
     }
 }
 
@@ -153,6 +172,17 @@ function postMessage(message) {
 }
 
 //******************* Usuarios ************************//
+function getConnectedUsers() {
+    $.ajax({
+        url: 'http://localhost:8080/users/connectedUsers'
+    }).done(function (list) {
+        for (let i = 0; i < list.length; i++) {
+            connectedUsers++;
+        }
+        console.log("Conectados: " + connectedUsers);
+    })
+}
+
 function postUser(user) {
     $.ajax({
         method: "POST",
@@ -170,8 +200,23 @@ function postUser(user) {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-function updateListOfMessages() {
-    
+$.ajax({
+    url:'http://localhost:8080/users',
+    success: function() {
+        connectionToServer = true;
+    },
+    error: function() {
+        connectionToServer = false;
+    }
+})
+
+function a(bool){
+    if(bool){
+        cntSrv.setText("Servidor Online");
+    } else {
+        cntSrv.setText("Servidor Offline");
+    }
+
 }
 
 //////////////////////////////////////////////////////////////////////
