@@ -75,6 +75,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('AirCatLeftMatter','./resources/img/SpriteSheet/Air_Spritesheet/leftMatter.png' , {frameWidth: 42, frameHeight: 44} );
         this.load.spritesheet('AirCatUpMatter','./resources/img/SpriteSheet/Air_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('AirCatRightMatter','./resources/img/SpriteSheet/Air_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
+        // Descripción
+        this.load.image('AirCatDesc', './resources/img/MenuDesign/Selection/airText.png');
         // Fuego //
         this.load.image("FireCatFace","./resources/img/Icons/Levi.png");
         // Sin materia
@@ -92,6 +94,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('FireCatLeftMatter','./resources/img/SpriteSheet/Fire_Spritesheet/leftMatter.png' , {frameWidth: 42, frameHeight: 44} );
         this.load.spritesheet('FireCatUpMatter','./resources/img/SpriteSheet/Fire_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('FireCatRightMatter','./resources/img/SpriteSheet/Fire_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
+        // Descripción
+        this.load.image('FireCatDesc', './resources/img/MenuDesign/Selection/fireText.png');
         // Tierra //
         this.load.image("GroundCatFace","./resources/img/Icons/Tommy.png");
         // Sin materia
@@ -109,6 +113,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('GroundCatLeftMatter','./resources/img/SpriteSheet/Ground_Spritesheet/leftMatter.png' , {frameWidth: 42, frameHeight: 44} );
         this.load.spritesheet('GroundCatUpMatter','./resources/img/SpriteSheet/Ground_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('GroundCatRightMatter','./resources/img/SpriteSheet/Ground_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
+        // Descripción
+        this.load.image('GroundCatDesc', './resources/img/MenuDesign/Selection/groundText.png');
         // Agua //
         this.load.image("WaterCatFace","./resources/img/Icons/Michi.png");
         // Sin materia
@@ -126,6 +132,8 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet('WaterCatLeftMatter','./resources/img/SpriteSheet/Water_Spritesheet/leftMatter.png' , {frameWidth: 42, frameHeight: 44} );
         this.load.spritesheet('WaterCatUpMatter','./resources/img/SpriteSheet/Water_Spritesheet/upMatter.png' , {frameWidth: 30, frameHeight: 54} );
         this.load.spritesheet('WaterCatRightMatter','./resources/img/SpriteSheet/Water_Spritesheet/rightMatter.png' , {frameWidth: 42, frameHeight: 44} );
+        // Descripción
+        this.load.image('WaterCatDesc', './resources/img/MenuDesign/Selection/waterText.png');
 
         //******************** Materia oscura ********************************//
         this.load.image("darkMatter","./resources/img/DarkMatter/DarkMatter_small.png");

@@ -183,19 +183,7 @@ function getConnectedUsers() {
     })
 }
 
-function postUser(user) {
-    $.ajax({
-        method: "POST",
-        url: 'http://localhost:8080/users',
-        data: JSON.stringify(user),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (item) {
-        console.log("Item created: " + JSON.stringify(item));
-    })
-}
+
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
