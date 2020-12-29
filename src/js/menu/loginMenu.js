@@ -39,7 +39,7 @@ class sceneLoginMenu extends Phaser.Scene {
 
         //******************* Botones de acceso ************************//
         // Registro //
-        signupButton = this.add.sprite(400, 200, "spriteSUButton", 0).setInteractive();
+        signupButton = this.add.sprite(400, 300, "spriteSUButton", 0).setInteractive();
         this.anims.create({
             key: 'SUButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteSUButton', {start: 1, end: 6}),
