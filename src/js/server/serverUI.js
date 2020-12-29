@@ -64,7 +64,7 @@ class sceneServer extends Phaser.Scene{
         var hChat = 256;
 
         // Lienzo
-        var graphics = this.make.graphics();
+        var graphics = this.make.graphics().setDepth(2);
         graphics.fillStyle(0xffffff);
         graphics.fillRect(xChat, yChat, wChat, hChat);
 
@@ -93,7 +93,7 @@ class sceneServer extends Phaser.Scene{
         });
 
         //******************* Conexión al servidor ************************//
-        cntSrv = this.add.text(600, 500, "Holi", {
+        cntSrv = this.add.text(100, 100, "Holi", {
             fontFamily: 'Consolas', 
             color: '#00ff00', 
         });

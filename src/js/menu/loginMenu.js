@@ -1,7 +1,7 @@
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import { user } from '../user.js';
+import { user } from '../server/user.js';
 import {controller} from '../gameController.js';
 import { game } from '../init.js';
 
@@ -218,6 +218,7 @@ function loadScene() {
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneMainMenu");
     nextScene.scene.start();
+    
 }
 
 //////////////////////////////////////////////////////////////////////

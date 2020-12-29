@@ -338,8 +338,8 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-
     }
+
     update(time, delta) {
         //******************* Animaciones botones ************************//
         if (startAnim === true && selectedCat === 1) {

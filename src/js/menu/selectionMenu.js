@@ -191,7 +191,7 @@ class sceneSelectionMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
-
+//******************* Carga descripciones de gatos ************************//
 function loadDescription(value) {
     switch (value) {
         case 0:
