@@ -26,6 +26,7 @@ class bootloader extends Phaser.Scene {
 
         //***********************  Fondos ***************************//
         // Menús //
+        this.load.image("loginMenu","./resources/img/MenuDesign/Login/login_NoButtons.png");
         this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");

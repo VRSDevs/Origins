@@ -33,6 +33,8 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
 
+        this.add.image(400, 320, "loginMenu");
+
         loginHTML = this.add.dom(400, 200).createFromCache('loginCode').setVisible(false);
 
         //******************* Botones de acceso ************************//
