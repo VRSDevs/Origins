@@ -32,9 +32,10 @@ class bootloader extends Phaser.Scene {
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
         this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/Button_Spritesheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
         // Mapas //
-        this.load.image("tiles", "./resources/img/Tileset/Tilemap.png");
+        this.load.image("tiles", "./resources/img/Tileset/Tileset/Tilemap.png");
         this.load.tilemapTiledJSON("map", "./resources/img/Tileset/TileMapForest..json");
         this.load.tilemapTiledJSON("map1", "./resources/img/Tileset/Map1.json");
+        this.load.tilemapTiledJSON("map2", "./resources/img/Tileset/Map2.json");
 
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
