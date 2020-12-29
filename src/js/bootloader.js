@@ -36,6 +36,11 @@ class bootloader extends Phaser.Scene {
         // Victoria
         this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/Backgound_SpriteSheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
         // Mapas //
+        this.load.image("tiles", "./resources/img/Tileset/Tileset/Tilemap.png");
+        this.load.tilemapTiledJSON("map", "./resources/img/Tileset/TileMapForest..json");
+        this.load.tilemapTiledJSON("map1", "./resources/img/Tileset/Map1.json");
+        this.load.tilemapTiledJSON("map2", "./resources/img/Tileset/Map2.json");
+
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
         this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
