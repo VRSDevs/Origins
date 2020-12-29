@@ -92,36 +92,6 @@ class sceneServer extends Phaser.Scene{
             }
         });
 
-        //******************* Usuarios ************************//
-        var loginHTML = this.add.dom(400,200).createFromCache('loginCode');
-        loginHTML.addListener('click');
-        loginHTML.on('click', function (event) {
-            if(event.target.name === 'loginButton') {
-                var usernameLog = this.getChildByName('usernameField');
-                var passwordLog = this.getChildByName('passwordField');
-
-                if(usernameLog.value !== '' && passwordLog.value !== '') {
-                    // Objeto de usuario
-                    user = new User(usernameLog.value, passwordLog.value, "Online");
-
-                    var userToCreate = {
-                        username: user.getUsername(),
-                        password: user.getPassword(),
-                        status: false,
-                    }
-
-                    //
-                    postUser(userToCreate);
-
-                    //
-                    usernameLog.value = '';
-                    passwordLog.value = '';
-                } else {
-                    console.log("Nope");
-                }
-            }
-        })
-
         //******************* Conexión al servidor ************************//
         cntSrv = this.add.text(600, 500, "Holi", {
             fontFamily: 'Consolas', 
