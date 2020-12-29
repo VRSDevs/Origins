@@ -1,12 +1,22 @@
 //////////////////////////////////////////////////////////////////////
+//                  Importaciones de otros JS                       //
+//////////////////////////////////////////////////////////////////////
+//import { user } from '../user.js';
+
+//////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
+//var user = undefined;
 //******************* Mensajes ************************//
 var messagesFromDB = [];    // Array de almacenamiento de mensajes de la base de datos
 var text = "";              // Texto para mostrar los mensajes
+//
+var cntSrv = "";
+var connectionToServer = undefined;
+var connectedUsers = 0;
 
 //////////////////////////////////////////////////////////////////////
-//                   Clase de escena del servidor     s              //
+//                   Clase de escena del servidor                   //
 //////////////////////////////////////////////////////////////////////
 class sceneServer extends Phaser.Scene{
     constructor() {
@@ -27,10 +37,10 @@ class sceneServer extends Phaser.Scene{
             if(event.target.name === 'sendMessage') {
                 //  Elemento HTML donde se introduce el texto
                 var elementHTML = this.getChildByName('messageField');
-                if(elementHTML !== '') {
+                if(elementHTML.value !== '') {
                     // Objeto de mensaje
                     var message = {
-                        username: "Antho",
+                        username: user.getUsername(),
                         body: elementHTML.value,
                     }
 
@@ -65,7 +75,11 @@ class sceneServer extends Phaser.Scene{
         var mask = new Phaser.Display.Masks.GeometryMask(this, graphics);
 
         // Texto contenedor de los mensajes
-        text = this.add.text(xChat + 6, yChat + 130, messagesFromDB, { fontFamily: 'Consolas', color: '#00ff00', wordWrap: { width: 310 } }).setOrigin(0);
+        text = this.add.text(xChat + 6, yChat + 130, messagesFromDB, { 
+            fontFamily: 'Consolas', 
+            color: '#00ff00', 
+            wordWrap: { width: 310 } 
+        }).setOrigin(0);
         text.setMask(mask);
 
         // Zona
@@ -77,12 +91,53 @@ class sceneServer extends Phaser.Scene{
                 text.y = Phaser.Math.Clamp(text.y, -300, 400);
             }
         });
+
+        //******************* Usuarios ************************//
+        var loginHTML = this.add.dom(400,200).createFromCache('loginCode');
+        loginHTML.addListener('click');
+        loginHTML.on('click', function (event) {
+            if(event.target.name === 'loginButton') {
+                var usernameLog = this.getChildByName('usernameField');
+                var passwordLog = this.getChildByName('passwordField');
+
+                if(usernameLog.value !== '' && passwordLog.value !== '') {
+                    // Objeto de usuario
+                    user = new User(usernameLog.value, passwordLog.value, "Online");
+
+                    var userToCreate = {
+                        username: user.getUsername(),
+                        password: user.getPassword(),
+                        status: false,
+                    }
+
+                    //
+                    postUser(userToCreate);
+
+                    //
+                    usernameLog.value = '';
+                    passwordLog.value = '';
+                } else {
+                    console.log("Nope");
+                }
+            }
+        })
+
+        //******************* Conexión al servidor ************************//
+        cntSrv = this.add.text(600, 500, "Holi", {
+            fontFamily: 'Consolas', 
+            color: '#00ff00', 
+        });
+
+        a(connectionToServer);
+        getConnectedUsers();
     }
 
     update() {
         //******************* Actualización de mensajes mostrados ************************//
-        loadMessagesFromDB();
-        text.setText(messagesFromDB);
+        if(connectionToServer){
+            loadMessagesFromDB();
+            text.setText(messagesFromDB);
+        }
     }
 }
 
@@ -116,11 +171,40 @@ function postMessage(message) {
     })
 }
 
+//******************* Usuarios ************************//
+function getConnectedUsers() {
+    $.ajax({
+        url: 'http://localhost:8080/users/connectedUsers'
+    }).done(function (list) {
+        for (let i = 0; i < list.length; i++) {
+            connectedUsers++;
+        }
+        console.log("Conectados: " + connectedUsers);
+    })
+}
+
+
+
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-function updateListOfMessages() {
-    
+$.ajax({
+    url:'http://localhost:8080/users',
+    success: function() {
+        connectionToServer = true;
+    },
+    error: function() {
+        connectionToServer = false;
+    }
+})
+
+function a(bool){
+    if(bool){
+        cntSrv.setText("Servidor Online");
+    } else {
+        cntSrv.setText("Servidor Offline");
+    }
+
 }
 
 //////////////////////////////////////////////////////////////////////

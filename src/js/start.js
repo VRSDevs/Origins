@@ -58,7 +58,7 @@ class sceneStart extends Phaser.Scene {
         if(videoCompleted && loadedResoruces) {
             this.scene.sleep();
             videoCompleted = false;
-            this.scene.start("sceneMainMenu");
+            this.scene.start("sceneLoginMenu");
         }
     }
 }
