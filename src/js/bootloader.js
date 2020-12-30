@@ -51,6 +51,7 @@ class bootloader extends Phaser.Scene {
         // Iconos //
         this.load.image("clock","./resources/img/Icons/clock.png");
         this.load.image("userIcon","./resources/img/Icons/user.png");
+        this.load.spritesheet("spriteReloadButton","./resources/img/SpriteSheet/Button_SpriteSheet/sync_SpriteSheet.png", {frameWidth: 30, frameHeight: 30});
 
         //***********************  Colisiones ***************************//
         // Nivel de bosque //

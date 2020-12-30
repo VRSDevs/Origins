@@ -21,6 +21,8 @@ var loginButton = undefined;
 //******************* Servidor ************************//
 // Imágenes //
 var userIc = undefined;
+// Botones //
+var syncButton = undefined;
 // Texto //
 var textServerConnected = "";
 var textNumOfUsersConnected = "";
@@ -123,7 +125,7 @@ class sceneLoginMenu extends Phaser.Scene {
             textNumOfUsersConnected.setStyle({
                 color: '#ff0000',
             });
-            textNumOfUsersConnected.setText("!");
+            textNumOfUsersConnected.setText("0");
         }
 
         //
@@ -189,11 +191,14 @@ function createServerUI() {
     controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
 
     //******************* Conexión al servidor ************************//
+    // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
         fontSize: 14,
         color: '#00ff00',
     });
+    // Botón recarga //
+    syncButton = controller.getCurrentScene().add.sprite(775, 145, "spriteReloadButton", 1).setInteractive();
 
     //******************* Conexión al servidor ************************//
     // Texto //
