@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 import { controller } from '../gameController.js';
 import { game } from '../init.js';
+import { server } from '../server/server.js';
 import { user } from '../server/user.js';
 
 //////////////////////////////////////////////////////////////////////
@@ -17,14 +18,12 @@ var controlsButton = undefined;
 var settingsButton = undefined;
 var exitButton = undefined;
 //******************* Servidor ************************//
-// Mensajes //
-var messagesFromDB = [];    // Array de almacenamiento de mensajes de la base de datos
-var text = "";              // Texto para mostrar los mensajes
-//
-var cntSrv = "";
-var connectionToServer = undefined;
-var connectedUsers = 0;
-
+// Imágenes //
+var userIc = undefined;
+// Texto //
+var textServerConnected = "";
+var textNumOfUsersConnected = "";
+var messages = "";
 //******************* Control ************************//
 // Selección de submenú //
 var id = 0;
@@ -150,7 +149,26 @@ class sceneMainMenu extends Phaser.Scene {
 
     update(time, delta) {
         //****************** Servidor *********************//
-
+        if (server.isServerConnected() === true) {
+            textServerConnected.setStyle({
+                color: '#00ff00',
+            });
+            textServerConnected.setText("Server Online");
+            userIc.setTint(0x00ff00);
+            textNumOfUsersConnected.setStyle({
+                color: '#00ff00',
+            });
+        } else {
+            textServerConnected.setStyle({
+                color: '#ff0000',
+            });
+            textServerConnected.setText("Server Offline");
+            userIc.setTint(0xff0000);
+            textNumOfUsersConnected.setStyle({
+                color: '#ff0000',
+            });
+            server.setMessagesFromDB(["<Servidor> ERROR"]);
+        }
 
         //****************** Música *********************//
         if (controller.getMusicEnabled() === false) {
@@ -209,35 +227,47 @@ function createServerUI() {
     graphics.fillRect(xChat, yChat, wChat, hChat);
 
     // Fondo del texto
-    controller.getCurrentScene().add.rectangle(xChat, yChat, wChat, hChat, 0xffffff).setOrigin(0);
+    controller.getCurrentScene().add.rectangle(xChat, yChat, wChat, hChat, 0x000000, 0.4).setOrigin(0);
 
     // Máscara para ocultar
     var mask = new Phaser.Display.Masks.GeometryMask(controller.getCurrentScene(), graphics);
-
+    
     // Texto contenedor de los mensajes
-    text = controller.getCurrentScene().add.text(xChat + 6, yChat + 130, messagesFromDB, {
+    messages = controller.getCurrentScene().add.text(xChat + 6, yChat + 130, server.getMessagesFromDB(), {
         fontFamily: 'Consolas',
         color: '#00ff00',
         wordWrap: { width: 310 }
     }).setOrigin(0);
-    text.setMask(mask);
+    messages.setMask(mask);
 
     // Zona
     var zone = controller.getCurrentScene().add.zone(xChat, yChat, wChat, hChat).setOrigin(0).setInteractive();
     zone.on('pointermove', function (pointer) {
         if (pointer.isDown) {
-            text.y += (pointer.velocity.y / 10);
-            text.y = Phaser.Math.Clamp(text.y, -300, 400);
+            messages.y += (pointer.velocity.y / 10);
+            messages.y = Phaser.Math.Clamp(messages.y, -300, 400);
         }
     });
 
     //******************* Conexión al servidor ************************//
-    cntSrv = controller.getCurrentScene().add.text(100, 100, "Holi", {
-        fontFamily: 'Consolas', 
-        color: '#00ff00', 
+    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
+
+    //******************* Conexión al servidor ************************//
+    textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
+        fontFamily: 'origins',
+        fontSize: 14,
+        color: '#00ff00',
     });
 
-    a(connectionToServer);
+    //******************* Conexión al servidor ************************//
+    // Texto //
+    textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
+        fontFamily: 'origins',
+        fontSize: 24,
+        color: '#00ff00',
+    });
+    // Icono //
+    userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
 
 
@@ -262,19 +292,11 @@ function loadScene() {
             break;
         case 4:
             controller.getCurrentScene().scene.stop();
-            var nextScene = game.scene.getScene("sceneServer");
+            controller.getMusic().pause();
+            var nextScene = game.scene.getScene("sceneLoginMenu");
             nextScene.scene.start();
             break;
     }
-}
-
-function a(bool){
-    if(bool){
-        cntSrv.setText("Servidor Online");
-    } else {
-        cntSrv.setText("Servidor Offline");
-    }
-
 }
 
 //////////////////////////////////////////////////////////////////////

@@ -2,7 +2,8 @@
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import { user } from '../server/user.js';
-import {controller} from '../gameController.js';
+import { server } from '../server/server.js';
+import { controller } from '../gameController.js';
 import { game } from '../init.js';
 
 //////////////////////////////////////////////////////////////////////
@@ -10,14 +11,19 @@ import { game } from '../init.js';
 //////////////////////////////////////////////////////////////////////
 //******************* Elementos HTML ************************//
 var loginHTML = undefined;
-
 //******************* Control ************************//
 var mode = 0;           // Opción de menú
 var updateScene = 0;    // Variable de control para implementar HTML
-var foundUser = false;
+var foundUser = false;  // ¿Se encontró al jugador insertado?
 //******************* Botones ************************//
 var signupButton = undefined;
 var loginButton = undefined;
+//******************* Servidor ************************//
+// Imágenes //
+var userIc = undefined;
+// Texto //
+var textServerConnected = "";
+var textNumOfUsersConnected = "";
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú de logueo              //
@@ -33,16 +39,23 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
 
+        //******************* Imágenes ************************// 
+        // Fondo //
         this.add.image(400, 320, "loginMenu");
 
+        //
         loginHTML = this.add.dom(400, 200).createFromCache('loginCode').setVisible(false);
+
+        //******************* Información del servidor ************************//
+        server.connect();
+        createServerUI();
 
         //******************* Botones de acceso ************************//
         // Registro //
         signupButton = this.add.sprite(400, 300, "spriteSUButton", 0).setInteractive();
         this.anims.create({
             key: 'SUButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteSUButton', {start: 1, end: 6}),
+            frames: this.anims.generateFrameNumbers('spriteSUButton', { start: 1, end: 6 }),
             frameRate: 6,
             repeat: 0
         });
@@ -67,7 +80,7 @@ class sceneLoginMenu extends Phaser.Scene {
         loginButton = this.add.sprite(400, 400, "spriteLIButton", 0).setInteractive();
         this.anims.create({
             key: 'LIButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteLIButton', {start: 1, end: 6}),
+            frames: this.anims.generateFrameNumbers('spriteLIButton', { start: 1, end: 6 }),
             frameRate: 6,
             repeat: 0
         })
@@ -87,10 +100,34 @@ class sceneLoginMenu extends Phaser.Scene {
             signupButton.removeAllListeners();
             loginButton.removeAllListeners();
         }, this);
+
     }
 
     update() {
-        if(updateScene !== 0) {
+        //****************** Servidor *********************//
+        if (server.isServerConnected() === true) {
+            textServerConnected.setStyle({
+                color: '#00ff00',
+            });
+            textServerConnected.setText("Server Online");
+            userIc.setTint(0x00ff00);
+            textNumOfUsersConnected.setStyle({
+                color: '#00ff00',
+            });
+        } else {
+            textServerConnected.setStyle({
+                color: '#ff0000',
+            });
+            textServerConnected.setText("Server Offline");
+            userIc.setTint(0xff0000);
+            textNumOfUsersConnected.setStyle({
+                color: '#ff0000',
+            });
+            textNumOfUsersConnected.setText("!");
+        }
+
+        //
+        if (updateScene !== 0) {
             mode = updateScene;
             updatingScene();
             updateScene = 0;
@@ -146,15 +183,38 @@ function updateUser(user) {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//
+//******************* Creación de interfaz de servidor ************************//
+function createServerUI() {
+    //******************* Conexión al servidor ************************//
+    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
+
+    //******************* Conexión al servidor ************************//
+    textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
+        fontFamily: 'origins',
+        fontSize: 14,
+        color: '#00ff00',
+    });
+
+    //******************* Conexión al servidor ************************//
+    // Texto //
+    textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
+        fontFamily: 'origins',
+        fontSize: 24,
+        color: '#00ff00',
+    });
+    // Icono //
+    userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
+}
+
+//******************* Actualización escena para mostrar HTML ************************//
 function updatingScene() {
     loginHTML.addListener('click');
-    loginHTML.on('click', function(event) {
-        if(event.target.name === 'loginButton') {
+    loginHTML.on('click', function (event) {
+        if (event.target.name === 'loginButton') {
             var usernameLog = this.getChildByName('usernameField');
             var passwordLog = this.getChildByName('passwordField');
 
-            if(usernameLog.value !== '' && passwordLog.value !== '') {
+            if (usernameLog.value !== '' && passwordLog.value !== '') {
                 switch (mode) {
                     case 1:
                         var codifiedPassword = sha256(passwordLog.value);
@@ -178,7 +238,7 @@ function updatingScene() {
 
                         loadScene();
                         break;
-                
+
                     case 2:
                         var codifiedPassword = sha256(passwordLog.value);
 
@@ -193,7 +253,7 @@ function updatingScene() {
 
                         checkUser(userToCheck);
 
-                        if(foundUser){
+                        if (foundUser) {
                             console.log("Lets go!");
                             updateUser(userToCheck);
                             usernameLog.value = '';
@@ -214,11 +274,12 @@ function updatingScene() {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
+//******************* Carga de la siguiente escena ************************//
 function loadScene() {
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneMainMenu");
     nextScene.scene.start();
-    
+
 }
 
 //////////////////////////////////////////////////////////////////////

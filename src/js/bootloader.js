@@ -50,6 +50,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
         // Iconos //
         this.load.image("clock","./resources/img/Icons/clock.png");
+        this.load.image("userIcon","./resources/img/Icons/user.png");
 
         //***********************  Colisiones ***************************//
         // Nivel de bosque //
