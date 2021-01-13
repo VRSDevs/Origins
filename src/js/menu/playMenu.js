@@ -56,7 +56,7 @@ class scenePlayMenu extends Phaser.Scene {
 
         //****************** Botones *********************//
         // Modo 1 Jugador //
-        singlePlayerButton = this.add.sprite(139, 251, "sprite1PlayerGM", 0).setInteractive();
+        singlePlayerButton = this.add.sprite(139, 284, "sprite1PlayerGM", 0).setInteractive();
         this.anims.create({
             key: 'singlePlayerAnim',
             frames: this.anims.generateFrameNumbers('sprite1PlayerGM', { start: 1, end: 6 }),
@@ -75,7 +75,7 @@ class scenePlayMenu extends Phaser.Scene {
         singlePlayerButton.addListener('pointerdown', loadScene, this);
 
         // Modo 2 Jugador (local) //
-        localMultiplayerButton = this.add.sprite(405, 251, "sprite2PlayerGM", 0).setInteractive();
+        localMultiplayerButton = this.add.sprite(405, 284, "sprite2PlayerGM", 0).setInteractive();
         this.anims.create({
             key: 'localMultiplayerAnim',
             frames: this.anims.generateFrameNumbers('sprite2PlayerGM', { start: 1, end: 4 }),
@@ -94,7 +94,7 @@ class scenePlayMenu extends Phaser.Scene {
         localMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Modo Multijugador //
-        onlineMultiplayerButton = this.add.sprite(662, 251, "spriteMultiplayerGM", 0).setInteractive();
+        onlineMultiplayerButton = this.add.sprite(662, 284, "spriteMultiplayerGM", 0).setInteractive();
         this.anims.create({
             key: 'multiplayerAnim',
             frames: this.anims.generateFrameNumbers('spriteMultiplayerGM', { start: 1, end: 4 }),
