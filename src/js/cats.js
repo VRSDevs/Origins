@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 class Cat {
     //******************* Constructor clase ************************//
-    constructor(obj, tp, sc, rw, hm) {
+    constructor(obj, tp, sc, rw, hm, sd) {
         this.object = obj;      // Objeto de phaser
         this.type = tp;         // Tipo:    1 -> Tierra
                                 //          2 -> Agua
@@ -12,6 +12,7 @@ class Cat {
         this.score = sc;        // Puntuación  
         this.roundsWon = rw;    // Rondas ganadas
         this.hasMatter = hm;    // ¿Tiene la materia?
+        this.sand = sd;         // ¿Está tocando arena?
     }
     //******************* Getters ************************//
     getObject() {
@@ -33,6 +34,10 @@ class Cat {
     getHasMatter = function () {
         return this.hasMatter;
     }
+
+    getSand = function () {
+        return this.sand;
+    }
     //******************* Setters ************************//
     setObject(obj) {
         this.object = obj;
@@ -53,6 +58,10 @@ class Cat {
     setHasMatter(value) {
         this.hasMatter = value;
     }
+
+    setSand(value) {
+        this.sand = value;
+    }
     //******************* Otros ************************//
     // Reseteo de jugadores //
     reset(bool) {
@@ -62,10 +71,12 @@ class Cat {
             this.score = 0;  
             this.roundsWon = 0;
             this.hasMatter = false;
+            this.sand = true;
         } else {
             this.score = 0;
             this.roundsWon = 0;
             this.hasMatter = false;
+            this.sand = false;
         }
     }
 }
@@ -74,9 +85,9 @@ class Cat {
 //                         Creación de jugadores                    //
 //////////////////////////////////////////////////////////////////////
 // Jugador 1 //
-var player1 = new Cat(undefined, 0, 0, 0, false);
+var player1 = new Cat(undefined, 0, 0, 0, false, false);
 // Jugador 2 //
-var player2 = new Cat(undefined, 0, 0, 0, false);
+var player2 = new Cat(undefined, 0, 0, 0, false, false);
 // Lista de jugadores //
 var players = [player1, player2];
 

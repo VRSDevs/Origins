@@ -14,6 +14,7 @@ var height = 0;     // Alto (px)
 //******************* Input teclado ************************//
 var cursors = undefined;
 var keys = undefined;
+var sand;
 //******************* Jugadores ************************//
 // Iconos //
 var player1Face = undefined;
@@ -73,7 +74,7 @@ class sceneForestLevel extends Phaser.Scene {
 
         var belowLayer = map.createStaticLayer("Ground", tileset);
         var wallsLayer = map.createStaticLayer("Walls", tileset);
-        
+        var sandObjects = map.getObjectLayer('sandObj')['objects'];
 
         //******************* Materia oscura ************************//
         posAzar();
@@ -113,7 +114,7 @@ class sceneForestLevel extends Phaser.Scene {
         }
 
         // Jugador 1 //
-        players[0].setObject(this.physics.add.sprite(70, 80, (skinP1 + 'Idle')));
+        players[0].setObject(this.physics.add.sprite(120, 120, (skinP1 + 'Idle')));
         // Sin materia oscura
         this.anims.create({
             key: 'leftP1',
@@ -179,7 +180,7 @@ class sceneForestLevel extends Phaser.Scene {
         players[0].getObject().anims.play('rightP1');
 
         // Jugador 2 //
-        players[1].setObject(this.physics.add.sprite(720, 80, (skinP2 + 'Idle')));
+        players[1].setObject(this.physics.add.sprite(700, 80, (skinP2 + 'Idle')));
         // Sin materia oscura
         this.anims.create({
             key: 'leftP2',
@@ -248,7 +249,21 @@ class sceneForestLevel extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
         keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P');
 
-        //******************* Colisiones ************************//
+        //******************* Colisiones y arena ************************//
+
+        sand = this.physics.add.staticGroup();
+
+        sandObjects.forEach(object=>{
+            var obj = sand.create(object.x,object.y);
+            obj.setScale(object.width/40, object.height/40); 
+            obj.setOrigin(0); 
+            obj.body.width = object.width; 
+            obj.body.height = object.height; 
+            obj.setVisible(false);
+        });
+
+
+
         // Con los bordes
         players[0].getObject().setCollideWorldBounds(true);
         players[1].getObject().setCollideWorldBounds(true);
@@ -257,11 +272,10 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.collider(players[0].getObject(), players[1].getObject());
 
         // Entre personajes y muros
-
-       wallsLayer.setCollisionByProperty({ collides: true });
-       this.physics.add.collider(wallsLayer, players[1].getObject());
-       this.physics.add.collider(wallsLayer, players[0].getObject());
-
+        wallsLayer.setCollisionByProperty({ collides: true });
+        this.physics.add.collider(wallsLayer, players[1].getObject());
+        this.physics.add.collider(wallsLayer, players[0].getObject());
+        
 
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
@@ -367,20 +381,20 @@ class sceneForestLevel extends Phaser.Scene {
             if (!players[0].getHasMatter()) {
                 switch (true) {
                     case keys.A.isDown:
-                        players[0].getObject().setVelocityX(-160);
-                        players[0].getObject().anims.play('leftP1', true);
+                            players[0].getObject().setVelocityX(-160);
+                            players[0].getObject().anims.play('leftP1', true);                                               
                         break;
                     case keys.D.isDown:
-                        players[0].getObject().setVelocityX(160);
-                        players[0].getObject().anims.play('rightP1', true);
+                            players[0].getObject().setVelocityX(160);
+                            players[0].getObject().anims.play('rightP1', true);                             
                         break;
                     case keys.S.isDown:
-                        players[0].getObject().setVelocityY(160);
-                        players[0].getObject().anims.play('downP1', true);
+                            players[0].getObject().setVelocityY(160);
+                            players[0].getObject().anims.play('downP1', true);                      
                         break;
                     case keys.W.isDown:
-                        players[0].getObject().setVelocityY(-160);
-                        players[0].getObject().anims.play('upP1', true);
+                            players[0].getObject().setVelocityY(-160);
+                            players[0].getObject().anims.play('upP1', true);                       
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
@@ -400,20 +414,21 @@ class sceneForestLevel extends Phaser.Scene {
             } else {
                 switch (true) {
                     case keys.A.isDown:
-                        players[0].getObject().setVelocityX(-160);
-                        players[0].getObject().anims.play('leftP1Matter', true);
+                            players[0].getObject().setVelocityX(-160);
+                            players[0].getObject().anims.play('leftP1Matter', true);
                         break;
                     case keys.D.isDown:
-                        players[0].getObject().setVelocityX(160);
-                        players[0].getObject().anims.play('rightP1Matter', true);
+                            players[0].getObject().setVelocityX(160);
+                            players[0].getObject().anims.play('rightP1Matter', true);             
                         break;
                     case keys.S.isDown:
-                        players[0].getObject().setVelocityY(160);
-                        players[0].getObject().anims.play('downP1Matter', true);
+                            players[0].getObject().setVelocityY(160);
+                            players[0].getObject().anims.play('downP1Matter', true);
+                        
                         break;
                     case keys.W.isDown:
-                        players[0].getObject().setVelocityY(-160);
-                        players[0].getObject().anims.play('upP1Matter', true);
+                            players[0].getObject().setVelocityY(-160);
+                            players[0].getObject().anims.play('upP1Matter', true);                     
                         break;
                     default:
                         players[0].getObject().setVelocityX(0);
@@ -484,10 +499,32 @@ class sceneForestLevel extends Phaser.Scene {
             }
 
             //Normalizar vectores
-            players[1].getObject().body.velocity.normalize().scale(160);
-            players[0].getObject().body.velocity.normalize().scale(160);
+            if(players[1].getSand() == true){
+                players[1].getObject().body.velocity.normalize().scale(80);
+            } else {
+                players[1].getObject().body.velocity.normalize().scale(160);
+            }
+
+            if(players[0].getSand() == true){
+                players[0].getObject().body.velocity.normalize().scale(80);
+            } else {
+                players[0].getObject().body.velocity.normalize().scale(160);
+            }
+
+
             // Puntuación
             updatePoints();
+            
+            // Movimiento en la arena
+            players[0].setSand(false);
+            players[1].setSand(false);
+
+            this.physics.add.overlap(players[1].getObject(), sand, () => {
+                players[1].setSand(true);
+            }, null, this);
+            this.physics.add.overlap(players[0].getObject(), sand, () => {
+                players[0].setSand(true);
+            }, null, this);
         }
     }
 }
@@ -604,6 +641,7 @@ function endRound() {
 function endRound2() {
     players.forEach(property => {
         property.setHasMatter(false);
+        property.setSand(false);
         property.setScore(0);
     });
     controller.setStopUpdateLevel(false);

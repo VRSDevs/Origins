@@ -55,7 +55,7 @@ class bootloader extends Phaser.Scene {
 
         //***********************  Colisiones ***************************//
         // Nivel de bosque //
-        this.load.image("forestCol1","./resources/img/Maps/fieldColisions/1.png");
+        this.load.image("forestCol1","./resources/img/Maps/fieldColisions/8.2png");
         this.load.image("forestCol2","./resources/img/Maps/fieldColisions/2.2.png");
         this.load.image("forestCol3","./resources/img/Maps/fieldColisions/2.1.png");
         this.load.image("forestCol4","./resources/img/Maps/fieldColisions/3.png");
