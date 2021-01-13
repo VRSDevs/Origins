@@ -64,7 +64,7 @@ class sceneServer extends Phaser.Scene{
         var hChat = 256;
 
         // Lienzo
-        var graphics = this.make.graphics();
+        var graphics = this.make.graphics().setDepth(2);
         graphics.fillStyle(0xffffff);
         graphics.fillRect(xChat, yChat, wChat, hChat);
 
@@ -92,38 +92,8 @@ class sceneServer extends Phaser.Scene{
             }
         });
 
-        //******************* Usuarios ************************//
-        var loginHTML = this.add.dom(400,200).createFromCache('loginCode');
-        loginHTML.addListener('click');
-        loginHTML.on('click', function (event) {
-            if(event.target.name === 'loginButton') {
-                var usernameLog = this.getChildByName('usernameField');
-                var passwordLog = this.getChildByName('passwordField');
-
-                if(usernameLog.value !== '' && passwordLog.value !== '') {
-                    // Objeto de usuario
-                    user = new User(usernameLog.value, passwordLog.value, "Online");
-
-                    var userToCreate = {
-                        username: user.getUsername(),
-                        password: user.getPassword(),
-                        status: false,
-                    }
-
-                    //
-                    postUser(userToCreate);
-
-                    //
-                    usernameLog.value = '';
-                    passwordLog.value = '';
-                } else {
-                    console.log("Nope");
-                }
-            }
-        })
-
         //******************* Conexión al servidor ************************//
-        cntSrv = this.add.text(600, 500, "Holi", {
+        cntSrv = this.add.text(100, 100, "Holi", {
             fontFamily: 'Consolas', 
             color: '#00ff00', 
         });

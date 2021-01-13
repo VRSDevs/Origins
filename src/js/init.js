@@ -4,7 +4,7 @@
 import bootloader from './bootloader.js';
 import sceneStart from './start.js';
 import sceneLoginMenu from './menu/loginMenu.js';
-import sceneServer from './server.js';
+import sceneServer from './server/serverUI.js';
 import sceneMainMenu from './menu/mainMenu.js';
 import scenePlayMenu from './menu/playMenu.js';
 import sceneSettingsMenu from './menu/settingsMenu.js';
@@ -23,7 +23,7 @@ import {controller} from './gameController.js';
 const config = {
     width: 800,                 // Tamaño lienzo (px.)
     height: 640,
-    parent: "container",        // Contenedor
+    parent: "container",            // Contenedor
     type: Phaser.AUTO,          // Tipo - AUTO hace que Phaser detecte por sí solo si el navegador puede correr WebGL o Canvas
     pixelArt: true,
     dom: {

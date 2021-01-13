@@ -24,6 +24,13 @@ class bootloader extends Phaser.Scene {
         this.load.html('messagesCode','src/html/sendMessage.html');
         this.load.html('loginCode', 'src/html/login.html');
 
+        //***********************  TilesMap ***************************//
+        this.load.image("tiles", "./resources/img/Tileset/Tileset/Tilemap.png");
+        // Código JSON //
+        this.load.tilemapTiledJSON("map", "./resources/img/Tileset/TileMapForest..json");
+        this.load.tilemapTiledJSON("map1", "./resources/img/Tileset/Map1.json");
+        this.load.tilemapTiledJSON("map2", "./resources/img/Tileset/Map2.json");
+
         //***********************  Fondos ***************************//
         // Menús //
         this.load.image("loginMenu","./resources/img/MenuDesign/Login/login_NoButtons.png");
@@ -35,17 +42,16 @@ class bootloader extends Phaser.Scene {
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
         // Victoria
         this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/Backgound_SpriteSheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        // Descripción //
+        this.load.image('emptyDesc', './resources/img/MenuDesign/Selection/textBox.png');
         // Mapas //
-        this.load.image("tiles", "./resources/img/Tileset/Tileset/Tilemap.png");
-        this.load.tilemapTiledJSON("map", "./resources/img/Tileset/TileMapForest..json");
-        this.load.tilemapTiledJSON("map1", "./resources/img/Tileset/Map1.json");
-        this.load.tilemapTiledJSON("map2", "./resources/img/Tileset/Map2.json");
-
         this.load.image("forestMap","./resources/img/Maps/FieldLevel.png");
         this.load.image("caveMap","./resources/img/Maps/CaveLevel_800x640.png");
         this.load.image("labMap","./resources/img/Maps/LabLevel800x640.png");
         // Iconos //
         this.load.image("clock","./resources/img/Icons/clock.png");
+        this.load.image("userIcon","./resources/img/Icons/user.png");
+        this.load.spritesheet("spriteReloadButton","./resources/img/SpriteSheet/Button_SpriteSheet/sync_SpriteSheet.png", {frameWidth: 30, frameHeight: 30});
 
         //***********************  Colisiones ***************************//
         // Nivel de bosque //

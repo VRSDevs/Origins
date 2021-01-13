@@ -47,7 +47,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         // Fondo //
         this.add.image(400, 320, "selectionPl1");
         // Descripciones gatos //
-        catDescription = this.add.image(400, 320, "");
+        catDescription = this.add.image(410, 423, "emptyDesc");
 
         //******************* Botones ************************//
         // Gato tierra //
@@ -191,26 +191,23 @@ class sceneSelectionMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
-
+//******************* Carga descripciones de gatos ************************//
 function loadDescription(value) {
     switch (value) {
         case 0:
-            
+            catDescription.setTexture("emptyDesc");
             break;
         case 1:
-            
+            catDescription.setTexture("GroundCatDesc");
             break;
-    
         case 2:
-            
+            catDescription.setTexture("WaterCatDesc");
             break;
-        
         case 3:
-            
+            catDescription.setTexture("AirCatDesc");
             break;
-            
         case 4:
-            
+            catDescription.setTexture("FireCatDesc");
             break;
     }
 }
