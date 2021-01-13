@@ -99,6 +99,13 @@ class sceneLoginMenu extends Phaser.Scene {
                                         postUser(userToCreate);
                                         userAlreadyCreated = true;
 
+                                        // Post de mensaje de inicio de sesión
+                                        var message = {
+                                            username: "Server",
+                                            body: "Se conectó " + user.getUsername(),
+                                        }
+                                        postMessage(message);
+
                                         // Limpieza de datos
                                         usernameLog.value = '';
                                         passwordLog.value = '';
@@ -150,6 +157,13 @@ class sceneLoginMenu extends Phaser.Scene {
                                                     status: true,
                                                 }
                                                 updateUser(userToUpdate);
+
+                                                // Post de mensaje de inicio de sesión
+                                                var message = {
+                                                    username: "Server",
+                                                    body: "Se conectó " + user.getUsername(),
+                                                }
+                                                postMessage(message);
 
                                                 // Carga de la siguiente escena
                                                 loadScene();
@@ -357,6 +371,21 @@ function updateUser(user) {
             "Content-Type": "application/json"
         }
     }).done(function (item) {
+    })
+}
+
+// Envío de mensaje al servidor y a la BD //
+function postMessage(message) {
+    $.ajax({
+        method: "POST",
+        url: 'http://localhost:8080/messages',
+        data: JSON.stringify(message),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function (item) {
+        console.log("Item created: " + JSON.stringify(item));
     })
 }
 
