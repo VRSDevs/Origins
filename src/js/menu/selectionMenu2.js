@@ -17,10 +17,8 @@ var groundCatButton = undefined;
 var waterCatButton = undefined;
 var airCatButton = undefined;
 var fireCatButton = undefined;
-//******************* Textos ************************//
-// Descripción de los gatos //
-var description = "";
-var ADescription = "";
+//******************* Descripciones ************************//
+var catDescription = undefined;
 //******************* Control ************************//
 // Selección de gato //
 var selectedCat = 0;
@@ -45,8 +43,11 @@ class sceneSelectionMenu2 extends Phaser.Scene {
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
 
-        //******************* Fondos ************************//
-        this.add.image(400, 320, "selectionPl2");
+        //******************* Imágenes ************************//
+        // Fondo //
+        this.add.image(400, 320, "selectionPl1");
+        // Descripciones gatos //
+        catDescription = this.add.image(410, 423, "emptyDesc");
 
         //******************* Botones ************************//
         switch (players[0].getType()) {
@@ -337,61 +338,40 @@ class sceneSelectionMenu2 extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-
-        //******************* Texto ************************//
-        // Descripción normal //
-        description = this.add.text(115, 334, "", {
-            fontFamily: 'origins',
-            fontSize: '16px',
-            align: 'center',
-            fill: '#000000'
-        });
-
-        // Descripción alienígena //
-        ADescription = this.add.text(90, 430, "", {
-            fontFamily: 'alien',
-            fontSize: '16px',
-            align: 'center',
-            fill: '#000000'
-        });
     }
+
     update(time, delta) {
         //******************* Animaciones botones ************************//
         if (startAnim === true && selectedCat === 1) {
             groundCatButton.anims.play('groundMenuAnim2', true);
-            description.setText(""+"\nHe's the Ground Cat. His breed is very jealous, \nand he feels  that his powers are a bull shit. They \nare the original human. He have weakness for videogames.");
-            ADescription.setText("he's the ground cat. his breed is very jealous, \nand he feels  that his powers are a bull shit. they \nare the original human. he have weakness for videogames.");
+            loadDescription(1);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 2) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', true);
-            description.setText(""+"\nHe's the Water Cat. His breed is very peacefull, \nso they hate the war. He lives in a wet enviroment and he loves \nbubbles. He hates fish (he is vegan).");
-            ADescription.setText("he's the water cat. his breed is very peacefull, \nso they hate the war. he lives in a wet enviroment and\n he loves bubbles. he hates fish (he is vegan).");
+            loadDescription(2);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 3) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', true);
-            description.setText(""+"\nShe's the Air Cat. Her breed its like the group's \nmother, very serious and she will do the impossible to get the \ndark matter. Her greatest weakness is fluffys clouds.");
-            ADescription.setText("she's the air cat. her breed its like the group's mother, \nvery serious and she will do the impossible to get the \ndark matter. her greatest weakness is fluffys clouds.");
+            loadDescription(3);
             fireCatButton.anims.play('fireMenuAnim2', false);
         } else if (startAnim === true && selectedCat === 4) {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', true);
-            description.setText(""+"\nHe's the Fire Cat. His breed is really aggresive. \nHe is always doing his own thing, but if u give him a reason to \nfight, he will ignite. He love the scorched galactic tuna.");
-            ADescription.setText("he's the Fire Cat. his breed is really aggresive. he is al-\nways doing his own thing, but if u give him a reason to \nfight, he will ignite. he love the scorched galactic tuna.");
+            loadDescription(4);
         } else {
             groundCatButton.anims.play('groundMenuAnim2', false);
             waterCatButton.anims.play('waterMenuAnim2', false);
             airCatButton.anims.play('airMenuAnim2', false);
             fireCatButton.anims.play('fireMenuAnim2', false);
-            description.setText("");
-            ADescription.setText("");
+            loadDescription(0);
         }
         
         //****************** Música *********************//
@@ -406,6 +386,27 @@ class sceneSelectionMenu2 extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
+//******************* Carga descripciones de gatos ************************//
+function loadDescription(value) {
+    switch (value) {
+        case 0:
+            catDescription.setTexture("emptyDesc");
+            break;
+        case 1:
+            catDescription.setTexture("GroundCatDesc");
+            break;
+        case 2:
+            catDescription.setTexture("WaterCatDesc");
+            break;
+        case 3:
+            catDescription.setTexture("AirCatDesc");
+            break;
+        case 4:
+            catDescription.setTexture("FireCatDesc");
+            break;
+    }
+}
+
 //******************* Obtención mapa de juego ************************//
 function getMap() {
     var max = 4;
