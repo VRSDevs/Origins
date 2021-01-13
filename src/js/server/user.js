@@ -33,6 +33,13 @@ class User {
     setStatus(value) {
         this.status = value;
     }
+
+    //
+    resertUser() {
+        this.username = "";
+        this.password = "";
+        this.status = false;
+    }
 }
 
 //////////////////////////////////////////////////////////////////////

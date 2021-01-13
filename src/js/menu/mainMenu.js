@@ -18,6 +18,8 @@ var controlsButton = undefined;
 var settingsButton = undefined;
 var exitButton = undefined;
 //******************* Servidor ************************//
+// Botón //
+var syncButton = undefined;
 // Imágenes //
 var userIc = undefined;
 // Texto //
@@ -27,6 +29,8 @@ var messages = "";
 //******************* Control ************************//
 // Selección de submenú //
 var id = 0;
+// Llamada al evento de obtención de usuarios //
+var callServerEvent = true;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú principal              //
@@ -150,24 +154,60 @@ class sceneMainMenu extends Phaser.Scene {
     update(time, delta) {
         //****************** Servidor *********************//
         if (server.isServerConnected() === true) {
+            // Generación de evento retardado para llamadas al servidor //
+            if(callServerEvent){
+                controller.getCurrentScene().time.addEvent({
+                    delay: 1200,
+                    callback: () => {
+                        loadMessagesFromDB();
+                        getConnectedUsers();
+                    },
+                    callbackScope: this,
+                    loop: true
+                });
+                callServerEvent = false;
+            }
+            // Actualización mensajes //
+            messages.setText(server.getMessagesFromDB());
+            // Actualización estado del servidor //
             textServerConnected.setStyle({
                 color: '#00ff00',
             });
             textServerConnected.setText("Server Online");
+            // Actualización usuarios conectados //
             userIc.setTint(0x00ff00);
             textNumOfUsersConnected.setStyle({
                 color: '#00ff00',
             });
+            textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
+            // Eliminación de eventos de llamada al servidor //
+            if(!callServerEvent){
+                controller.getCurrentScene().time.removeAllEvents();
+                controller.getCurrentScene().time.addEvent({
+                    delay: 1200,
+                    callback: () => {
+                        syncButton.anims.stop();
+                        syncButton.setFrame(1);
+                    },
+                    callbackScope: this,
+                    loop: false
+                });
+                callServerEvent = true;
+            }
+            // Actualización del estado del servidor //
             textServerConnected.setStyle({
                 color: '#ff0000',
             });
             textServerConnected.setText("Server Offline");
+            // Actualización 
             userIc.setTint(0xff0000);
             textNumOfUsersConnected.setStyle({
                 color: '#ff0000',
             });
+            textNumOfUsersConnected.setText("0");
             server.setMessagesFromDB(["<Servidor> ERROR"]);
+            messages.setText(server.getMessagesFromDB());
         }
 
         //****************** Música *********************//
@@ -177,6 +217,61 @@ class sceneMainMenu extends Phaser.Scene {
             controller.getMusic().resume();
         }
     }
+}
+//////////////////////////////////////////////////////////////////////
+//                          Funciones HTTP                          //
+//////////////////////////////////////////////////////////////////////
+//******************* Usuarios ************************//
+// Usuarios conectados al servidor //
+function getConnectedUsers() {
+    $.ajax({
+        url: 'http://localhost:8080/users/connectedUsers'
+    }).done(function (listOfConnectedUsers){
+        server.setConnectedUsers(listOfConnectedUsers.length);
+    })
+}
+
+// Inicio de sesión del jugador //
+function updateUser(user) {
+    $.ajax({
+        method: "PUT",
+        url: 'http://localhost:8080/users/' + user.username,
+        data: JSON.stringify(user),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function (item) {
+    })
+}
+
+//******************* Mensajes ************************//
+// Carga de mensajes de la base de datos y servidor //
+function loadMessagesFromDB() {
+    $.ajax({
+        url: 'http://localhost:8080/messages'
+    }).done(function (messages) {
+        var arrayOfMessages = [];
+        for (let i = 0; i < messages.length; i++) {
+            arrayOfMessages[i] = "<" + messages[i].username + "> " + messages[i].body;
+        }
+        server.setMessagesFromDB(arrayOfMessages);
+    })
+}
+
+// Envío de mensaje al servidor y a la BD //
+function postMessage(message) {
+    $.ajax({
+        method: "POST",
+        url: 'http://localhost:8080/messages',
+        data: JSON.stringify(message),
+        processData: false,
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).done(function (item) {
+        console.log("Item created: " + JSON.stringify(item));
+    })
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -231,7 +326,7 @@ function createServerUI() {
 
     // Máscara para ocultar
     var mask = new Phaser.Display.Masks.GeometryMask(controller.getCurrentScene(), graphics);
-    
+
     // Texto contenedor de los mensajes
     messages = controller.getCurrentScene().add.text(xChat + 6, yChat + 130, server.getMessagesFromDB(), {
         fontFamily: 'Consolas',
@@ -253,14 +348,39 @@ function createServerUI() {
     controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
 
     //******************* Conexión al servidor ************************//
+    // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
         fontSize: 14,
         color: '#00ff00',
     });
+    // Botón recarga //
+    syncButton = controller.getCurrentScene().add.sprite(775, 145, "spriteReloadButton", 1).setInteractive();
+    controller.getCurrentScene().anims.create({
+        key: 'syncButtonAnim',
+        frames: controller.getCurrentScene().anims.generateFrameNumbers('spriteReloadButton', { start: 0, end: 1 }),
+        frameRate: 6,
+        repeat: -1
+    });
+
+    syncButton.addListener('pointerdown', () => {
+        syncButton.anims.play('syncButtonAnim', true);
+        server.connect();
+        controller.getCurrentScene().time.addEvent({
+            delay: 1200,
+            callback: () => {
+                syncButton.anims.stop();
+                syncButton.setFrame(1);
+            },
+            callbackScope: this,
+            loop: false
+        });
+    }, this);
+
 
     //******************* Conexión al servidor ************************//
     // Texto //
+    getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
@@ -270,7 +390,19 @@ function createServerUI() {
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
 
+//
+function logOut() {
+    //
+    var userToLogOut = {
+        username: user.getUsername(),
+        password: user.getPassword(),
+        status: false,
+    }
 
+    user.resertUser();
+
+    updateUser(userToLogOut);
+}
 
 //******************* Carga de escena ************************//
 function loadScene() {
@@ -291,6 +423,7 @@ function loadScene() {
             nextScene.scene.start();
             break;
         case 4:
+            logOut();
             controller.getCurrentScene().scene.stop();
             controller.getMusic().pause();
             var nextScene = game.scene.getScene("sceneLoginMenu");
