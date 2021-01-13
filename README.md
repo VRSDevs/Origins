@@ -105,6 +105,16 @@ Figura 8
 7. **Menú Ajustes:** menú donde se podrá cambiar algunos ajustes del juego (como la música).
 ![Figura 9](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/Settings.png?raw=true)
 Figura 9
+8. **Pantalla de inicio:** pantalla con los botones de registrarse o iniciar sesión.
+![Figura 10](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/intro.png?raw=true)
+Figura 10
+9. **Menú inicio de sesión:** menú de inicio de sesión.
+![Figura 11](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/login.png?raw=true)
+Figura 11
+10. **Menú registrarse:** menú de registro).
+![Figura 12](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/register.png?raw=true)
+Figura 12
+
 
 #### 2.6 Instrucciones de juego
 El juego comienza con un menú principal, donde el jugador podrá elegir jugar, ver los controles,modificar los ajustes y o salir del juego. Tras pulsar el modo de un jugador dentro del menú jugar, el juego comenzará con un personaje a elegir por el jugador, y deberá buscar la materia oscura antes que las IAs y mantenerla el tiempo necesario para ganar. Por tanto, la condición de victoria en el modo un jugador será obtener la materia durante el mayor tiempo posible.
@@ -119,11 +129,11 @@ En ambos modos, la condición que define la derrota es tener menos puntos que el
 _NOTA_: Para una preview de las canciones, vea apartado 5.1 (Anexos y referencias - Enlaces de música).
 
 ### 4. Arte
-Base de los personajes principales (véase figura 10).
+Base de los personajes principales (véase figura 13).
 
-Diseño de escenario (véase figura 11).
+Diseño de escenario (véase figura 14).
 
-La forma del mapa será algo similar a esto (véase figura 12).
+La forma del mapa será algo similar a esto (véase figura 15).
 
 ### 5. Anexos y referencias
 La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha modificado para poder cumplir las características pedidas para este trabajo.
@@ -146,11 +156,11 @@ La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha m
 #### 5.2 Enlaces de referencia artística:
 https://www.pinterest.es/pin/188166090660008827/
 
-[Figura 10](https://www.pinterest.es/pin/331577591312078256/)
+[Figura 13](https://www.pinterest.es/pin/331577591312078256/)
 
-[Figura 11](https://www.pinterest.es/pin/244883298474322218/)
+[Figura 14](https://www.pinterest.es/pin/244883298474322218/)
 
-[Figura 12](http://www.onlinemania.es/juego/8356/Pokemon-Perla-Version-8GBA9.html)
+[Figura 5](http://www.onlinemania.es/juego/8356/Pokemon-Perla-Version-8GBA9.html)
 
 [Letra logo](https://www.dafont.com/es/a-alloy-ink.font)
 
