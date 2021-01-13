@@ -24,6 +24,7 @@ var syncButton = undefined;
 var userIc = undefined;
 // Texto //
 var textServerConnected = "";
+var textUsername = "";
 var textNumOfUsersConnected = "";
 var messages = "";
 //******************* Control ************************//
@@ -346,8 +347,6 @@ function createServerUI() {
 
     //******************* Conexión al servidor ************************//
     controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
-
-    //******************* Conexión al servidor ************************//
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
@@ -377,8 +376,16 @@ function createServerUI() {
         });
     }, this);
 
+    //******************* Usuario cliente ************************//
+    controller.getCurrentScene().add.rectangle(xChat, yChat - hChat / 4, wChat, hChat / 6, 0x000000, 0.6).setOrigin(0);
+    var nameString = "Bienvenido, " + user.getUsername() + ".";
+    textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
+        fontFamily: 'origins',
+        fontSize: 20,
+        color: '#00ff00',
+    });
 
-    //******************* Conexión al servidor ************************//
+    //******************* Usuarios ************************//
     // Texto //
     getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
@@ -404,8 +411,15 @@ function logOut() {
     user.resertUser();
 }
 
+//
+function resetVariables() {
+    callServerEvent = true;
+    textUsername = "";
+}
+
 //******************* Carga de escena ************************//
 function loadScene() {
+    resetVariables();
     switch (id) {
         case 1:
             controller.getCurrentScene().scene.stop();
