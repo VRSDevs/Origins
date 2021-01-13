@@ -18,14 +18,18 @@ var controlsButton = undefined;
 var settingsButton = undefined;
 var exitButton = undefined;
 //******************* Servidor ************************//
+// Control //
+var chatMode = 0;
 // Botón //
 var syncButton = undefined;
+var changeTxT = undefined;
 // Imágenes //
 var userIc = undefined;
 // Texto //
 var textServerConnected = "";
+var textUsername = "";
 var textNumOfUsersConnected = "";
-var messages = "";
+var messagesOrUsers = "";
 //******************* Control ************************//
 // Selección de submenú //
 var id = 0;
@@ -154,6 +158,8 @@ class sceneMainMenu extends Phaser.Scene {
     update(time, delta) {
         //****************** Servidor *********************//
         if (server.isServerConnected() === true) {
+            //
+            messagesOrUsers.setText(server.getLogMessage());
             // Generación de evento retardado para llamadas al servidor //
             if(callServerEvent){
                 controller.getCurrentScene().time.addEvent({
@@ -167,8 +173,13 @@ class sceneMainMenu extends Phaser.Scene {
                 });
                 callServerEvent = false;
             }
-            // Actualización mensajes //
-            messages.setText(server.getMessagesFromDB());
+            // Actualización mensajes o lista de usuarios //
+            if(chatMode === 0) {
+                messagesOrUsers.setText(server.getMessagesFromDB());
+            } else {
+                messagesOrUsers.setText(server.getListConnectedUsers());
+            }
+            
             // Actualización estado del servidor //
             textServerConnected.setStyle({
                 color: '#00ff00',
@@ -181,6 +192,7 @@ class sceneMainMenu extends Phaser.Scene {
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
+            messagesOrUsers.setText(server.getLogMessage());
             // Eliminación de eventos de llamada al servidor //
             if(!callServerEvent){
                 controller.getCurrentScene().time.removeAllEvents();
@@ -206,8 +218,6 @@ class sceneMainMenu extends Phaser.Scene {
                 color: '#ff0000',
             });
             textNumOfUsersConnected.setText("0");
-            server.setMessagesFromDB(["<Servidor> ERROR"]);
-            messages.setText(server.getMessagesFromDB());
         }
 
         //****************** Música *********************//
@@ -228,6 +238,12 @@ function getConnectedUsers() {
         url: 'http://localhost:8080/users/connectedUsers'
     }).done(function (listOfConnectedUsers){
         server.setConnectedUsers(listOfConnectedUsers.length);
+        var arrayOfUsers = [];
+        arrayOfUsers.push("USUARIOS CONECTADOS:");
+        for (let i = 0; i < listOfConnectedUsers.length; i++) {
+            arrayOfUsers[i+1] = listOfConnectedUsers[i].username;
+        }
+        server.setListConnectedUsers(arrayOfUsers);
     })
 }
 
@@ -280,6 +296,12 @@ function postMessage(message) {
 //******************* Creación de interfaz de servidor ************************//
 function createServerUI() {
     //******************* Mensajes ************************//
+    // Variables auxiliares //   
+    var xChat = 19;
+    var yChat = 340;
+    var wChat = 320;
+    var hChat = 256;
+
     // Introducción de mensajes //
     // Código HTML para introducir mensajes
     var messagesHTML = controller.getCurrentScene().add.dom(95, 605).createFromCache('messagesCode').setOrigin(0);
@@ -308,46 +330,48 @@ function createServerUI() {
             }
         }
     });
+    changeTxT = controller.getCurrentScene().add.sprite(xChat + 30, 620, "spriteMsgButton", 1).setInteractive();
+    changeTxT.addListener('pointerdown', () => {
+        if(chatMode === 1) {
+            changeTxT.setFrame(1);
+            chatMode = 0;
+        } else {
+            changeTxT.setFrame(0);
+            chatMode = 1;
+        }
+    }, this);
 
     // Muestra de mensajes //
-    // Variables auxiliares
-    var xChat = 19;
-    var yChat = 340;
-    var wChat = 320;
-    var hChat = 256;
-
     // Lienzo
     var graphics = controller.getCurrentScene().make.graphics().setDepth(2);
     graphics.fillStyle(0xffffff);
     graphics.fillRect(xChat, yChat, wChat, hChat);
 
     // Fondo del texto
-    controller.getCurrentScene().add.rectangle(xChat, yChat, wChat, hChat, 0x000000, 0.4).setOrigin(0);
+    controller.getCurrentScene().add.rectangle(xChat, yChat, wChat, hChat, 0x000000, 0.6).setOrigin(0);
 
     // Máscara para ocultar
     var mask = new Phaser.Display.Masks.GeometryMask(controller.getCurrentScene(), graphics);
 
     // Texto contenedor de los mensajes
-    messages = controller.getCurrentScene().add.text(xChat + 6, yChat + 130, server.getMessagesFromDB(), {
+    messagesOrUsers = controller.getCurrentScene().add.text(xChat + 6, yChat + 130, server.getMessagesFromDB(), {
         fontFamily: 'Consolas',
         color: '#00ff00',
         wordWrap: { width: 310 }
     }).setOrigin(0);
-    messages.setMask(mask);
+    messagesOrUsers.setMask(mask);
 
     // Zona
     var zone = controller.getCurrentScene().add.zone(xChat, yChat, wChat, hChat).setOrigin(0).setInteractive();
     zone.on('pointermove', function (pointer) {
         if (pointer.isDown) {
-            messages.y += (pointer.velocity.y / 10);
-            messages.y = Phaser.Math.Clamp(messages.y, -300, 400);
+            messagesOrUsers.y += (pointer.velocity.y / 10);
+            messagesOrUsers.y = Phaser.Math.Clamp(messagesOrUsers.y, -300, 400);
         }
     });
 
     //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
-
-    //******************* Conexión al servidor ************************//
+    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
@@ -377,8 +401,16 @@ function createServerUI() {
         });
     }, this);
 
+    //******************* Usuario cliente ************************//
+    controller.getCurrentScene().add.rectangle(xChat, yChat - hChat / 4, wChat, hChat / 6, 0x000000, 0.6).setOrigin(0);
+    var nameString = "Bienvenido, " + user.getUsername() + ".";
+    textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
+        fontFamily: 'origins',
+        fontSize: 20,
+        color: '#00ff00',
+    });
 
-    //******************* Conexión al servidor ************************//
+    //******************* Usuarios ************************//
     // Texto //
     getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
@@ -390,22 +422,29 @@ function createServerUI() {
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
 
-//
+//******************* Cierre de sesión de jugador ************************//
 function logOut() {
-    //
+    // Usuario auxiliar para actualizar la BD //
     var userToLogOut = {
         username: user.getUsername(),
         password: user.getPassword(),
         status: false,
     }
-
-    user.resertUser();
-
     updateUser(userToLogOut);
+
+    // Reset de usuario del cliente //
+    user.resertUser();
+}
+
+//
+function resetVariables() {
+    callServerEvent = true;
+    textUsername = "";
 }
 
 //******************* Carga de escena ************************//
 function loadScene() {
+    resetVariables();
     switch (id) {
         case 1:
             controller.getCurrentScene().scene.stop();
@@ -423,9 +462,14 @@ function loadScene() {
             nextScene.scene.start();
             break;
         case 4:
+            var message = {
+                username: "Server",
+                body: "Se desconectó " + user.getUsername(),
+            }
+            postMessage(message);
             logOut();
             controller.getCurrentScene().scene.stop();
-            controller.getMusic().pause();
+            controller.getMusic().stop();
             var nextScene = game.scene.getScene("sceneLoginMenu");
             nextScene.scene.start();
             break;

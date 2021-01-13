@@ -127,7 +127,7 @@ class sceneSelectionMenu extends Phaser.Scene {
         fireCatButton.addListener('pointerdown', loadScene, this);
 
         // Retroceso //
-        backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2", 0).setInteractive();
+        backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2",0).setInteractive();
         this.anims.create({
             key: 'backButton2Anim',
             frames: this.anims.generateFrameNumbers('spriteBackButton2', {start: 1, end: 4}),
