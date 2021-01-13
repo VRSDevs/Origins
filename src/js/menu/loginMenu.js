@@ -17,7 +17,6 @@ var loginHTML = undefined;
 //******************* Control ************************//
 var mode = 0;           // Opción de menú
 var updateScene = 0;    // Variable de control para implementar HTML
-var userToCheck = undefined;
 var callGetUsersEvent = true;   // Llamada al evento de obtención de usuarios
 var userAlreadyCreated = false;
 //******************* Botones ************************//
@@ -32,6 +31,10 @@ var syncButton = undefined;
 // Texto //
 var textServerConnected = "";
 var textNumOfUsersConnected = "";
+// Usuarios //
+var userToUpdate = undefined;
+var userToCreate = undefined;
+var userToCheck = undefined;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú de logueo              //
@@ -203,6 +206,7 @@ function getConnectedUsers() {
 
 // Comprobación del jugador logueado //
 function checkUser(username){
+    console.log(username);
     $.ajax({
         url: 'http://localhost:8080/users/' + username,
         data: username,
@@ -301,10 +305,11 @@ function updatingScene() {
         if (event.target.name === 'loginButton') {
             var usernameLog = this.getChildByName('usernameField');
             var passwordLog = this.getChildByName('passwordField');
+            console.log("De q vas");
 
             if (usernameLog.value !== '' && passwordLog.value !== '') {
                 switch (mode) {
-                    // Registro del usuario
+                    // Registro del usuario //
                     case 1:
                         // Comprobación de existencia en la BD
                         checkUser(usernameLog.value);
@@ -323,31 +328,32 @@ function updatingScene() {
                                     user.setStatus(true);
 
                                     // Copia usuario auxiliar para subir a la BD
-                                    var userToCreate = {
+                                    userToCreate = {
                                         username: usernameLog.value,
                                         password: passwordLog.value,
                                         status: true,
                                     }
+                                    console.log(userToCreate);
 
                                     // Post del usuario creado
                                     postUser(userToCreate);
+                                    userAlreadyCreated = true;
 
-                                    // Reset inputs HTML
+                                    // Limpieza de datos
                                     usernameLog.value = '';
                                     passwordLog.value = '';
+                                    userToCreate = undefined;
 
                                     // Carga de la siguiente escena
                                     loadScene();
                                 } else {
                                     console.log("Roberto no estaría orgulloso de que intentes robar un usuario.");
-                                    
-                                    // Reset inputs HTML
-                                    usernameLog.value = '';
-                                    passwordLog.value = '';
-
-                                    // Reset variable controladora
-                                    userAlreadyCreated = false;
                                 }
+                                // Limpieza de datos
+                                usernameLog.value = '';
+                                passwordLog.value = '';
+                                userToCreate = undefined;
+                                userAlreadyCreated = false;
                             },
                             callbackScope: this,
                             loop: false
@@ -378,16 +384,12 @@ function updatingScene() {
                                             user.setStatus(true);
 
                                             // Actualización información de la BD
-                                            var userToUpdate = {
+                                            userToUpdate = {
                                                 username: usernameLog.value,
                                                 password: passwordLog.value,
                                                 status: true,
                                             }
                                             updateUser(userToUpdate);
-
-                                            // Reset inputs HTML
-                                            usernameLog.value = '';
-                                            passwordLog.value = '';
 
                                             // Carga de la siguiente escena
                                             loadScene();
@@ -395,28 +397,22 @@ function updatingScene() {
                                             console.log("Usuario ya conectado.");
                                             // Limpieza de datos
                                             userToCheck = undefined;
-                                            usernameLog.value = '';
-                                            passwordLog.value = '';
                                         }
                                     } else {
                                         console.log("Contraseña incorrecta.");
-                                        // Limpieza de datos
-                                        userToCheck = undefined;
-                                        usernameLog.value = '';
-                                        passwordLog.value = '';
                                     }
                                 } else {
                                     console.log("Ese usuario no existe.");
-                                    // Limpieza de datos
-                                    userToCheck = undefined;
-                                    usernameLog.value = '';
-                                    passwordLog.value = '';
                                 }
+                                // Limpieza de datos
+                                userToUpdate = undefined;
+                                userToCheck = undefined;
+                                usernameLog.value = '';
+                                passwordLog.value = '';
                             },
                             callbackScope: this,
                             loop: false
                         });
-
                         break;
                 }
             }
@@ -431,7 +427,6 @@ function updatingScene() {
 function goBack() {
     mode = 0;
     updateScene = 0;
-
     loginHTML.setVisible(false);
     loginButton.setVisible(true);
     signupButton.setVisible(true);
@@ -444,7 +439,10 @@ function resetVariables() {
     updateScene = 0;
     userToCheck = undefined;
     callGetUsersEvent = true;
-    userAlreadyCreated = false; 
+    userAlreadyCreated = false;
+    userToCreate = undefined;
+    userToUpdate = undefined; 
+    userToCheck = undefined;
 }
 
 //******************* Carga de la siguiente escena ************************//

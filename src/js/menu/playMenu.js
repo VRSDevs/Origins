@@ -1,8 +1,10 @@
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import {game} from '../init.js';
-import {controller} from '../gameController.js';
+import { game } from '../init.js';
+import { controller } from '../gameController.js';
+import { user } from '../server/user.js';
+import { server } from '../server/server.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -18,6 +20,16 @@ var onlineMultiplayerButton = undefined;
 //******************* Control ************************//
 // Animaciones //
 var startAnim = false;
+//******************* Servidor ************************//
+// Imágenes //
+var userIc = undefined;
+// Botones //
+var syncButton = undefined;
+// Texto //
+var textServerConnected = "";
+var textNumOfUsersConnected = "";
+//
+var callGetUsersEvent = true;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú jugar                  //
@@ -39,12 +51,15 @@ class scenePlayMenu extends Phaser.Scene {
         //******************* Fondos ************************//
         this.add.image(400, 320, "play");
 
+        //
+        createServerUI();
+
         //****************** Botones *********************//
         // Modo 1 Jugador //
         singlePlayerButton = this.add.sprite(139, 251, "sprite1PlayerGM", 0).setInteractive();
         this.anims.create({
             key: 'singlePlayerAnim',
-            frames: this.anims.generateFrameNumbers('sprite1PlayerGM', { start: 0, end: 6 }),
+            frames: this.anims.generateFrameNumbers('sprite1PlayerGM', { start: 1, end: 6 }),
             frameRate: 4, 
             repeat: -1
         });
@@ -63,7 +78,7 @@ class scenePlayMenu extends Phaser.Scene {
         localMultiplayerButton = this.add.sprite(405, 251, "sprite2PlayerGM", 0).setInteractive();
         this.anims.create({
             key: 'localMultiplayerAnim',
-            frames: this.anims.generateFrameNumbers('sprite2PlayerGM', { start: 0, end: 4 }),
+            frames: this.anims.generateFrameNumbers('sprite2PlayerGM', { start: 1, end: 4 }),
             frameRate: 4, 
             repeat: -1
         });
@@ -82,7 +97,7 @@ class scenePlayMenu extends Phaser.Scene {
         onlineMultiplayerButton = this.add.sprite(662, 251, "spriteMultiplayerGM", 0).setInteractive();
         this.anims.create({
             key: 'multiplayerAnim',
-            frames: this.anims.generateFrameNumbers('spriteMultiplayerGM', { start: 0, end: 4 }),
+            frames: this.anims.generateFrameNumbers('spriteMultiplayerGM', { start: 1, end: 4 }),
             frameRate: 4, 
             repeat: -1
         });
@@ -98,7 +113,7 @@ class scenePlayMenu extends Phaser.Scene {
         onlineMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Retroceso //
-        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 0).setInteractive();
+        backButton = this.add.sprite(242/2, 580, "spriteBackButton2", 0).setInteractive();
         this.anims.create({
             key: 'backButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),
@@ -117,6 +132,53 @@ class scenePlayMenu extends Phaser.Scene {
     }
 
     update(time, delta){
+        //****************** Servidor *********************//
+        if (server.isServerConnected() === true) {
+            textServerConnected.setStyle({
+                color: '#00ff00',
+            });
+            textServerConnected.setText("Server Online");
+            userIc.setTint(0x00ff00);
+            textNumOfUsersConnected.setStyle({
+                color: '#00ff00',
+            });
+            if(callGetUsersEvent){
+                controller.getCurrentScene().time.addEvent({
+                    delay: 1200,
+                    callback: () => {
+                        getConnectedUsers();
+                    },
+                    callbackScope: this,
+                    loop: true
+                });
+                callGetUsersEvent = false;
+            }
+            textNumOfUsersConnected.setText(server.getConnectedUsers());
+        } else {
+            textServerConnected.setStyle({
+                color: '#ff0000',
+            });
+            textServerConnected.setText("Server Offline");
+            userIc.setTint(0xff0000);
+            textNumOfUsersConnected.setStyle({
+                color: '#ff0000',
+            });
+            if(!callGetUsersEvent){
+                controller.getCurrentScene().time.removeAllEvents();
+                controller.getCurrentScene().time.addEvent({
+                    delay: 1200,
+                    callback: () => {
+                        syncButton.anims.stop();
+                        syncButton.setFrame(1);
+                    },
+                    callbackScope: this,
+                    loop: false
+                });
+                callGetUsersEvent = true;
+            }
+            textNumOfUsersConnected.setText("0");
+        }
+
         //****************** Animaciones *********************//
         if(startAnim === true && controller.getGameMode() === 1){
             singlePlayerButton.anims.play('singlePlayerAnim', true);
@@ -147,8 +209,67 @@ class scenePlayMenu extends Phaser.Scene {
 }
 
 //////////////////////////////////////////////////////////////////////
+//                      Funciones HTTP                              //
+//////////////////////////////////////////////////////////////////////
+// Usuarios conectados al servidor //
+function getConnectedUsers() {
+    $.ajax({
+        url: 'http://localhost:8080/users/connectedUsers'
+    }).done(function (listOfConnectedUsers){
+        server.setConnectedUsers(listOfConnectedUsers.length);
+    })
+}
+
+//////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
+
+function createServerUI() {
+    //******************* Conexión al servidor ************************//
+    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
+
+    //******************* Conexión al servidor ************************//
+    // Texto //
+    textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
+        fontFamily: 'origins',
+        fontSize: 14,
+        color: '#00ff00',
+    });
+    // Botón recarga //
+    syncButton = controller.getCurrentScene().add.sprite(775, 145, "spriteReloadButton", 1).setInteractive();
+    controller.getCurrentScene().anims.create({
+        key: 'syncButtonAnim',
+        frames: controller.getCurrentScene().anims.generateFrameNumbers('spriteReloadButton', { start: 0, end: 1 }),
+        frameRate: 6,
+        repeat: -1
+    });
+
+    syncButton.addListener('pointerdown', () => {
+        syncButton.anims.play('syncButtonAnim', true);
+        server.connect();
+        controller.getCurrentScene().time.addEvent({
+            delay: 1200,
+            callback: () => {
+                syncButton.anims.stop();
+                syncButton.setFrame(1);
+            },
+            callbackScope: this,
+            loop: false
+        });
+    }, this);
+
+    //******************* Conexión al servidor ************************//
+    // Texto //
+    getConnectedUsers();
+    textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
+        fontFamily: 'origins',
+        fontSize: 24,
+        color: '#00ff00',
+    });
+    // Icono //
+    userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
+}
+
 //******************* Carga de escena ************************//
 function loadScene(){
     if(controller.getGameMode() === 1) {

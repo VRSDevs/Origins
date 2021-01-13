@@ -322,7 +322,7 @@ function createServerUI() {
     graphics.fillRect(xChat, yChat, wChat, hChat);
 
     // Fondo del texto
-    controller.getCurrentScene().add.rectangle(xChat, yChat, wChat, hChat, 0x000000, 0.4).setOrigin(0);
+    controller.getCurrentScene().add.rectangle(xChat, yChat, wChat, hChat, 0x000000, 0.6).setOrigin(0);
 
     // Máscara para ocultar
     var mask = new Phaser.Display.Masks.GeometryMask(controller.getCurrentScene(), graphics);
@@ -345,7 +345,7 @@ function createServerUI() {
     });
 
     //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
+    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
 
     //******************* Conexión al servidor ************************//
     // Texto //
@@ -390,18 +390,18 @@ function createServerUI() {
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
 
-//
+//******************* Cierre de sesión de jugador ************************//
 function logOut() {
-    //
+    // Usuario auxiliar para actualizar la BD //
     var userToLogOut = {
         username: user.getUsername(),
         password: user.getPassword(),
         status: false,
     }
-
-    user.resertUser();
-
     updateUser(userToLogOut);
+
+    // Reset de usuario del cliente //
+    user.resertUser();
 }
 
 //******************* Carga de escena ************************//
@@ -425,7 +425,7 @@ function loadScene() {
         case 4:
             logOut();
             controller.getCurrentScene().scene.stop();
-            controller.getMusic().pause();
+            controller.getMusic().stop();
             var nextScene = game.scene.getScene("sceneLoginMenu");
             nextScene.scene.start();
             break;
