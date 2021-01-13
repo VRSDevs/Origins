@@ -20,6 +20,7 @@ html{
 }
 
 .login {
+    font-family: 'Courier New';
     background: #eceeee;
     border: 3px solid #42464b;
     border-radius: 6px;
@@ -29,6 +30,7 @@ html{
 }
 
 input[type="password"], input[type="text"] {
+    font-family: 'Courier New';
     background: center left no-repeat, linear-gradient(top, #d6d7d7, #dee0e0);
     border: 2px solid #a1a3a3;
     border-radius: 4px;
@@ -43,6 +45,7 @@ input[type="password"], input[type="text"] {
   }
 
   input[type="submit"] {
+    font-family: 'Courier New';
     width:150px;
     height:20px;
     display:block;
@@ -69,6 +72,7 @@ input[type="password"], input[type="text"] {
   }
 
   input[type="button"]{
+    font-family: 'Courier New';
     position: relative;
     top: -10px; left: 0px;
     font-size: 40px;  
@@ -81,6 +85,7 @@ input[type="password"], input[type="text"] {
     cursor: pointer;
   }
  input[type="text1"] {
+    font-family: 'Courier New';
     position: relative;
     top: -10px; left: 0px;
     font-size: 24px;

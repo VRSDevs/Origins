@@ -3,13 +3,23 @@
 //////////////////////////////////////////////////////////////////////
 class ServerClass {
     //******************* Constructor clase ************************//
-    constructor(numUs, servCon, mDB) {
+    constructor(msg, numUs, lCU, servCon, mDB) {
+        this.logMessage = msg;
         this.connectedUsers = numUs;
+        this.listConnectedUsers = lCU;
         this.serverConnected = servCon;
         this.messagesFromDB = mDB;
     }
 
     //******************* Getters ************************//
+    getLogMessage() {
+        return this.logMessage;
+    }
+
+    getListConnectedUsers() {
+        return this.listConnectedUsers;
+    }
+
     getConnectedUsers() {
         return this.connectedUsers;
     }
@@ -23,6 +33,14 @@ class ServerClass {
     }
 
     //******************* Setters ************************//
+    setLogMessage(message) {
+        this.logMessage = message;
+    }
+
+    setListConnectedUsers(list){
+        this.listConnectedUsers = list;
+    }
+
     setConnectedUsers(value) {
         this.connectedUsers = value;
     }
@@ -41,11 +59,11 @@ class ServerClass {
             url: 'http://localhost:8080/users',
             success: function () {
                 server.setServerConnected(true);
-                console.log(server.isServerConnected());
+                server.setLogMessage("<> Se ha establecido conexión con el servidor.");
             },
             error: function () {
                 server.setServerConnected(false);
-                console.log(server.isServerConnected());
+                server.setLogMessage("<> No se ha establecido conexión con el servidor.");
             }
         })
     }
@@ -54,7 +72,7 @@ class ServerClass {
 //////////////////////////////////////////////////////////////////////
 //                       Inicialización de datos                    //
 //////////////////////////////////////////////////////////////////////
-var server = new ServerClass(0, false, []);
+var server = new ServerClass("", 0, [], false, []);
 
 //////////////////////////////////////////////////////////////////////
 //                            Exportación                           //
