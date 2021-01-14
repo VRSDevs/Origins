@@ -12,8 +12,12 @@ import { game } from '../init.js';
 //******************* Dimensiones lienzo ************************//
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
+//******************* Fondos ************************//
+var descRectangle = undefined;
 //******************* Elementos HTML ************************//
 var loginHTML = undefined;
+var textMode = undefined;
+var textModeLog = undefined;
 //******************* Control ************************//
 var mode = 0;           // Opción de menú
 var updateScene = 0;    // Variable de control para implementar HTML
@@ -57,15 +61,15 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Imágenes ************************// 
         // Fondo //
         this.add.image(400, 320, "loginMenu");
-
+        descRectangle = this.add.rectangle(width / 2, 500, 400, 40, 0x000000, 0.6).setVisible(false);
+        
         // Asignación HTML en Canvas //
-        loginHTML = this.add.dom(width / 2, (height / 2) - 40).createFromCache('loginCode').setVisible(false);
+        loginHTML = this.add.dom(width / 2, (height / 2) + 40).createFromCache('loginCode').setVisible(false);
         loginHTML.addListener('click');
         loginHTML.on('click', function (event) {
             if (event.target.name === 'loginButton') {
                 var usernameLog = this.getChildByName('usernameField');
                 var passwordLog = this.getChildByName('passwordField');
-                console.log("De q vas");
 
                 if (usernameLog.value !== '' && passwordLog.value !== '') {
                     switch (mode) {
@@ -79,6 +83,7 @@ class sceneLoginMenu extends Phaser.Scene {
                                 delay: 20,
                                 callback: () => {
                                     if (!userAlreadyCreated) {
+                                        textModeLog.setText("Registro con éxito.");
                                         // Codificación de la contraseña introducida
                                         //var codifiedPassword = sha256(passwordLog.value);
 
@@ -93,7 +98,6 @@ class sceneLoginMenu extends Phaser.Scene {
                                             password: passwordLog.value,
                                             status: true,
                                         }
-                                        console.log(userToCreate);
 
                                         // Post del usuario creado
                                         postUser(userToCreate);
@@ -102,8 +106,9 @@ class sceneLoginMenu extends Phaser.Scene {
                                         // Post de mensaje de inicio de sesión
                                         var message = {
                                             username: "Server",
-                                            body: "Se conectó " + user.getUsername(),
+                                            body: user.getUsername() + " has connected.",
                                         }
+                                        server.setLogPlayMenu(user.getUsername() + " has connected.");
                                         postMessage(message);
 
                                         // Limpieza de datos
@@ -114,7 +119,7 @@ class sceneLoginMenu extends Phaser.Scene {
                                         // Carga de la siguiente escena
                                         loadScene();
                                     } else {
-                                        console.log("Roberto no estaría orgulloso de que intentes robar un usuario.");
+                                        textModeLog.setText("Error. El usuario introducido ya existe.");
                                     }
                                     // Limpieza de datos
                                     usernameLog.value = '';
@@ -138,13 +143,12 @@ class sceneLoginMenu extends Phaser.Scene {
                                 callback: () => {
                                     // Comprobación con la BD //
                                     if (userToCheck !== undefined) {
-                                        console.log(userToCheck);
                                         //var codedPasswordFromLog = sha256(passwordLog.value);
                                         // Coincidencia con la contraseña //
                                         if (userToCheck.password === passwordLog.value) {
                                             // Estado de conexión del usuario //
                                             if (userToCheck.status === false) {
-                                                console.log("Conectado");
+                                                textModeLog.setText("Inicio de sesión con éxito.");
                                                 //Inserción en usuario del cliente
                                                 user.setUsername(usernameLog.value);
                                                 user.setPassword(passwordLog.value);
@@ -165,18 +169,20 @@ class sceneLoginMenu extends Phaser.Scene {
                                                 }
                                                 postMessage(message);
 
+                                                server.setLogPlayMenu(user.getUsername() + " has connected.");
+
                                                 // Carga de la siguiente escena
                                                 loadScene();
                                             } else {
-                                                console.log("Usuario ya conectado.");
+                                                textModeLog.setText("Error. El usuario ya está conectado.");
                                                 // Limpieza de datos
                                                 userToCheck = undefined;
                                             }
                                         } else {
-                                            console.log("Contraseña incorrecta.");
+                                            textModeLog.setText("Error. La contraseña es incorrecta.");
                                         }
                                     } else {
-                                        console.log("Ese usuario no existe.");
+                                        textModeLog.setText("Error. El usuario no existe.");
                                     }
                                     // Limpieza de datos
                                     userToUpdate = undefined;
@@ -197,6 +203,21 @@ class sceneLoginMenu extends Phaser.Scene {
         server.connect();
         createServerUI();
 
+        //******************* Textos ************************//
+        // Modo //
+        textMode = this.add.text(320, 210, "", {
+            fontFamily: 'Consolas',
+            fontSize: 38,
+            color: '#ffffff',
+        });
+
+        // Log de registro / inicio de sesión //
+        textModeLog = this.add.text(210, 490, "", {
+            fontFamily: 'Consolas',
+            fontSize: 16,
+            color: '#00ff00',
+        });
+
         //******************* Botones de acceso ************************//
         // Registro //
         signupButton = this.add.sprite(400, 300, "spriteSUButton", 0).setInteractive();
@@ -216,7 +237,9 @@ class sceneLoginMenu extends Phaser.Scene {
         }, this);
         signupButton.addListener('pointerdown', () => {
             mode = 1;
+            textMode.setText("Register");
             loginHTML.setVisible(true);
+            descRectangle.setVisible(true);
             signupButton.setVisible(false);
             loginButton.setVisible(false);
             backButton.setVisible(true);
@@ -240,7 +263,9 @@ class sceneLoginMenu extends Phaser.Scene {
         }, this);
         loginButton.addListener('pointerdown', () => {
             mode = 2;
+            textMode.setText("Log in");
             loginHTML.setVisible(true);
+            descRectangle.setVisible(true);
             loginButton.setVisible(false);
             signupButton.setVisible(false);
             backButton.setVisible(true);
@@ -330,16 +355,13 @@ function getConnectedUsers() {
 
 // Comprobación del jugador logueado //
 function checkUser(username) {
-    console.log(mode);
     $.ajax({
         url: 'http://localhost:8080/users/' + username,
         data: username,
     }).done(function (user) {
-        console.log("Hola");
         if (mode === 1) {
             userAlreadyCreated = true;
         } else {
-            console.log("Petó?");
             userToCheck = user;
         }
     })
@@ -445,8 +467,10 @@ function createServerUI() {
 //******************* Cancelación de inicio de sesión ************************//
 function goBack() {
     mode = 0;
-    updateScene = 0;
+    textMode.setText("");
+    textModeLog.setText("");
     loginHTML.setVisible(false);
+    descRectangle.setVisible(false);
     loginButton.setVisible(true);
     signupButton.setVisible(true);
     backButton.setVisible(false);
