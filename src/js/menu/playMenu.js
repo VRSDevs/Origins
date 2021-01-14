@@ -28,6 +28,7 @@ var syncButton = undefined;
 // Texto //
 var textServerConnected = "";
 var textNumOfUsersConnected = "";
+var textServerLog = undefined;
 //
 var callGetUsersEvent = true;
 
@@ -179,6 +180,9 @@ class scenePlayMenu extends Phaser.Scene {
             textNumOfUsersConnected.setText("0");
         }
 
+        //****************** Información servidor *********************//
+        textServerLog.setText(("Server Log:\n" + server.getLogPlayMenu()));
+
         //****************** Animaciones *********************//
         if(startAnim === true && controller.getGameMode() === 1){
             singlePlayerButton.anims.play('singlePlayerAnim', true);
@@ -223,12 +227,27 @@ function getConnectedUsers() {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-
+//******************* Carga HUD del servidor ************************//
 function createServerUI() {
-    //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.3);
+    //******************* Información usuario ************************//
+    controller.getCurrentScene().add.rectangle(130, 76, 260, 42, "0x000000", 0.6);
+    // Texto //
+    controller.getCurrentScene().add.text(10, 70, ("Hola, " + user.getUsername() + "."), {
+        fontFamily: 'origins',
+        fontSize: 18,
+        color: '#00ff00',
+    });
+
+    //******************* Información servidor ************************//
+    controller.getCurrentScene().add.rectangle(220, 134, 440, 42, "0x000000", 0.6);
+    textServerLog = controller.getCurrentScene().add.text(10, 120, "", {
+        fontFamily: 'Consolas',
+        fontSize: 16,
+        color: '#00ff00',
+    });
 
     //******************* Conexión al servidor ************************//
+    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',

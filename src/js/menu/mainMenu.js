@@ -268,8 +268,12 @@ function loadMessagesFromDB() {
         url: 'http://localhost:8080/messages'
     }).done(function (messages) {
         var arrayOfMessages = [];
+        arrayOfMessages.push("MENSAJES:");
         for (let i = 0; i < messages.length; i++) {
-            arrayOfMessages[i] = "<" + messages[i].username + "> " + messages[i].body;
+            var index = (i+1)%56;
+            if(index !== 0){
+                arrayOfMessages[index] = "<" + messages[i].username + "> " + messages[i].body;
+            }
         }
         server.setMessagesFromDB(arrayOfMessages);
     })
@@ -403,7 +407,7 @@ function createServerUI() {
 
     //******************* Usuario cliente ************************//
     controller.getCurrentScene().add.rectangle(xChat, yChat - hChat / 4, wChat, hChat / 6, 0x000000, 0.6).setOrigin(0);
-    var nameString = "Bienvenido, " + user.getUsername() + ".";
+    var nameString = "Hola, " + user.getUsername() + ".";
     textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
         fontFamily: 'origins',
         fontSize: 20,
@@ -464,8 +468,9 @@ function loadScene() {
         case 4:
             var message = {
                 username: "Server",
-                body: "Se desconectó " + user.getUsername(),
+                body: user.getUsername() + " has disconnected.",
             }
+            server.setLogPlayMenu(user.getUsername() + " has disconnected.");
             postMessage(message);
             logOut();
             controller.getCurrentScene().scene.stop();
