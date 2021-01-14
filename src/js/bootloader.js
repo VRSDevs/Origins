@@ -33,7 +33,7 @@ class bootloader extends Phaser.Scene {
 
         //***********************  Fondos ***************************//
         // Menús //
-        this.load.image("loginMenu","./resources/img/MenuDesign/Login/login_NoButtons.png");
+        this.load.image("loginMenu","./resources/img/MenuDesign/Login/loginBG.png");
         this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
@@ -53,27 +53,11 @@ class bootloader extends Phaser.Scene {
         this.load.image("userIcon","./resources/img/Icons/user.png");
         this.load.spritesheet("spriteReloadButton","./resources/img/SpriteSheet/Button_SpriteSheet/sync_SpriteSheet.png", {frameWidth: 30, frameHeight: 30});
 
-        //***********************  Colisiones ***************************//
-        // Nivel de bosque //
-        this.load.image("forestCol1","./resources/img/Maps/fieldColisions/8.2png");
-        this.load.image("forestCol2","./resources/img/Maps/fieldColisions/2.2.png");
-        this.load.image("forestCol3","./resources/img/Maps/fieldColisions/2.1.png");
-        this.load.image("forestCol4","./resources/img/Maps/fieldColisions/3.png");
-        this.load.image("forestCol5","./resources/img/Maps/fieldColisions/4.3.png");
-        this.load.image("forestCol6","./resources/img/Maps/fieldColisions/4.2.png");
-        this.load.image("forestCol7","./resources/img/Maps/fieldColisions/4.1.png");
-        this.load.image("forestCol8","./resources/img/Maps/fieldColisions/10.1.png");
-        this.load.image("forestCol9","./resources/img/Maps/fieldColisions/7.png");
-        this.load.image("forestCol10","./resources/img/Maps/fieldColisions/10.8.png");
-        this.load.image("forestCol11","./resources/img/Maps/fieldColisions/10.2.png");
-        this.load.image("forestCol12","./resources/img/Maps/fieldColisions/10.4.png");
-        this.load.image("forestCol13","./resources/img/Maps/fieldColisions/10.6.png");
-
         //***********************  Gatos ***************************//
         // Aire //
         this.load.image("AirCatFace","./resources/img/Icons/Wiskas.png");
         // Sin materia
-        this.load.spritesheet('AirCatDown','./resources/img/SpriteSheet/Air_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
+        this.load.spritesheet('AirCatDown','./resources/img/SpriteSheet/Air_Spritesheet/aDown.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('AirCatIdle','./resources/img/SpriteSheet/Air_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('AirCatIdle2','./resources/img/SpriteSheet/Air_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
         this.load.spritesheet('AirCatIdle3','./resources/img/SpriteSheet/Air_Spritesheet/idle_b.png' , {frameWidth: 85, frameHeight: 90} );

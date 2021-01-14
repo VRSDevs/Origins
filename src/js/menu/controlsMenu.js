@@ -60,7 +60,7 @@ class sceneControlsMenu extends Phaser.Scene {
         pButton = this.add.sprite(692, 312, "spritePButton", 0).setInteractive();
 
         // Retroceso //
-        backButton = this.add.sprite(width - 242/2, 580, "spriteBackButton", 0).setInteractive();
+        backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2", 0).setInteractive();
         this.anims.create({
             key: 'backButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),

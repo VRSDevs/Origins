@@ -247,7 +247,7 @@ class sceneForestLevel extends Phaser.Scene {
 
         //******************* Detección por teclado ************************//
         cursors = this.input.keyboard.createCursorKeys();
-        keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P');
+        keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P', false);
 
         //******************* Colisiones y arena ************************//
 
