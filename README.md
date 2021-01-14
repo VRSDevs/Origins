@@ -76,7 +76,7 @@ La interacción para poder robar la materia del otro jugador, en el jugador 1 se
 #### 2.5 Interfaz
 ##### 2.5.1 Diagrama de flujo
 En el siguiente diagrama se muestra una representación de las diferentes pantallas de interfaces que el jugador puede recorrer antes de entrar en partida y, más abajo, los diferentes estados por los que el jugador pasa a lo largo de la partida de Origins.
-![Figura 1](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/flowchart.png?raw=true)
+![Figura 1](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Flowchart.png?raw=true)
 Figura 2
 El siguiente diagrama de clases muestra el flujo de la aplicación
 ![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Diagrama%20de%20fllujo.png?raw=true)
