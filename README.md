@@ -125,23 +125,53 @@ El juego comienza con un menú principal, donde el jugador podrá elegir jugar, 
 En el modo de dos jugadores, el jugador luchará contra otro jugador, ambos podrán elegir su personaje, y la condición de victoria será la misma, ganará quien tenga más puntos por poseer mayor tiempo la materia oscura.
 
 En ambos modos, la condición que define la derrota es tener menos puntos que el otro jugador o la IA.
+### 3. Instrucciones para ejecutar la aplicación
+##### 3.1 Compilación
+Para poder inicializar el proyecto con el servidor online, se abrirá el proyecto en SpringTools. Una vez abierto, para iniciar el server correctamente se hará lo siguiente:
+1. Se pulsará click derecho encima del nombre del directorio en el Package Explorer. 
+2. Se buscará maven build.
+3. Una vez pulsado, saldrá una pestaña con distintos datos, el que interesa es el espacio de Goals.
+4. En el espacio de Goals se pondrá la palabra 'package' (sin las comillas).
+5. Se pulsará Run, y ya se podría ejecutar el proyecto.
+##### 3.2 Ejecutar el .jar
+Para la ejecucción del archivo .jar hay dos formas de abrirlo:
+**Forma 1**
+Aunque se podría abrir el .jar de manera rápida, no lograríamos ver el contenido de este. Para ello, se tendrán que seguir los siguientes pasos:
+1. Poner en el buscador de tu PC 'cmd' para poder abrir la consola de comandos.
+2. Una vez abierta, se pondrá 'cd /' seguido del directorio donde se encuentra el .jar (en el explorador se puede dar click derecho en la barra donde se encuentra y copiar para tener directamente la ubicación del archivo)
+3. Seguido de eso se pondrá 'java -jar origins-1.jar'
+Ya se habría abierto el .jar con todos los datos
+**Forma 2**
+La segunda forma de abrir el archivo .jar, será de la siguiente manera:
+1. Abrir bloc de notas
+2. Escribir lo siguiente exactamente igual:
+   ' @echo off
+    java -jar origins-1.jar
+    pause '
+3. Guardar el bloc de notas como .bat
+Al abrir el documento .bat se abrirá directamente la consola con la aplicación ejecutada.
+##### 3.4 URL para el navegador
+Para abrir la URL donde se encuentra el juego, se tendrá que poner en la barra superior del navegador 'localhost:8080'
+##### 3.4 Requisitos
+Se recomienda tener Java JDK 15 y es necesario tener Spring Tools.
 
-### 3. Música
+
+### 4. Música
 - **Menú  principal:** música  arcade  para  dar  una  pequeña  introducción  al  juego,  este  audio será compartido también por el menú jugar.
 - **Pantalla de juego:** música de fondo durante la partida. Variará en función del mapa en cual se encuentren los jugadores.
 _NOTA_: Para una preview de las canciones, vea apartado 5.1 (Anexos y referencias - Enlaces de música).
 
-### 4. Arte
+### 5. Arte
 Base de los personajes principales (véase figura 13).
 
 Diseño de escenario (véase figura 14).
 
 La forma del mapa será algo similar a esto (véase figura 15).
 
-### 5. Anexos y referencias
+### 6. Anexos y referencias
 La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha modificado para poder cumplir las características pedidas para este trabajo.
 
-#### 5.1 Enlaces de música
+#### 6.1 Enlaces de música
 [Música Menú Principal](https://opengameart.org/content/crystal-cave-mysterious-ambience-seamless-loop)
 
 [Música Nivel Bosque](https://opengameart.org/content/in-the-forest)
