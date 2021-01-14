@@ -77,24 +77,27 @@ La interacción para poder robar la materia del otro jugador, en el jugador 1 se
 ##### 2.5.1 Diagrama de flujo
 En el siguiente diagrama se muestra una representación de las diferentes pantallas de interfaces que el jugador puede recorrer antes de entrar en partida y, más abajo, los diferentes estados por los que el jugador pasa a lo largo de la partida de Origins.
 ![Figura 1](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/flowchart.png?raw=true)
-Figura 1
+Figura 2
+El siguiente diagrama de clases muestra el flujo de la aplicación
+![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Diagrama%20de%20fllujo.png?raw=true)
+Figura 2
 
 ##### 2.5.2 Interfaces y bocetos
 A lo largo del juego, podemos encontrar las siguientes interfaces:
 1. **Menú principal:** compuesto por el botón de jugar, controles, ajustes y salida del juego.
-![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/MainMenu.png?raw=true)
-Figura 2
-2. **Menú Jugar:** compuesto por los tipos de modo de juego que se podrán elegir.
-![Figura 3](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/GameMenu.png?raw=true)
+![Figura 3](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/MainMenu.png?raw=true)
 Figura 3
-3. **Menú de selección:** se podrán elegir los personajes a gusto del usuario.
-![Figura 4](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/selection.png?raw=true)
+2. **Menú Jugar:** compuesto por los tipos de modo de juego que se podrán elegir.
+![Figura 4](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/GameMenu.png?raw=true)
 Figura 4
+3. **Menú de selección:** se podrán elegir los personajes a gusto del usuario.
+![Figura 5](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/selection.png?raw=true)
+Figura 5
 4. **Pantalla  de  juego:**  tendrá  a  los  personajes,  el  número  de  rondas ganadas,  la puntuación de los personajes y el tiempo restante.
 
 1 Jugador | 2 Jugadores
 ------------- | -------------
-![Figura 5](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/1player.png?raw=true) Figura 5 | ![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 6
+![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/1player.png?raw=true) Figura 5 | ![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 6
 
 5. **Pantalla de victoria:** pantalla con el gato vencedor y unas opciones para poder volver a jugar o volver al menú de inicio.
 ![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/win.png?raw=true)
