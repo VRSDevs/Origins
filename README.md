@@ -61,7 +61,7 @@ Este apartado intenta acercar la idea general del juego.
 El objetivo del juego es conseguir la mayor cantidad de materia oscura posible, para ello, aparecerá la puntuación que la materia oscura cederá al jugador por poseerla.
 
 #### 2.2 Jugabilidad
-Origins presenta tres mapas queno se considerarán niveles ya que aparecen de manera aleatoriatrasseleccionar el modo de juego que se quiera jugar.
+Origins presenta tres mapas queno se considerarán niveles ya que aparecen de manera aleatoria tras seleccionar el modo de juego que se quiera jugar.
 
 #### 2.3 Controles
 Para el movimiento del jugador 1, se usarán las teclas ‘W’, ‘A’, ‘S’, ‘D’; mientras que para el jugador 2 se usarán las flechas del teclado.
