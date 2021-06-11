@@ -33,7 +33,7 @@ class bootloader extends Phaser.Scene {
 
         //***********************  Fondos ***************************//
         // Menús //
-        this.load.image("loginMenu","./resources/img/MenuDesign/Login/loginBG.png");
+        this.load.image("loginMenu","./resources/img/MenuDesign/Login/login_noButtons.png");
         this.load.image("mainMenu","./resources/img/MenuDesign/Main/MainMenu_NoButtons.png");
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
@@ -57,7 +57,7 @@ class bootloader extends Phaser.Scene {
         // Aire //
         this.load.image("AirCatFace","./resources/img/Icons/Wiskas.png");
         // Sin materia
-        this.load.spritesheet('AirCatDown','./resources/img/SpriteSheet/Air_Spritesheet/aDown.png' , {frameWidth: 30, frameHeight: 38} );
+        this.load.spritesheet('AirCatDown','./resources/img/SpriteSheet/Air_Spritesheet/down.png' , {frameWidth: 30, frameHeight: 38} );
         this.load.spritesheet('AirCatIdle','./resources/img/SpriteSheet/Air_Spritesheet/idle.png' , {frameWidth: 34, frameHeight: 36} );
         this.load.spritesheet('AirCatIdle2','./resources/img/SpriteSheet/Air_Spritesheet/idle_x2.png' , {frameWidth: 124, frameHeight: 124} );
         this.load.spritesheet('AirCatIdle3','./resources/img/SpriteSheet/Air_Spritesheet/idle_b.png' , {frameWidth: 85, frameHeight: 90} );
@@ -166,6 +166,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
         this.load.spritesheet("spriteRestart", './resources/img/SpriteSheet/Button_SpriteSheet/restart_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
         this.load.spritesheet("spriteMainMenu", './resources/img/SpriteSheet/Button_SpriteSheet/mainMenu_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
+    	this.load.spritesheet("readyPButton", './resources/img/SpriteSheet/Button_SpriteSheet/readyButton.png', { frameWidth: 655, frameHeight: 84});
     }
 }
 

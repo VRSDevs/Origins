@@ -76,7 +76,7 @@ class sceneLoginMenu extends Phaser.Scene {
                         // Registro del usuario //
                         case 1:
                             // Comprobación de existencia en la BD
-                            checkUser(usernameLog.value);
+                            //checkUser(usernameLog.value);
 
                             // Ejecucuión tras un período de tiempo
                             controller.getCurrentScene().time.addEvent({
@@ -100,7 +100,7 @@ class sceneLoginMenu extends Phaser.Scene {
                                         }
 
                                         // Post del usuario creado
-                                        postUser(userToCreate);
+                                        //postUser(userToCreate);
                                         userAlreadyCreated = true;
 
                                         // Post de mensaje de inicio de sesión
@@ -160,7 +160,7 @@ class sceneLoginMenu extends Phaser.Scene {
                                                     password: passwordLog.value,
                                                     status: true,
                                                 }
-                                                updateUser(userToUpdate);
+                                                //updateUser(userToUpdate);
 
                                                 // Post de mensaje de inicio de sesión
                                                 var message = {
@@ -306,7 +306,7 @@ class sceneLoginMenu extends Phaser.Scene {
                 controller.getCurrentScene().time.addEvent({
                     delay: 1200,
                     callback: () => {
-                        getConnectedUsers();
+                        //getConnectedUsers();
                     },
                     callbackScope: this,
                     loop: true
@@ -344,6 +344,7 @@ class sceneLoginMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                      Funciones HTTP                              //
 //////////////////////////////////////////////////////////////////////
+/*
 // Usuarios conectados al servidor //
 function getConnectedUsers() {
     $.ajax({
@@ -410,6 +411,7 @@ function postMessage(message) {
         console.log("Item created: " + JSON.stringify(item));
     })
 }
+*/
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
@@ -451,7 +453,7 @@ function createServerUI() {
 
     //******************* Conexión al servidor ************************//
     // Texto //
-    getConnectedUsers();
+    //getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,

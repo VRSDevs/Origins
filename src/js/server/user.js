@@ -8,6 +8,7 @@ class User {
         this.password = pw;
         this.status = st;
     }
+    
     //******************* Getters ************************//
     getUsername() {
         return this.username;

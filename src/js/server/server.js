@@ -64,6 +64,23 @@ class ServerClass {
 
     //******************* Otros ************************//
     connect() {
+        console.log("Nos vamos a conectar...");
+        
+        var connection = new WebSocket('ws://85.137.44.104:80/chat');
+
+        connection.onopen = function() {
+            server.setServerConnected(true);
+            server.setLogMessage("<> Established connection to the server.");
+            server.setLogPlayMenu("<> Established connection to the server.");
+        }
+
+        connection.onerror = function(e) {
+            console.log("Nope.");
+            server.setServerConnected(false);
+            server.setLogMessage("<> Cant establish connection to the server.");
+            server.setLogPlayMenu("<> Cant establish connection to the server.");
+        }
+        /*
         $.ajax({
             url: 'http://localhost:8080/users',
             success: function () {
@@ -77,6 +94,7 @@ class ServerClass {
                 server.setLogPlayMenu("<> Cant establish connection to the server.");
             }
         })
+        */
     }
 }
 

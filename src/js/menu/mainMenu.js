@@ -140,7 +140,7 @@ class sceneMainMenu extends Phaser.Scene {
         exitButton.addListener('pointerdown', loadScene, this);
 
         //******************* Interfaz servidor ************************//
-        createServerUI();
+        //createServerUI();
 
         //****************** Música *********************//
         if (controller.getMusicPlaying() === false) {
@@ -157,6 +157,7 @@ class sceneMainMenu extends Phaser.Scene {
 
     update(time, delta) {
         //****************** Servidor *********************//
+        /*
         if (server.isServerConnected() === true) {
             //
             messagesOrUsers.setText(server.getLogMessage());
@@ -219,6 +220,7 @@ class sceneMainMenu extends Phaser.Scene {
             });
             textNumOfUsersConnected.setText("0");
         }
+        */
 
         //****************** Música *********************//
         if (controller.getMusicEnabled() === false) {
@@ -231,7 +233,8 @@ class sceneMainMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones HTTP                          //
 //////////////////////////////////////////////////////////////////////
-//******************* Usuarios ************************//
+/*
+//******************* Usuarios 
 // Usuarios conectados al servidor //
 function getConnectedUsers() {
     $.ajax({
@@ -261,7 +264,7 @@ function updateUser(user) {
     })
 }
 
-//******************* Mensajes ************************//
+//******************* Mensajes 
 // Carga de mensajes de la base de datos y servidor //
 function loadMessagesFromDB() {
     $.ajax({
@@ -293,13 +296,14 @@ function postMessage(message) {
         console.log("Item created: " + JSON.stringify(item));
     })
 }
-
+*/
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
 //******************* Creación de interfaz de servidor ************************//
+/*
 function createServerUI() {
-    //******************* Mensajes ************************//
+    //******************* Mensajes
     // Variables auxiliares //   
     var xChat = 19;
     var yChat = 340;
@@ -374,7 +378,7 @@ function createServerUI() {
         }
     });
 
-    //******************* Conexión al servidor ************************//
+    //******************* Conexión al servidor
     controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
@@ -405,7 +409,7 @@ function createServerUI() {
         });
     }, this);
 
-    //******************* Usuario cliente ************************//
+    //******************* Usuario cliente
     controller.getCurrentScene().add.rectangle(xChat, yChat - hChat / 4, wChat, hChat / 6, 0x000000, 0.6).setOrigin(0);
     var nameString = "Hola, " + user.getUsername() + ".";
     textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
@@ -414,7 +418,7 @@ function createServerUI() {
         color: '#00ff00',
     });
 
-    //******************* Usuarios ************************//
+    //******************* Usuarios
     // Texto //
     getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
@@ -425,9 +429,11 @@ function createServerUI() {
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
+*/
 
 //******************* Cierre de sesión de jugador ************************//
 function logOut() {
+    /*
     // Usuario auxiliar para actualizar la BD //
     var userToLogOut = {
         username: user.getUsername(),
@@ -438,6 +444,7 @@ function logOut() {
 
     // Reset de usuario del cliente //
     user.resertUser();
+    */
 }
 
 //
