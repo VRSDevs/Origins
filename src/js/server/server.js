@@ -1,23 +1,25 @@
 //////////////////////////////////////////////////////////////////////
+//                        Variables globales                        //
+//////////////////////////////////////////////////////////////////////
+//******************* Conexiones ************************//
+var chatWS = undefined;
+var userWS = undefined;
+
+//////////////////////////////////////////////////////////////////////
 //                         Clase servidor                           //
 //////////////////////////////////////////////////////////////////////
 class ServerClass {
     //******************* Constructor clase ************************//
-    constructor(msg, msgPM, numUs, lCU, servCon, mDB, ws) {
-        this.logMessage = msg;
+    constructor(msgPM, numUs, lCU, servCon, mDB, ws) {
         this.logPlayMenu = msgPM;
         this.connectedUsers = numUs;
         this.listConnectedUsers = lCU;
         this.serverConnected = servCon;
         this.messagesFromDB = mDB;
-        this.connection = ws;
+        this.connections = ws;
     }
 
     //******************* Getters ************************//
-    getLogMessage() {
-        return this.logMessage;
-    }
-
     getLogPlayMenu() {
         return this.logPlayMenu;
     }
@@ -39,7 +41,7 @@ class ServerClass {
     }
 
     getWSConnection() {
-        return this.connection;
+        return this.connections;
     }
 
     //******************* Setters ************************//
@@ -67,75 +69,91 @@ class ServerClass {
         this.messagesFromDB = array;
     }
 
-    setWSConnection(connection) {
-        this.connection = connection;
+    setWSConnection(connections) {
+        this.connections = connections;
     }
 
     //******************* Otros ************************//
-    connect() {
-        /*
-        
-        var wsConnection = new WebSocket('ws://85.137.44.104:80/chat');
+    connectToChatService() {
+        chatWS = new WebSocket('ws://85.137.44.104:80/chat');
 
-        wsConnection.onopen = function() {
+        chatWS.onopen = function() {
             server.setServerConnected(true);
 
-            var aux = {};
-            aux["chat"] = wsConnection;
+            var aux = server.getWSConnection();
+            aux["chat"] = chatWS;
             server.setWSConnection(aux);
-            
-            server.setLogMessage("<> Established connection to the server.");
-            server.setLogPlayMenu("<> Established connection to the server.");
         }
 
-        wsConnection.onerror = function(e) {
+        chatWS.onmessage = function (msg) {
+            var message = JSON.parse(msg.data);
+
+            var aux = [];
+            aux = server.getMessagesFromDB();
+
+            var messageToAdd = "<" + message.name + "> " + message.message;
+            console.log(messageToAdd);
+
+            aux.push(messageToAdd);
+            server.setMessagesFromDB(aux);
+        }
+
+        chatWS.onerror = function(e) {
+            console.log("a");
             server.setServerConnected(false);
+
+            var aux = [];
+            var messageToAdd = "<" + message.username + "> " + message.body;
+
+            aux.push(messageToAdd);
+            server.setMessagesFromDB(aux);
+            /*
             server.setLogMessage("<> Cant establish connection to the server.");
             server.setLogPlayMenu("<> Cant establish connection to the server.");
+            */
         }
-        */
+    }
+
+    messageToChatService(message){
+        var messageToAdd = "<" + message.name + "> " + message.message;
+        console.log(messageToAdd);
+
+        server.getMessagesFromDB().push(messageToAdd);
+
+        chatWS.send(JSON.stringify(message));
     }
 
     connectToUserService() {
-        var wsConnection = new WebSocket('ws://85.137.44.104:80/user');
+        userWS = new WebSocket('ws://85.137.44.104:80/user');
 
-        wsConnection.onopen = function() {
+        userWS.onopen = function() {
             server.setServerConnected(true);
 
-            var aux = {}
-            aux["user"] = wsConnection;
+            var aux = server.getWSConnection();
+            aux["user"] = userWS;
             server.setWSConnection(aux);
-
-            console.log("Dingga");
         }
 
-        wsConnection.onmessage = function(msg) {
+        userWS.onmessage = function(msg) {
             var message = JSON.parse(msg.data);
 
             server.setConnectedUsers(message.connectedUsers);
-            console.log(message.connectedUsers);
         }
     }
 
     disconnect() {
-        var wsConnection = this.getWSConnection()["user"];
-
-        wsConnection.close();
-
-        wsConnection.onclose = function(msg) {
-            var message = JSON.parse(msg.data);
-
-            server.setConnectedUsers(message.connectedUsers);
-        }
-
-        this.setWSConnection(null);
+        chatWS.close();
+        userWS.close();
+        
+        this.setWSConnection({});
+        server.setServerConnected(false);
     }
 }
 
 //////////////////////////////////////////////////////////////////////
 //                       Inicialización de datos                    //
 //////////////////////////////////////////////////////////////////////
-var server = new ServerClass("", "", 0, [], false, [], {});
+var server = new ServerClass("", 0, [], false, [], {});
 
 //////////////////////////////////////////////////////////////////////
 //                            Exportación                           //
