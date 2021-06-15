@@ -54,6 +54,10 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
 
+        // Establecer conexion al servidor
+        server.connectToUserService();
+        //getConnectedUsers();
+
         //******************* Variables auxiliares ************************//
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
@@ -200,7 +204,6 @@ class sceneLoginMenu extends Phaser.Scene {
         });
 
         //******************* Información del servidor ************************//
-        server.connect();
         createServerUI();
 
         //******************* Textos ************************//
@@ -302,17 +305,19 @@ class sceneLoginMenu extends Phaser.Scene {
             textNumOfUsersConnected.setStyle({
                 color: '#00ff00',
             });
+            /*
             if (callGetUsersEvent) {
                 controller.getCurrentScene().time.addEvent({
                     delay: 1200,
                     callback: () => {
-                        //getConnectedUsers();
+                        getConnectedUsers();
                     },
                     callbackScope: this,
                     loop: true
                 });
                 callGetUsersEvent = false;
             }
+            */
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
             textServerConnected.setStyle({
@@ -344,16 +349,25 @@ class sceneLoginMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                      Funciones HTTP                              //
 //////////////////////////////////////////////////////////////////////
-/*
 // Usuarios conectados al servidor //
 function getConnectedUsers() {
+    //var wsConnection = server.getWSConnection()["user"];
+
+    //console.log("Dinggi");
+
+    /*wsConnection.onmessage = function(msg) {
+        
+    }*/
+    /*
     $.ajax({
         url: 'http://localhost:8080/users/connectedUsers'
     }).done(function (listOfConnectedUsers) {
         server.setConnectedUsers(listOfConnectedUsers.length);
     })
+    */
 }
 
+/*
 // Comprobación del jugador logueado //
 function checkUser(username) {
     $.ajax({
