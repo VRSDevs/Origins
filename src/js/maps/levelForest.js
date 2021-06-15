@@ -262,8 +262,6 @@ class sceneForestLevel extends Phaser.Scene {
             obj.setVisible(false);
         });
 
-
-
         // Con los bordes
         players[0].getObject().setCollideWorldBounds(true);
         players[1].getObject().setCollideWorldBounds(true);
@@ -510,7 +508,6 @@ class sceneForestLevel extends Phaser.Scene {
             } else {
                 players[0].getObject().body.velocity.normalize().scale(160);
             }
-
 
             // Puntuación
             updatePoints();

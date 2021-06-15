@@ -33,8 +33,6 @@ var messagesOrUsers = "";
 //******************* Control ************************//
 // Selección de submenú //
 var id = 0;
-// Llamada al evento de obtención de usuarios //
-var callServerEvent = true;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú principal              //
@@ -157,28 +155,12 @@ class sceneMainMenu extends Phaser.Scene {
 
     update(time, delta) {
         //****************** Servidor *********************//
-        if (server.isServerConnected() === true) {
-            loadMessagesFromDB();
-            //
-            messagesOrUsers.setText(server.getLogMessage());
-            // Generación de evento retardado para llamadas al servidor //
-            if(callServerEvent){
-                controller.getCurrentScene().time.addEvent({
-                    delay: 1200,
-                    callback: () => {
-                        
-                        //getConnectedUsers();
-                    },
-                    callbackScope: this,
-                    loop: true
-                });
-                callServerEvent = false;
-            }
+        if (server.isServerConnected() === true) {          
             // Actualización mensajes o lista de usuarios //
             if(chatMode === 0) {
                 messagesOrUsers.setText(server.getMessagesFromDB());
             } else {
-                //messagesOrUsers.setText(server.getListConnectedUsers());
+                messagesOrUsers.setText(server.getListConnectedUsers());
             }
             
             // Actualización estado del servidor //
@@ -193,21 +175,8 @@ class sceneMainMenu extends Phaser.Scene {
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
-            messagesOrUsers.setText(server.getLogMessage());
-            // Eliminación de eventos de llamada al servidor //
-            if(!callServerEvent){
-                controller.getCurrentScene().time.removeAllEvents();
-                controller.getCurrentScene().time.addEvent({
-                    delay: 1200,
-                    callback: () => {
-                        syncButton.anims.stop();
-                        syncButton.setFrame(1);
-                    },
-                    callbackScope: this,
-                    loop: false
-                });
-                callServerEvent = true;
-            }
+            //
+            messagesOrUsers.setText(server.getMessagesFromDB());
             // Actualización del estado del servidor //
             textServerConnected.setStyle({
                 color: '#ff0000',
@@ -232,23 +201,6 @@ class sceneMainMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones HTTP                          //
 //////////////////////////////////////////////////////////////////////
-//******************* Usuarios 
-// Usuarios conectados al servidor //
-function getConnectedUsers() {
-    /*
-    $.ajax({
-        url: 'http://localhost:8080/users/connectedUsers'
-    }).done(function (listOfConnectedUsers){
-        server.setConnectedUsers(listOfConnectedUsers.length);
-        var arrayOfUsers = [];
-        arrayOfUsers.push("USUARIOS CONECTADOS:");
-        for (let i = 0; i < listOfConnectedUsers.length; i++) {
-            arrayOfUsers[i+1] = listOfConnectedUsers[i].username;
-        }
-        server.setListConnectedUsers(arrayOfUsers);
-    })
-    */
-}
 
 // Inicio de sesión del jugador //
 function updateUser(user) {
@@ -264,66 +216,13 @@ function updateUser(user) {
     })
 }
 
-//******************* Mensajes 
-// Carga de mensajes de la base de datos y servidor //
-function loadMessagesFromDB() {
-    
-    /*
-    $.ajax({
-        url: 'http://localhost:8080/messages'
-    }).done(function (messages) {
-        var arrayOfMessages = [];
-        arrayOfMessages.push("MENSAJES:");
-        for (let i = 0; i < messages.length; i++) {
-            var index = (i+1)%56;
-            if(index !== 0){
-                arrayOfMessages[index] = "<" + messages[i].username + "> " + messages[i].body;
-            }
-        }
-        server.setMessagesFromDB(arrayOfMessages);
-    })
-    */
-}
-/*
-$(document).ready(function() {
-    server.connect();
-	var chatConnection = new WebSocket('ws://85.137.44.104:80/chat');
-
-	chatConnection.onmessage = function(msg) {
-		console.log("WS message: " + msg.data);
-		var message = JSON.parse(msg.data)
-		console.log("Nombre: " + message.username + ", Mensaje: " + message.body);
-	}
-
-}) 
-*/
-
-// Envío de mensaje al servidor y a la BD //
-function postMessage(message) {
-    //server.getWSConnection().send(JSON.stringify(message));
-    var chatConnection = server.getWSConnection()["chat"];
-    chatConnection.send(JSON.stringify(message));
-    /*
-    $.ajax({
-        method: "POST",
-        url: 'http://localhost:8080/messages',
-        data: JSON.stringify(message),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (item) {
-        console.log("Item created: " + JSON.stringify(item));
-    })
-    */
-}
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
 //******************* Creación de interfaz de servidor ************************//
 function createServerUI() {
-    //******************* Mensajes
+    //******************* Mensajes *******************//
     // Variables auxiliares //   
     var xChat = 19;
     var yChat = 340;
@@ -343,12 +242,12 @@ function createServerUI() {
             if (elementHTML.value !== '') {
                 // Objeto de mensaje
                 var message = {
-                    username: user.getUsername(),
-                    body: elementHTML.value,
+                    name: user.getUsername(),
+                    message: elementHTML.value,
                 }
 
                 // Envío del mensaje al servidor y a la BD
-                postMessage(message);
+                server.messageToChatService(message);
 
                 // Limpieza del campo de texto
                 elementHTML.value = '';
@@ -398,7 +297,7 @@ function createServerUI() {
         }
     });
 
-    //******************* Conexión al servidor
+    //******************* Conexión al servidor *******************//
     controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
@@ -406,30 +305,8 @@ function createServerUI() {
         fontSize: 14,
         color: '#00ff00',
     });
-    // Botón recarga //
-    syncButton = controller.getCurrentScene().add.sprite(775, 145, "spriteReloadButton", 1).setInteractive();
-    controller.getCurrentScene().anims.create({
-        key: 'syncButtonAnim',
-        frames: controller.getCurrentScene().anims.generateFrameNumbers('spriteReloadButton', { start: 0, end: 1 }),
-        frameRate: 6,
-        repeat: -1
-    });
 
-    syncButton.addListener('pointerdown', () => {
-        syncButton.anims.play('syncButtonAnim', true);
-        server.connect();
-        controller.getCurrentScene().time.addEvent({
-            delay: 1200,
-            callback: () => {
-                syncButton.anims.stop();
-                syncButton.setFrame(1);
-            },
-            callbackScope: this,
-            loop: false
-        });
-    }, this);
-
-    //******************* Usuario cliente
+    //******************* Usuario cliente *******************//
     controller.getCurrentScene().add.rectangle(xChat, yChat - hChat / 4, wChat, hChat / 6, 0x000000, 0.6).setOrigin(0);
     var nameString = "Hola, " + user.getUsername() + ".";
     textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
@@ -438,9 +315,8 @@ function createServerUI() {
         color: '#00ff00',
     });
 
-    //******************* Usuarios
+    //******************* Usuarios *******************//
     // Texto //
-    //getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
@@ -469,7 +345,6 @@ function logOut() {
 
 //
 function resetVariables() {
-    callServerEvent = true;
     textUsername = "";
 }
 
@@ -493,15 +368,15 @@ function loadScene() {
             nextScene.scene.start();
             break;
         case 4:
-            /*
             var message = {
-                username: "Server",
-                body: user.getUsername() + " has disconnected.",
+                name: "Server",
+                message: user.getUsername() + " has disconnected.",
             }
             
             server.setLogPlayMenu(user.getUsername() + " has disconnected.");
-            postMessage(message);
-            */
+            
+            server.messageToChatService(message);
+            
             server.disconnect();
 
             logOut();

@@ -21,7 +21,6 @@ var textModeLog = undefined;
 //******************* Control ************************//
 var mode = 0;           // Opción de menú
 var updateScene = 0;    // Variable de control para implementar HTML
-var callGetUsersEvent = true;   // Llamada al evento de obtención de usuarios
 var userAlreadyCreated = false;
 //******************* Botones ************************//
 var signupButton = undefined;
@@ -54,10 +53,6 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
 
-        // Establecer conexion al servidor
-        server.connectToUserService();
-        //getConnectedUsers();
-
         //******************* Variables auxiliares ************************//
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
@@ -87,6 +82,10 @@ class sceneLoginMenu extends Phaser.Scene {
                                 delay: 20,
                                 callback: () => {
                                     if (!userAlreadyCreated) {
+                                        // Establecer conexion al servidor
+                                        server.connectToChatService();
+                                        server.connectToUserService();
+
                                         textModeLog.setText("Registro con éxito.");
                                         // Codificación de la contraseña introducida
                                         //var codifiedPassword = sha256(passwordLog.value);
@@ -109,11 +108,11 @@ class sceneLoginMenu extends Phaser.Scene {
 
                                         // Post de mensaje de inicio de sesión
                                         var message = {
-                                            username: "Server",
-                                            body: user.getUsername() + " has connected.",
+                                            name: "Server",
+                                            message: user.getUsername() + " has connected.",
                                         }
                                         server.setLogPlayMenu(user.getUsername() + " has connected.");
-                                        postMessage(message);
+                                        //server.messageToChatService(message);
 
                                         // Limpieza de datos
                                         usernameLog.value = '';
@@ -305,19 +304,6 @@ class sceneLoginMenu extends Phaser.Scene {
             textNumOfUsersConnected.setStyle({
                 color: '#00ff00',
             });
-            /*
-            if (callGetUsersEvent) {
-                controller.getCurrentScene().time.addEvent({
-                    delay: 1200,
-                    callback: () => {
-                        getConnectedUsers();
-                    },
-                    callbackScope: this,
-                    loop: true
-                });
-                callGetUsersEvent = false;
-            }
-            */
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
             textServerConnected.setStyle({
@@ -328,19 +314,6 @@ class sceneLoginMenu extends Phaser.Scene {
             textNumOfUsersConnected.setStyle({
                 color: '#ff0000',
             });
-            if (!callGetUsersEvent) {
-                controller.getCurrentScene().time.removeAllEvents();
-                controller.getCurrentScene().time.addEvent({
-                    delay: 1200,
-                    callback: () => {
-                        syncButton.anims.stop();
-                        syncButton.setFrame(1);
-                    },
-                    callbackScope: this,
-                    loop: false
-                });
-                callGetUsersEvent = true;
-            }
             textNumOfUsersConnected.setText("0");
         }
     }
@@ -442,32 +415,9 @@ function createServerUI() {
         fontSize: 14,
         color: '#00ff00',
     });
-    // Botón recarga //
-    syncButton = controller.getCurrentScene().add.sprite(775, 145, "spriteReloadButton", 1).setInteractive();
-    controller.getCurrentScene().anims.create({
-        key: 'syncButtonAnim',
-        frames: controller.getCurrentScene().anims.generateFrameNumbers('spriteReloadButton', { start: 0, end: 1 }),
-        frameRate: 6,
-        repeat: -1
-    });
-
-    syncButton.addListener('pointerdown', () => {
-        syncButton.anims.play('syncButtonAnim', true);
-        server.connect();
-        controller.getCurrentScene().time.addEvent({
-            delay: 1200,
-            callback: () => {
-                syncButton.anims.stop();
-                syncButton.setFrame(1);
-            },
-            callbackScope: this,
-            loop: false
-        });
-    }, this);
 
     //******************* Conexión al servidor ************************//
     // Texto //
-    //getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
@@ -497,7 +447,6 @@ function resetVariables() {
     mode = 0;
     updateScene = 0;
     userToCheck = undefined;
-    callGetUsersEvent = true;
     userAlreadyCreated = false;
     userToCreate = undefined;
     userToUpdate = undefined;
