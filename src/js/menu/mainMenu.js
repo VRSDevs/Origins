@@ -158,6 +158,7 @@ class sceneMainMenu extends Phaser.Scene {
     update(time, delta) {
         //****************** Servidor *********************//
         if (server.isServerConnected() === true) {
+            loadMessagesFromDB();
             //
             messagesOrUsers.setText(server.getLogMessage());
             // Generación de evento retardado para llamadas al servidor //
@@ -165,8 +166,8 @@ class sceneMainMenu extends Phaser.Scene {
                 controller.getCurrentScene().time.addEvent({
                     delay: 1200,
                     callback: () => {
-                        loadMessagesFromDB();
-                        getConnectedUsers();
+                        
+                        //getConnectedUsers();
                     },
                     callbackScope: this,
                     loop: true
@@ -177,7 +178,7 @@ class sceneMainMenu extends Phaser.Scene {
             if(chatMode === 0) {
                 messagesOrUsers.setText(server.getMessagesFromDB());
             } else {
-                messagesOrUsers.setText(server.getListConnectedUsers());
+                //messagesOrUsers.setText(server.getListConnectedUsers());
             }
             
             // Actualización estado del servidor //
@@ -231,9 +232,10 @@ class sceneMainMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones HTTP                          //
 //////////////////////////////////////////////////////////////////////
-//******************* Usuarios ************************//
+//******************* Usuarios 
 // Usuarios conectados al servidor //
 function getConnectedUsers() {
+    /*
     $.ajax({
         url: 'http://localhost:8080/users/connectedUsers'
     }).done(function (listOfConnectedUsers){
@@ -245,6 +247,7 @@ function getConnectedUsers() {
         }
         server.setListConnectedUsers(arrayOfUsers);
     })
+    */
 }
 
 // Inicio de sesión del jugador //
@@ -261,9 +264,11 @@ function updateUser(user) {
     })
 }
 
-//******************* Mensajes ************************//
+//******************* Mensajes 
 // Carga de mensajes de la base de datos y servidor //
 function loadMessagesFromDB() {
+    
+    /*
     $.ajax({
         url: 'http://localhost:8080/messages'
     }).done(function (messages) {
@@ -277,10 +282,28 @@ function loadMessagesFromDB() {
         }
         server.setMessagesFromDB(arrayOfMessages);
     })
+    */
 }
+/*
+$(document).ready(function() {
+    server.connect();
+	var chatConnection = new WebSocket('ws://85.137.44.104:80/chat');
+
+	chatConnection.onmessage = function(msg) {
+		console.log("WS message: " + msg.data);
+		var message = JSON.parse(msg.data)
+		console.log("Nombre: " + message.username + ", Mensaje: " + message.body);
+	}
+
+}) 
+*/
 
 // Envío de mensaje al servidor y a la BD //
 function postMessage(message) {
+    //server.getWSConnection().send(JSON.stringify(message));
+    var chatConnection = server.getWSConnection()["chat"];
+    chatConnection.send(JSON.stringify(message));
+    /*
     $.ajax({
         method: "POST",
         url: 'http://localhost:8080/messages',
@@ -292,6 +315,7 @@ function postMessage(message) {
     }).done(function (item) {
         console.log("Item created: " + JSON.stringify(item));
     })
+    */
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -299,7 +323,7 @@ function postMessage(message) {
 //////////////////////////////////////////////////////////////////////
 //******************* Creación de interfaz de servidor ************************//
 function createServerUI() {
-    //******************* Mensajes ************************//
+    //******************* Mensajes
     // Variables auxiliares //   
     var xChat = 19;
     var yChat = 340;
@@ -374,7 +398,7 @@ function createServerUI() {
         }
     });
 
-    //******************* Conexión al servidor ************************//
+    //******************* Conexión al servidor
     controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
@@ -405,7 +429,7 @@ function createServerUI() {
         });
     }, this);
 
-    //******************* Usuario cliente ************************//
+    //******************* Usuario cliente
     controller.getCurrentScene().add.rectangle(xChat, yChat - hChat / 4, wChat, hChat / 6, 0x000000, 0.6).setOrigin(0);
     var nameString = "Hola, " + user.getUsername() + ".";
     textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
@@ -414,9 +438,9 @@ function createServerUI() {
         color: '#00ff00',
     });
 
-    //******************* Usuarios ************************//
+    //******************* Usuarios
     // Texto //
-    getConnectedUsers();
+    //getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
@@ -428,6 +452,8 @@ function createServerUI() {
 
 //******************* Cierre de sesión de jugador ************************//
 function logOut() {
+    user.resertUser();
+    /*
     // Usuario auxiliar para actualizar la BD //
     var userToLogOut = {
         username: user.getUsername(),
@@ -437,7 +463,8 @@ function logOut() {
     updateUser(userToLogOut);
 
     // Reset de usuario del cliente //
-    user.resertUser();
+    
+    */
 }
 
 //
@@ -466,13 +493,19 @@ function loadScene() {
             nextScene.scene.start();
             break;
         case 4:
+            /*
             var message = {
                 username: "Server",
                 body: user.getUsername() + " has disconnected.",
             }
+            
             server.setLogPlayMenu(user.getUsername() + " has disconnected.");
             postMessage(message);
+            */
+            server.disconnect();
+
             logOut();
+
             controller.getCurrentScene().scene.stop();
             controller.getMusic().stop();
             var nextScene = game.scene.getScene("sceneLoginMenu");

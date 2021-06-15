@@ -54,6 +54,10 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Asignación escena ************************//       
         controller.setCurrentScene(this);
 
+        // Establecer conexion al servidor
+        server.connectToUserService();
+        //getConnectedUsers();
+
         //******************* Variables auxiliares ************************//
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
@@ -76,7 +80,7 @@ class sceneLoginMenu extends Phaser.Scene {
                         // Registro del usuario //
                         case 1:
                             // Comprobación de existencia en la BD
-                            checkUser(usernameLog.value);
+                            //checkUser(usernameLog.value);
 
                             // Ejecucuión tras un período de tiempo
                             controller.getCurrentScene().time.addEvent({
@@ -100,7 +104,7 @@ class sceneLoginMenu extends Phaser.Scene {
                                         }
 
                                         // Post del usuario creado
-                                        postUser(userToCreate);
+                                        //postUser(userToCreate);
                                         userAlreadyCreated = true;
 
                                         // Post de mensaje de inicio de sesión
@@ -160,7 +164,7 @@ class sceneLoginMenu extends Phaser.Scene {
                                                     password: passwordLog.value,
                                                     status: true,
                                                 }
-                                                updateUser(userToUpdate);
+                                                //updateUser(userToUpdate);
 
                                                 // Post de mensaje de inicio de sesión
                                                 var message = {
@@ -200,7 +204,6 @@ class sceneLoginMenu extends Phaser.Scene {
         });
 
         //******************* Información del servidor ************************//
-        server.connect();
         createServerUI();
 
         //******************* Textos ************************//
@@ -302,6 +305,7 @@ class sceneLoginMenu extends Phaser.Scene {
             textNumOfUsersConnected.setStyle({
                 color: '#00ff00',
             });
+            /*
             if (callGetUsersEvent) {
                 controller.getCurrentScene().time.addEvent({
                     delay: 1200,
@@ -313,6 +317,7 @@ class sceneLoginMenu extends Phaser.Scene {
                 });
                 callGetUsersEvent = false;
             }
+            */
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
             textServerConnected.setStyle({
@@ -346,13 +351,23 @@ class sceneLoginMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 // Usuarios conectados al servidor //
 function getConnectedUsers() {
+    //var wsConnection = server.getWSConnection()["user"];
+
+    //console.log("Dinggi");
+
+    /*wsConnection.onmessage = function(msg) {
+        
+    }*/
+    /*
     $.ajax({
         url: 'http://localhost:8080/users/connectedUsers'
     }).done(function (listOfConnectedUsers) {
         server.setConnectedUsers(listOfConnectedUsers.length);
     })
+    */
 }
 
+/*
 // Comprobación del jugador logueado //
 function checkUser(username) {
     $.ajax({
@@ -410,6 +425,7 @@ function postMessage(message) {
         console.log("Item created: " + JSON.stringify(item));
     })
 }
+*/
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
@@ -451,7 +467,7 @@ function createServerUI() {
 
     //******************* Conexión al servidor ************************//
     // Texto //
-    getConnectedUsers();
+    //getConnectedUsers();
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,

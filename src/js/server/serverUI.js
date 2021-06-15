@@ -29,6 +29,7 @@ class sceneServer extends Phaser.Scene{
         //******************* Mensajes ************************//
         // Introducción de mensajes //
         // Código HTML para introducir mensajes
+        /*
         var messagesHTML = this.add.dom(95,605).createFromCache('messagesCode').setOrigin(0);
         messagesHTML.setScale(0.5);
         messagesHTML.addListener('click');
@@ -91,8 +92,10 @@ class sceneServer extends Phaser.Scene{
                 text.y = Phaser.Math.Clamp(text.y, -300, 400);
             }
         });
+        */
 
         //******************* Conexión al servidor ************************//
+        /*
         cntSrv = this.add.text(100, 100, "Holi", {
             fontFamily: 'Consolas', 
             color: '#00ff00', 
@@ -100,21 +103,25 @@ class sceneServer extends Phaser.Scene{
 
         a(connectionToServer);
         getConnectedUsers();
+        */
     }
 
     update() {
         //******************* Actualización de mensajes mostrados ************************//
+        /*
         if(connectionToServer){
             loadMessagesFromDB();
             text.setText(messagesFromDB);
         }
+        */
     }
 }
 
 //////////////////////////////////////////////////////////////////////
 //                      Funciones HTTP                              //
 //////////////////////////////////////////////////////////////////////
-//******************* Mensajes ************************//
+//******************* Mensajes
+/*
 // Carga de mensajes de la base de datos y servidor //
 function loadMessagesFromDB() {
     $.ajax({
@@ -141,7 +148,7 @@ function postMessage(message) {
     })
 }
 
-//******************* Usuarios ************************//
+//******************* Usuarios
 function getConnectedUsers() {
     $.ajax({
         url: 'http://localhost:8080/users/connectedUsers'
@@ -152,12 +159,12 @@ function getConnectedUsers() {
         console.log("Conectados: " + connectedUsers);
     })
 }
-
-
+*/
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
+/*
 $.ajax({
     url:'http://localhost:8080/users',
     success: function() {
@@ -176,6 +183,7 @@ function a(bool){
     }
 
 }
+*/
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
