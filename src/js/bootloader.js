@@ -38,6 +38,7 @@ class bootloader extends Phaser.Scene {
         this.load.image("play","./resources/img/MenuDesign/Game/GameMenu_noButtons.png");
         this.load.image("controls","./resources/img/MenuDesign/Controls/ControlsMenu_noButtons.png");
         this.load.image("settings","./resources/img/MenuDesign/Settings/SettingsMenu_noButtons.png");
+        this.load.image("lobbyBG", "./resources/img/MenuDesign/WaitingRoom/waitingRoom_NOButtons.png");
         this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
         // Victoria
@@ -148,24 +149,33 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteMsgButton", './resources/img/SpriteSheet/Button_SpriteSheet/user_SpriteSheet.png', { frameWidth: 30, frameHeight: 30});
         this.load.spritesheet("spriteSUButton", './resources/img/SpriteSheet/Button_SpriteSheet/signup_SpriteSheet.png', { frameWidth: 399, frameHeight: 67});
         this.load.spritesheet("spriteLIButton", './resources/img/SpriteSheet/Button_SpriteSheet/login_SpriteSheet.png', { frameWidth: 399, frameHeight: 67});
+        // Teclas //
         this.load.spritesheet("spriteWButton", './resources/img/SpriteSheet/Button_SpriteSheet/wButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteAButton", './resources/img/SpriteSheet/Button_SpriteSheet/aButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteSButton", './resources/img/SpriteSheet/Button_SpriteSheet/sButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteDButton", './resources/img/SpriteSheet/Button_SpriteSheet/dButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spriteVButton", './resources/img/SpriteSheet/Button_SpriteSheet/vButton.png', { frameWidth: 45, frameHeight: 45});
         this.load.spritesheet("spritePButton", './resources/img/SpriteSheet/Button_SpriteSheet/pButton.png', { frameWidth: 45, frameHeight: 45});
+        // Menú principal //
         this.load.spritesheet("spritePlayButton", './resources/img/SpriteSheet/Button_SpriteSheet/play_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteControlsButton", './resources/img/SpriteSheet/Button_SpriteSheet/controls_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
         this.load.spritesheet("spriteSettingsButton", './resources/img/SpriteSheet/Button_SpriteSheet/settings_SpriteSheet.png', { frameWidth: 350, frameHeight: 67 });
+        // Salida //
         this.load.spritesheet("spriteExitButton", './resources/img/SpriteSheet/Button_SpriteSheet/exit_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
         this.load.spritesheet("spriteBackButton", './resources/img/SpriteSheet/Button_SpriteSheet/back_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
         this.load.spritesheet("spriteBackButton2", './resources/img/SpriteSheet/Button_SpriteSheet/back_SpriteSheet2.png', { frameWidth: 301, frameHeight: 66 });
+        // Menú de juego //
         this.load.spritesheet("sprite1PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player1Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("sprite2PlayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/Player2Button.png', { frameWidth: 206, frameHeight: 206 });
         this.load.spritesheet("spriteMultiplayerGM", './resources/img/SpriteSheet/Button_SpriteSheet/OnlineButton.png', { frameWidth: 206, frameHeight: 206 });
+        // Música //
         this.load.spritesheet("spriteChangeMusicButton", './resources/img/SpriteSheet/Button_SpriteSheet/music_SpriteSheet.png', { frameWidth: 399, frameHeight: 67 });
+        // Final de partida //
         this.load.spritesheet("spriteRestart", './resources/img/SpriteSheet/Button_SpriteSheet/restart_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
         this.load.spritesheet("spriteMainMenu", './resources/img/SpriteSheet/Button_SpriteSheet/mainMenu_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
+        // Juego Online //
+        this.load.spritesheet("spriteForestLobby", './resources/img/SpriteSheet/Button_SpriteSheet/groundRoom.png', {frameWidth: 662, frameHeight: 67});
+        this.load.spritesheet("spriteWaterLobby", './resources/img/SpriteSheet/Button_SpriteSheet/waterRoom.png', {frameWidth: 662, frameHeight: 67});
     	this.load.spritesheet("readyPButton", './resources/img/SpriteSheet/Button_SpriteSheet/readyButton.png', { frameWidth: 655, frameHeight: 84});
     }
 }
