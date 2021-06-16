@@ -2,8 +2,8 @@
 //                        Variables globales                        //
 //////////////////////////////////////////////////////////////////////
 //******************* Conexiones ************************//
-var chatWS = undefined;
-var userWS = undefined;
+//var chatWS = undefined;
+//var userWS = undefined;
 
 //////////////////////////////////////////////////////////////////////
 //                         Clase servidor                           //
@@ -75,38 +75,38 @@ class ServerClass {
 
     //******************* Otros ************************//
     connectToChatService() {
-        chatWS = new WebSocket('ws://85.137.44.104:80/chat');
+        var chatWS = new WebSocket('ws://85.137.44.104:80/chat');
 
         chatWS.onopen = function() {
-            server.setServerConnected(true);
+            this.setServerConnected(true);
 
-            var aux = server.getWSConnection();
+            var aux = this.getWSConnection();
             aux["chat"] = chatWS;
-            server.setWSConnection(aux);
+            this.setWSConnection(aux);
         }
 
         chatWS.onmessage = function (msg) {
             var message = JSON.parse(msg.data);
 
             var aux = [];
-            aux = server.getMessagesFromDB();
+            aux = this.getMessagesFromDB();
 
             var messageToAdd = "<" + message.name + "> " + message.message;
             console.log(messageToAdd);
 
             aux.push(messageToAdd);
-            server.setMessagesFromDB(aux);
+            this.setMessagesFromDB(aux);
         }
 
         chatWS.onerror = function(e) {
             console.log("a");
-            server.setServerConnected(false);
+            this.setServerConnected(false);
 
             var aux = [];
             var messageToAdd = "<" + message.username + "> " + message.body;
 
             aux.push(messageToAdd);
-            server.setMessagesFromDB(aux);
+            this.setMessagesFromDB(aux);
             /*
             server.setLogMessage("<> Cant establish connection to the server.");
             server.setLogPlayMenu("<> Cant establish connection to the server.");
@@ -114,39 +114,36 @@ class ServerClass {
         }
     }
 
-    messageToChatService(message){
-        var messageToAdd = "<" + message.name + "> " + message.message;
-        console.log(messageToAdd);
-
-        server.getMessagesFromDB().push(messageToAdd);
-
-        chatWS.send(JSON.stringify(message));
-    }
-
     connectToUserService() {
-        userWS = new WebSocket('ws://85.137.44.104:80/user');
+        var userWS = new WebSocket('ws://85.137.44.104:80/user');
 
         userWS.onopen = function() {
-            server.setServerConnected(true);
+            this.setServerConnected(true);
 
-            var aux = server.getWSConnection();
+            var aux = this.getWSConnection();
             aux["user"] = userWS;
-            server.setWSConnection(aux);
+            this.setWSConnection(aux);
         }
 
         userWS.onmessage = function(msg) {
             var message = JSON.parse(msg.data);
 
-            server.setConnectedUsers(message.connectedUsers);
+            this.setConnectedUsers(message.connectedUsers);
         }
     }
 
     disconnect() {
-        chatWS.close();
-        userWS.close();
+        var arrayConnections = [
+            this.getWSConnection()["chat"],
+            this.getWSConnection()["user"]
+        ];
+
+        arrayConnections.forEach(connection => {
+            connection.close();
+        });
         
         this.setWSConnection({});
-        server.setServerConnected(false);
+        this.setServerConnected(false);
     }
 }
 

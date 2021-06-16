@@ -199,8 +199,18 @@ class sceneMainMenu extends Phaser.Scene {
     }
 }
 //////////////////////////////////////////////////////////////////////
-//                          Funciones HTTP                          //
+//                     Funciones al servidor                        //
 //////////////////////////////////////////////////////////////////////
+//
+function sendMessage(message){
+    var wsConnection = server.getWSConnection()["chat"];
+
+    var messageToAdd = "<" + message.name + "> " + message.message;
+    console.log(messageToAdd);
+    server.getMessagesFromDB().push(messageToAdd);
+
+    wsConnection.send(JSON.stringify(message));
+}
 
 // Inicio de sesión del jugador //
 function updateUser(user) {
@@ -247,7 +257,7 @@ function createServerUI() {
                 }
 
                 // Envío del mensaje al servidor y a la BD
-                server.messageToChatService(message);
+                sendMessage(message);
 
                 // Limpieza del campo de texto
                 elementHTML.value = '';
@@ -373,9 +383,8 @@ function loadScene() {
                 message: user.getUsername() + " has disconnected.",
             }
             
-            server.setLogPlayMenu(user.getUsername() + " has disconnected.");
-            
-            server.messageToChatService(message);
+            server.setLogPlayMenu(user.getUsername() + " has disconnected."); 
+            sendMessage(message);
             
             server.disconnect();
 
