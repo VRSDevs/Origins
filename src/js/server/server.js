@@ -74,6 +74,8 @@ class ServerClass {
     }
 
     //******************* Otros ************************//
+    // Conexiones a servicios generales //
+    // Servicio del chat
     connectToChatService() {
         var chatWS = new WebSocket('ws://85.137.44.104:80/chat');
 
@@ -114,6 +116,7 @@ class ServerClass {
         }
     }
 
+    // Servicio de usuarios
     connectToUserService() {
         var userWS = new WebSocket('ws://85.137.44.104:80/user');
 
@@ -132,6 +135,7 @@ class ServerClass {
         }
     }
 
+    // Desconexión de servicios generales //
     disconnect() {
         var arrayConnections = [
             this.getWSConnection()["chat"],
@@ -144,6 +148,17 @@ class ServerClass {
         
         this.setWSConnection({});
         this.setServerConnected(false);
+    }
+
+    // Conexión a salas de online //
+    connectToForestRoom() {
+        var forestWS = new WebSocket('ws://85.137.44.104:80/forest');
+
+        forestWS.onopen = function() {
+            var aux = server.getWSConnection();
+            aux["forest"] = userWS;
+            server.setWSConnection(aux);
+        }
     }
 }
 

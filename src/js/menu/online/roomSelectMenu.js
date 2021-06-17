@@ -56,7 +56,8 @@ class sceneRoomSelectMenu extends Phaser.Scene {
 
         //****************** Botones *********************//
         // Lobbys //
-        forestRoomButton = this.add.sprite(width / 2, (height / 4) + 33, "spriteForestLobby", 0).setInteractive();
+        // Lobby de tierra
+        forestRoomButton = this.add.sprite(width / 2, 222, "spriteForestLobby", 0).setInteractive();
         this.anims.create({
             key: 'forestRoomButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteForestLobby', { start: 0, end: 0 }),
@@ -75,7 +76,8 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         }, this);
         forestRoomButton.addListener('pointerdown', loadScene, this);
 
-        waterRoomButton = this.add.sprite(width / 2, (height / 2), "spriteWaterLobby", 0).setInteractive();
+        // Lobby de agua
+        waterRoomButton = this.add.sprite(width / 2, 312, "spriteWaterLobby", 0).setInteractive();
         this.anims.create({
             key: 'waterRoomButtonAnim',
             frames: this.anims.generateFrameNumbers('spriteWaterLobby', { start: 0, end: 0 }),
@@ -84,7 +86,7 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         });
 
         waterRoomButton.addListener('pointerover', () => {
-            lobby = 1;
+            lobby = 2;
             waterRoomButton.anims.play('waterRoomButtonAnim', true);
         }, this);
         waterRoomButton.addListener('pointerout', () => {
@@ -93,6 +95,46 @@ class sceneRoomSelectMenu extends Phaser.Scene {
             waterRoomButton.setFrame(0);
         }, this);
         waterRoomButton.addListener('pointerdown', loadScene, this);
+
+        // Lobby de fuego
+        fireRoomButton = this.add.sprite(width / 2, 402, "spriteFireLobby", 0).setInteractive();
+        this.anims.create({
+            key: 'fireRoomButtonAnim',
+            frames: this.anims.generateFrameNumbers('spriteFireLobby', { start: 0, end: 0 }),
+            frameRate: 6,
+            repeat: 0
+        });
+
+        fireRoomButton.addListener('pointerover', () => {
+            lobby = 3;
+            fireRoomButton.anims.play('fireRoomButtonAnim', true);
+        }, this);
+        fireRoomButton.addListener('pointerout', () => {
+            lobby = 0;
+            fireRoomButton.anims.stop();
+            fireRoomButton.setFrame(0);
+        }, this);
+        fireRoomButton.addListener('pointerdown', loadScene, this);
+
+        // Lobby de aire
+        airRoomButton = this.add.sprite(width / 2, 492, "spriteAirLobby", 0).setInteractive();
+        this.anims.create({
+            key: 'airRoomButtonAnim',
+            frames: this.anims.generateFrameNumbers('spriteAirLobby', { start: 0, end: 0 }),
+            frameRate: 6,
+            repeat: 0
+        });
+
+        airRoomButton.addListener('pointerover', () => {
+            lobby = 4;
+            airRoomButton.anims.play('airRoomButtonAnim', true);
+        }, this);
+        airRoomButton.addListener('pointerout', () => {
+            lobby = 0;
+            airRoomButton.anims.stop();
+            airRoomButton.setFrame(0);
+        }, this);
+        airRoomButton.addListener('pointerdown', loadScene, this);
 
         // Retroceso //
         backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2", 0).setInteractive();
