@@ -42,11 +42,11 @@ class bootloader extends Phaser.Scene {
         this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
         // Victoria
-        this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/Backgound_SpriteSheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Ground','./resources/img/SpriteSheet/Backgound_SpriteSheet/VictoryGround_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Air','./resources/img/SpriteSheet/Backgound_SpriteSheet/VictoryAir_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Fire','./resources/img/SpriteSheet/Backgound_SpriteSheet/VictoryFire_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Water','./resources/img/SpriteSheet/Backgound_SpriteSheet/VictoryWater_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/BackgoundSpriteSheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Ground','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryGround_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Air','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryAir_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Fire','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryFire_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Water','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryWater_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
 
 
         this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/BackgoundSpritesheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
