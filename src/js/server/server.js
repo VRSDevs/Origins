@@ -74,39 +74,41 @@ class ServerClass {
     }
 
     //******************* Otros ************************//
+    // Conexiones a servicios generales //
+    // Servicio del chat
     connectToChatService() {
         var chatWS = new WebSocket('ws://85.137.44.104:80/chat');
 
         chatWS.onopen = function() {
-            this.setServerConnected(true);
+            server.setServerConnected(true);
 
-            var aux = this.getWSConnection();
+            var aux = server.getWSConnection();
             aux["chat"] = chatWS;
-            this.setWSConnection(aux);
+            server.setWSConnection(aux);
         }
 
         chatWS.onmessage = function (msg) {
             var message = JSON.parse(msg.data);
 
             var aux = [];
-            aux = this.getMessagesFromDB();
+            aux = server.getMessagesFromDB();
 
             var messageToAdd = "<" + message.name + "> " + message.message;
             console.log(messageToAdd);
 
             aux.push(messageToAdd);
-            this.setMessagesFromDB(aux);
+            server.setMessagesFromDB(aux);
         }
 
         chatWS.onerror = function(e) {
             console.log("a");
-            this.setServerConnected(false);
+            server.setServerConnected(false);
 
             var aux = [];
             var messageToAdd = "<" + message.username + "> " + message.body;
 
             aux.push(messageToAdd);
-            this.setMessagesFromDB(aux);
+            server.setMessagesFromDB(aux);
             /*
             server.setLogMessage("<> Cant establish connection to the server.");
             server.setLogPlayMenu("<> Cant establish connection to the server.");
@@ -114,24 +116,26 @@ class ServerClass {
         }
     }
 
+    // Servicio de usuarios
     connectToUserService() {
         var userWS = new WebSocket('ws://85.137.44.104:80/user');
 
         userWS.onopen = function() {
-            this.setServerConnected(true);
+            server.setServerConnected(true);
 
-            var aux = this.getWSConnection();
+            var aux = server.getWSConnection();
             aux["user"] = userWS;
-            this.setWSConnection(aux);
+            server.setWSConnection(aux);
         }
 
         userWS.onmessage = function(msg) {
             var message = JSON.parse(msg.data);
 
-            this.setConnectedUsers(message.connectedUsers);
+            server.setConnectedUsers(message.connectedUsers);
         }
     }
 
+    // Desconexión de servicios generales //
     disconnect() {
         var arrayConnections = [
             this.getWSConnection()["chat"],
@@ -144,6 +148,17 @@ class ServerClass {
         
         this.setWSConnection({});
         this.setServerConnected(false);
+    }
+
+    // Conexión a salas de online //
+    connectToForestRoom() {
+        var forestWS = new WebSocket('ws://85.137.44.104:80/forest');
+
+        forestWS.onopen = function() {
+            var aux = server.getWSConnection();
+            aux["forest"] = userWS;
+            server.setWSConnection(aux);
+        }
     }
 }
 

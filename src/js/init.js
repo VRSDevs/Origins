@@ -9,6 +9,7 @@ import sceneMainMenu from './menu/mainMenu.js';
 import scenePlayMenu from './menu/playMenu.js';
 import sceneSettingsMenu from './menu/settingsMenu.js';
 import sceneControlsMenu from './menu/controlsMenu.js';
+import sceneRoomSelectMenu from './menu/online/roomSelectMenu.js';
 import sceneSelectionMenu from './menu/selectionMenu.js';
 import sceneSelectionMenu2 from './menu/selectionMenu2.js';
 import sceneForestLevel from './maps/levelForest.js';
@@ -34,7 +35,7 @@ const config = {
     },
     scene: [                    // Lista de escenas
         bootloader, sceneStart, sceneLoginMenu, sceneServer, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
-        sceneSettingsMenu, sceneSelectionMenu, sceneSelectionMenu2,
+        sceneSettingsMenu, sceneRoomSelectMenu, sceneSelectionMenu, sceneSelectionMenu2,
         sceneForestLevel, sceneCaveLevel, sceneLabLevel, sceneEndGame
     ]
 };
