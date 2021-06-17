@@ -41,6 +41,10 @@ class bootloader extends Phaser.Scene {
         this.load.image("lobbyBG", "./resources/img/MenuDesign/WaitingRoom/waitingRoom_NOButtons.png");
         this.load.image("selectionPl1","./resources/img/MenuDesign/Selection/selectionMenu_player1.png");
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
+        this.load.image("airRoom","./resources/img/MenuDesign/ElementsRoom/airRoom.png");
+        this.load.image("fireRoom","./resources/img/MenuDesign/ElementsRoom/fireRoom.png");
+        this.load.image("groundRoom","./resources/img/MenuDesign/ElementsRoom/groundRoom.png");
+        this.load.image("waterRoom","./resources/img/MenuDesign/ElementsRoom/waterRoom.png");
         // Victoria
         this.load.spritesheet('bgVictory','./resources/img/SpriteSheet/BackgoundSpritesheet/backgroundVictory_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
         // Descripción //
