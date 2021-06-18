@@ -211,7 +211,7 @@ function createServerUI() {
 function loadScene(){
     switch (lobby) {
         case 1:
-            
+            server.connectToForestRoom();
             break;
         case 2:
             
