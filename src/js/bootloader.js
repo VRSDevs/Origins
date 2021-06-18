@@ -43,10 +43,10 @@ class bootloader extends Phaser.Scene {
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
         // Victoria
         this.load.spritesheet('bgVictory','./resources/img/MenuDesign/Victory/commonVictoryBG.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Ground','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryGround_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Air','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryAir_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Fire','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryFire_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
-        this.load.spritesheet('bgVictory_Water','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryWater_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Ground','./resources/img/MenuDesign/Victory/groundVictoryBG.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Air','./resources/img/MenuDesign/Victory/airVictoryBG.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Fire','./resources/img/MenuDesign/Victory/fireVictoryBG.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Water','./resources/img/MenuDesign/Victory/waterVictoryBG.png' , {frameWidth: 800, frameHeight: 640} );
         // Descripción //
         this.load.image('emptyDesc', './resources/img/MenuDesign/Selection/textBox.png');
         // Mapas //
