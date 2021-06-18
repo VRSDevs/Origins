@@ -43,6 +43,10 @@ class bootloader extends Phaser.Scene {
         this.load.image("selectionPl2","./resources/img/MenuDesign/Selection/selectionMenu_player2.png");
         // Victoria
         this.load.spritesheet('bgVictory','./resources/img/MenuDesign/Victory/commonVictoryBG.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Ground','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryGround_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Air','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryAir_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Fire','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryFire_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
+        this.load.spritesheet('bgVictory_Water','./resources/img/SpriteSheet/BackgoundSpriteSheet/VictoryWater_SpriteSheet.png' , {frameWidth: 800, frameHeight: 640} );
         // Descripción //
         this.load.image('emptyDesc', './resources/img/MenuDesign/Selection/textBox.png');
         // Mapas //
@@ -53,7 +57,12 @@ class bootloader extends Phaser.Scene {
         this.load.image("clock","./resources/img/Icons/clock.png");
         this.load.image("userIcon","./resources/img/Icons/user.png");
         this.load.spritesheet("spriteReloadButton","./resources/img/Buttons/sync_SpriteSheet.png", {frameWidth: 30, frameHeight: 30});
-
+        // Salas de espera //
+        this.load.image("airRoom","./resources/img/MenuDesign/ElementsRoom/airRoom.png");
+        this.load.image("fireRoom","./resources/img/MenuDesign/ElementsRoom/fireRoom.png");
+        this.load.image("groundRoom","./resources/img/MenuDesign/ElementsRoom/groundRoom.png");
+        this.load.image("waterRoom","./resources/img/MenuDesign/ElementsRoom/waterRoom.png");
+        
         //***********************  Gatos ***************************//
         // Aire //
         this.load.image("AirCatFace","./resources/img/Icons/Wiskas.png");

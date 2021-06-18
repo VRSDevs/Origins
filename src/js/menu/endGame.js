@@ -45,14 +45,16 @@ class sceneEndGame extends Phaser.Scene {
         height = this.sys.canvas.height;
 
         //******************* Fondo ************************//
-        bg = this.add.sprite(width/2, height/2, "bgVictory",0);
+/*    
+        bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
         this.anims.create({
             key: 'bgVictoryAnim',
-            frames: this.anims.generateFrameNumbers('bgVictory', {start: 0, end: 14}),
+            frames: this.anims.generateFrameNumbers('bgVictory_Fire', {start: 0, end: 14}),
             frameRate: 12,
             repeat: 0
         });
         bg.anims.play('bgVictoryAnim');
+*/
 
         //******************* Ganador ************************//
         switch (2) {
@@ -62,15 +64,55 @@ class sceneEndGame extends Phaser.Scene {
                 switch (players[0].getType()) {
                     case 1:
                         textureID = "GroundCatIdle3";
+                        if(textureID == "GroundCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Ground",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Ground', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                     case 2:
                         textureID = "WaterCatIdle3";
+                        if(textureID == "WaterCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Water",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Water', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                     case 3:
                         textureID = "AirCatIdle3";
+                        if(textureID == "AirCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Air",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Air', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                     case 4:
                         textureID = "FireCatIdle3";
+                        if(textureID == "FireCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Fire', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                 }
                 victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
@@ -102,15 +144,55 @@ class sceneEndGame extends Phaser.Scene {
                 switch (players[1].getType()) {
                     case 1:
                         textureID = "GroundCatIdle3";
+                        if(textureID == "GroundCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Ground",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Ground', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                     case 2:
                         textureID = "WaterCatIdle3";
+                        if(textureID == "WaterCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Water",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Water', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                     case 3:
                         textureID = "AirCatIdle3";
+                        if(textureID == "AirCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Air",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Air', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                     case 4:
                         textureID = "FireCatIdle3";
+                        if(textureID == "FireCatIdle3"){
+                            bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
+                            this.anims.create({
+                                key: 'bgVictoryAnim',
+                                frames: this.anims.generateFrameNumbers('bgVictory_Fire', {start: 0, end: 14}),
+                                frameRate: 12,
+                                repeat: 0
+                            });
+                            bg.anims.play('bgVictoryAnim');
+                        }
                         break;
                 }
                 victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
@@ -120,6 +202,7 @@ class sceneEndGame extends Phaser.Scene {
                     frameRate: 4,
                     repeat: -1
                 });
+
                 victoryPlayer.anims.play("victoryPlayerAnim");
 
                 // Texto //
