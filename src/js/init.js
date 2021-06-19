@@ -16,7 +16,10 @@ import sceneForestLevel from './maps/levelForest.js';
 import sceneCaveLevel from './maps/levelCave.js';
 import sceneLabLevel from './maps/levelLab.js';
 import sceneEndGame from './menu/endGame.js';
+import sceneGroundRoom from './menu/online/groundRoom.js'
+import sceneAirRoom from './menu/online/airRoom.js';
 import {controller} from './gameController.js';
+
 
 //////////////////////////////////////////////////////////////////////
 //                      Configuración del juego                     //
@@ -36,7 +39,7 @@ const config = {
     scene: [                    // Lista de escenas
         bootloader, sceneStart, sceneLoginMenu, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
         sceneSettingsMenu, sceneRoomSelectMenu, sceneSelectionMenu, sceneSelectionMenu2, sceneOnlineSelectionMenu,
-        sceneForestLevel, sceneCaveLevel, sceneEndGame
+        sceneForestLevel, sceneCaveLevel, sceneEndGame, sceneGroundRoom, sceneAirRoom
     ]
 };
 
