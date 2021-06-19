@@ -15,7 +15,17 @@ var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
 var backButton = undefined;
+//****************** Iconos *********************//
+var catIcons = [undefined, undefined, undefined, undefined];
 //****************** Textos *********************//
+// Nombres jugadores //
+var names = ["", "", "", ""];
+var name1 = "";
+var name2 = "";
+var name3 = "";
+var name4 = "";
+// Preparados //
+var readyTexts = ["", "", "", ""];
 var readyP1 = "";
 var readyP2 = "";
 var readyP3 = "";
@@ -39,39 +49,60 @@ class sceneGroundRoom extends Phaser.Scene{
         height = this.sys.canvas.height; 
 
         //******************* Fondos ************************//
-        this.add.image(400, 320, "groundRoom");
+        this.add.image(width / 2, height / 2, "groundRoom");
 
         //****************** Gatos *********************//
-
         // Conocer posiciones
-        this.add.image(80,215,"AirCatFace");
-        this.add.image(80,295,"GroundCatFace");
-        this.add.image(80,380,"WaterCatFace");
-        this.add.image(80,465,"FireCatFace");
+        catIcons[0] = this.add.image(80, 215, "");
+        catIcons[1] = this.add.image(80, 295, "");
+        catIcons[2] = this.add.image(80, 375, "");
+        catIcons[3] = this.add.image(80, 465, "");
 
         //****************** Nombres *********************//
+        names[0] = this.add.text(width / 6, 203, "Requenisima", {
+            fontFamily: 'origins',
+            fontSize: '20px',
+            fill: '#ffffff'
+        });
 
+        names[1] = this.add.text(width / 6, 283, "Rox06io", {
+            fontFamily: 'origins',
+            fontSize: '20px',
+            fill: '#ffffff'
+        });
+
+        names[2] = this.add.text(width / 6, 363, "Blonks", {
+            fontFamily: 'origins',
+            fontSize: '20px',
+            fill: '#ffffff'
+        });
+
+        names[3] = this.add.text(width / 6, 453, "marika", {
+            fontFamily: 'origins',
+            fontSize: '20px',
+            fill: '#ffffff'
+        });
 
         //****************** Listo *********************//
-        readyP1 = this.add.text(650, 215, "0", {
+        readyTexts[0] = this.add.text((width * 3) / 4, 203, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
         });
 
-        readyP2 = this.add.text(650, 295, "0", {
+        readyTexts[1] = this.add.text((width * 3) / 4, 283, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
         });
 
-        readyP3 = this.add.text(650, 380, "0", {
+        readyTexts[2] = this.add.text((width * 3) / 4, 363, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
         });
 
-        readyP4 = this.add.text(650, 465, "0", {
+        readyTexts[3] = this.add.text((width * 3) / 4, 453, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
@@ -88,11 +119,9 @@ class sceneGroundRoom extends Phaser.Scene{
         });
 
         backButton.addListener('pointerover', () => {
-            lobby = 5;
             backButton.anims.play('backButtonAnim',true);
         }, this);
         backButton.addListener('pointerout', () => {
-            lobby = 0;
             backButton.anims.stop();
             backButton.setFrame(0);
         }, this);
@@ -101,47 +130,17 @@ class sceneGroundRoom extends Phaser.Scene{
 
     }
     update() {
-
-        updateReady();
-
-
-
+        //
+        updatePlayerInfo();
     }
-
-
-
-
-
 }
-
-
 
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga descripciones de gatos ************************//
-function loadDescription(value) {
-    switch (value) {
-        case 0:
-            catDescription.setTexture("emptyDesc");
-            break;
-        case 1:
-            catDescription.setTexture("GroundCatDesc");
-            break;
-        case 2:
-            catDescription.setTexture("WaterCatDesc");
-            break;
-        case 3:
-            catDescription.setTexture("AirCatDesc");
-            break;
-        case 4:
-            catDescription.setTexture("FireCatDesc");
-            break;
-    }
-}
-
-
-//******************* Carga de escena ************************//
+/**
+ * 
+ */
 function loadScene(){
     switch (lobby) {
         case 1:
@@ -165,20 +164,43 @@ function loadScene(){
     }
 }
 
-//******************* Actualización del texto ************************//
-function updateReady() {
+/**
+ * 
+ */
+function updatePlayerInfo() {
+    for (var i = 0; i < players.length; i++) {
+        //
+        switch (players[i].getType()) {
+            case 1:
+                catIcons[i].setTexture("GroundCatFace");
+                break;
+            case 2:
+                catIcons[i].setTexture("WaterCatFace");
+                break;
+            case 3:
+                catIcons[i].setTexture("AirCatFace");   
+                break;
+            case 4:
+                catIcons[i].setTexture("FireCatFace");             
+                break;
+            default:
+                catIcons[i].setTexture("");
+                break;
+        }
 
+        //
+        names[i].setText(players[i].getName());
 
-    readyP1.setText("Ready");
-
-    readyP2.setText("Not ready");
-
-    readyP3.setText("Ready");
-
-    readyP4.setText("Ready");
-    
+        //
+        if(players[i].getName() !== ""){
+            if(players[i].getReady()) {
+                readyTexts[i].setText("Ready");
+            } else {
+                readyTexts[i].setText("Not ready");
+            } 
+        }      
+    }
 }
-
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //

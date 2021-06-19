@@ -39,7 +39,7 @@ const config = {
     scene: [                    // Lista de escenas
         bootloader, sceneStart, sceneLoginMenu, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
         sceneSettingsMenu, sceneRoomSelectMenu, sceneSelectionMenu, sceneSelectionMenu2, sceneOnlineSelectionMenu,
-        sceneForestLevel, sceneCaveLevel, sceneEndGame, sceneGroundRoom, sceneAirRoom
+        sceneForestLevel, sceneCaveLevel, sceneGroundRoom, sceneAirRoom, sceneEndGame
     ]
 };
 

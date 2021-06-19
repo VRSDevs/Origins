@@ -189,6 +189,22 @@ class sceneOnlineSelectionMenu extends Phaser.Scene {
         }
     }
 }
+//////////////////////////////////////////////////////////////////////
+//                        Funciones Comunicación                    //
+//////////////////////////////////////////////////////////////////////
+function sendPlayerInfo() {
+    var wsConnection = server.getWSConnection()[user.getOnlineRoom()];
+
+    var message = {
+        code: "OK_PLAYERJOIN",
+        playerId: user.getIdInRoom(),
+        playerType: players[user.getIdInRoom()].getType(),
+        playerName: user.getUsername(),
+        playerReady: players[user.getIdInRoom()].getReady()
+    }
+
+    wsConnection.send(JSON.stringify(message));
+}
 
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
@@ -221,9 +237,15 @@ function loadDescription(value) {
  * Función para ir a la siguiente escena
  */
 function goNextScene() {
+    //
     selectedCat = 0;
+
+    //
+    sendPlayerInfo();
+
+    //
     controller.getCurrentScene().scene.stop();
-    var nextScene = game.scene.getScene("sceneSelectionMenu2");
+    var nextScene = game.scene.getScene("sceneGroundRoom");
     nextScene.scene.start();
 }
 
@@ -235,18 +257,26 @@ function loadScene() {
     switch (selectedCat) {
         case 1:
             players[user.getIdInRoom()].setType(1);
+            players[user.getIdInRoom()].setName(user.getUsername());
+            players[user.getIdInRoom()].setReady(false);
             goNextScene();
             break;
         case 2:
             players[user.getIdInRoom()].setType(2);
+            players[user.getIdInRoom()].setName(user.getUsername());
+            players[user.getIdInRoom()].setReady(false);
             goNextScene();
             break;
         case 3:
             players[user.getIdInRoom()].setType(3);
+            players[user.getIdInRoom()].setName(user.getUsername());
+            players[user.getIdInRoom()].setReady(false);
             goNextScene();
             break;
         case 4:
             players[user.getIdInRoom()].setType(4);
+            players[user.getIdInRoom()].setName(user.getUsername());
+            players[user.getIdInRoom()].setReady(false);
             goNextScene();
             break;
         default:
