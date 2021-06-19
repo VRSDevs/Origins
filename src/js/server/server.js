@@ -196,10 +196,16 @@ class ServerClass {
                     user.setIdInRoom(message.userID);   // ID del usuario en la sala
                     console.log(user.getIdInRoom());
                     break;
+                //
                 case "OK_PLAYERJOIN":
                     players[message.playerId].setType(message.playerType);
                     players[message.playerId].setName(message.playerName);
                     players[message.playerId].setReady(message.playerReady);
+                    break;
+                //
+                case "OK_PLAYERDISC":
+                    console.log("A borrar");
+                    players[message.playerId].reset(true);
                     break;
             }
         }
@@ -243,15 +249,18 @@ class ServerClass {
         // Envío del mensaje
         this.messageToRoomService(roomConnection, message);
 
-        // Cierre de la conexión
-        roomConnection.close();
-
         // Eliminación de la conexión en el diccionario
         this.getWSConnection()["ground"] = null;
+
+        //
+        players[user.getIdInRoom()].reset(true);
 
         // Eliminación de la sala e ID del usuario
         user.setOnlineRoom("");
         user.setIdInRoom(-1);
+
+        // Cierre de la conexión
+        roomConnection.close();
     }
 }
 
