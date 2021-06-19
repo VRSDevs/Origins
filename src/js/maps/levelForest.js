@@ -70,7 +70,11 @@ class sceneForestLevel extends Phaser.Scene {
         
         //******************* Mapa ************************//
         var map = this.make.tilemap({ key: 'map2' });
-        var tileset = map.addTilesetImage("Bosque", "tiles");
+        var tileset = map.addTilesetImage("Bosque", "tilesForest");
+
+        // **************** Mapa de fuego *******************//
+        //var map = this.make.tilemap({ key: 'mapFuego' });
+        //var tileset = map.addTilesetImage("fire", "tiles");
 
         var belowLayer = map.createStaticLayer("Ground", tileset);
         var wallsLayer = map.createStaticLayer("Walls", tileset);
@@ -294,32 +298,32 @@ class sceneForestLevel extends Phaser.Scene {
         this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3);
         switch (players[0].getType()) {
             case 1:
-                player1Face = this.add.image(50, 41, "GroundCatFace");
+                player1Face = this.add.image(60, 41, "GroundCatFace");
                 break;
             case 2:
-                player1Face = this.add.image(50, 41, "WaterCatFace");
+                player1Face = this.add.image(60, 41, "WaterCatFace");
                 break;
             case 3:
-                player1Face = this.add.image(50, 41, "AirCatFace");
+                player1Face = this.add.image(60, 41, "AirCatFace");
                 break;
             case 4:
-                player1Face = this.add.image(50, 41, "FireCatFace");
+                player1Face = this.add.image(60, 41, "FireCatFace");
                 break;
         }
         // Jugador 2
         this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3);
         switch (players[1].getType()) {
             case 1:
-                player2Face = this.add.image(width - 130, 41, "GroundCatFace");
+                player2Face = this.add.image(width - 120, 41, "GroundCatFace");
                 break;
             case 2:
-                player2Face = this.add.image(width - 130, 41, "WaterCatFace");
+                player2Face = this.add.image(width - 120, 41, "WaterCatFace");
                 break;
             case 3:
-                player2Face = this.add.image(width - 130, 41, "AirCatFace");
+                player2Face = this.add.image(width - 120, 41, "AirCatFace");
                 break;
             case 4:
-                player2Face = this.add.image(width - 130, 41, "FireCatFace");
+                player2Face = this.add.image(width - 120, 41, "FireCatFace");
                 break;
         }
 
@@ -341,15 +345,15 @@ class sceneForestLevel extends Phaser.Scene {
 
         //******************* Puntos ************************//
         // Jugador 1 //
-        textPtsP1 = this.add.text(80, 20, "0", {
+        textPtsP1 = this.add.text(96, 24, "0", {
             fontFamily: 'origins',
-            fontSize: '32px',
+            fontSize: '28px',
             fill: '#ffffff'
         });
         // Jugador 2 //
-        textPtsP2 = this.add.text(width - 100, 20, "0", {
+        textPtsP2 = this.add.text(width - 84, 24, "0", {
             fontFamily: 'origins',
-            fontSize: '32px',
+            fontSize: '28px',
             fill: '#ffffff'
         });
 

@@ -81,7 +81,7 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         waterRoomButton = this.add.sprite(width / 2, 312, "spriteWaterLobby", 0).setInteractive();
         this.anims.create({
             key: 'waterRoomButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteWaterLobby', { start: 1, end: 10}),
+            frames: this.anims.generateFrameNumbers('spriteWaterLobby', { start: 1, end: 9}),
             frameRate: 6,
             repeat: 0
         });
@@ -101,7 +101,7 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         fireRoomButton = this.add.sprite(width / 2, 402, "spriteFireLobby", 0).setInteractive();
         this.anims.create({
             key: 'fireRoomButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteFireLobby', { start: 1, end: 10}),
+            frames: this.anims.generateFrameNumbers('spriteFireLobby', { start: 1, end: 8}),
             frameRate: 6,
             repeat: 0
         });
@@ -121,7 +121,7 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         airRoomButton = this.add.sprite(width / 2, 492, "spriteAirLobby", 0).setInteractive();
         this.anims.create({
             key: 'airRoomButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteAirLobby', { start: 1, end: 10}),
+            frames: this.anims.generateFrameNumbers('spriteAirLobby', { start: 1, end: 8}),
             frameRate: 6,
             repeat: 0
         });
@@ -247,7 +247,7 @@ function loadScene(){
             server.connectToGroundRoom();
             // Carga de la sala una vez se ha establecido la conexión (con delay para poder ejecutarlo correctamente).
             controller.getCurrentScene().time.delayedCall(
-                200,
+                250,
                 loadRoom,
                 [],
                 this
