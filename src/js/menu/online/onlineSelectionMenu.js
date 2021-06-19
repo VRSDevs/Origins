@@ -47,7 +47,7 @@ class sceneOnlineSelectionMenu extends Phaser.Scene {
 
         //******************* Imágenes ************************//
         // Fondo //
-        this.add.image(400, 320, "selectionMenuOnline");
+        this.add.image(400, 320, "selectionOnline");
         // Descripciones gatos //
         catDescription = this.add.image(410, 423, "emptyDesc");
 

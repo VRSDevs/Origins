@@ -53,31 +53,31 @@ class sceneGroundRoom extends Phaser.Scene{
 
         //****************** Gatos *********************//
         // Conocer posiciones
-        catIcons[0] = this.add.image(80, 215, "");
-        catIcons[1] = this.add.image(80, 295, "");
-        catIcons[2] = this.add.image(80, 375, "");
-        catIcons[3] = this.add.image(80, 465, "");
+        catIcons[0] = this.add.image(80, 215, "emptyFace");
+        catIcons[1] = this.add.image(80, 295, "emptyFace");
+        catIcons[2] = this.add.image(80, 375, "emptyFace");
+        catIcons[3] = this.add.image(80, 465, "emptyFace");
 
         //****************** Nombres *********************//
-        names[0] = this.add.text(width / 6, 203, "Requenisima", {
+        names[0] = this.add.text(width / 6, 203, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
         });
 
-        names[1] = this.add.text(width / 6, 283, "Rox06io", {
+        names[1] = this.add.text(width / 6, 283, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
         });
 
-        names[2] = this.add.text(width / 6, 363, "Blonks", {
+        names[2] = this.add.text(width / 6, 363, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
         });
 
-        names[3] = this.add.text(width / 6, 453, "marika", {
+        names[3] = this.add.text(width / 6, 453, "", {
             fontFamily: 'origins',
             fontSize: '20px',
             fill: '#ffffff'
@@ -184,7 +184,7 @@ function updatePlayerInfo() {
                 catIcons[i].setTexture("FireCatFace");             
                 break;
             default:
-                catIcons[i].setTexture("");
+                catIcons[i].setTexture("emptyFace");
                 break;
         }
 
