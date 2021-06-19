@@ -28,7 +28,7 @@ var textNumOfUsersConnected = "";
 var textServerLog = undefined;
 //******************* Control ************************//
 // Selección de lobby //
-var lobby = 0;
+var lobby = 0;  
 
 //////////////////////////////////////////////////////////////////////
 //              Clase de escena de menú de loobies                  //
@@ -208,10 +208,33 @@ function createServerUI() {
 }
 
 //******************* Carga de escena ************************//
+//
+function loadRoom(){
+    console.log("Dingga");
+    if(user.getOnlineRoom() !== ""){
+        console.log("Carga de la siguiente escena de bosque.");
+        controller.getCurrentScene().scene.stop();
+        console.log(game);
+        var nextScene = game.scene.getScene("sceneOnlineSelectionMenu");
+        nextScene.scene.start();
+
+    }
+}
+
+//
 function loadScene(){
     switch (lobby) {
         case 1:
+            console.log("Conectando...");
             server.connectToForestRoom();
+            
+            controller.getCurrentScene().time.delayedCall(
+                200,
+                loadRoom,
+                [],
+                this
+            );
+            
             break;
         case 2:
             

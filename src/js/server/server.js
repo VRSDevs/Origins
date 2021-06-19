@@ -1,4 +1,9 @@
 //////////////////////////////////////////////////////////////////////
+//                  Importaciones de otros JS                       //
+//////////////////////////////////////////////////////////////////////
+import { user } from "./user.js";
+
+//////////////////////////////////////////////////////////////////////
 //                        Variables globales                        //
 //////////////////////////////////////////////////////////////////////
 //******************* Conexiones ************************//
@@ -156,9 +161,46 @@ class ServerClass {
 
         forestWS.onopen = function() {
             var aux = server.getWSConnection();
-            aux["forest"] = userWS;
+            aux["forest"] = forestWS;
             server.setWSConnection(aux);
+
+            console.log("Conectado.");
         }
+
+        forestWS.onmessage = function(msg) {
+            var message = JSON.parse(msg.data);
+
+            switch (message.code) {
+                case "Error_MAXUSERS":
+                    console.log("No se pudo conectar. Sala llena.");
+                    break;
+                case "OK_ROOMCONN":
+                    console.log("Se estableció conexión con la sala.");
+                    user.setOnlineRoom("forest");
+                    break;
+            }
+        }
+
+        forestWS.onclose = function() {
+            console.log("Desconectado.");
+        }
+    }
+
+    disconnectFromRoom() {
+        // Obtención de la conexión del diccionario de conexiones (en función de la sala conectada del usuario)
+        var roomConnection;
+        switch (user.getOnlineRoom()) {
+            case "forest":
+                roomConnection = this.getWSConnection()["forest"];
+                break;
+        
+            default:
+                break;
+        }
+        roomConnection.close();
+        this.getWSConnection()["forest"] = null;
+
+        user.setOnlineRoom("");
     }
 }
 
