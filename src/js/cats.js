@@ -88,8 +88,12 @@ class Cat {
 var player1 = new Cat(undefined, 0, 0, 0, false, false);
 // Jugador 2 //
 var player2 = new Cat(undefined, 0, 0, 0, false, false);
+// Jugador 3 //
+var player3 = new Cat(undefined, 0, 0, 0, false, false);
+// Jugador 4 //
+var player4 = new Cat(undefined, 0, 0, 0, false, false);
 // Lista de jugadores //
-var players = [player1, player2];
+var players = [player1, player2, player3, player4];
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //

@@ -5,6 +5,7 @@ import { game } from '../../init.js';
 import { controller } from '../../gameController.js';
 import { players } from '../../cats.js';
 import { server } from '../../server/server.js';
+import { user } from '../../server/user.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -27,7 +28,7 @@ var selectedCat = 0;
 var startAnim = 0;
 
 //////////////////////////////////////////////////////////////////////
-//                   Clase de escena de menú selección P1           //
+//                   Clase de escena de menú selección PJ           //
 //////////////////////////////////////////////////////////////////////
 class sceneOnlineSelectionMenu extends Phaser.Scene {
     constructor() {
@@ -192,7 +193,10 @@ class sceneOnlineSelectionMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga descripciones de gatos ************************//
+/**
+ * Método para cargar las descripciones de los gatos en función del seleccionado
+ * @param {integer} value Valor (ID auxiliar) del gato seleccionado
+ */
 function loadDescription(value) {
     switch (value) {
         case 0:
@@ -213,7 +217,9 @@ function loadDescription(value) {
     }
 }
 
-//******************* Ir a la siguiente escena ************************//
+/**
+ * Función para ir a la siguiente escena
+ */
 function goNextScene() {
     selectedCat = 0;
     controller.getCurrentScene().scene.stop();
@@ -221,27 +227,32 @@ function goNextScene() {
     nextScene.scene.start();
 }
 
-//******************* Carga de escena ************************//
+/**
+ * Función de carga de la siguiente escena
+ */
 function loadScene() {
+    // Asignación de tipo al jugador en función del asignado al usuario
     switch (selectedCat) {
         case 1:
-            players[0].setType(1);
+            players[user.getIdInRoom()].setType(1);
             goNextScene();
             break;
         case 2:
-            players[0].setType(2);
+            players[user.getIdInRoom()].setType(2);
             goNextScene();
             break;
         case 3:
-            players[0].setType(3);
+            players[user.getIdInRoom()].setType(3);
             goNextScene();
             break;
         case 4:
-            players[0].setType(4);
+            players[user.getIdInRoom()].setType(4);
             goNextScene();
             break;
         default:
+            // Desconexión de la sala
             server.disconnectFromRoom();
+            // Carga de la siguiente escena (anterior)
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("scenePlayMenu");
             nextScene.scene.start();

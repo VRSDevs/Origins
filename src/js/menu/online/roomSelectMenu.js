@@ -14,11 +14,12 @@ var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
 // Lobbys //
-var forestRoomButton = undefined;
-var waterRoomButton = undefined;
-var fireRoomButton = undefined;
-var airRoomButton = undefined;
-var backButton = undefined;
+var forestRoomButton = undefined;   // Tierra
+var waterRoomButton = undefined;    // Agua
+var fireRoomButton = undefined;     // Fuego
+var airRoomButton = undefined;      // Aire
+// Atrás //
+var backButton = undefined;         
 //******************* Servidor ************************//
 // Imágenes //
 var userIc = undefined;
@@ -51,7 +52,7 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         //******************* Fondos ************************//
         this.add.image(400, 320, "lobbyBG");
 
-        //
+        //******************* Interfaz Servidor ************************//
         createServerUI();
 
         //****************** Botones *********************//
@@ -158,22 +159,29 @@ class sceneRoomSelectMenu extends Phaser.Scene {
     }
     update() {
         //****************** Servidor *********************//
+        // Si está conectado el servidor
         if (server.isServerConnected() === true) {
+            // Texto de estado
             textServerConnected.setStyle({
                 color: '#00ff00',
             });
             textServerConnected.setText("Server Online");
+            // Icono
             userIc.setTint(0x00ff00);
+            // Usuarios conectados
             textNumOfUsersConnected.setStyle({
                 color: '#00ff00',
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
+            // Texto de estado
             textServerConnected.setStyle({
                 color: '#ff0000',
             });
             textServerConnected.setText("Server Offline");
+            // Icono
             userIc.setTint(0xff0000);
+            // Usuarios conectados
             textNumOfUsersConnected.setStyle({
                 color: '#ff0000',
             });
@@ -185,7 +193,9 @@ class sceneRoomSelectMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                        Funciones extras                          //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga HUD del servidor ************************//
+/**
+ * Método para generar la interfaz del servidor
+ */
 function createServerUI() {
     //******************* Conexión al servidor ************************//
     controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
@@ -208,43 +218,54 @@ function createServerUI() {
 }
 
 //******************* Carga de escena ************************//
-//
+/**
+ * Carga de sala
+ */
 function loadRoom(){
-    console.log("Dingga");
+    // Si el usuario tiene asignada una sala
     if(user.getOnlineRoom() !== ""){
+        // Parado de la escena actual
         console.log("Carga de la siguiente escena de bosque.");
         controller.getCurrentScene().scene.stop();
-        console.log(game);
+        // Obtención de la siguiente escena
         var nextScene = game.scene.getScene("sceneOnlineSelectionMenu");
+        // Comienzo de la escena
         nextScene.scene.start();
-
     }
 }
 
-//
+/**
+ * Carga de la siguiente escena
+ */
 function loadScene(){
+    // En función del botón pulsado de la escena
     switch (lobby) {
+        // Caso: 1 - Sala de tierra
         case 1:
+            // Establecimiento de conexión con la sala de tierra
             console.log("Conectando...");
-            server.connectToForestRoom();
-            
+            server.connectToGroundRoom();
+            // Carga de la sala una vez se ha establecido la conexión (con delay para poder ejecutarlo correctamente).
             controller.getCurrentScene().time.delayedCall(
                 200,
                 loadRoom,
                 [],
                 this
             );
-            
             break;
+        // Caso: 2 - Sala de 
         case 2:
             
             break;
+        // Caso: 3 - Sala de 
         case 3:
             
             break;
+        // Caso: 4 - Sala de 
         case 4:
             
             break;
+        // Caso: 5 - Vuelta a la escena anterior
         case 5:
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("scenePlayMenu");
