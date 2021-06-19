@@ -2,6 +2,7 @@
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
 import { user } from "./user.js";
+import { players } from "../cats.js";
 
 //////////////////////////////////////////////////////////////////////
 //                        Variables globales                        //
@@ -194,6 +195,11 @@ class ServerClass {
                     user.setOnlineRoom("ground");       // Sala en la que se encuentra
                     user.setIdInRoom(message.userID);   // ID del usuario en la sala
                     console.log(user.getIdInRoom());
+                    break;
+                case "OK_PLAYERJOIN":
+                    players[message.playerId].setType(message.playerType);
+                    players[message.playerId].setName(message.playerName);
+                    players[message.playerId].setReady(message.playerReady);
                     break;
             }
         }

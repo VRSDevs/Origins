@@ -3,12 +3,14 @@
 //////////////////////////////////////////////////////////////////////
 class Cat {
     //******************* Constructor clase ************************//
-    constructor(obj, tp, sc, rw, hm, sd) {
+    constructor(obj, tp, nm, rd, sc, rw, hm, sd) {
         this.object = obj;      // Objeto de phaser
         this.type = tp;         // Tipo:    1 -> Tierra
                                 //          2 -> Agua
                                 //          3 -> Aire
                                 //          4 -> Fuego
+        this.name = nm          // Nombre del gato (usuario)
+        this.isReady = rd       // ¿Está listo para jugar?
         this.score = sc;        // Puntuación  
         this.roundsWon = rw;    // Rondas ganadas
         this.hasMatter = hm;    // ¿Tiene la materia?
@@ -21,6 +23,14 @@ class Cat {
 
     getType() {
         return this.type;
+    }
+
+    getName() {
+        return this.name;
+    }
+
+    getReady() {
+        return this.isReady;
     }
 
     getScore() {
@@ -38,6 +48,7 @@ class Cat {
     getSand = function () {
         return this.sand;
     }
+
     //******************* Setters ************************//
     setObject(obj) {
         this.object = obj;
@@ -45,6 +56,14 @@ class Cat {
 
     setType(value) {
         this.type = value;
+    }
+
+    setName(name) {
+        this.name = name;
+    }
+
+    setReady(value) {
+        this.isReady = value;
     }
 
     setScore(value) {
@@ -68,6 +87,8 @@ class Cat {
         if(bool){
             this.object = undefined;
             this.type = 0;
+            this.name = "";
+            this.isReady = false;
             this.score = 0;  
             this.roundsWon = 0;
             this.hasMatter = false;
@@ -85,13 +106,13 @@ class Cat {
 //                         Creación de jugadores                    //
 //////////////////////////////////////////////////////////////////////
 // Jugador 1 //
-var player1 = new Cat(undefined, 0, 0, 0, false, false);
+var player1 = new Cat(undefined, 0, "", false, 0, 0, false, false);
 // Jugador 2 //
-var player2 = new Cat(undefined, 0, 0, 0, false, false);
+var player2 = new Cat(undefined, 0, "", false, 0, 0, false, false);
 // Jugador 3 //
-var player3 = new Cat(undefined, 0, 0, 0, false, false);
+var player3 = new Cat(undefined, 0, "", false, 0, 0, false, false);
 // Jugador 4 //
-var player4 = new Cat(undefined, 0, 0, 0, false, false);
+var player4 = new Cat(undefined, 0, "", false, 0, 0, false, false);
 // Lista de jugadores //
 var players = [player1, player2, player3, player4];
 
