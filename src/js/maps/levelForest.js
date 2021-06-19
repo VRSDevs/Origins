@@ -70,7 +70,11 @@ class sceneForestLevel extends Phaser.Scene {
         
         //******************* Mapa ************************//
         var map = this.make.tilemap({ key: 'map2' });
-        var tileset = map.addTilesetImage("Bosque", "tiles");
+        var tileset = map.addTilesetImage("Bosque", "tilesForest");
+
+        // **************** Mapa de fuego *******************//
+        //var map = this.make.tilemap({ key: 'mapFuego' });
+        //var tileset = map.addTilesetImage("fire", "tiles");
 
         var belowLayer = map.createStaticLayer("Ground", tileset);
         var wallsLayer = map.createStaticLayer("Walls", tileset);
