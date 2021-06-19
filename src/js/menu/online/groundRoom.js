@@ -14,6 +14,7 @@ import { server } from '../../server/server.js';
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
+var readyButton = undefined;
 var backButton = undefined;
 //****************** Iconos *********************//
 var catIcons = [undefined, undefined, undefined, undefined];
@@ -109,6 +110,20 @@ class sceneGroundRoom extends Phaser.Scene{
         });
 
         //****************** Botones *********************//
+        // Botón de listo //
+        readyButton = this.add.sprite((width * 3) / 4, 580, "readyPButton", 0).setInteractive();
+        readyButton.addListener('pointerdown', () => {
+            if (players[user.getIdInRoom()].getReady() === true){     
+                readyButton.setFrame(0);
+                players[user.getIdInRoom()].setReady(false);
+                //
+            } else {
+                readyButton.setFrame(1);
+                players[user.getIdInRoom()].setReady(true);
+                //
+            }
+        }, this);
+
         // Retroceso //
         backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2", 0).setInteractive();
         this.anims.create({
@@ -133,6 +148,17 @@ class sceneGroundRoom extends Phaser.Scene{
         //
         updatePlayerInfo();
     }
+}
+
+//////////////////////////////////////////////////////////////////////
+//                          Funciones Comms                         //
+//////////////////////////////////////////////////////////////////////
+function sexo() {
+    //
+
+    //
+
+    //
 }
 
 //////////////////////////////////////////////////////////////////////
