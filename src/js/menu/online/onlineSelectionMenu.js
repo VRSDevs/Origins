@@ -4,6 +4,7 @@
 import { game } from '../../init.js';
 import { controller } from '../../gameController.js';
 import { players } from '../../cats.js';
+import { server } from '../../server/server.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -240,6 +241,7 @@ function loadScene() {
             goNextScene();
             break;
         default:
+            server.disconnectFromRoom();
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("scenePlayMenu");
             nextScene.scene.start();
