@@ -11,17 +11,6 @@ import { controller } from '../gameController.js';
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
-// Jugador 1 //
-// Movimiento
-var wButton = undefined;
-var aButton = undefined;
-var sButton = undefined;
-var dButton = undefined;
-// Interacción
-var vButton = undefined;
-// Jugador 2 //
-// Interacción
-var pButton = undefined;
 // Retroceso //
 var backButton = undefined;
 
@@ -91,9 +80,10 @@ class sceneControlsMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga de escena ************************//
+/**
+ * Función para cargar la siguiente escena
+ */
 function loadScene(){
-
     controller.getMusic().pause();
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneMainMenu");

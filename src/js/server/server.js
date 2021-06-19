@@ -80,7 +80,9 @@ class ServerClass {
 
     //******************* Otros ************************//
     // Conexiones a servicios generales //
-    // Servicio del chat
+    /**
+     * Conexión del cliente al servicio del chat
+     */
     connectToChatService() {
         var chatWS = new WebSocket('ws://85.137.44.104:80/chat');
 
@@ -121,7 +123,9 @@ class ServerClass {
         }
     }
 
-    // Servicio de usuarios
+    /**
+     * Conexión del cliente al servicio de usuarios
+     */
     connectToUserService() {
         var userWS = new WebSocket('ws://85.137.44.104:80/user');
 
@@ -141,6 +145,9 @@ class ServerClass {
     }
 
     // Desconexión de servicios generales //
+    /**
+     * Método para desconectar al usuario de los servicios generales (chat y usuarios)
+     */
     disconnect() {
         var arrayConnections = [
             this.getWSConnection()["chat"],
@@ -156,27 +163,37 @@ class ServerClass {
     }
 
     // Conexión a salas de online //
-    connectToForestRoom() {
-        var forestWS = new WebSocket('ws://85.137.44.104:80/forest');
+    /**
+     * Conexión a la sala de tierra
+     */
+    connectToGroundRoom() {
+        var forestWS = new WebSocket('ws://85.137.44.104:80/ground');
 
         forestWS.onopen = function() {
             var aux = server.getWSConnection();
-            aux["forest"] = forestWS;
+            aux["ground"] = forestWS;
             server.setWSConnection(aux);
 
             console.log("Conectado.");
         }
 
         forestWS.onmessage = function(msg) {
+            // Parser del mensaje enviado por parte del servidor
             var message = JSON.parse(msg.data);
 
+            // Comprobación del código del mensaje
             switch (message.code) {
+                // Caso: Error -> Se ha excedido el número máximo de usuarios de la sala
                 case "Error_MAXUSERS":
                     console.log("No se pudo conectar. Sala llena.");
                     break;
+                // Caso: OK -> Se ha podido establecer la conexión con la sala
                 case "OK_ROOMCONN":
                     console.log("Se estableció conexión con la sala.");
-                    user.setOnlineRoom("forest");
+                    // Actualización de información del usuario
+                    user.setOnlineRoom("ground");       // Sala en la que se encuentra
+                    user.setIdInRoom(message.userID);   // ID del usuario en la sala
+                    console.log(user.getIdInRoom());
                     break;
             }
         }
@@ -186,21 +203,49 @@ class ServerClass {
         }
     }
 
+    /**
+     * Método para enviar un mensaje al servicio de la sala
+     * @param {WebSocket} wsConnection Conexión websocket de la sala
+     * @param {Object} msg Mensaje a enviar al servidor
+     */
+    messageToRoomService(wsConnection, msg) {
+        wsConnection.send(JSON.stringify(msg));
+    }
+
+    /**
+     * Método para desconectar al cliente de la conexión websocket
+     */
     disconnectFromRoom() {
         // Obtención de la conexión del diccionario de conexiones (en función de la sala conectada del usuario)
         var roomConnection;
         switch (user.getOnlineRoom()) {
-            case "forest":
-                roomConnection = this.getWSConnection()["forest"];
+            // Cada caso es la clave de cada conexión en el diccionario
+            case "ground":
+                roomConnection = this.getWSConnection()["ground"];
                 break;
         
             default:
                 break;
         }
-        roomConnection.close();
-        this.getWSConnection()["forest"] = null;
 
+        // Generación del mensaje a enviar al servidor
+        var message = {
+            code: "DISCON",
+            idUser: user.getIdInRoom()
+        }
+
+        // Envío del mensaje
+        this.messageToRoomService(roomConnection, message);
+
+        // Cierre de la conexión
+        roomConnection.close();
+
+        // Eliminación de la conexión en el diccionario
+        this.getWSConnection()["ground"] = null;
+
+        // Eliminación de la sala e ID del usuario
         user.setOnlineRoom("");
+        user.setIdInRoom(-1);
     }
 }
 

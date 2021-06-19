@@ -4,7 +4,6 @@
 import bootloader from './bootloader.js';
 import sceneStart from './start.js';
 import sceneLoginMenu from './menu/loginMenu.js';
-import sceneServer from './server/serverUI.js';
 import sceneMainMenu from './menu/mainMenu.js';
 import scenePlayMenu from './menu/playMenu.js';
 import sceneSettingsMenu from './menu/settingsMenu.js';
@@ -35,7 +34,7 @@ const config = {
         default : "arcade"
     },
     scene: [                    // Lista de escenas
-        bootloader, sceneStart, sceneLoginMenu, sceneServer, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
+        bootloader, sceneStart, sceneLoginMenu, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
         sceneSettingsMenu, sceneRoomSelectMenu, sceneSelectionMenu, sceneSelectionMenu2, sceneOnlineSelectionMenu,
         sceneForestLevel, sceneCaveLevel, sceneEndGame
     ]

@@ -3,11 +3,14 @@
 //////////////////////////////////////////////////////////////////////
 class User {
     //******************* Constructor clase ************************//
-    constructor(un, pw, st, om) {
-        this.username = un;
-        this.password = pw;
-        this.status = st;
-        this.onlineRoom = om;
+    constructor(un, pw, st, om, id) {
+        this.username = un;         // Nombre de usuario del usuario
+        this.password = pw;         // Contraseña del usuario
+        this.status = st;           // Estado del jugador
+                                    //      true -> Conectado
+                                    //      false -> Desconectado
+        this.onlineRoom = om;       // Sala en la que se encuentra el usuario (tierra, agua, aire, fuego)
+        this.id = id;               // ID del usuario en la partida
     }
     
     //******************* Getters ************************//
@@ -27,6 +30,10 @@ class User {
         return this.onlineRoom;
     }
 
+    getIdInRoom() {
+        return this.id;
+    }
+
     //******************* Setters ************************//
     setUsername(value) {
         this.username = value;
@@ -44,6 +51,10 @@ class User {
         this.onlineRoom = value;
     }
 
+    setIdInRoom(value) {
+        this.id = value;
+    }
+
     //******************* Otros ************************//
     //
     resertUser() {
@@ -51,13 +62,14 @@ class User {
         this.password = "";
         this.status = false;
         this.onlineRoom = "";
+        this.id = -1;
     }
 }
 
 //////////////////////////////////////////////////////////////////////
 //                     Inicialización de usuario                    //
 //////////////////////////////////////////////////////////////////////
-var user = new User("", "", false, "");
+var user = new User("", "", false, "", -1);
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
