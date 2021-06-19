@@ -26,10 +26,12 @@ class bootloader extends Phaser.Scene {
 
         //***********************  TilesMap ***************************//
         this.load.image("tilesForest", "./resources/img/Tileset/Tileset/Tilemap.png");
+        this.load.image("tilesFire", "./resources/img/Tileset/Tilemap_Fire.png");
         // Código JSON //
         this.load.tilemapTiledJSON("map", "./resources/img/Tileset/TileMapForest..json");
         this.load.tilemapTiledJSON("map1", "./resources/img/Tileset/Map1.json");
         this.load.tilemapTiledJSON("map2", "./resources/img/Tileset/Map2.json");
+        this.load.tilemapTiledJSON("fireMap", "./resources/img/Tileset/FireMap.json");
 
         //***********************  Fondos ***************************//
         // Menús //
