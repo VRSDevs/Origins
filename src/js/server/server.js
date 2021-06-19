@@ -207,6 +207,9 @@ class ServerClass {
                     console.log("A borrar");
                     players[message.playerId].reset(true);
                     break;
+                //
+
+                //
             }
         }
 
