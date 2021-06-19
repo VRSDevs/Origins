@@ -92,9 +92,11 @@ class Cat {
             this.score = 0;  
             this.roundsWon = 0;
             this.hasMatter = false;
-            this.sand = true;
+            this.sand = false;
         } else {
-            this.score = 0;
+            this.name = "";
+            this.isReady = false;
+            this.score = 0;  
             this.roundsWon = 0;
             this.hasMatter = false;
             this.sand = false;

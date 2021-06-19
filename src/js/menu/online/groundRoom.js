@@ -142,6 +142,13 @@ class sceneGroundRoom extends Phaser.Scene{
  * 
  */
 function loadScene(){
+    // Desconexión de la sala
+    server.disconnectFromRoom();
+    //
+    controller.getCurrentScene().scene.stop();
+    var nextScene = game.scene.getScene("sceneMainMenu");
+    nextScene.scene.start();
+    /*
     switch (lobby) {
         case 1:
             
@@ -156,12 +163,11 @@ function loadScene(){
             
             break;
         case 5:
-            controller.getCurrentScene().scene.stop();
-            var nextScene = game.scene.getScene("sceneMainMenu");
-            nextScene.scene.start();
+            
 
             break;
     }
+    */
 }
 
 /**
@@ -198,7 +204,9 @@ function updatePlayerInfo() {
             } else {
                 readyTexts[i].setText("Not ready");
             } 
-        }      
+        } else {
+            readyTexts[i].setText("");
+        }     
     }
 }
 
