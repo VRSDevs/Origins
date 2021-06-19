@@ -1,9 +1,9 @@
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import { controller } from '../gameController.js';
-import { players } from '../cats.js';
-import { game } from '../init.js';
+import { controller } from '../../gameController.js';
+import { players } from '../../cats.js';
+import { game } from '../../init.js';
 import { user } from '../../server/user.js';
 import { server } from '../../server/server.js';
 
@@ -97,3 +97,8 @@ function loadScene(){
     }
 }
 
+
+//////////////////////////////////////////////////////////////////////
+//                          Exportaciones                           //
+//////////////////////////////////////////////////////////////////////
+export default sceneAirRoom;
