@@ -153,10 +153,17 @@ class sceneGroundRoom extends Phaser.Scene{
 //////////////////////////////////////////////////////////////////////
 //                          Funciones Comms                         //
 //////////////////////////////////////////////////////////////////////
-function sexo() {
+/**
+ * 
+ */
+function readyMessage() {
     //
+    var wsConnection = server.getWSConnection()[user.getOnlineRoom()];
 
     //
+    var message = {
+
+    }
 
     //
 }
