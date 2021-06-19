@@ -14,7 +14,6 @@ var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
 var backButton = undefined;
-var singlePlayerButton = undefined;
 var localMultiplayerButton = undefined;
 var onlineMultiplayerButton = undefined;
 //******************* Control ************************//
@@ -52,27 +51,8 @@ class scenePlayMenu extends Phaser.Scene {
         createServerUI();
 
         //****************** Botones *********************//
-        // Modo 1 Jugador //
-        singlePlayerButton = this.add.sprite(139, 284, "sprite1PlayerGM", 0).setInteractive();
-        this.anims.create({
-            key: 'singlePlayerAnim',
-            frames: this.anims.generateFrameNumbers('sprite1PlayerGM', { start: 1, end: 6 }),
-            frameRate: 4, 
-            repeat: -1
-        });
-
-        singlePlayerButton.addListener('pointerover', () => {
-            startAnim = true;
-            controller.setGameMode(1);
-        }, this);
-        singlePlayerButton.addListener('pointerout', () => {
-            startAnim = false;
-            controller.setGameMode(0);
-        }, this);
-        singlePlayerButton.addListener('pointerdown', loadScene, this);
-
         // Modo 2 Jugador (local) //
-        localMultiplayerButton = this.add.sprite(405, 284, "sprite2PlayerGM", 0).setInteractive();
+        localMultiplayerButton = this.add.sprite(width / 4, 284, "sprite2PlayerGM", 0).setInteractive();
         this.anims.create({
             key: 'localMultiplayerAnim',
             frames: this.anims.generateFrameNumbers('sprite2PlayerGM', { start: 1, end: 4 }),
@@ -91,7 +71,7 @@ class scenePlayMenu extends Phaser.Scene {
         localMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Modo Multijugador //
-        onlineMultiplayerButton = this.add.sprite(662, 284, "spriteMultiplayerGM", 0).setInteractive();
+        onlineMultiplayerButton = this.add.sprite((width * 3) / 4, 284, "spriteMultiplayerGM", 0).setInteractive();
         this.anims.create({
             key: 'multiplayerAnim',
             frames: this.anims.generateFrameNumbers('spriteMultiplayerGM', { start: 1, end: 4 }),
@@ -156,20 +136,13 @@ class scenePlayMenu extends Phaser.Scene {
         textServerLog.setText(("Server Log:\n" + server.getLogPlayMenu()));
 
         //****************** Animaciones *********************//
-        if(startAnim === true && controller.getGameMode() === 1){
-            singlePlayerButton.anims.play('singlePlayerAnim', true);
-            localMultiplayerButton.anims.play('localMultiplayerAnim', false);
-            onlineMultiplayerButton.anims.play('multiplayerAnim', false);
-        } else if (startAnim === true && controller.getGameMode() === 2){
-            singlePlayerButton.anims.play('singlePlayerAnim', false);
+        if (startAnim === true && controller.getGameMode() === 2){
             localMultiplayerButton.anims.play('localMultiplayerAnim', true);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
         } else if (startAnim === true && controller.getGameMode() === 3){
-            singlePlayerButton.anims.play('singlePlayerAnim', false);
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', true);
         } else {
-            singlePlayerButton.anims.play('singlePlayerAnim', false);
             localMultiplayerButton.anims.play('localMultiplayerAnim', false);
             onlineMultiplayerButton.anims.play('multiplayerAnim', false);
         }
@@ -181,7 +154,6 @@ class scenePlayMenu extends Phaser.Scene {
             controller.getMusic().resume();
         }
     }    
-
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -235,7 +207,6 @@ function loadScene(){
     if(controller.getGameMode() === 1) {
         controller.setGameMode(0);
         alert("En progreso...");
-
     } else if(controller.getGameMode() === 2){
         controller.setGameMode(0);
         controller.getCurrentScene().scene.stop();
