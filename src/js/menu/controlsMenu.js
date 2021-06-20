@@ -11,6 +11,13 @@ import { controller } from '../gameController.js';
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
+// Tecla // 
+var wButton = undefined;
+var aButton = undefined;
+var sButton = undefined;
+var dButton = undefined;
+var vButton = undefined;
+var pButton = undefined;
 // Retroceso //
 var backButton = undefined;
 

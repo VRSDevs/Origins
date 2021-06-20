@@ -198,6 +198,7 @@ class ServerClass {
                     break;
                 //
                 case "OK_PLAYERJOIN":
+                case "OK_GETPLAYERS":
                     players[message.playerId].setType(message.playerType);
                     players[message.playerId].setName(message.playerName);
                     players[message.playerId].setReady(message.playerReady);
@@ -209,7 +210,7 @@ class ServerClass {
                     break;
                 //
                 case "OK_PLAYERREADY":
-                    players[message.playerId].setReady(message.playerStatus);
+                    players[message.playerId].setReady(message.playerReady);
                     break;
                 //
                 case "OK_STARTMATCH":
