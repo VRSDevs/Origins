@@ -327,6 +327,8 @@ function buttonsAnimation(){
 function resetVariables(){
     // Reseteo de animaciones //
     controller.getCurrentScene().anims.remove('victoryPlayerAnim');
+    controller.getCurrentScene().anims.remove('bgVictoryAnim');
+
 }
 
 //////////////////////////////////////////////////////////////////////
