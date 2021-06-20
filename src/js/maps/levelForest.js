@@ -399,7 +399,7 @@ class sceneForestLevel extends Phaser.Scene {
                             players[0].getObject().anims.play('upP1', true);                       
                         break;
                     case keys.V.isDown:
-                        if (distance() === true) {
+                        if (distance() === true && players[1].getHasMatter()) {
                             controller.getmusicEffect1().play();
                             controller.getmusicEffect2().play();
                             players[0].setHasMatter(true);
@@ -461,7 +461,7 @@ class sceneForestLevel extends Phaser.Scene {
                         players[1].getObject().anims.play('upP2', true);
                         break;
                     case keys.P.isDown:
-                        if (distance() === true) {
+                        if (distance() === true && players[0].getHasMatter()) {
                             controller.getmusicEffect1().play();
                             controller.getmusicEffect2().play();
                             players[1].setHasMatter(true);
