@@ -1,9 +1,11 @@
 //////////////////////////////////////////////////////////////////////
 //                  Importaciones de otros JS                       //
 //////////////////////////////////////////////////////////////////////
-import { controller } from '../gameController.js';
-import { players } from '../cats.js';
-import { game } from '../init.js';
+import { controller } from '../../gameController.js';
+import { players } from '../../cats.js';
+import { game } from '../../init.js';
+import { user } from '../../server/user.js';
+import { server } from '../../server/server.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -19,6 +21,8 @@ var sand;
 // Iconos //
 var player1Face = undefined;
 var player2Face = undefined;
+var player3Face = undefined;
+var player4Face = undefined;
 // Distancias entre jugadores //
 var distanceX = 0;
 var distanceY = 0;
@@ -33,6 +37,12 @@ var textRndsP1 = "";
 // Jugador 2 //
 var textPtsP2 = "";
 var textRndsP2 = "";
+// Jugador 1 //
+var textPtsP3 = "";
+var textRndsP3 = "";
+// Jugador 2 //
+var textPtsP4 = "";
+var textRndsP4 = "";
 // Temporizador //
 var timer = "";
 //******************* Materia oscura ************************//
@@ -53,10 +63,10 @@ var diffT = controller.getTimeRound();
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
 //////////////////////////////////////////////////////////////////////
-class sceneForestLevel extends Phaser.Scene {
+class sceneGroundLevelOnline extends Phaser.Scene {
     constructor() {
         super({
-            key: "sceneForestLevel",
+            key: "sceneGroundLevelOnline",
             active: false
         });
     }
@@ -88,6 +98,9 @@ class sceneForestLevel extends Phaser.Scene {
         // Texturas //
         var skinP1 = undefined;
         var skinP2 = undefined;
+        var skinP3 = undefined;
+        var skinP4 = undefined;
+
         switch (players[0].getType()) {
             case 1:
                 skinP1 = "GroundCat";
@@ -114,6 +127,34 @@ class sceneForestLevel extends Phaser.Scene {
                 break;
             case 4:
                 skinP2 = "FireCat";
+                break;
+        }
+        switch (players[2].getType()) {
+            case 1:
+                skinP3 = "GroundCat";
+                break;
+            case 2:
+                skinP3 = "WaterCat";
+                break;
+            case 3:
+                skinP3 = "AirCat";
+                break;
+            case 4:
+                skinP3 = "FireCat";
+                break;
+        }
+        switch (players[3].getType()) {
+            case 1:
+                skinP4 = "GroundCat";
+                break;
+            case 2:
+                skinP4 = "WaterCat";
+                break;
+            case 3:
+                skinP4 = "AirCat";
+                break;
+            case 4:
+                skinP4 = "FireCat";
                 break;
         }
 
@@ -249,9 +290,141 @@ class sceneForestLevel extends Phaser.Scene {
         });
         players[1].getObject().anims.play('rightP1');
 
+        // Jugador 3 //
+        players[2].setObject(this.physics.add.sprite(120, 120, (skinP3 + 'Idle')));
+        // Sin materia oscura
+        this.anims.create({
+            key: 'leftP3',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'Left'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'rightP3',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'Right'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'upP3',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'Up'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'downP3',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'Down'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idleP3',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'Idle'), { start: 0, end: 6 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        // Con la materia oscura
+        this.anims.create({
+            key: 'leftP3Matter',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'LeftMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'rightP3Matter',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'RightMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'upP3Matter',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'UpMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'downP3Matter',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'DownMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idleP3Matter',
+            frames: this.anims.generateFrameNumbers((skinP3 + 'IdleMatter'), { start: 0, end: 6 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        players[2].getObject().anims.play('rightP3');
+
+        // Jugador 4 //
+        players[3].setObject(this.physics.add.sprite(700, 80, (skinP4 + 'Idle')));
+        // Sin materia oscura
+        this.anims.create({
+            key: 'leftP4',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'Left'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'rightP4',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'Right'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'upP4',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'Up'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'downP4',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'Down'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idleP4',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'Idle'), { start: 0, end: 6 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        // Con la materia oscura
+        this.anims.create({
+            key: 'leftP4Matter',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'LeftMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'rightP4Matter',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'RightMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'upP4Matter',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'UpMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'downP4Matter',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'DownMatter'), { start: 0, end: 4 }),
+            frameRate: 5,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'idleP4Matter',
+            frames: this.anims.generateFrameNumbers((skinP4 + 'IdleMatter'), { start: 0, end: 6 }),
+            frameRate: 4,
+            repeat: -1
+        });
+        players[3].getObject().anims.play('rightP4');
+
         //******************* Detección por teclado ************************//
         cursors = this.input.keyboard.createCursorKeys();
-        keys = this.input.keyboard.addKeys('A,W,S,D,C,V,O,P', false);
+        keys = this.input.keyboard.addKeys('A,W,S,D,V', false);
 
         //******************* Colisiones y arena ************************//
 
@@ -269,15 +442,23 @@ class sceneForestLevel extends Phaser.Scene {
         // Con los bordes
         players[0].getObject().setCollideWorldBounds(true);
         players[1].getObject().setCollideWorldBounds(true);
+        players[2].getObject().setCollideWorldBounds(true);
+        players[3].getObject().setCollideWorldBounds(true);
 
         // Entre personajes 
         this.physics.add.collider(players[0].getObject(), players[1].getObject());
+        this.physics.add.collider(players[0].getObject(), players[2].getObject());
+        this.physics.add.collider(players[0].getObject(), players[3].getObject());
+        this.physics.add.collider(players[1].getObject(), players[2].getObject());
+        this.physics.add.collider(players[1].getObject(), players[3].getObject());
+        this.physics.add.collider(players[2].getObject(), players[3].getObject());
 
         // Entre personajes y muros
         wallsLayer.setCollisionByProperty({ collides: true });
         this.physics.add.collider(wallsLayer, players[1].getObject());
         this.physics.add.collider(wallsLayer, players[0].getObject());
-        
+        this.physics.add.collider(wallsLayer, players[2].getObject());
+        this.physics.add.collider(wallsLayer, players[3].getObject());
 
         // Personajes con la materia oscura
         this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
@@ -288,6 +469,18 @@ class sceneForestLevel extends Phaser.Scene {
         this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
             darkMatter.disableBody(true, true);
             players[1].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
+        }, null, this);
+        this.physics.add.overlap(players[2].getObject(), darkMatter, () => {
+            darkMatter.disableBody(true, true);
+            players[2].setHasMatter(true);
+            controller.getmusicEffect1().play();
+
+        }, null, this);
+        this.physics.add.overlap(players[3].getObject(), darkMatter, () => {
+            darkMatter.disableBody(true, true);
+            players[3].setHasMatter(true);
             controller.getmusicEffect1().play();
 
         }, null, this);
@@ -327,6 +520,39 @@ class sceneForestLevel extends Phaser.Scene {
                 break;
         }
 
+        // Jugador 3
+        this.add.rectangle(90, height - 60, 125, 50, 0x000000, 0.3);
+        switch (players[2].getType()) {
+            case 1:
+                player3Face = this.add.image(60, height - 50, "GroundCatFace");
+                break;
+            case 2:
+                player3Face = this.add.image(60, height - 50, "WaterCatFace");
+                break;
+            case 3:
+                player3Face = this.add.image(60, height - 50, "AirCatFace");
+                break;
+            case 4:
+                player3Face = this.add.image(60, height - 50, "FireCatFace");
+                break;
+        }
+        // Jugador 4
+        this.add.rectangle(width - 90, height - 60, 125, 50, 0x000000, 0.3);
+        switch (players[3].getType()) {
+            case 1:
+                player4Face = this.add.image(width - 120, height - 50, "GroundCatFace");
+                break;
+            case 2:
+                player4Face = this.add.image(width - 120, height - 50, "WaterCatFace");
+                break;
+            case 3:
+                player4Face = this.add.image(width - 120, height - 50, "AirCatFace");
+                break;
+            case 4:
+                player4Face = this.add.image(width - 120, height - 50, "FireCatFace");
+                break;
+        }
+
         // Temporizador //
         this.add.rectangle(width / 2, 41, 100, 50, 0x000000, 0.3);
         var clock = this.physics.add.image((width / 2) - 35, 41, "clock");
@@ -356,6 +582,18 @@ class sceneForestLevel extends Phaser.Scene {
             fontSize: '28px',
             fill: '#ffffff'
         });
+        // Jugador 3 //
+        textPtsP3 = this.add.text(96, height - 20, "0", {
+            fontFamily: 'origins',
+            fontSize: '28px',
+            fill: '#ffffff'
+        });
+        // Jugador 4 //
+        textPtsP4 = this.add.text(width - 84, height - 20, "0", {
+            fontFamily: 'origins',
+            fontSize: '28px',
+            fill: '#ffffff'
+        });
 
         //******************* Música del nivel ************************//
         
@@ -370,6 +608,11 @@ class sceneForestLevel extends Phaser.Scene {
 
     }
     update(time, delta) {
+
+
+        // Primero comprobar cual es el usuario en el vector de players, despues hacer que se actualice solo su gato con las teclas
+        // el resto de gatos se actualiza mediante mensajes del ws.
+
         // No actualizar solo puntos a ver
         if (!controller.getStopUpdateLevel()) {
             //******************* Temporizador ************************//
@@ -687,6 +930,16 @@ function updatePoints() {
         players[1].setScore(players[1].getScore() + 1);
         textPtsP2.setText(Math.trunc(players[1].getScore() / diffT));
     }
+    // Jugador 3 //
+    if (players[2].getHasMatter()) {
+        players[2].setScore(players[2].getScore() + 1);
+        textPtsP3.setText(Math.trunc(players[2].getScore() / diffT));
+    }
+    // Jugador 4 //
+    if (players[3].getHasMatter()) {
+        players[3].setScore(players[3].getScore() + 1);
+        textPtsP4.setText(Math.trunc(players[3].getScore() / diffT));
+    }
 }
 
 //******************* Reseteo de variables ************************//
@@ -714,9 +967,31 @@ function resetVariables(){
     controller.getCurrentScene().anims.remove('upP2Matter');
     controller.getCurrentScene().anims.remove('downP2Matter');
     controller.getCurrentScene().anims.remove('idleP2Matter');
+    // Jugador 3
+    controller.getCurrentScene().anims.remove('leftP3');
+    controller.getCurrentScene().anims.remove('rightP3');
+    controller.getCurrentScene().anims.remove('upP3');
+    controller.getCurrentScene().anims.remove('downP3');
+    controller.getCurrentScene().anims.remove('idleP3');
+    controller.getCurrentScene().anims.remove('leftP3Matter');
+    controller.getCurrentScene().anims.remove('rightP3Matter');
+    controller.getCurrentScene().anims.remove('upP3Matter');
+    controller.getCurrentScene().anims.remove('downP3Matter');
+    controller.getCurrentScene().anims.remove('idleP3Matter');
+    // Jugador 4
+    controller.getCurrentScene().anims.remove('leftP4');
+    controller.getCurrentScene().anims.remove('rightP4');
+    controller.getCurrentScene().anims.remove('upP4');
+    controller.getCurrentScene().anims.remove('downP4');
+    controller.getCurrentScene().anims.remove('idleP4');
+    controller.getCurrentScene().anims.remove('leftP4Matter');
+    controller.getCurrentScene().anims.remove('rightP4Matter');
+    controller.getCurrentScene().anims.remove('upP4Matter');
+    controller.getCurrentScene().anims.remove('downP4Matter');
+    controller.getCurrentScene().anims.remove('idleP4Matter');
 }
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
 //////////////////////////////////////////////////////////////////////
-export default sceneForestLevel;
+export default sceneGroundLevelOnline;

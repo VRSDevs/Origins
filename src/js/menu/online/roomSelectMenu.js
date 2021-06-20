@@ -247,7 +247,7 @@ function loadScene(){
             server.connectToGroundRoom();
             // Carga de la sala una vez se ha establecido la conexión (con delay para poder ejecutarlo correctamente).
             controller.getCurrentScene().time.delayedCall(
-                250,
+                500,
                 loadRoom,
                 [],
                 this

@@ -14,25 +14,19 @@ import { server } from '../../server/server.js';
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
+var readyButton = undefined;
 var backButton = undefined;
 //****************** Iconos *********************//
 var catIcons = [undefined, undefined, undefined, undefined];
 //****************** Textos *********************//
 // Nombres jugadores //
 var names = ["", "", "", ""];
-var name1 = "";
-var name2 = "";
-var name3 = "";
-var name4 = "";
 // Preparados //
 var readyTexts = ["", "", "", ""];
-var readyP1 = "";
-var readyP2 = "";
-var readyP3 = "";
-var readyP4 = "";
 
-
-
+//////////////////////////////////////////////////////////////////////
+//              Clase de escena de lobby de tierra                  //
+//////////////////////////////////////////////////////////////////////
 class sceneGroundRoom extends Phaser.Scene{
     constructor() {
         super({
@@ -109,6 +103,20 @@ class sceneGroundRoom extends Phaser.Scene{
         });
 
         //****************** Botones *********************//
+        // Botón de listo //
+        readyButton = this.add.sprite(((width * 3) / 4) - 50, 580, "readyPButton", 0).setInteractive();
+        readyButton.addListener('pointerdown', () => {
+            if (players[user.getIdInRoom()].getReady() === true){     
+                readyButton.setFrame(0);
+                players[user.getIdInRoom()].setReady(false);
+            } else {
+                readyButton.setFrame(1);
+                players[user.getIdInRoom()].setReady(true);
+            }
+            //
+            sendReadyMessage();
+        }, this);
+
         // Retroceso //
         backButton = this.add.sprite(242 / 2, 580, "spriteBackButton2", 0).setInteractive();
         this.anims.create({
@@ -133,6 +141,29 @@ class sceneGroundRoom extends Phaser.Scene{
         //
         updatePlayerInfo();
     }
+}
+
+//////////////////////////////////////////////////////////////////////
+//                          Funciones Comms                         //
+//////////////////////////////////////////////////////////////////////
+/**
+ * Función para enviar un mensaje al servidor con el nuevo estado del jugador
+ */
+function sendReadyMessage() {
+    // Obtención de la conexión ws del diccionario de conexiones
+    var wsConnection = server.getWSConnection()[user.getOnlineRoom()];
+
+    // Creación del mensaje a mandar al servidor con el estado de "listo"
+    var message = {
+        code: "OK_PLAYERREADY",
+        playerId: user.getIdInRoom(),
+        playerType: players[user.getIdInRoom()].getType(),
+        playerName: players[user.getIdInRoom()].getName(),
+        playerReady: players[user.getIdInRoom()].getReady()
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
 }
 
 //////////////////////////////////////////////////////////////////////

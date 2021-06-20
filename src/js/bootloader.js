@@ -26,10 +26,12 @@ class bootloader extends Phaser.Scene {
 
         //***********************  TilesMap ***************************//
         this.load.image("tilesForest", "./resources/img/Tileset/Tileset/Tilemap.png");
+        this.load.image("tilesFire", "./resources/img/Tileset/Tilemap_Fire.png");
         // Código JSON //
         this.load.tilemapTiledJSON("map", "./resources/img/Tileset/TileMapForest..json");
         this.load.tilemapTiledJSON("map1", "./resources/img/Tileset/Map1.json");
         this.load.tilemapTiledJSON("map2", "./resources/img/Tileset/Map2.json");
+        this.load.tilemapTiledJSON("fireMap", "./resources/img/Tileset/FireMap.json");
 
         //***********************  Fondos ***************************//
         // Menús //
@@ -189,7 +191,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteWaterLobby", './resources/img/Buttons/waterRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67});
         this.load.spritesheet("spriteFireLobby", './resources/img/Buttons/fireRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67}); 
         this.load.spritesheet("spriteAirLobby", './resources/img/Buttons/airRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67});    
-    	this.load.spritesheet("readyPButton", './resources/img/Buttons/readyButton.png', { frameWidth: 655, frameHeight: 84});
+    	this.load.spritesheet("readyPButton", './resources/img/Buttons/readySpriteSheet.png', { frameWidth: 411, frameHeight: 69});
     }
 }
 
