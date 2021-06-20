@@ -208,8 +208,13 @@ class ServerClass {
                     players[message.playerId].reset(true);
                     break;
                 //
-
+                case "OK_PLAYERREADY":
+                    players[message.playerId].setReady(message.playerStatus);
+                    break;
                 //
+                case "OK_STARTMATCH":
+                    console.log("Sexo");
+                    break;
             }
         }
 
