@@ -174,11 +174,13 @@ La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha m
 #### 6.1 Enlaces de música
 [Música Menú Principal](https://opengameart.org/content/crystal-cave-mysterious-ambience-seamless-loop)
 
-[Música Nivel Bosque](https://opengameart.org/content/in-the-forest)
+[Música Nivel Tierra](https://opengameart.org/content/in-the-forest)
 
-[Música Nivel Cueva](https://opengameart.org/content/attack-of-the-enormous-mutant-badgers-music)
+[Música Nivel Aire](https://opengameart.org/content/virus-hunter-toon-level-music)
 
-[Música Nivel Laboratorio](https://opengameart.org/content/high-tech-lab)
+[Música Nivel Fuego](https://opengameart.org/content/lava-area-theme)
+
+[Música Nivel Agua](...)
 
 [Efecto de sonido 1](https://opengameart.org/content/meow)
 
