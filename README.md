@@ -114,13 +114,14 @@ Figura 10
 9. **Menú inicio de sesión:** menú de inicio de sesión.
 ![Figura 11](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/login.png?raw=true)
 Figura 11
-10. **Menú registrarse:** menú de registro).
+10. **Menú registrarse:** menú de registro.
 ![Figura 12](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/register.png?raw=true)
 Figura 12
 
 11. **Menú de salas:** Menú donde se podrá elegir entre los cuatro tipo sala.
 
 Figura 13
+
 12. **Sala de espera:** Sala en la cual cada jugador deberá esperar a que el resto esté listo paara comenzar la partida tras pulsar el botón Ready.
 
 Figura 14
