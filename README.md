@@ -118,6 +118,12 @@ Figura 11
 ![Figura 12](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/register.png?raw=true)
 Figura 12
 
+11. **Menú de salas:** Menú donde se podrá elegir entre los cuatro tipo sala.
+
+Figura 13
+12. **Sala de espera:** Sala en la cual cada jugador deberá esperar a que el resto esté listo paara comenzar la partida tras pulsar el botón Ready.
+
+Figura 14
 
 #### 2.6 Instrucciones de juego
 El juego comienza con un menú principal, donde el jugador podrá elegir jugar, ver los controles,modificar los ajustes y o salir del juego. Tras pulsar el modo de un jugador dentro del menú jugar, el juego comenzará con un personaje a elegir por el jugador, y deberá buscar la materia oscura antes que las IAs y mantenerla el tiempo necesario para ganar. Por tanto, la condición de victoria en el modo un jugador será obtener la materia durante el mayor tiempo posible.
