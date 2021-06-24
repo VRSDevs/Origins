@@ -77,7 +77,7 @@ La interacción para poder robar la materia del otro jugador, en el jugador 1 se
 ##### 2.5.1 Diagrama de flujo
 En el siguiente diagrama se muestra una representación de las diferentes pantallas de interfaces que el jugador puede recorrer antes de entrar en partida y, más abajo, los diferentes estados por los que el jugador pasa a lo largo de la partida de Origins.
 ![Figura 1](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Flowchart.png?raw=true)
-Figura 2
+Figura 1
 El siguiente diagrama de clases muestra el flujo de la aplicación
 ![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Diagrama%20de%20fllujo.png?raw=true)
 Figura 2
@@ -95,9 +95,9 @@ Figura 4
 Figura 5
 4. **Pantalla  de  juego:**  tendrá  a  los  personajes,  el  número  de  rondas ganadas,  la puntuación de los personajes y el tiempo restante.
 
-1 Jugador | 2 Jugadores
+2 Jugadores | Online
 ------------- | -------------
-![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/1player.png?raw=true) Figura 5 | ![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 6
+![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 6 | ![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/online.png?raw=true) Figura 7
 
 5. **Pantalla de victoria:** pantalla con el gato vencedor y unas opciones para poder volver a jugar o volver al menú de inicio.
 ![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/win.png?raw=true)
@@ -118,12 +118,12 @@ Figura 11
 ![Figura 12](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/register.png?raw=true)
 Figura 12
 
-11. **Menú de salas:** Menú donde se podrá elegir entre los cuatro tipo sala.
-
+11. **Menú de salas:** Menú donde se podrá elegir entre los cuatro tipos sala.
+![Figura 13](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/waitingRoom.png?raw=true)
 Figura 13
 
 12. **Sala de espera:** Sala en la cual cada jugador deberá esperar a que el resto esté listo paara comenzar la partida tras pulsar el botón Ready.
-
+![Figura 14](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/especificRoom.png?raw=true)
 Figura 14
 
 #### 2.6 Instrucciones de juego
@@ -169,11 +169,11 @@ Se recomienda tener Java JDK 15 y es necesario tener Spring Tools.
 _NOTA_: Para una preview de las canciones, vea apartado 5.1 (Anexos y referencias - Enlaces de música).
 
 ### 5. Arte
-Base de los personajes principales (véase figura 13).
+Base de los personajes principales (véase figura 15).
 
-Diseño de escenario (véase figura 14).
+Diseño de escenario (véase figura 16).
 
-La forma del mapa será algo similar a esto (véase figura 15).
+La forma del mapa será algo similar a esto (véase figura 17).
 
 ### 6. Anexos y referencias
 La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha modificado para poder cumplir las características pedidas para este trabajo.
@@ -198,11 +198,11 @@ La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha m
 #### 5.2 Enlaces de referencia artística:
 https://www.pinterest.es/pin/188166090660008827/
 
-[Figura 13](https://www.pinterest.es/pin/331577591312078256/)
+[Figura 15](https://www.pinterest.es/pin/331577591312078256/)
 
-[Figura 14](https://www.pinterest.es/pin/244883298474322218/)
+[Figura 16](https://www.pinterest.es/pin/244883298474322218/)
 
-[Figura 5](http://www.onlinemania.es/juego/8356/Pokemon-Perla-Version-8GBA9.html)
+[Figura 17](http://www.onlinemania.es/juego/8356/Pokemon-Perla-Version-8GBA9.html)
 
 [Letra logo](https://www.dafont.com/es/a-alloy-ink.font)
 
