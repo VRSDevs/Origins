@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 import { user } from "./user.js";
 import { players } from "../cats.js";
+import { darkMatter } from "../darkmatter.js";
 import { controller } from "../gameController.js";
 
 //////////////////////////////////////////////////////////////////////
@@ -329,6 +330,11 @@ class ServerClass {
                         break;
                 case "OK_POINTSINFO":
                     players[message.userId].setScore(players[message.userId].getScore() + 1);       
+                    break;
+                case "OK_TAKEDM":
+                    darkMatter.getObject().disableBody(true, true);
+                    players[message.userTaken].setHasMatter(true);
+                    controller.getmusicEffect1().play();
                     break;
             }
         }

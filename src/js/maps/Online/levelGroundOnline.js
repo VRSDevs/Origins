@@ -264,9 +264,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
 
         // Generación de colisión personaje - materia oscura
         this.physics.add.overlap(players[user.getIdInRoom()].getObject(), darkMatter.getObject(), () => {
-            darkMatter.getObject().disableBody(true, true);
-            players[user.getIdInRoom()].setHasMatter(true);
-            controller.getmusicEffect1().play();
+            sendTakeDM();
         }, null, this);
 
         /* 
@@ -475,6 +473,9 @@ function sendPlayerUpdate(key) {
     wsConnection.send(JSON.stringify(message));
 }
 
+/**
+ * 
+ */
 function sendPuntuationUpdate() {
     //
     var wsConnection = server.getWSConnection()["groundMatch"];
@@ -484,6 +485,23 @@ function sendPuntuationUpdate() {
         code: "OK_POINTSINFO",
         userID: user.getIdInRoom(),
         updatedPoints: players[user.getIdInRoom()].getScore()
+    }
+
+    //
+    wsConnection.send(JSON.stringify(message));
+}
+
+/**
+ * 
+ */
+function sendTakeDM() {
+    //
+    var wsConnection = server.getWSConnection()["groundMatch"];
+
+    //
+    var message = {
+        code: "OK_TAKEDM",
+        userTaken: user.getIdInRoom(),
     }
 
     //
@@ -648,6 +666,7 @@ function updatePoints() {
         //
         textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
     }
+}
 
 //******************* Reseteo de variables ************************//
 function resetVariables(){
