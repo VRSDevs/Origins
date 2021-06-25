@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 import { controller } from '../../gameController.js';
 import { players } from '../../cats.js';
+import { darkMatter } from '../../darkmatter.js';
 import { game } from '../../init.js';
 import { user } from '../../server/user.js';
 import { server } from '../../server/server.js';
@@ -26,6 +27,7 @@ var playersFace = [undefined, undefined, undefined, undefined];
 var distancesX = [-1, -1, -1, -1];
 var distancesY = [-1, -1, -1, -1];
 var distanceBool = false;   // ¿Se están tocando los jugadores?
+var canIdle = true;
 //******************* Texto ************************//
 // Final de ronda //
 var textEndRound = "";
@@ -47,7 +49,7 @@ var timer = "";
 var darkMatterPosX = 0;
 var darkMatterPosY = 0;
 // Objeto //
-var darkMatter = undefined;
+//var darkMatter = undefined;
 // ID jugador con materia antigua //
 var victim = -1;
 //******************* Auxiliares ************************//
@@ -103,10 +105,13 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         var sandObjects = map.getObjectLayer('sandObj')['objects'];
 
         //******************* Materia oscura ************************//
-        darkMatter = this.physics.add.image(
-            controller.getMatterPosX(),
-            controller.getMatterPosY(),
-            "darkMatter");
+        darkMatter.setObject(
+            this.physics.add.image(
+                controller.getMatterPosX(),
+                controller.getMatterPosY(),
+                "darkMatter"
+            )
+        );
 
         //******************* Personajes ************************//
         // Creación de personajes
@@ -131,11 +136,13 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             }
 
             // Creación y asignación de objeto al jugador actual
-            players[i].setObject(this.physics.add.sprite(
-                auxPlayerPosX[i],
-                auxPlayerPosY[i],
-                (playersSkin[i] + 'Idle')
-            ));
+            players[i].setObject(
+                this.physics.add.sprite(
+                    auxPlayerPosX[i],
+                    auxPlayerPosY[i],
+                    (playersSkin[i] + 'Idle')
+                )
+            );
 
             // Generación de animaciones en función del jugador actual
             // Sin materia oscura
@@ -256,7 +263,14 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             
         }
 
-        // Generación de colisión personaje - materia oscura 
+        // Generación de colisión personaje - materia oscura
+        this.physics.add.overlap(players[user.getIdInRoom()].getObject(), darkMatter.getObject(), () => {
+            darkMatter.getObject().disableBody(true, true);
+            players[user.getIdInRoom()].setHasMatter(true);
+            controller.getmusicEffect1().play();
+        }, null, this);
+
+        /* 
         for (var i = 0; i < players.length; i++) {
             // Si el jugador no tiene un objeto asignado (slot vacío)
             if(players[i].getObject() === undefined) continue;
@@ -270,7 +284,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                 controller.getmusicEffect1().play();
             }, null, this);
             
-        }
+        }*/
 
         //******************* HUD ************************//
         for (var i = 0; i < players.length; i++) {
@@ -357,24 +371,20 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                 //
                 switch (true) {
                     case keys.A.isDown:
-                            // players[user.getIdInRoom()].getObject().setVelocityX(-160);
-                            // players[user.getIdInRoom()].getObject().anims.play(('leftP' + user.getIdInRoom()), true);
-                            sendPlayerUpdate("A");                                        
+                            sendPlayerUpdate("A");
+                            canIdle = true;                                        
                         break;
                     case keys.D.isDown:
-                            // players[user.getIdInRoom()].getObject().setVelocityX(160);
-                            // players[user.getIdInRoom()].getObject().anims.play(('rightP' + user.getIdInRoom()), true);
-                            sendPlayerUpdate("D");                             
+                            sendPlayerUpdate("D");
+                            canIdle = true;                        
                         break;
                     case keys.S.isDown:
-                            // players[user.getIdInRoom()].getObject().setVelocityY(160);
-                            // players[user.getIdInRoom()].getObject().anims.play(('downP' + user.getIdInRoom()), true);
-                            sendPlayerUpdate("S");                      
+                            sendPlayerUpdate("S");
+                            canIdle = true;                       
                         break;
                     case keys.W.isDown:
-                            // players[user.getIdInRoom()].getObject().setVelocityY(-160);
-                            // players[user.getIdInRoom()].getObject().anims.play(('upP' + user.getIdInRoom()), true);
-                            sendPlayerUpdate("W");                       
+                            sendPlayerUpdate("W");
+                            canIdle = true;                        
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
@@ -386,10 +396,11 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                         }
                         break;
                     default:
-                        // players[user.getIdInRoom()].getObject().setVelocityX(0);
-                        // players[user.getIdInRoom()].getObject().setVelocityY(0);
-                        // players[user.getIdInRoom()].getObject().anims.play(('idleP' + user.getIdInRoom()), true);
-                        sendPlayerUpdate("N");
+                        if(canIdle){
+                            sendPlayerUpdate("N");
+                            canIdle = false;
+                        }
+                        
                         break;
                 }
                 
@@ -621,7 +632,7 @@ function distance() {
 }
 
 //******************  Actualización puntuación de jugadores ****************//
-function updatePoints() {
+function updatePoints() { 
     for (var i = 0; i < players.length; i++) {
         //
         if(players[i].getObject() === undefined) continue;
@@ -636,8 +647,8 @@ function updatePoints() {
         }
 
         //
-        textPlayerPts[i].setText(players[i].getScore());
-    }   
+        textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
+    }
 }
 
 //******************* Reseteo de variables ************************//
