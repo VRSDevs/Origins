@@ -643,6 +643,7 @@ function updatePoints() {
             //
             sendPuntuationUpdate();
         }
+    }
 
         //
         textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
