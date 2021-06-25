@@ -647,6 +647,7 @@ function updatePoints() {
         //
         textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
     }
+}
 
 //******************* Reseteo de variables ************************//
 function resetVariables(){
