@@ -328,7 +328,7 @@ class ServerClass {
 
                         break;
                 case "OK_POINTSINFO":
-                    players[message.userId].setScore(message.updatedPoints);       
+                    players[message.userId].setScore(players[message.userId].getScore() + 1);       
                     break;
             }
         }
