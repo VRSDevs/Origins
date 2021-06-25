@@ -125,11 +125,32 @@ class sceneEndGame extends Phaser.Scene {
                 victoryPlayer.anims.play("victoryPlayerAnim");
 
                 // Texto //
-                victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
-                    fontFamily: 'origins',
-                    fontSize: '40px',
-                    fill: '#3380ff'
-                });
+                if(textureID == "GroundCatIdle3"){
+                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
+                        fontFamily: 'origins',
+                        fontSize: '40px',
+                        fill: '#008f39'
+                    });
+    
+                }else if(textureID == "WaterCatIdle3"){
+                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
+                        fontFamily: 'origins',
+                        fontSize: '40px',
+                        fill: '#0000ff'
+                    });
+                }else if(textureID == "AirCatIdle3"){
+                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
+                        fontFamily: 'origins',
+                        fontSize: '40px',
+                        fill: '#81CECF'
+                    });
+                }else if(textureID == "FireCatIdle3"){
+                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
+                        fontFamily: 'origins',
+                        fontSize: '40px',
+                        fill: '#FF0000'
+                    });
+                }
                 this.tweens.add({
                     targets: victoryText,
                     y: height/6,
@@ -206,11 +227,33 @@ class sceneEndGame extends Phaser.Scene {
                 victoryPlayer.anims.play("victoryPlayerAnim");
 
                 // Texto //
+            if(textureID == "GroundCatIdle3"){
                 victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
-                    fill: '#3380ff'
+                    fill: '#008f39'
                 });
+
+            }else if(textureID == "WaterCatIdle3"){
+                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
+                    fontFamily: 'origins',
+                    fontSize: '40px',
+                    fill: '#0000ff'
+                });
+            }else if(textureID == "AirCatIdle3"){
+                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
+                    fontFamily: 'origins',
+                    fontSize: '40px',
+                    fill: '#81CECF'
+                });
+            }else if(textureID == "FireCatIdle3"){
+                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
+                    fontFamily: 'origins',
+                    fontSize: '40px',
+                    fill: '#FF0000'
+                });
+            }
+
                 this.tweens.add({
                     targets: victoryText,
                     y: height/6,
