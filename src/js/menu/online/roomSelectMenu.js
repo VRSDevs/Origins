@@ -28,7 +28,7 @@ var textServerConnected = "";
 var textNumOfUsersConnected = "";
 var textServerLog = undefined;
 var conected = "";
-var conecting = "";
+var roomStatus = "";
 //******************* Control ************************//
 // Selección de lobby //
 var lobby = 0;  
@@ -177,6 +177,8 @@ class sceneRoomSelectMenu extends Phaser.Scene {
                 color: '#00ff00',
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
+            // Estado conexión
+            roomStatus.setText(server.getRoomStatusMessage());
         } else {
             // Texto de estado
             textServerConnected.setStyle({
@@ -191,10 +193,6 @@ class sceneRoomSelectMenu extends Phaser.Scene {
             });
             textNumOfUsersConnected.setText("0");
         }
-
-        server.ge
-
-
     }
 }
 
@@ -224,21 +222,13 @@ function createServerUI() {
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 
-    // Conectando //
+    // Estado de la sala //
     controller.getCurrentScene().add.rectangle(730, height - 93, 160, 67, 0x000000, 0.6);
-
-    conecting = controller.getCurrentScene().add.text(660, height - 20, "Conecting...",{
-        fontFamily: 'origins',
+    roomStatus = controller.getCurrentScene().add.text(660, height - 20, "",{
+        fontFamily: 'Consolas',
         fontSize: 24,
         color: '#00ff00',
     });
-   /*
-    conected = controller.getCurrentScene().add.text(width - 80, height - 40, "Conected succesfully",{
-        fontFamily: 'origins',
-        fontSize: 24,
-        color: '#000000',
-    });
-    */
 }
 
 //******************* Carga de escena ************************//
@@ -267,7 +257,7 @@ function loadScene(){
         // Caso: 1 - Sala de tierra
         case 1:
             // Establecimiento de conexión con la sala de tierra
-            console.log("Conectando...");
+            server.setRoomStatusMessage("Conectando...");
             server.connectToGroundRoom();
             // Carga de la sala una vez se ha establecido la conexión (con delay para poder ejecutarlo correctamente).
             controller.getCurrentScene().time.delayedCall(

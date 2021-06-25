@@ -17,12 +17,13 @@ var ip = 'ws://127.0.0.1:80';
 //////////////////////////////////////////////////////////////////////
 class ServerClass {
     //******************* Constructor clase ************************//
-    constructor(msgPM, numUs, lCU, servCon, mDB, ws) {
+    constructor(msgPM, numUs, lCU, servCon, mDB, roomMsg, ws) {
         this.logPlayMenu = msgPM;
         this.connectedUsers = numUs;
         this.listConnectedUsers = lCU;
         this.serverConnected = servCon;
         this.messagesFromDB = mDB;
+        this.roomStatus = roomMsg;
         this.connections = ws;
     }
 
@@ -41,6 +42,9 @@ class ServerClass {
     }
     getMessagesFromDB() {
         return this.messagesFromDB;
+    }
+    getRoomStatusMessage() {
+        return this.roomStatus;
     }
     getWSConnection() {
         return this.connections;
@@ -64,6 +68,9 @@ class ServerClass {
     }
     setMessagesFromDB(array) {
         this.messagesFromDB = array;
+    }
+    setRoomStatusMessage(msg) {
+        this.roomStatus = msg;
     }
     setWSConnection(connections) {
         this.connections = connections;
@@ -165,8 +172,6 @@ class ServerClass {
             var aux = server.getWSConnection();
             aux["ground"] = groundRWS;
             server.setWSConnection(aux);
-
-            console.log("Conectado.");
         }
 
         //
@@ -178,11 +183,11 @@ class ServerClass {
             switch (message.code) {
                 // Caso: Error_MAXUSERS -> Se ha excedido el número máximo de usuarios de la sala
                 case "Error_MAXUSERS":
-                    console.log("No se pudo conectar. Sala llena.");
+                    server.setRoomStatusMessage("No se pudo conectar. Sala llena.");
                     break;
                 // Caso: OK_ROOMCONN -> Se ha podido establecer la conexión con la sala
                 case "OK_ROOMCONN":
-                    console.log("Se estableció conexión con la sala.");
+                    server.setRoomStatusMessage("Se estableció conexión con la sala");
                     // Actualización de información del usuario
                     user.setOnlineRoom("ground");       // Sala en la que se encuentra
                     user.setIdInRoom(message.userID);   // ID del usuario en la sala
@@ -213,7 +218,6 @@ class ServerClass {
 
         //
         groundRWS.onclose = function() {
-            console.log("Desconectado.");
         }
     }
 
@@ -370,7 +374,7 @@ class ServerClass {
 //////////////////////////////////////////////////////////////////////
 //                       Inicialización de datos                    //
 //////////////////////////////////////////////////////////////////////
-var server = new ServerClass("", 0, [], false, [], {});
+var server = new ServerClass("", 0, [], false, [], "", {});
 
 //////////////////////////////////////////////////////////////////////
 //                            Exportación                           //
