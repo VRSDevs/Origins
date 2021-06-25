@@ -332,7 +332,6 @@ class ServerClass {
                     players[message.userId].setScore(players[message.userId].getScore() + 1);       
                     break;
                 case "OK_TAKEDM":
-                    console.log("La cogí");
                     darkMatter.getObject().disableBody(true, true);
                     players[message.userTaken].setHasMatter(true);
                     controller.getmusicEffect1().play();
