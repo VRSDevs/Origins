@@ -27,9 +27,12 @@ var userIc = undefined;
 var textServerConnected = "";
 var textNumOfUsersConnected = "";
 var textServerLog = undefined;
+var conected = "";
+var conecting = "";
 //******************* Control ************************//
 // Selección de lobby //
 var lobby = 0;  
+
 
 //////////////////////////////////////////////////////////////////////
 //              Clase de escena de menú de loobies                  //
@@ -156,6 +159,7 @@ class sceneRoomSelectMenu extends Phaser.Scene {
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);  
+
     }
     update() {
         //****************** Servidor *********************//
@@ -187,6 +191,10 @@ class sceneRoomSelectMenu extends Phaser.Scene {
             });
             textNumOfUsersConnected.setText("0");
         }
+
+        server.ge
+
+
     }
 }
 
@@ -215,6 +223,18 @@ function createServerUI() {
     });
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
+
+    conecting = controller.getCurrentScene().add.text(width - 80, height - 40, server.get,{
+        fontFamily: 'origins',
+        fontSize: 24,
+        color: '#000000',
+    });
+   
+    conected = controller.getCurrentScene().add.text(width - 80, height - 40, "Conected succesfully",{
+        fontFamily: 'origins',
+        fontSize: 24,
+        color: '#000000',
+    });
 }
 
 //******************* Carga de escena ************************//
