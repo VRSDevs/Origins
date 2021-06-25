@@ -232,7 +232,6 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         for (var i = 0; i < players.length; i++) {
             // Si el jugador no tiene un objeto asignado (slot vacío)
             if(players[i].getObject() === undefined) continue;
-
             // Activación de colisión
             players[i].getObject().setCollideWorldBounds(true);
         }
@@ -384,7 +383,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                         break;
                     case keys.W.isDown:
                             sendPlayerUpdate("W");
-                            canIdle = true;                        
+                            canIdle = true;                                           
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
@@ -392,7 +391,6 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                             controller.getmusicEffect2().play();
                             players[user.getIdInRoom()].setHasMatter(true);
                             players[victim].setHasMatter(false);
-
                         }
                         break;
                     default:
@@ -400,7 +398,6 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                             sendPlayerUpdate("N");
                             canIdle = false;
                         }
-                        
                         break;
                 }
                 
@@ -633,6 +630,7 @@ function distance() {
 
 //******************  Actualización puntuación de jugadores ****************//
 function updatePoints() { 
+
     for (var i = 0; i < players.length; i++) {
         //
         if(players[i].getObject() === undefined) continue;
@@ -649,7 +647,6 @@ function updatePoints() {
         //
         textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
     }
-}
 
 //******************* Reseteo de variables ************************//
 function resetVariables(){
