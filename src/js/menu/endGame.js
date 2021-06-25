@@ -206,11 +206,14 @@ class sceneEndGame extends Phaser.Scene {
                 victoryPlayer.anims.play("victoryPlayerAnim");
 
                 // Texto //
+            if(textureID == "GroundCatIdle3"){
                 victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
-                    fill: '#3380ff'
+                    fill: '#008f39 '
                 });
+            }
+
                 this.tweens.add({
                     targets: victoryText,
                     y: height/6,
