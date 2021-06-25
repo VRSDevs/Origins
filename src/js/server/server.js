@@ -301,22 +301,43 @@ class ServerClass {
                             players[message.userId].getObject().setVelocityY(-160);
                             players[message.userId].getObject().anims.play(('upP' + message.userId), true);
                             break;
+                        case "WM":
+                            players[message.userId].getObject().setVelocityY(-160);
+                            players[message.userId].getObject().anims.play(('upP' + message.userId + 'Matter'), true);
+                            break;
                         case "A":
                             players[message.userId].getObject().setVelocityX(-160);
                             players[message.userId].getObject().anims.play(('leftP' + message.userId), true);
+                            break;
+                        case "AM":
+                            players[message.userId].getObject().setVelocityX(-160);
+                            players[message.userId].getObject().anims.play(('leftP' + message.userId + 'Matter'), true);
                             break;
                         case "S":
                             players[message.userId].getObject().setVelocityY(160);
                             players[message.userId].getObject().anims.play(('downP' + message.userId), true);
                             break;
+                        case "SM":
+                            players[message.userId].getObject().setVelocityY(160);
+                            players[message.userId].getObject().anims.play(('downP' + message.userId + 'Matter'), true);
+                            break;
                         case "D":
                             players[message.userId].getObject().setVelocityX(160);
                             players[message.userId].getObject().anims.play(('rightP' + message.userId), true);
+                            break;
+                        case "DM":
+                            players[message.userId].getObject().setVelocityX(160);
+                            players[message.userId].getObject().anims.play(('rightP' + message.userId + 'Matter'), true);
                             break;
                         case "N":
                             players[message.userId].getObject().setVelocityX(0);
                             players[message.userId].getObject().setVelocityY(0);
                             players[message.userId].getObject().anims.play(('idleP' + message.userId), true);
+                            break;
+                        case "NM":
+                            players[message.userId].getObject().setVelocityX(0);
+                            players[message.userId].getObject().setVelocityY(0);
+                            players[message.userId].getObject().anims.play(('idleP' + message.userId + 'Matter'), true);
                             break;
                         }
 
