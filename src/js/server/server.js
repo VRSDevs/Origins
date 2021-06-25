@@ -55,27 +55,21 @@ class ServerClass {
     setLogMessage(message) {
         this.logMessage = message;
     }
-
     setLogPlayMenu(message) {
         this.logPlayMenu = message;
     }
-
     setListConnectedUsers(list){
         this.listConnectedUsers = list;
     }
-
     setConnectedUsers(value) {
         this.connectedUsers = value;
     }
-
     setServerConnected(value) {
         this.serverConnected = value;
     }
-
     setMessagesFromDB(array) {
         this.messagesFromDB = array;
     }
-
     setWSConnection(connections) {
         this.connections = connections;
     }
@@ -291,9 +285,7 @@ class ServerClass {
                     //
                     controller.setMatterPosX(message.matterX);
                     controller.setMatterPosY(message.matterY);
-                    
                     break;
-                
                 case "OK_PLAYERINFO":
                     //
                     switch (message.updateKey) {
@@ -339,7 +331,17 @@ class ServerClass {
                             players[message.userId].getObject().setVelocityY(0);
                             players[message.userId].getObject().anims.play(('idleP' + message.userId + 'Matter'), true);
                             break;
-                        }
+                        case "V":
+                            controller.getmusicEffect1().play();
+                            controller.getmusicEffect2().play();
+
+                            console.log("Jugador con materia: " + message.userId);
+                            console.log("Jugador sin materia: "+ message.userVictim);
+
+                            players[message.userId].setHasMatter(true);
+                            players[message.userVictim].setHasMatter(false);
+                            break;
+                    }
 
                         //Normalizar vectores
                         if(players[message.userId].getSand() == true){
