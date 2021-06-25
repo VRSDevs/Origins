@@ -30,23 +30,18 @@ class ServerClass {
     getLogPlayMenu() {
         return this.logPlayMenu;
     }
-
     getListConnectedUsers() {
         return this.listConnectedUsers;
     }
-
     getConnectedUsers() {
         return this.connectedUsers;
     }
-
     isServerConnected() {
         return this.serverConnected;
     }
-
     getMessagesFromDB() {
         return this.messagesFromDB;
     }
-
     getWSConnection() {
         return this.connections;
     }
@@ -291,34 +286,42 @@ class ServerClass {
                     switch (message.updateKey) {
                         case "W":
                             players[message.userId].getObject().setVelocityY(-160);
+                            players[message.userId].getObject().setVelocityX(0);
                             players[message.userId].getObject().anims.play(('upP' + message.userId), true);
                             break;
                         case "WM":
                             players[message.userId].getObject().setVelocityY(-160);
+                            players[message.userId].getObject().setVelocityX(0);
                             players[message.userId].getObject().anims.play(('upP' + message.userId + 'Matter'), true);
                             break;
                         case "A":
                             players[message.userId].getObject().setVelocityX(-160);
+                            players[message.userId].getObject().setVelocityY(0);
                             players[message.userId].getObject().anims.play(('leftP' + message.userId), true);
                             break;
                         case "AM":
                             players[message.userId].getObject().setVelocityX(-160);
+                            players[message.userId].getObject().setVelocityY(0);
                             players[message.userId].getObject().anims.play(('leftP' + message.userId + 'Matter'), true);
                             break;
                         case "S":
                             players[message.userId].getObject().setVelocityY(160);
+                            players[message.userId].getObject().setVelocityX(0);
                             players[message.userId].getObject().anims.play(('downP' + message.userId), true);
                             break;
                         case "SM":
                             players[message.userId].getObject().setVelocityY(160);
+                            players[message.userId].getObject().setVelocityX(0);
                             players[message.userId].getObject().anims.play(('downP' + message.userId + 'Matter'), true);
                             break;
                         case "D":
                             players[message.userId].getObject().setVelocityX(160);
+                            players[message.userId].getObject().setVelocityY(0);
                             players[message.userId].getObject().anims.play(('rightP' + message.userId), true);
                             break;
                         case "DM":
                             players[message.userId].getObject().setVelocityX(160);
+                            players[message.userId].getObject().setVelocityY(0);
                             players[message.userId].getObject().anims.play(('rightP' + message.userId + 'Matter'), true);
                             break;
                         case "N":
@@ -335,11 +338,11 @@ class ServerClass {
                             controller.getmusicEffect1().play();
                             controller.getmusicEffect2().play();
 
-                            console.log("Jugador con materia: " + message.userId);
-                            console.log("Jugador sin materia: "+ message.userVictim);
-
                             players[message.userId].setHasMatter(true);
                             players[message.userVictim].setHasMatter(false);
+
+                            players[message.userId].getObject().anims.play(('idleP' + message.userId + 'Matter'), true);
+                            players[message.userVictim].getObject().anims.play(('idleP' + message.userId), true);
                             break;
                     }
 
