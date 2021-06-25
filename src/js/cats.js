@@ -11,7 +11,7 @@ class Cat {
                                 //          4 -> Fuego
         this.name = nm          // Nombre del gato (usuario)
         this.isReady = rd       // ¿Está listo para jugar?
-        this.score = sc;        // Puntuación  
+        this.score = sc;        // Puntuación
         this.roundsWon = rw;    // Rondas ganadas
         this.hasMatter = hm;    // ¿Tiene la materia?
         this.sand = sd;         // ¿Está tocando arena?
@@ -89,14 +89,14 @@ class Cat {
             this.type = 0;
             this.name = "";
             this.isReady = false;
-            this.score = 0;  
+            this.score = 0;
             this.roundsWon = 0;
             this.hasMatter = false;
             this.sand = false;
         } else {
             this.name = "";
             this.isReady = false;
-            this.score = 0;  
+            this.score = 0; 
             this.roundsWon = 0;
             this.hasMatter = false;
             this.sand = false;

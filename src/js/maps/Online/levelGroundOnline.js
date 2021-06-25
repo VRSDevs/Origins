@@ -11,37 +11,34 @@ import { server } from '../../server/server.js';
 //                  Variables globales                              //
 //////////////////////////////////////////////////////////////////////
 //******************* Dimensiones lienzo ************************//
-var width = 0;      // Ancho (px)
-var height = 0;     // Alto (px)
+var width = 800;      // Ancho (px)
+var height = 640;     // Alto (px)
 //******************* Input teclado ************************//
 var cursors = undefined;
 var keys = undefined;
 var sand;
 //******************* Jugadores ************************//
+// Texturas //
+var playersSkin = [undefined, undefined, undefined, undefined];
 // Iconos //
-var player1Face = undefined;
-var player2Face = undefined;
-var player3Face = undefined;
-var player4Face = undefined;
+var playersFace = [undefined, undefined, undefined, undefined];
 // Distancias entre jugadores //
-var distanceX = 0;
-var distanceY = 0;
+var distancesX = [-1, -1, -1, -1];
+var distancesY = [-1, -1, -1, -1];
 var distanceBool = false;   // ¿Se están tocando los jugadores?
 //******************* Texto ************************//
 // Final de ronda //
 var textEndRound = "";
 var textEndMatch = "";
+// Puntuaciones //
+var textPlayerPts = [undefined, undefined, undefined, undefined];
 // Jugador 1 //
-var textPtsP1 = "";
 var textRndsP1 = "";
 // Jugador 2 //
-var textPtsP2 = "";
 var textRndsP2 = "";
 // Jugador 1 //
-var textPtsP3 = "";
 var textRndsP3 = "";
 // Jugador 2 //
-var textPtsP4 = "";
 var textRndsP4 = "";
 // Temporizador //
 var timer = "";
@@ -51,6 +48,22 @@ var darkMatterPosX = 0;
 var darkMatterPosY = 0;
 // Objeto //
 var darkMatter = undefined;
+// ID jugador con materia antigua //
+var victim = -1;
+//******************* Auxiliares ************************//
+// Jugador //
+var auxPlayerPosX = [120, 700, 120, 700];
+var auxPlayerPosY = [120, 80, 500, 500];
+// HUD //
+// Rectángulos
+var auxHUDPosX = [90, width - 90, 90, width - 90];
+var auxHUDPosY = [41, 41, height - 41, height - 41];
+// Caras de los gatos
+var auxCatFacePosX = [60, width - 120, 60, width - 120];
+var auxCatFacePosY = [41, 41, height - 41, height - 41];
+// Puntuaciones
+var auxPlayerPtsPosX = [96, width - 84, 96 , width - 84];
+var auxPlayerPtsPosY = [24, 24, height - 59, height - 59];
 //******************* Temporizador ************************//
 // Evento //
 var tEvent = undefined;
@@ -58,7 +71,6 @@ var tEvent = undefined;
 var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();
-
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
@@ -91,345 +103,115 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         var sandObjects = map.getObjectLayer('sandObj')['objects'];
 
         //******************* Materia oscura ************************//
-        posAzar();
-        darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
+        darkMatter = this.physics.add.image(
+            controller.getMatterPosX(),
+            controller.getMatterPosY(),
+            "darkMatter");
 
         //******************* Personajes ************************//
-        // Texturas //
-        var skinP1 = undefined;
-        var skinP2 = undefined;
-        var skinP3 = undefined;
-        var skinP4 = undefined;
+        // Creación de personajes
+        for (var i = 0; i < players.length; i++) {
+            // Si el jugador actual no tiene tipo asignado, se pasa al siguiente
+            if(players[i].getType() === 0) continue;
+                
+            // Asignación de la skin del personaje en función del tipo
+            switch (players[i].getType()) {
+                case 1:
+                    playersSkin[i] = "GroundCat";
+                    break;
+                case 2:
+                    playersSkin[i] = "WaterCat";
+                    break;
+                case 3:
+                    playersSkin[i] = "AirCat";
+                    break;
+                case 4:
+                    playersSkin[i] = "FireCat";
+                    break;
+            }
 
-        switch (players[0].getType()) {
-            case 1:
-                skinP1 = "GroundCat";
-                break;
-            case 2:
-                skinP1 = "WaterCat";
-                break;
-            case 3:
-                skinP1 = "AirCat";
-                break;
-            case 4:
-                skinP1 = "FireCat";
-                break;
+            // Creación y asignación de objeto al jugador actual
+            players[i].setObject(this.physics.add.sprite(
+                auxPlayerPosX[i],
+                auxPlayerPosY[i],
+                (playersSkin[i] + 'Idle')
+            ));
+
+            // Generación de animaciones en función del jugador actual
+            // Sin materia oscura
+            this.anims.create({
+                key: ('leftP' + i),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'Left'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: ('rightP' + i),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'Right'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: ('upP' + i),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'Up'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: ('downP' + i),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'Down'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: ('idleP' + i),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'Idle'), { start: 0, end: 6 }),
+                frameRate: 4,
+                repeat: -1
+            });
+
+            // Con la materia oscura
+            this.anims.create({
+                key: ('leftP' + i + 'Matter'),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'LeftMatter'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: ('rightP' + i + 'Matter'),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'RightMatter'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: ('upP' + i + 'Matter'),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'UpMatter'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: ('downP' + i + 'Matter'),
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'DownMatter'), { start: 0, end: 4 }),
+                frameRate: 5,
+                repeat: -1
+            });
+            this.anims.create({
+                key: 'idleP' + i + 'Matter',
+                frames: this.anims.generateFrameNumbers((playersSkin[i] + 'IdleMatter'), { start: 0, end: 6 }),
+                frameRate: 4,
+                repeat: -1
+            });
+
+            // Comienzo de animación del personaje
+            players[i].getObject().anims.play(('idleP' + i));
         }
-        switch (players[1].getType()) {
-            case 1:
-                skinP2 = "GroundCat";
-                break;
-            case 2:
-                skinP2 = "WaterCat";
-                break;
-            case 3:
-                skinP2 = "AirCat";
-                break;
-            case 4:
-                skinP2 = "FireCat";
-                break;
-        }
-        switch (players[2].getType()) {
-            case 1:
-                skinP3 = "GroundCat";
-                break;
-            case 2:
-                skinP3 = "WaterCat";
-                break;
-            case 3:
-                skinP3 = "AirCat";
-                break;
-            case 4:
-                skinP3 = "FireCat";
-                break;
-        }
-        switch (players[3].getType()) {
-            case 1:
-                skinP4 = "GroundCat";
-                break;
-            case 2:
-                skinP4 = "WaterCat";
-                break;
-            case 3:
-                skinP4 = "AirCat";
-                break;
-            case 4:
-                skinP4 = "FireCat";
-                break;
-        }
-
-        // Jugador 1 //
-        players[0].setObject(this.physics.add.sprite(120, 120, (skinP1 + 'Idle')));
-        // Sin materia oscura
-        this.anims.create({
-            key: 'leftP1',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'Left'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP1',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'Right'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP1',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'Up'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP1',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'Down'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP1',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'Idle'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        // Con la materia oscura
-        this.anims.create({
-            key: 'leftP1Matter',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'LeftMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP1Matter',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'RightMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP1Matter',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'UpMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP1Matter',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'DownMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP1Matter',
-            frames: this.anims.generateFrameNumbers((skinP1 + 'IdleMatter'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        players[0].getObject().anims.play('rightP1');
-
-        // Jugador 2 //
-        players[1].setObject(this.physics.add.sprite(700, 80, (skinP2 + 'Idle')));
-        // Sin materia oscura
-        this.anims.create({
-            key: 'leftP2',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'Left'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP2',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'Right'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP2',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'Up'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP2',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'Down'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP2',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'Idle'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        // Con la materia oscura
-        this.anims.create({
-            key: 'leftP2Matter',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'LeftMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP2Matter',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'RightMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP2Matter',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'UpMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP2Matter',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'DownMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP2Matter',
-            frames: this.anims.generateFrameNumbers((skinP2 + 'IdleMatter'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        players[1].getObject().anims.play('rightP1');
-
-        // Jugador 3 //
-        players[2].setObject(this.physics.add.sprite(120, 120, (skinP3 + 'Idle')));
-        // Sin materia oscura
-        this.anims.create({
-            key: 'leftP3',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'Left'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP3',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'Right'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP3',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'Up'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP3',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'Down'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP3',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'Idle'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        // Con la materia oscura
-        this.anims.create({
-            key: 'leftP3Matter',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'LeftMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP3Matter',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'RightMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP3Matter',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'UpMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP3Matter',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'DownMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP3Matter',
-            frames: this.anims.generateFrameNumbers((skinP3 + 'IdleMatter'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        players[2].getObject().anims.play('rightP3');
-
-        // Jugador 4 //
-        players[3].setObject(this.physics.add.sprite(700, 80, (skinP4 + 'Idle')));
-        // Sin materia oscura
-        this.anims.create({
-            key: 'leftP4',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'Left'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP4',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'Right'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP4',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'Up'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP4',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'Down'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP4',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'Idle'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        // Con la materia oscura
-        this.anims.create({
-            key: 'leftP4Matter',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'LeftMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'rightP4Matter',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'RightMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'upP4Matter',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'UpMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'downP4Matter',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'DownMatter'), { start: 0, end: 4 }),
-            frameRate: 5,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'idleP4Matter',
-            frames: this.anims.generateFrameNumbers((skinP4 + 'IdleMatter'), { start: 0, end: 6 }),
-            frameRate: 4,
-            repeat: -1
-        });
-        players[3].getObject().anims.play('rightP4');
 
         //******************* Detección por teclado ************************//
         cursors = this.input.keyboard.createCursorKeys();
         keys = this.input.keyboard.addKeys('A,W,S,D,V', false);
 
         //******************* Colisiones y arena ************************//
-
         sand = this.physics.add.staticGroup();
-
         sandObjects.forEach(object=>{
             var obj = sand.create(object.x,object.y);
             obj.setScale(object.width/40, object.height/40); 
@@ -439,118 +221,96 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             obj.setVisible(false);
         });
 
-        // Con los bordes
-        players[0].getObject().setCollideWorldBounds(true);
-        players[1].getObject().setCollideWorldBounds(true);
-        players[2].getObject().setCollideWorldBounds(true);
-        players[3].getObject().setCollideWorldBounds(true);
+        // Generación de colisión personaje - borde del mundo
+        for (var i = 0; i < players.length; i++) {
+            // Si el jugador no tiene un objeto asignado (slot vacío)
+            if(players[i].getObject() === undefined) continue;
 
-        // Entre personajes 
-        this.physics.add.collider(players[0].getObject(), players[1].getObject());
-        this.physics.add.collider(players[0].getObject(), players[2].getObject());
-        this.physics.add.collider(players[0].getObject(), players[3].getObject());
-        this.physics.add.collider(players[1].getObject(), players[2].getObject());
-        this.physics.add.collider(players[1].getObject(), players[3].getObject());
-        this.physics.add.collider(players[2].getObject(), players[3].getObject());
+            // Activación de colisión
+            players[i].getObject().setCollideWorldBounds(true);
+        }
 
-        // Entre personajes y muros
+        // Generación de colisión personaje - personaje 
+        for (var i = 0; i < players.length; i++) {
+            // Si el jugador no tiene un objeto asignado (slot vacío)
+            if(players[i].getObject() === undefined) continue;
+
+            // Generación para el resto de jugadores
+            for (var j = i + 1; j < players.length; j++) {
+                // Si el jugador no tiene un objeto asignado (slot vacío)
+                if(players[j].getObject() === undefined) continue;
+
+                // Generación de la colisión entre personajes
+                this.physics.add.collider(players[i].getObject(), players[j].getObject());
+            }
+        }
+
+        // Generación de colisión personaje - muro 
         wallsLayer.setCollisionByProperty({ collides: true });
-        this.physics.add.collider(wallsLayer, players[1].getObject());
-        this.physics.add.collider(wallsLayer, players[0].getObject());
-        this.physics.add.collider(wallsLayer, players[2].getObject());
-        this.physics.add.collider(wallsLayer, players[3].getObject());
+        for (var i = 0; i < players.length; i++) {
+            // Si el jugador no tiene un objeto asignado (slot vacío)
+            if(players[i].getObject() === undefined) continue;
 
-        // Personajes con la materia oscura
-        this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
-            darkMatter.disableBody(true, true);
-            players[0].setHasMatter(true);
-            controller.getmusicEffect1().play();
-        }, null, this);
-        this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
-            darkMatter.disableBody(true, true);
-            players[1].setHasMatter(true);
-            controller.getmusicEffect1().play();
+            // Generación de la colisión con el muro
+            this.physics.add.collider(wallsLayer, players[i].getObject());
+            
+        }
 
-        }, null, this);
-        this.physics.add.overlap(players[2].getObject(), darkMatter, () => {
-            darkMatter.disableBody(true, true);
-            players[2].setHasMatter(true);
-            controller.getmusicEffect1().play();
+        // Generación de colisión personaje - materia oscura 
+        for (var i = 0; i < players.length; i++) {
+            // Si el jugador no tiene un objeto asignado (slot vacío)
+            if(players[i].getObject() === undefined) continue;
 
-        }, null, this);
-        this.physics.add.overlap(players[3].getObject(), darkMatter, () => {
-            darkMatter.disableBody(true, true);
-            players[3].setHasMatter(true);
-            controller.getmusicEffect1().play();
+            console.log("Gato " + i + ": " + players[i].getObject())
 
-        }, null, this);
+            // Generación de colisión
+            this.physics.add.overlap(players[i].getObject(), darkMatter, () => {
+                darkMatter.disableBody(true, true);
+                players[i].setHasMatter(true);
+                controller.getmusicEffect1().play();
+            }, null, this);
+            
+        }
 
         //******************* HUD ************************//
-        // Puntuaciones //
-        // Jugador 1
-        this.add.rectangle(90, 41, 125, 50, 0x000000, 0.3);
-        switch (players[0].getType()) {
-            case 1:
-                player1Face = this.add.image(60, 41, "GroundCatFace");
-                break;
-            case 2:
-                player1Face = this.add.image(60, 41, "WaterCatFace");
-                break;
-            case 3:
-                player1Face = this.add.image(60, 41, "AirCatFace");
-                break;
-            case 4:
-                player1Face = this.add.image(60, 41, "FireCatFace");
-                break;
-        }
-        // Jugador 2
-        this.add.rectangle(width - 90, 41, 125, 50, 0x000000, 0.3);
-        switch (players[1].getType()) {
-            case 1:
-                player2Face = this.add.image(width - 120, 41, "GroundCatFace");
-                break;
-            case 2:
-                player2Face = this.add.image(width - 120, 41, "WaterCatFace");
-                break;
-            case 3:
-                player2Face = this.add.image(width - 120, 41, "AirCatFace");
-                break;
-            case 4:
-                player2Face = this.add.image(width - 120, 41, "FireCatFace");
-                break;
-        }
+        for (var i = 0; i < players.length; i++) {
+            // Creación rectángulo para HUD
+            this.add.rectangle(
+                auxHUDPosX[i], auxHUDPosY[i],
+                125, 50,
+                0x000000, 0.3
+            );
+            
+            // Generación de cara en función del tipo seleccionado
+            switch (players[i].getType()) {
+                case 0:
+                    playersFace[i] = this.add.image(auxCatFacePosX[i], auxCatFacePosY[i], "emptyFace");
+                    break;
+                case 1:
+                    playersFace[i] = this.add.image(auxCatFacePosX[i], auxCatFacePosY[i], "GroundCatFace");
+                    break;
+                case 2:
+                    playersFace[i] = this.add.image(auxCatFacePosX[i], auxCatFacePosY[i], "WaterCatFace");
+                    break;
+                case 3:
+                    playersFace[i] = this.add.image(auxCatFacePosX[i], auxCatFacePosY[i], "AirCatFace");
+                    break;
+                case 4:
+                    playersFace[i] = this.add.image(auxCatFacePosX[i], auxCatFacePosY[i], "FireCatFace");
+                    break;
+            }
 
-        // Jugador 3
-        this.add.rectangle(90, height - 60, 125, 50, 0x000000, 0.3);
-        switch (players[2].getType()) {
-            case 1:
-                player3Face = this.add.image(60, height - 50, "GroundCatFace");
-                break;
-            case 2:
-                player3Face = this.add.image(60, height - 50, "WaterCatFace");
-                break;
-            case 3:
-                player3Face = this.add.image(60, height - 50, "AirCatFace");
-                break;
-            case 4:
-                player3Face = this.add.image(60, height - 50, "FireCatFace");
-                break;
-        }
-        // Jugador 4
-        this.add.rectangle(width - 90, height - 60, 125, 50, 0x000000, 0.3);
-        switch (players[3].getType()) {
-            case 1:
-                player4Face = this.add.image(width - 120, height - 50, "GroundCatFace");
-                break;
-            case 2:
-                player4Face = this.add.image(width - 120, height - 50, "WaterCatFace");
-                break;
-            case 3:
-                player4Face = this.add.image(width - 120, height - 50, "AirCatFace");
-                break;
-            case 4:
-                player4Face = this.add.image(width - 120, height - 50, "FireCatFace");
-                break;
+            // Generación de texto de puntuación del jugador
+            textPlayerPts[i] = this.add.text(
+                auxPlayerPtsPosX[i],
+                auxPlayerPtsPosY[i],
+                "0",
+                {
+                    fontFamily: 'origins',
+                    fontSize: '28px',
+                    fill: '#ffffff'
+                }
+            );
         }
 
         // Temporizador //
@@ -569,34 +329,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         // Evento de finalización de ronda //
         tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
 
-        //******************* Puntos ************************//
-        // Jugador 1 //
-        textPtsP1 = this.add.text(96, 24, "0", {
-            fontFamily: 'origins',
-            fontSize: '28px',
-            fill: '#ffffff'
-        });
-        // Jugador 2 //
-        textPtsP2 = this.add.text(width - 84, 24, "0", {
-            fontFamily: 'origins',
-            fontSize: '28px',
-            fill: '#ffffff'
-        });
-        // Jugador 3 //
-        textPtsP3 = this.add.text(96, height - 20, "0", {
-            fontFamily: 'origins',
-            fontSize: '28px',
-            fill: '#ffffff'
-        });
-        // Jugador 4 //
-        textPtsP4 = this.add.text(width - 84, height - 20, "0", {
-            fontFamily: 'origins',
-            fontSize: '28px',
-            fill: '#ffffff'
-        });
-
         //******************* Música del nivel ************************//
-        
         controller.getMusic().stop();
         controller.getMusicLevelForest().play();
         controller.getmusicEffect1(this.sound.add("musicEffect1"));
@@ -608,8 +341,6 @@ class sceneGroundLevelOnline extends Phaser.Scene {
 
     }
     update(time, delta) {
-
-
         // Primero comprobar cual es el usuario en el vector de players, despues hacer que se actualice solo su gato con las teclas
         // el resto de gatos se actualiza mediante mensajes del ws.
 
@@ -620,185 +351,140 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             timer.setText(Math.trunc(t));
             oldT = tEvent.getProgress();
 
-            //******************* Personajes ************************//
-            // Jugador 1 //
-            // Sin materia oscura
-            if (!players[0].getHasMatter()) {
+            //******************* Personaje ************************//
+            //
+            if(!players[user.getIdInRoom()].getHasMatter()){
+                //
                 switch (true) {
                     case keys.A.isDown:
-                            players[0].getObject().setVelocityX(-160);
-                            players[0].getObject().anims.play('leftP1', true);                                               
+                            // players[user.getIdInRoom()].getObject().setVelocityX(-160);
+                            // players[user.getIdInRoom()].getObject().anims.play(('leftP' + user.getIdInRoom()), true);
+                            sendPlayerUpdate("A");                                        
                         break;
                     case keys.D.isDown:
-                            players[0].getObject().setVelocityX(160);
-                            players[0].getObject().anims.play('rightP1', true);                             
+                            // players[user.getIdInRoom()].getObject().setVelocityX(160);
+                            // players[user.getIdInRoom()].getObject().anims.play(('rightP' + user.getIdInRoom()), true);
+                            sendPlayerUpdate("D");                             
                         break;
                     case keys.S.isDown:
-                            players[0].getObject().setVelocityY(160);
-                            players[0].getObject().anims.play('downP1', true);                      
+                            // players[user.getIdInRoom()].getObject().setVelocityY(160);
+                            // players[user.getIdInRoom()].getObject().anims.play(('downP' + user.getIdInRoom()), true);
+                            sendPlayerUpdate("S");                      
                         break;
                     case keys.W.isDown:
-                            players[0].getObject().setVelocityY(-160);
-                            players[0].getObject().anims.play('upP1', true);                       
+                            // players[user.getIdInRoom()].getObject().setVelocityY(-160);
+                            // players[user.getIdInRoom()].getObject().anims.play(('upP' + user.getIdInRoom()), true);
+                            sendPlayerUpdate("W");                       
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
                             controller.getmusicEffect1().play();
                             controller.getmusicEffect2().play();
-                            players[0].setHasMatter(true);
-                            players[1].setHasMatter(false);
+                            players[user.getIdInRoom()].setHasMatter(true);
+                            players[victim].setHasMatter(false);
 
                         }
                         break;
                     default:
-                        players[0].getObject().setVelocityX(0);
-                        players[0].getObject().setVelocityY(0);
-                        players[0].getObject().anims.play('idleP1', true);
+                        // players[user.getIdInRoom()].getObject().setVelocityX(0);
+                        // players[user.getIdInRoom()].getObject().setVelocityY(0);
+                        // players[user.getIdInRoom()].getObject().anims.play(('idleP' + user.getIdInRoom()), true);
+                        sendPlayerUpdate("N");
                         break;
                 }
+                
             } else {
                 switch (true) {
                     case keys.A.isDown:
-                            players[0].getObject().setVelocityX(-160);
-                            players[0].getObject().anims.play('leftP1Matter', true);
+                            players[user.getIdInRoom()].getObject().setVelocityX(-160);
+                            players[user.getIdInRoom()].getObject().anims.play('leftP' + user.getIdInRoom() + 'Matter', true);
                         break;
                     case keys.D.isDown:
-                            players[0].getObject().setVelocityX(160);
-                            players[0].getObject().anims.play('rightP1Matter', true);             
+                            players[user.getIdInRoom()].getObject().setVelocityX(160);
+                            players[user.getIdInRoom()].getObject().anims.play('rightP' + user.getIdInRoom() + 'Matter', true);             
                         break;
                     case keys.S.isDown:
-                            players[0].getObject().setVelocityY(160);
-                            players[0].getObject().anims.play('downP1Matter', true);
+                            players[user.getIdInRoom()].getObject().setVelocityY(160);
+                            players[user.getIdInRoom()].getObject().anims.play('downP' + user.getIdInRoom() + 'Matter', true);
                         
                         break;
                     case keys.W.isDown:
-                            players[0].getObject().setVelocityY(-160);
-                            players[0].getObject().anims.play('upP1Matter', true);                     
+                            players[user.getIdInRoom()].getObject().setVelocityY(-160);
+                            players[user.getIdInRoom()].getObject().anims.play('upP' + user.getIdInRoom() + 'Matter', true);                     
                         break;
                     default:
-                        players[0].getObject().setVelocityX(0);
-                        players[0].getObject().setVelocityY(0);
-                        players[0].getObject().anims.play('idleP1Matter', true);
-                        break;
-                }
-            }
-
-            // Jugador 2 //
-            // Sin materia oscura
-            if (!players[1].getHasMatter()) {
-                switch (true) {
-                    case cursors.left.isDown:
-                        players[1].getObject().setVelocityX(-160);
-                        players[1].getObject().anims.play('leftP2', true);
-                        break;
-                    case cursors.right.isDown:
-                        players[1].getObject().setVelocityX(160);
-                        players[1].getObject().anims.play('rightP2', true);
-                        break;
-                    case cursors.down.isDown:
-                        players[1].getObject().setVelocityY(160);
-                        players[1].getObject().anims.play('downP2', true);
-                        break;
-                    case cursors.up.isDown:
-                        players[1].getObject().setVelocityY(-160);
-                        players[1].getObject().anims.play('upP2', true);
-                        break;
-                    case keys.P.isDown:
-                        if (distance() === true) {
-                            controller.getmusicEffect1().play();
-                            controller.getmusicEffect2().play();
-                            players[1].setHasMatter(true);
-                            players[0].setHasMatter(false);
-                        }
-                        break;
-                    default:
-                        players[1].getObject().setVelocityX(0);
-                        players[1].getObject().setVelocityY(0);
-                        players[1].getObject().anims.play('idleP2', true);
-                        break;
-                }
-            } else {
-                switch (true) {
-                    case cursors.left.isDown:
-                        players[1].getObject().setVelocityX(-160);
-                        players[1].getObject().anims.play('leftP2Matter', true);
-                        break;
-                    case cursors.right.isDown:
-                        players[1].getObject().setVelocityX(160);
-                        players[1].getObject().anims.play('rightP2Matter', true);
-                        break;
-                    case cursors.down.isDown:
-                        players[1].getObject().setVelocityY(160);
-                        players[1].getObject().anims.play('downP2Matter', true);
-                        break;
-                    case cursors.up.isDown:
-                        players[1].getObject().setVelocityY(-160);
-                        players[1].getObject().anims.play('upP2Matter', true);
-                        break;
-                    default:
-                        players[1].getObject().setVelocityX(0);
-                        players[1].getObject().setVelocityY(0);
-                        players[1].getObject().anims.play('idleP2Matter', true);
+                        players[user.getIdInRoom()].getObject().setVelocityX(0);
+                        players[user.getIdInRoom()].getObject().setVelocityY(0);
+                        players[user.getIdInRoom()].getObject().anims.play('idleP' + user.getIdInRoom() + 'Matter', true);
                         break;
                 }
             }
 
             //Normalizar vectores
-            if(players[1].getSand() == true){
-                players[1].getObject().body.velocity.normalize().scale(80);
-            } else {
-                players[1].getObject().body.velocity.normalize().scale(160);
-            }
+            // if(players[user.getIdInRoom()].getSand() == true){
+            //     players[user.getIdInRoom()].getObject().body.velocity.normalize().scale(80);
+            // } else {
+            //     players[user.getIdInRoom()].getObject().body.velocity.normalize().scale(160);
+            // }
 
-            if(players[0].getSand() == true){
-                players[0].getObject().body.velocity.normalize().scale(80);
-            } else {
-                players[0].getObject().body.velocity.normalize().scale(160);
-            }
-
-            // Puntuación
+            //
             updatePoints();
-            
-            // Movimiento en la arena
-            players[0].setSand(false);
-            players[1].setSand(false);
 
-            this.physics.add.overlap(players[1].getObject(), sand, () => {
-                players[1].setSand(true);
-            }, null, this);
-            this.physics.add.overlap(players[0].getObject(), sand, () => {
-                players[0].setSand(true);
-            }, null, this);
+            //
+            players[user.getIdInRoom()].setSand(false);
+
+            this.physics.add.overlap(
+                players[user.getIdInRoom()].getObject(),
+                sand,
+                () => {
+                    players[user.getIdInRoom()].setSand(true);
+                },
+                null,
+                this
+            );
         }
     }
+}
+//////////////////////////////////////////////////////////////////////
+//                   Funciones comunicación                         //
+//////////////////////////////////////////////////////////////////////
+/**
+ * 
+ * @param {String} key 
+ */
+function sendPlayerUpdate(key) {
+    //
+    var wsConnection = server.getWSConnection()["groundMatch"];
+
+    //
+    var message = {
+        code: "OK_PLAYERINFO",
+        userID: user.getIdInRoom(),
+        updateKey: key
+    }
+
+    //
+    wsConnection.send(JSON.stringify(message));
+}
+
+function sendPuntuationUpdate() {
+    //
+    var wsConnection = server.getWSConnection()["groundMatch"];
+
+    //
+    var message = {
+        code: "OK_POINTSINFO",
+        userID: user.getIdInRoom(),
+        updatedPoints: players[user.getIdInRoom()].getScore()
+    }
+
+    //
+    wsConnection.send(JSON.stringify(message));
 }
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Posición aleatoria de materia oscura ************************//
-function posAzar() {
-    var rand = Phaser.Math.Between(1, 4)
-    switch (rand) {
-        case 1:
-            darkMatterPosX = 200;
-            darkMatterPosY = 500;
-            break;
-        case 2:
-            darkMatterPosX = 400;
-            darkMatterPosY = 120;
-            break;
-        case 3:
-            darkMatterPosX = 530;
-            darkMatterPosY = 460;
-            break;
-        case 4:
-            darkMatterPosX = 400;
-            darkMatterPosY = 530;
-            break;
-    }
-};
-
 //******************* Evento final de ronda ************************//
 function endRound() {
     controller.setStopUpdateLevel(true);
@@ -903,43 +589,55 @@ function endMatch() {
 
 //******************  Calcular distancia entre gatos ****************//
 function distance() {
+    //
     var aux = false;
     distanceBool = false;
+    victim = -1;
 
-    distanceX = players[0].getObject().x - players[1].getObject().x;
-    distanceY = players[0].getObject().y - players[1].getObject().y;
+    //
+    for (var i = 0; i < array.length; i++) {
+        //
+        if(i === user.getIdInRoom() || players[i].getObject() === undefined) continue;
 
-    if (distanceX >= -50 && distanceX <= 50) {
-        aux = true;
-        if (aux == true && distanceY >= -50 && distanceY <= 50) {
-            distanceBool = true;
+        //
+        distancesX[i] = players[user.getIdInRoom()].getObject().x - players[i].getObject().x;
+        distancesY[i] = players[user.getIdInRoom()].getObject().y - players[i].getObject().y;
+        
+        //
+        if (distancesX[i] >= -50 && distancesX[i] <= 50) {
+            aux = true;
+            //
+            if (aux == true && distancesY[i] >= -50 && distancesY[i] <= 50) {
+                //
+                distanceBool = true;
+                victim = i;
+            }
         }
+
     }
+
+    //
     return distanceBool;
 }
 
 //******************  Actualización puntuación de jugadores ****************//
 function updatePoints() {
-    // Jugador 1 //
-    if (players[0].getHasMatter()) {
-        players[0].setScore(players[0].getScore() + 1);
-        textPtsP1.setText(Math.trunc(players[0].getScore() / diffT));
-    }
-    // Jugador 2 //
-    if (players[1].getHasMatter()) {
-        players[1].setScore(players[1].getScore() + 1);
-        textPtsP2.setText(Math.trunc(players[1].getScore() / diffT));
-    }
-    // Jugador 3 //
-    if (players[2].getHasMatter()) {
-        players[2].setScore(players[2].getScore() + 1);
-        textPtsP3.setText(Math.trunc(players[2].getScore() / diffT));
-    }
-    // Jugador 4 //
-    if (players[3].getHasMatter()) {
-        players[3].setScore(players[3].getScore() + 1);
-        textPtsP4.setText(Math.trunc(players[3].getScore() / diffT));
-    }
+    for (var i = 0; i < players.length; i++) {
+        //
+        if(players[i].getObject() === undefined) continue;
+        
+        //
+        if(players[i].getHasMatter()) {
+            //
+            players[i].setScore(players[i].getScore() + 1);
+
+            //
+            sendPuntuationUpdate();
+        }
+
+        //
+        textPlayerPts[i].setText(players[i].getScore());
+    }   
 }
 
 //******************* Reseteo de variables ************************//
