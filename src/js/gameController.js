@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 class gameController{
     //******************* Constructor clase ************************//
-    constructor(scene, music, mp, globalMusic, gameMode, timeRound,musicForest, musicCave, musicLab, musicEffect1,musicEffect2, up, npl, mX, mY){
+    constructor(scene, music, mp, globalMusic, gameMode, timeRound, musicForest, musicCave, musicLab, musicEffect1,musicEffect2, up, npl, mX, mY){
         this.currentScene = scene;              // Escena actual
         this.musicEnabled = music;              // ¿Está habilitada la música?
         this.musicPlaying = mp;                 // ¿Se está reproduciendo la música?
@@ -121,7 +121,7 @@ class gameController{
 //////////////////////////////////////////////////////////////////////
 //                      Creación del controlador                    //
 //////////////////////////////////////////////////////////////////////
-var controller = new gameController(undefined, true, false, undefined, 0, 30,undefined, 
+var controller = new gameController(undefined, true, false, undefined, 0, 120, undefined, 
     undefined, undefined, undefined, undefined, false, 0, 0, 0);
 
 //////////////////////////////////////////////////////////////////////

@@ -28,6 +28,7 @@ var distancesX = [-1, -1, -1, -1];
 var distancesY = [-1, -1, -1, -1];
 var distanceBool = false;   // ¿Se están tocando los jugadores?
 var canIdle = true;
+var canIdleWithMatter = true;
 //******************* Texto ************************//
 // Final de ronda //
 var textEndRound = "";
@@ -369,22 +370,31 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                 switch (true) {
                     case keys.A.isDown:
                             sendPlayerUpdate("A");
+                            players[user.getIdInRoom()].getObject().setVelocityX(-160);
+                            players[user.getIdInRoom()].getObject().anims.play(('leftP' + user.getIdInRoom()), true);
                             canIdle = true;                                        
                         break;
                     case keys.D.isDown:
                             sendPlayerUpdate("D");
+                            players[user.getIdInRoom()].getObject().setVelocityX(160);
+                            players[user.getIdInRoom()].getObject().anims.play(('rightP' + user.getIdInRoom()), true);
                             canIdle = true;                        
                         break;
                     case keys.S.isDown:
                             sendPlayerUpdate("S");
+                            players[user.getIdInRoom()].getObject().setVelocityY(160);
+                            players[user.getIdInRoom()].getObject().anims.play(('downP' + user.getIdInRoom()), true);
                             canIdle = true;                       
                         break;
                     case keys.W.isDown:
                             sendPlayerUpdate("W");
+                            players[user.getIdInRoom()].getObject().setVelocityY(-160);
+                            players[user.getIdInRoom()].getObject().anims.play(('upP' + user.getIdInRoom()), true);
                             canIdle = true;                                           
                         break;
                     case keys.V.isDown:
                         if (distance() === true) {
+                            sendPlayerUpdate("V");
                             controller.getmusicEffect1().play();
                             controller.getmusicEffect2().play();
                             players[user.getIdInRoom()].setHasMatter(true);
@@ -394,6 +404,9 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                     default:
                         if(canIdle){
                             sendPlayerUpdate("N");
+                            players[user.getIdInRoom()].getObject().setVelocityX(0);
+                            players[user.getIdInRoom()].getObject().setVelocityY(0);
+                            players[user.getIdInRoom()].getObject().anims.play(('idleP' + user.getIdInRoom()), true);
                             canIdle = false;
                         }
                         break;
@@ -403,24 +416,35 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                 switch (true) {
                     case keys.A.isDown:
                         sendPlayerUpdate("AM");
-                        canIdle = true;   
+                        players[user.getIdInRoom()].getObject().setVelocityX(-160);
+                        players[user.getIdInRoom()].getObject().anims.play(('leftP' + user.getIdInRoom() + 'Matter'), true);
+                        canIdleWithMatter = true;   
                         break;
                     case keys.D.isDown:
                         sendPlayerUpdate("DM");
-                        canIdle = true;              
+                        players[user.getIdInRoom()].getObject().setVelocityX(160);
+                        players[user.getIdInRoom()].getObject().anims.play(('rightP' + user.getIdInRoom() + 'Matter'), true);
+                        canIdleWithMatter = true;              
                         break;
                     case keys.S.isDown:
                         sendPlayerUpdate("SM");
-                        canIdle = true; 
+                        players[user.getIdInRoom()].getObject().setVelocityY(160);
+                        players[user.getIdInRoom()].getObject().anims.play(('downP' + user.getIdInRoom() + 'Matter'), true);
+                        canIdleWithMatter = true; 
                         break;
                     case keys.W.isDown:
+                        players[user.getIdInRoom()].getObject().setVelocityY(-160);
+                        players[user.getIdInRoom()].getObject().anims.play(('upP' + user.getIdInRoom() + 'Matter'), true);
                         sendPlayerUpdate("WM");
-                        canIdle = true;                    
+                        canIdleWithMatter = true;                    
                         break;
                     default:
-                        if(canIdle){
+                        if(canIdleWithMatter){
                             sendPlayerUpdate("NM");
-                            canIdle = false;
+                            players[user.getIdInRoom()].getObject().setVelocityX(0);
+                            players[user.getIdInRoom()].getObject().setVelocityY(0);
+                            players[user.getIdInRoom()].getObject().anims.play(('idleP' + user.getIdInRoom() + 'Matter'), true);
+                            canIdleWithMatter = false;
                         }
                         break;
                 }
@@ -459,6 +483,7 @@ function sendPlayerUpdate(key) {
     var message = {
         code: "OK_PLAYERINFO",
         userID: user.getIdInRoom(),
+        userVictim: victim,
         updateKey: key
     }
 
@@ -614,7 +639,7 @@ function distance() {
     victim = -1;
 
     //
-    for (var i = 0; i < array.length; i++) {
+    for (var i = 0; i < players.length; i++) {
         //
         if(i === user.getIdInRoom() || players[i].getObject() === undefined) continue;
 
