@@ -402,36 +402,29 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             } else {
                 switch (true) {
                     case keys.A.isDown:
-                            players[user.getIdInRoom()].getObject().setVelocityX(-160);
-                            players[user.getIdInRoom()].getObject().anims.play('leftP' + user.getIdInRoom() + 'Matter', true);
+                        sendPlayerUpdate("AM");
+                        canIdle = true;   
                         break;
                     case keys.D.isDown:
-                            players[user.getIdInRoom()].getObject().setVelocityX(160);
-                            players[user.getIdInRoom()].getObject().anims.play('rightP' + user.getIdInRoom() + 'Matter', true);             
+                        sendPlayerUpdate("DM");
+                        canIdle = true;              
                         break;
                     case keys.S.isDown:
-                            players[user.getIdInRoom()].getObject().setVelocityY(160);
-                            players[user.getIdInRoom()].getObject().anims.play('downP' + user.getIdInRoom() + 'Matter', true);
-                        
+                        sendPlayerUpdate("SM");
+                        canIdle = true; 
                         break;
                     case keys.W.isDown:
-                            players[user.getIdInRoom()].getObject().setVelocityY(-160);
-                            players[user.getIdInRoom()].getObject().anims.play('upP' + user.getIdInRoom() + 'Matter', true);                     
+                        sendPlayerUpdate("WM");
+                        canIdle = true;                    
                         break;
                     default:
-                        players[user.getIdInRoom()].getObject().setVelocityX(0);
-                        players[user.getIdInRoom()].getObject().setVelocityY(0);
-                        players[user.getIdInRoom()].getObject().anims.play('idleP' + user.getIdInRoom() + 'Matter', true);
+                        if(canIdle){
+                            sendPlayerUpdate("NM");
+                            canIdle = false;
+                        }
                         break;
                 }
             }
-
-            //Normalizar vectores
-            // if(players[user.getIdInRoom()].getSand() == true){
-            //     players[user.getIdInRoom()].getObject().body.velocity.normalize().scale(80);
-            // } else {
-            //     players[user.getIdInRoom()].getObject().body.velocity.normalize().scale(160);
-            // }
 
             //
             updatePoints();
