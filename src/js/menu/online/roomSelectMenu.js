@@ -224,17 +224,21 @@ function createServerUI() {
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 
-    conecting = controller.getCurrentScene().add.text(width - 80, height - 40, server.get,{
+    // Conectando //
+    controller.getCurrentScene().add.rectangle(730, height - 93, 160, 67, 0x000000, 0.6);
+
+    conecting = controller.getCurrentScene().add.text(660, height - 20, "Conecting...",{
         fontFamily: 'origins',
         fontSize: 24,
-        color: '#000000',
+        color: '#00ff00',
     });
-   
+   /*
     conected = controller.getCurrentScene().add.text(width - 80, height - 40, "Conected succesfully",{
         fontFamily: 'origins',
         fontSize: 24,
         color: '#000000',
     });
+    */
 }
 
 //******************* Carga de escena ************************//
