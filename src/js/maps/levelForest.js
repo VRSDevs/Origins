@@ -384,18 +384,22 @@ class sceneForestLevel extends Phaser.Scene {
                 switch (true) {
                     case keys.A.isDown:
                             players[0].getObject().setVelocityX(-160);
+                            players[0].getObject().setVelocityY(0);
                             players[0].getObject().anims.play('leftP1', true);                                               
                         break;
                     case keys.D.isDown:
                             players[0].getObject().setVelocityX(160);
+                            players[0].getObject().setVelocityY(0);
                             players[0].getObject().anims.play('rightP1', true);                             
                         break;
                     case keys.S.isDown:
                             players[0].getObject().setVelocityY(160);
+                            players[0].getObject().setVelocityX(0);
                             players[0].getObject().anims.play('downP1', true);                      
                         break;
                     case keys.W.isDown:
                             players[0].getObject().setVelocityY(-160);
+                            players[0].getObject().setVelocityX(0);
                             players[0].getObject().anims.play('upP1', true);                       
                         break;
                     case keys.V.isDown:
@@ -417,19 +421,23 @@ class sceneForestLevel extends Phaser.Scene {
                 switch (true) {
                     case keys.A.isDown:
                             players[0].getObject().setVelocityX(-160);
+                            players[0].getObject().setVelocityY(0);
                             players[0].getObject().anims.play('leftP1Matter', true);
                         break;
                     case keys.D.isDown:
                             players[0].getObject().setVelocityX(160);
+                            players[0].getObject().setVelocityY(0);
                             players[0].getObject().anims.play('rightP1Matter', true);             
                         break;
                     case keys.S.isDown:
                             players[0].getObject().setVelocityY(160);
+                            players[0].getObject().setVelocityX(0);
                             players[0].getObject().anims.play('downP1Matter', true);
                         
                         break;
                     case keys.W.isDown:
                             players[0].getObject().setVelocityY(-160);
+                            players[0].getObject().setVelocityX(0);
                             players[0].getObject().anims.play('upP1Matter', true);                     
                         break;
                     default:
@@ -446,18 +454,22 @@ class sceneForestLevel extends Phaser.Scene {
                 switch (true) {
                     case cursors.left.isDown:
                         players[1].getObject().setVelocityX(-160);
+                        players[1].getObject().setVelocityY(0);
                         players[1].getObject().anims.play('leftP2', true);
                         break;
                     case cursors.right.isDown:
                         players[1].getObject().setVelocityX(160);
+                        players[1].getObject().setVelocityY(0);
                         players[1].getObject().anims.play('rightP2', true);
                         break;
                     case cursors.down.isDown:
                         players[1].getObject().setVelocityY(160);
+                        players[1].getObject().setVelocityX(0);
                         players[1].getObject().anims.play('downP2', true);
                         break;
                     case cursors.up.isDown:
                         players[1].getObject().setVelocityY(-160);
+                        players[1].getObject().setVelocityX(0);
                         players[1].getObject().anims.play('upP2', true);
                         break;
                     case keys.P.isDown:
@@ -478,18 +490,22 @@ class sceneForestLevel extends Phaser.Scene {
                 switch (true) {
                     case cursors.left.isDown:
                         players[1].getObject().setVelocityX(-160);
+                        players[1].getObject().setVelocityY(0);
                         players[1].getObject().anims.play('leftP2Matter', true);
                         break;
                     case cursors.right.isDown:
                         players[1].getObject().setVelocityX(160);
+                        players[1].getObject().setVelocityY(0);
                         players[1].getObject().anims.play('rightP2Matter', true);
                         break;
                     case cursors.down.isDown:
                         players[1].getObject().setVelocityY(160);
+                        players[1].getObject().setVelocityX(0);
                         players[1].getObject().anims.play('downP2Matter', true);
                         break;
                     case cursors.up.isDown:
                         players[1].getObject().setVelocityY(-160);
+                        players[1].getObject().setVelocityX(0);
                         players[1].getObject().anims.play('upP2Matter', true);
                         break;
                     default:
