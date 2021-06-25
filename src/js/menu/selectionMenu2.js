@@ -474,7 +474,7 @@ function resetVariables(){
     controller.getCurrentScene().anims.remove('waterMenuAnim2');
     controller.getCurrentScene().anims.remove('airMenuAnim2');
     controller.getCurrentScene().anims.remove('fireMenuAnim2');
-    controller.getCurrentScene().anims.remove('bgVictoryAnim');
+
 }
 
 //////////////////////////////////////////////////////////////////////
