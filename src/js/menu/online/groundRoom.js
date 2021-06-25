@@ -23,6 +23,9 @@ var catIcons = [undefined, undefined, undefined, undefined];
 var names = ["", "", "", ""];
 // Preparados //
 var readyTexts = ["", "", "", ""];
+//****************** Control *********************//
+var startMatch = false;
+var option = 0;
 
 //////////////////////////////////////////////////////////////////////
 //              Clase de escena de lobby de tierra                  //
@@ -127,9 +130,11 @@ class sceneGroundRoom extends Phaser.Scene{
         });
 
         backButton.addListener('pointerover', () => {
+            option = 2;
             backButton.anims.play('backButtonAnim',true);
         }, this);
         backButton.addListener('pointerout', () => {
+            option = 0;
             backButton.anims.stop();
             backButton.setFrame(0);
         }, this);
@@ -140,6 +145,20 @@ class sceneGroundRoom extends Phaser.Scene{
     update() {
         //
         updatePlayerInfo();
+
+        if(controller.getMatchPlayers() !== 0 && !startMatch) {
+            //
+            option = 1;
+            startMatch = true;
+
+            //
+            controller.getCurrentScene().time.delayedCall(
+                1000,
+                loadScene,
+                [],
+                this
+            );
+        }
     }
 }
 
@@ -173,32 +192,22 @@ function sendReadyMessage() {
  * 
  */
 function loadScene(){
-    // Desconexión de la sala
-    server.disconnectFromRoom();
-    //
-    controller.getCurrentScene().scene.stop();
-    var nextScene = game.scene.getScene("sceneMainMenu");
-    nextScene.scene.start();
-    /*
-    switch (lobby) {
+    switch (option) {
         case 1:
-            
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneGroundLevelOnline");
+            nextScene.scene.start();
             break;
+    
         case 2:
-            
-            break;
-        case 3:
-            
-            break;
-        case 4:
-            
-            break;
-        case 5:
-            
-
+            // Desconexión de la sala
+            server.disconnectFromRoom();
+            //
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene("sceneMainMenu");
+            nextScene.scene.start();
             break;
     }
-    */
 }
 
 /**

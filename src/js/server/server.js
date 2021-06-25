@@ -3,13 +3,13 @@
 //////////////////////////////////////////////////////////////////////
 import { user } from "./user.js";
 import { players } from "../cats.js";
+import { controller } from "../gameController.js";
 
 //////////////////////////////////////////////////////////////////////
 //                        Variables globales                        //
 //////////////////////////////////////////////////////////////////////
-//******************* Conexiones ************************//
-//var chatWS = undefined;
-//var userWS = undefined;
+//******************* IP ************************//
+var ip = 'ws://127.0.0.1:80';
 
 //////////////////////////////////////////////////////////////////////
 //                         Clase servidor                           //
@@ -85,7 +85,7 @@ class ServerClass {
      * Conexión del cliente al servicio del chat
      */
     connectToChatService() {
-        var chatWS = new WebSocket('ws://85.137.44.104:80/chat');
+        var chatWS = new WebSocket(ip + '/chat');
 
         chatWS.onopen = function() {
             server.setServerConnected(true);
@@ -128,7 +128,7 @@ class ServerClass {
      * Conexión del cliente al servicio de usuarios
      */
     connectToUserService() {
-        var userWS = new WebSocket('ws://85.137.44.104:80/user');
+        var userWS = new WebSocket(ip + '/user');
 
         userWS.onopen = function() {
             server.setServerConnected(true);
@@ -168,27 +168,29 @@ class ServerClass {
      * Conexión a la sala de tierra
      */
     connectToGroundRoom() {
-        var forestWS = new WebSocket('ws://85.137.44.104:80/ground');
+        var groundRWS = new WebSocket(ip + '/groundR');
 
-        forestWS.onopen = function() {
+        //
+        groundRWS.onopen = function() {
             var aux = server.getWSConnection();
-            aux["ground"] = forestWS;
+            aux["ground"] = groundRWS;
             server.setWSConnection(aux);
 
             console.log("Conectado.");
         }
 
-        forestWS.onmessage = function(msg) {
+        //
+        groundRWS.onmessage = function(msg) {
             // Parser del mensaje enviado por parte del servidor
             var message = JSON.parse(msg.data);
 
             // Comprobación del código del mensaje
             switch (message.code) {
-                // Caso: Error -> Se ha excedido el número máximo de usuarios de la sala
+                // Caso: Error_MAXUSERS -> Se ha excedido el número máximo de usuarios de la sala
                 case "Error_MAXUSERS":
                     console.log("No se pudo conectar. Sala llena.");
                     break;
-                // Caso: OK -> Se ha podido establecer la conexión con la sala
+                // Caso: OK_ROOMCONN -> Se ha podido establecer la conexión con la sala
                 case "OK_ROOMCONN":
                     console.log("Se estableció conexión con la sala.");
                     // Actualización de información del usuario
@@ -196,30 +198,31 @@ class ServerClass {
                     user.setIdInRoom(message.userID);   // ID del usuario en la sala
                     console.log(user.getIdInRoom());
                     break;
-                //
+                // Caso: OK_PLAYERJOIN / OK_GETPLAYERS -> Caso para cuando un jugador entra a la sala y pide información de todos los jugadores
                 case "OK_PLAYERJOIN":
                 case "OK_GETPLAYERS":
                     players[message.playerId].setType(message.playerType);
                     players[message.playerId].setName(message.playerName);
                     players[message.playerId].setReady(message.playerReady);
                     break;
-                //
+                // Caso: OK_PLAYERDISC -> Caso para cuando un jugador se desconecta de la sala
                 case "OK_PLAYERDISC":
-                    console.log("A borrar");
                     players[message.playerId].reset(true);
                     break;
-                //
+                // Caso: OK_PLAYERREADY -> Un jugador ha marcado que está listo para jugar la partida
                 case "OK_PLAYERREADY":
                     players[message.playerId].setReady(message.playerReady);
                     break;
-                //
+                // Caso: OK_STARTMATCH -> La partida ha comenzado
                 case "OK_STARTMATCH":
-                    console.log("Sexo");
+                    server.connectToGroundMatch();
+                    controller.setMatchPlayers(message.players);
                     break;
             }
         }
 
-        forestWS.onclose = function() {
+        //
+        groundRWS.onclose = function() {
             console.log("Desconectado.");
         }
     }
@@ -244,24 +247,14 @@ class ServerClass {
             case "ground":
                 roomConnection = this.getWSConnection()["ground"];
                 break;
-        
             default:
                 break;
         }
 
-        // Generación del mensaje a enviar al servidor
-        var message = {
-            code: "DISCON",
-            idUser: user.getIdInRoom()
-        }
-
-        // Envío del mensaje
-        this.messageToRoomService(roomConnection, message);
-
         // Eliminación de la conexión en el diccionario
         this.getWSConnection()["ground"] = null;
 
-        //
+        // Reset de las variables del jugador
         players[user.getIdInRoom()].reset(true);
 
         // Eliminación de la sala e ID del usuario
@@ -270,6 +263,75 @@ class ServerClass {
 
         // Cierre de la conexión
         roomConnection.close();
+    }
+
+    /**
+     * 
+     */
+    connectToGroundMatch() {
+        var groundMWS = new WebSocket(ip + '/groundM');
+
+        groundMWS.onopen = function() {
+            var aux = server.getWSConnection();
+            aux["groundMatch"] = groundMWS;
+            server.setWSConnection(aux);
+
+            console.log("Partida iniciada.");
+        }
+
+        groundMWS.onmessage = function(msg) {
+            //
+            var message = JSON.parse(msg.data);
+
+            //
+            switch (message.code) {
+                //
+                case "OK_INITIALSTATE":
+                    //
+                    controller.setMatterPosX(message.matterX);
+                    controller.setMatterPosY(message.matterY);
+                    
+                    break;
+                
+                case "OK_PLAYERINFO":
+                    //
+                    switch (message.updateKey) {
+                        case "W":
+                            players[message.userId].getObject().setVelocityY(-160);
+                            players[message.userId].getObject().anims.play(('upP' + message.userId), true);
+                            break;
+                        case "A":
+                            players[message.userId].getObject().setVelocityX(-160);
+                            players[message.userId].getObject().anims.play(('leftP' + message.userId), true);
+                            break;
+                        case "S":
+                            players[message.userId].getObject().setVelocityY(160);
+                            players[message.userId].getObject().anims.play(('downP' + message.userId), true);
+                            break;
+                        case "D":
+                            players[message.userId].getObject().setVelocityX(160);
+                            players[message.userId].getObject().anims.play(('rightP' + message.userId), true);
+                            break;
+                        case "N":
+                            players[message.userId].getObject().setVelocityX(0);
+                            players[message.userId].getObject().setVelocityY(0);
+                            players[message.userId].getObject().anims.play(('idleP' + message.userId), true);
+                            break;
+                        }
+
+                        //Normalizar vectores
+                        if(players[message.userId].getSand() == true){
+                            players[message.userId].getObject().body.velocity.normalize().scale(80);
+                        } else {
+                            players[message.userId].getObject().body.velocity.normalize().scale(160);
+                        }
+
+                        break;
+                case "OK_POINTSINFO":
+                    players[message.userId].setScore(message.updatedPoints);       
+                    break;
+            }
+        }
     }
 }
 

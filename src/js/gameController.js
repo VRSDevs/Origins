@@ -3,7 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 class gameController{
     //******************* Constructor clase ************************//
-    constructor(scene, music, mp, globalMusic, gameMode, timeRound,musicForest, musicCave, musicLab, musicEffect1,musicEffect2, up){
+    constructor(scene, music, mp, globalMusic, gameMode, timeRound,musicForest, musicCave, musicLab, musicEffect1,musicEffect2, up, npl, mX, mY){
         this.currentScene = scene;              // Escena actual
         this.musicEnabled = music;              // ¿Está habilitada la música?
         this.musicPlaying = mp;                 // ¿Se está reproduciendo la música?
@@ -18,6 +18,9 @@ class gameController{
                                                 //                  3 -> Multijugador
         this.timeRound = timeRound;             // Tiempo de ronda
         this.stopUpdateLevel = up;
+        this.matchPlayers = npl;
+        this.matterPosX = mX;
+        this.matterPosY = mY;
     }
 
     //******************* Getters ************************//
@@ -57,6 +60,15 @@ class gameController{
     getmusicEffect2(){
         return this.musicEffect2;
     }
+    getMatchPlayers(){
+        return this.matchPlayers;
+    }
+    getMatterPosX(){
+        return this.matterPosX;
+    }
+    getMatterPosY(){
+        return this.matterPosY;
+    }
 
     //******************* Setters ************************//
     setGameMode(value){
@@ -95,12 +107,22 @@ class gameController{
     setStopUpdateLevel(value){
         this.stopUpdateLevel = value;
     }
+    setMatchPlayers(value) {
+        this.matchPlayers = value;
+    }
+    setMatterPosX(value){
+        this.matterPosX = value;
+    }
+    setMatterPosY(value){
+        this.matterPosY = value;
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
 //                      Creación del controlador                    //
 //////////////////////////////////////////////////////////////////////
-var controller = new gameController(undefined, true, false, undefined, 0, 30,undefined, undefined, undefined, undefined, undefined, false);
+var controller = new gameController(undefined, true, false, undefined, 0, 30,undefined, 
+    undefined, undefined, undefined, undefined, false, 0, 0, 0);
 
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
