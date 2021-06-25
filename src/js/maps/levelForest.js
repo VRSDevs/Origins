@@ -4,6 +4,7 @@
 import { controller } from '../gameController.js';
 import { players } from '../cats.js';
 import { game } from '../init.js';
+import { darkMatter } from '../darkmatter.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -40,7 +41,7 @@ var timer = "";
 var darkMatterPosX = 0;
 var darkMatterPosY = 0;
 // Objeto //
-var darkMatter = undefined;
+//var darkMatter = undefined;
 //******************* Temporizador ************************//
 // Evento //
 var tEvent = undefined;
@@ -82,7 +83,7 @@ class sceneForestLevel extends Phaser.Scene {
 
         //******************* Materia oscura ************************//
         posAzar();
-        darkMatter = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
+        darkMatter.getObject = this.physics.add.image(darkMatterPosX, darkMatterPosY, "darkMatter");
 
         //******************* Personajes ************************//
         // Texturas //
@@ -280,13 +281,13 @@ class sceneForestLevel extends Phaser.Scene {
         
 
         // Personajes con la materia oscura
-        this.physics.add.overlap(players[0].getObject(), darkMatter, () => {
-            darkMatter.disableBody(true, true);
+        this.physics.add.overlap(players[0].getObject(), darkMatter.getObject, () => {
+            darkMatter.getObject.disableBody(true, true);
             players[0].setHasMatter(true);
             controller.getmusicEffect1().play();
         }, null, this);
-        this.physics.add.overlap(players[1].getObject(), darkMatter, () => {
-            darkMatter.disableBody(true, true);
+        this.physics.add.overlap(players[1].getObject(), darkMatter.getObject, () => {
+            darkMatter.getObject.disableBody(true, true);
             players[1].setHasMatter(true);
             controller.getmusicEffect1().play();
 
