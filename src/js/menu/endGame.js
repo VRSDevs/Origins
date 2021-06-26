@@ -4,6 +4,7 @@
 import { controller } from '../gameController.js';
 import { players } from '../cats.js';
 import { game } from '../init.js';
+import { server } from '../server/server.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -44,225 +45,122 @@ class sceneEndGame extends Phaser.Scene {
         width = this.sys.canvas.width;
         height = this.sys.canvas.height;
 
-        //******************* Fondo ************************//
-/*    
-        bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
-        this.anims.create({
-            key: 'bgVictoryAnim',
-            frames: this.anims.generateFrameNumbers('bgVictory_Fire', {start: 0, end: 14}),
-            frameRate: 12,
-            repeat: 0
-        });
-        bg.anims.play('bgVictoryAnim');
-*/
-
         //******************* Ganador ************************//
-        switch (2) {
-            case players[0].getRoundsWon():
-                // Personaje //
-                var textureID = "";
-                switch (players[0].getType()) {
-                    case 1:
-                        textureID = "GroundCatIdle3";
-                        if(textureID == "GroundCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Ground",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Ground', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                    case 2:
-                        textureID = "WaterCatIdle3";
-                        if(textureID == "WaterCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Water",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Water', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                    case 3:
-                        textureID = "AirCatIdle3";
-                        if(textureID == "AirCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Air",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Air', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                    case 4:
-                        textureID = "FireCatIdle3";
-                        if(textureID == "FireCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Fire', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                }
-                victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
+        //
+        //
+        var textureID = "";
+
+        //
+        switch (players[controller.getWinnerCat()].getType()) {
+            //
+            case 1:
+                //
+                textureID = "GroundCatIdle3";
+                //
+                bg = this.add.sprite(width/2, height/2, "bgVictory_Ground",0);
                 this.anims.create({
-                    key: 'victoryPlayerAnim',
-                    frames: this.anims.generateFrameNumbers(textureID, {start: 0, end: 5}),
-                    frameRate: 4,
-                    repeat: -1
+                    key: 'bgVictoryAnim',
+                    frames: this.anims.generateFrameNumbers('bgVictory_Ground', {start: 0, end: 14}),
+                    frameRate: 12,
+                    repeat: 0
                 });
-                victoryPlayer.anims.play("victoryPlayerAnim");
+                //
+                bg.anims.play('bgVictoryAnim');
 
-                // Texto //
-                if(textureID == "GroundCatIdle3"){
-                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
-                        fontFamily: 'origins',
-                        fontSize: '40px',
-                        fill: '#008f39'
-                    });
-    
-                }else if(textureID == "WaterCatIdle3"){
-                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
-                        fontFamily: 'origins',
-                        fontSize: '40px',
-                        fill: '#0000ff'
-                    });
-                }else if(textureID == "AirCatIdle3"){
-                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
-                        fontFamily: 'origins',
-                        fontSize: '40px',
-                        fill: '#81CECF'
-                    });
-                }else if(textureID == "FireCatIdle3"){
-                    victoryText = this.add.text(width/2 - 135, -20, "Player 1 won!", {
-                        fontFamily: 'origins',
-                        fontSize: '40px',
-                        fill: '#FF0000'
-                    });
-                }
-                this.tweens.add({
-                    targets: victoryText,
-                    y: height/6,
-                    duration: 2000,
-                    ease: 'Power2',
-                    yoyo: false,
-                });
-                break;
-            case players[1].getRoundsWon():
-                // Personaje //
-                var textureID = "";
-                switch (players[1].getType()) {
-                    case 1:
-                        textureID = "GroundCatIdle3";
-                        if(textureID == "GroundCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Ground",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Ground', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                    case 2:
-                        textureID = "WaterCatIdle3";
-                        if(textureID == "WaterCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Water",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Water', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                    case 3:
-                        textureID = "AirCatIdle3";
-                        if(textureID == "AirCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Air",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Air', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                    case 4:
-                        textureID = "FireCatIdle3";
-                        if(textureID == "FireCatIdle3"){
-                            bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
-                            this.anims.create({
-                                key: 'bgVictoryAnim',
-                                frames: this.anims.generateFrameNumbers('bgVictory_Fire', {start: 0, end: 14}),
-                                frameRate: 12,
-                                repeat: 0
-                            });
-                            bg.anims.play('bgVictoryAnim');
-                        }
-                        break;
-                }
-                victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
-                this.anims.create({
-                    key: 'victoryPlayerAnim',
-                    frames: this.anims.generateFrameNumbers(textureID, {start: 0, end: 5}),
-                    frameRate: 4,
-                    repeat: -1
-                });
-
-                victoryPlayer.anims.play("victoryPlayerAnim");
-
-                // Texto //
-            if(textureID == "GroundCatIdle3"){
-                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
+                //
+                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     fill: '#008f39'
                 });
+                break;
+            //
+            case 2:
+                //
+                textureID = "WaterCatIdle3";
 
-            }else if(textureID == "WaterCatIdle3"){
-                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
+                //
+                bg = this.add.sprite(width/2, height/2, "bgVictory_Water",0);
+                this.anims.create({
+                    key: 'bgVictoryAnim',
+                    frames: this.anims.generateFrameNumbers('bgVictory_Water', {start: 0, end: 14}),
+                    frameRate: 12,
+                    repeat: 0
+                });
+                //
+                bg.anims.play('bgVictoryAnim');
+
+                //
+                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     fill: '#0000ff'
                 });
-            }else if(textureID == "AirCatIdle3"){
-                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
+                break;
+            case 3:
+                //
+                textureID = "AirCatIdle3";
+                //
+                bg = this.add.sprite(width/2, height/2, "bgVictory_Air",0);
+                this.anims.create({
+                    key: 'bgVictoryAnim',
+                    frames: this.anims.generateFrameNumbers('bgVictory_Air', {start: 0, end: 14}),
+                    frameRate: 12,
+                    repeat: 0
+                });
+                //
+                bg.anims.play('bgVictoryAnim');
+
+                //
+                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     fill: '#81CECF'
                 });
-            }else if(textureID == "FireCatIdle3"){
-                victoryText = this.add.text(width/2 - 135, -20, "Player 2 won!", {
+                break;
+            case 4:
+                //
+                textureID = "FireCatIdle3";
+                //
+                bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
+                this.anims.create({
+                    key: 'bgVictoryAnim',
+                    frames: this.anims.generateFrameNumbers('bgVictory_Fire', {start: 0, end: 14}),
+                    frameRate: 12,
+                    repeat: 0
+                });
+                //
+                bg.anims.play('bgVictoryAnim');
+
+                //
+                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     fill: '#FF0000'
                 });
-            }
-
-                this.tweens.add({
-                    targets: victoryText,
-                    y: height/6,
-                    duration: 2000,
-                    ease: 'Power2',
-                    yoyo: false,
-                });
                 break;
         }
+
+        //
+        //
+        victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
+        this.anims.create({
+            key: 'victoryPlayerAnim',
+            frames: this.anims.generateFrameNumbers(textureID, {start: 0, end: 5}),
+            frameRate: 4,
+            repeat: -1
+        });
+        //
+        victoryPlayer.anims.play("victoryPlayerAnim");
+
+        //
+        this.tweens.add({
+            targets: victoryText,
+            y: height/6,
+            duration: 2000,
+            ease: 'Power2',
+            yoyo: false,
+        });
 
         //******************* Botones ************************//
         // Menú principal//
@@ -282,17 +180,26 @@ class sceneEndGame extends Phaser.Scene {
             mainMenuButton.setFrame(0);
         }, this);
         mainMenuButton.addListener('pointerdown', () => {
-            players.forEach(cat => {
-                cat = cat.reset(true);
-            });
+            //
+            if(controller.getGameMode() === 3) {
+                server.disconnectFromRoomAndMatch();
+            }
+
+            //
             controller.getCurrentScene().scene.sleep();
             var nextScene = game.scene.getScene("sceneMainMenu");
+
+            //
             resetVariables();
+            //
+            controller.setGameMode(0);
             controller.setStopUpdateLevel(false);
             controller.getMusic().stop();
             controller.setMusic(undefined);
             controller.setMusic(this.sound.add("music"));
             controller.getMusic().play();
+
+            //
             nextScene.scene.wake();
             nextScene.scene.restart();
         }, this);
@@ -371,7 +278,6 @@ function resetVariables(){
     // Reseteo de animaciones //
     controller.getCurrentScene().anims.remove('victoryPlayerAnim');
     controller.getCurrentScene().anims.remove('bgVictoryAnim');
-
 }
 
 //////////////////////////////////////////////////////////////////////

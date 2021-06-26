@@ -29,6 +29,7 @@ var distancesY = [-1, -1, -1, -1];
 var distanceBool = false;   // ¿Se están tocando los jugadores?
 var canIdle = true;
 var canIdleWithMatter = true;
+var MAX_ROUNDS = controller.getMaxRounds();
 //******************* Texto ************************//
 // Final de ronda //
 var textEndRound = "";
@@ -266,6 +267,9 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         // Generación de colisión personaje - materia oscura
         this.physics.add.overlap(players[user.getIdInRoom()].getObject(), darkMatter.getObject(), () => {
             sendTakeDM();
+            darkMatter.getObject().disableBody(true, true);
+            players[user.getIdInRoom()].setHasMatter(true);
+            controller.getmusicEffect1().play();
         }, null, this);
 
         /* 
@@ -542,86 +546,113 @@ function sendTakeDM() {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
+/**
+ * 
+ */
+function checkResults() {
+    //
+    var winner = -1;
+    var points = [0, 0, 0, 0];
+    var passedPlayers = 0;
+
+    //
+    for (var i = 0; i < points.length; i++) {
+        //
+        if(players[i].getObject() === undefined) continue;
+
+        //
+        points[i] = players[i].getScore();
+    }
+
+    console.log(points);
+
+    //
+    for (var i = 0; i < players.length; i++) {
+        //
+        if(players[i].getObject() === undefined) continue;
+        
+        //
+        for (var j = 0; j < players.length; j++) {
+            if(j === i) continue;
+
+            //
+            if(points[i] > points[j]) {
+                passedPlayers++;
+            }
+        }
+
+        //
+        if(passedPlayers >= 3) {
+            //
+            winner = i;
+            break;
+        //
+        } else {
+            //
+            passedPlayers = 0;
+        }
+    }
+
+    return winner;
+}
+
 //******************* Evento final de ronda ************************//
 function endRound() {
+    //
     controller.setStopUpdateLevel(true);
-    if (players[0].getScore() < players[1].getScore()) {
-        players[1].setRoundsWon(players[1].getRoundsWon() + 1);
-        if (players[1].getRoundsWon() < 2) {
-            textEndRound = this.add.text(width + 100, height / 2, "Player 2 won the round.", {
-                fontFamily: 'origins',
-                fontSize: '32px',
-                fill: '#ffffff'
-            });
-            this.tweens.add({
-                targets: textEndRound,
-                x: width / 2 - 300,
-                duration: 2000,
-                ease: 'Power2',
-                yoyo: true,
-            });
-            this.time.delayedCall(4200, endRound2, [], this);
-        } else {
-            textEndMatch = this.add.text(width + 100, height / 2, "Player 2 won the round.", {
-                fontFamily: 'origins',
-                fontSize: '32px',
-                fill: '#ffffff'
-            });
-            this.tweens.add({
-                targets: textEndMatch,
-                x: width / 2 - 300,
-                duration: 2000,
-                ease: 'Power2',
-                yoyo: true,
-            });
-            this.time.delayedCall(4200, endMatch, [], this);
-        }
-    } else if (players[0].getScore() > players[1].getScore()) {
-        players[0].setRoundsWon(players[0].getRoundsWon() + 1);
-        if (players[0].getRoundsWon() < 2) {
-            textEndRound = this.add.text(width + 100, height / 2, "Player 1 won the round.", {
-                fontFamily: 'origins',
-                fontSize: '32px',
-                fill: '#ffffff'
-            });
-            this.tweens.add({
-                targets: textEndRound,
-                x: width / 2 - 300,
-                duration: 2000,
-                ease: 'Power2',
-                yoyo: true,
-            });
-            this.time.delayedCall(4200, endRound2, [], this);
-        } else {
-            textEndMatch = this.add.text(width + 100, height / 2, "Player 1 won the round.", {
-                fontFamily: 'origins',
-                fontSize: '32px',
-                fill: '#ffffff'
-            });
-            this.tweens.add({
-                targets: textEndMatch,
-                x: width / 2 - 300,
-                duration: 2000,
-                ease: 'Power2',
-                yoyo: true,
-            });
-            this.time.delayedCall(4200, endMatch, [], this);
-        } 
 
-    } else {
-        textEndRound = this.add.text(width + 100, height / 2, "Draw.", {
-            fontFamily: 'origins',
-            fontSize: '32px',
-            fill: '#ffffff'
-        });
-        this.tweens.add({
-            targets: textEndRound,
-            x: width / 2 - 128,
-            duration: 2000,
-            ease: 'Power2',
-            yoyo: true,
-        });
-        this.time.delayedCall(4200, endRound2, [], this);
+    var winner = checkResults();
+
+    //
+    switch (winner) {
+        //
+        case -1:
+            //
+            textEndRound = this.add.text(width + 100, height / 2, "Draw.", {
+                fontFamily: 'origins',
+                fontSize: '32px',
+                fill: '#ffffff'
+            });
+            this.tweens.add({
+                targets: textEndRound,
+                x: width / 2 - 128,
+                duration: 2000,
+                ease: 'Power2',
+                yoyo: true,
+            });
+            this.time.delayedCall(4200, endRound2, [], this);
+            break;
+        //
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+            //
+            players[winner].setRoundsWon(players[winner].getRoundsWon() + 1);
+
+            //
+            textEndRound = this.add.text(width + 100, height / 2, players[winner].getName() + " won the round.", {
+                fontFamily: 'origins',
+                fontSize: '32px',
+                fill: '#ffffff'
+            });
+            this.tweens.add({
+                targets: textEndRound,
+                x: width / 2 - 300,
+                duration: 2000,
+                ease: 'Power2',
+                yoyo: true,
+            });
+
+            //
+            if(players[winner].getRoundsWon() < MAX_ROUNDS) {
+                this.time.delayedCall(4200, endRound2, [], this);
+            } else {
+                controller.setWinnerCat(winner);
+                this.time.delayedCall(4200, endMatch, [], this);
+            }
+            
+            break;
     }
 }
 
@@ -679,20 +710,16 @@ function distance() {
 
 //******************  Actualización puntuación de jugadores ****************//
 function updatePoints() { 
+    //
+    if(players[user.getIdInRoom()].getHasMatter()) {
+        //
+        players[user.getIdInRoom()].setScore(players[user.getIdInRoom()].getScore() + 1);
+
+        //
+        sendPuntuationUpdate();
+    }
 
     for (var i = 0; i < players.length; i++) {
-        //
-        if(players[i].getObject() === undefined) continue;
-        
-        //
-        if(players[i].getHasMatter()) {
-            //
-            players[i].setScore(players[i].getScore() + 1);
-
-            //
-            sendPuntuationUpdate();
-        }
-
         //
         textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
     }    
