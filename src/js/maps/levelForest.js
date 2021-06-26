@@ -683,6 +683,7 @@ function endMatch() {
     controller.getCurrentScene().scene.sleep();
     resetVariables();
     var nextScene = game.scene.getScene("sceneEndGame");
+    controller.setWinnerCat();
     nextScene.scene.wake();
     nextScene.scene.restart();
     controller.getMusicLevelForest().stop();

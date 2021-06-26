@@ -208,12 +208,12 @@ function loadScene(){
         controller.setGameMode(0);
         alert("En progreso...");
     } else if(controller.getGameMode() === 2){
-        controller.setGameMode(0);
+        //controller.setGameMode(0);
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneSelectionMenu");
         nextScene.scene.start();
     } else if(controller.getGameMode() === 3){
-        controller.setGameMode(0);
+        //controller.setGameMode(0);
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneRoomSelectMenu");
         nextScene.scene.start();

@@ -17,14 +17,21 @@ var ip = 'ws://127.0.0.1:80';
 //////////////////////////////////////////////////////////////////////
 class ServerClass {
     //******************* Constructor clase ************************//
-    constructor(msgPM, numUs, lCU, servCon, mDB, roomMsg, ws) {
-        this.logPlayMenu = msgPM;
-        this.connectedUsers = numUs;
-        this.listConnectedUsers = lCU;
-        this.serverConnected = servCon;
-        this.messagesFromDB = mDB;
-        this.roomStatus = roomMsg;
-        this.connections = ws;
+    constructor() {
+        // Estado //
+        this.serverConnected = false;       // ¿El servidor está conectado?
+
+        // Mensajes //
+        this.logPlayMenu = "";              // Mensaje en el menú de LogIn
+        this.roomStatus = "";               // Mensaje de estado de acceso a sala
+        this.messagesFromDB = [];           // Mensajes del chat
+
+        // Usuarios //
+        this.connectedUsers = 0;            // Usuarios conectados
+        this.listConnectedUsers = [];       // Lista de usuarios conectados
+        
+        // Conexiones
+        this.connections = {};              // Diccionario de conexiones de WS
     }
 
     //******************* Getters ************************//
@@ -82,30 +89,41 @@ class ServerClass {
      * Conexión del cliente al servicio del chat
      */
     connectToChatService() {
+        // Establecimiento de la conexión a la dirección WS del servicio
         var chatWS = new WebSocket(ip + '/chat');
 
+        // Cuando se establece la conexión
         chatWS.onopen = function() {
+            // Actualización del estado del servidor
             server.setServerConnected(true);
 
+            // Almacenamiento de la conexión en diccionario de conexiones
             var aux = server.getWSConnection();
             aux["chat"] = chatWS;
             server.setWSConnection(aux);
         }
 
+        // Cuando el cliente recibe un mensaje del servidor
         chatWS.onmessage = function (msg) {
+            // Parser del mensaje recibido
             var message = JSON.parse(msg.data);
 
+            // Obtención de todos los mensajes recibidos
             var aux = [];
             aux = server.getMessagesFromDB();
 
+            // Creación del mensaje recibido por parte de otro cliente
             var messageToAdd = "<" + message.name + "> " + message.message;
-            console.log(messageToAdd);
 
+            // Inserción de mensaje en pila de mensajes
             aux.push(messageToAdd);
+            // Actualización de lista de mensajes
             server.setMessagesFromDB(aux);
         }
 
+        // Cuando hay un fallo en la conexión
         chatWS.onerror = function(e) {
+            /*
             console.log("a");
             server.setServerConnected(false);
 
@@ -114,7 +132,6 @@ class ServerClass {
 
             aux.push(messageToAdd);
             server.setMessagesFromDB(aux);
-            /*
             server.setLogMessage("<> Cant establish connection to the server.");
             server.setLogPlayMenu("<> Cant establish connection to the server.");
             */
@@ -125,9 +142,12 @@ class ServerClass {
      * Conexión del cliente al servicio de usuarios
      */
     connectToUserService() {
+        // Establecimiento de la conexión a la dirección WS del servicio
         var userWS = new WebSocket(ip + '/user');
 
+        // Cuando se establece la conexión
         userWS.onopen = function() {
+            // Actualización del estado del servidor
             server.setServerConnected(true);
 
             var aux = server.getWSConnection();
@@ -135,9 +155,12 @@ class ServerClass {
             server.setWSConnection(aux);
         }
 
+        // Almacenamiento de la conexión en diccionario de conexiones
         userWS.onmessage = function(msg) {
+            // Parser del mensaje recibido
             var message = JSON.parse(msg.data);
 
+            // Actualización del número de jugadores conectados
             server.setConnectedUsers(message.connectedUsers);
         }
     }
@@ -366,15 +389,52 @@ class ServerClass {
                     players[message.userTaken].setHasMatter(true);
                     controller.getmusicEffect1().play();
                     break;
+                case "OK_ENDROUNDINFO":
+                    controller.setWinnerCat(message.winnerUser)
+                    players[message.winnerUser].setRoundsWon(players[message.winnerUser].getRoundsWon() + 1);
+                    break;
             }
         }
+    }
+
+    /**
+     * 
+     */
+    disconnectFromRoomAndMatch() {
+        // Obtención de la conexión del diccionario de conexiones (en función de la sala conectada del usuario)
+        var roomConnection;
+        var matchConnection;
+        switch (user.getOnlineRoom()) {
+            // Cada caso es la clave de cada conexión en el diccionario
+            case "ground":
+                roomConnection = this.getWSConnection()["ground"];
+                matchConnection = this.getWSConnection()["groundMatch"];
+                break;
+            default:
+                break;
+        }
+
+        // Eliminación de la conexión en el diccionario
+        this.getWSConnection()["ground"] = null;
+        this.getWSConnection()["groundMatch"] = null;
+
+        // Reset de las variables del jugador
+        players[user.getIdInRoom()].reset(true);
+
+        // Eliminación de la sala e ID del usuario
+        user.setOnlineRoom("");
+        user.setIdInRoom(-1);
+
+        // Cierre de la conexión
+        roomConnection.close();
+        matchConnection.close();
     }
 }
 
 //////////////////////////////////////////////////////////////////////
 //                       Inicialización de datos                    //
 //////////////////////////////////////////////////////////////////////
-var server = new ServerClass("", 0, [], false, [], "", {});
+var server = new ServerClass();
 
 //////////////////////////////////////////////////////////////////////
 //                            Exportación                           //
