@@ -167,14 +167,14 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         if (server.isServerConnected() === true) {
             // Texto de estado
             textServerConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textServerConnected.setText("Server Online");
             // Icono
             userIc.setTint(0x00ff00);
             // Usuarios conectados
             textNumOfUsersConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
             // Estado conexión
@@ -182,14 +182,14 @@ class sceneRoomSelectMenu extends Phaser.Scene {
         } else {
             // Texto de estado
             textServerConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textServerConnected.setText("Server Offline");
             // Icono
-            userIc.setTint(0xff0000);
+            userIc.setTint(0xbc1616);
             // Usuarios conectados
             textNumOfUsersConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textNumOfUsersConnected.setText("0");
         }
@@ -204,12 +204,12 @@ class sceneRoomSelectMenu extends Phaser.Scene {
  */
 function createServerUI() {
     //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
+    controller.getCurrentScene().add.image(725,93, "log");
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
         fontSize: 14,
-        color: '#00ff00',
+        color: '#056005',
     });
 
     //******************* Conexión al servidor ************************//
@@ -217,17 +217,17 @@ function createServerUI() {
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
-        color: '#00ff00',
+        color: '#056005',
     });
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 
     // Estado de la sala //
-    controller.getCurrentScene().add.rectangle(730, height - 93, 160, 67, 0x000000, 0.6);
+    controller.getCurrentScene().add.image(670,height-57, "load");
     roomStatus = controller.getCurrentScene().add.text(660, height - 20, "",{
         fontFamily: 'Consolas',
         fontSize: 24,
-        color: '#00ff00',
+        color: '#056005',
     });
 }
 

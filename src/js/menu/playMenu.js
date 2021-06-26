@@ -112,22 +112,22 @@ class scenePlayMenu extends Phaser.Scene {
         //****************** Servidor *********************//
         if (server.isServerConnected() === true) {
             textServerConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textServerConnected.setText("Server Online");
             userIc.setTint(0x00ff00);
             textNumOfUsersConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
             textServerConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textServerConnected.setText("Server Offline");
-            userIc.setTint(0xff0000);
+            userIc.setTint(0xbc1616);
             textNumOfUsersConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textNumOfUsersConnected.setText("0");
         }
@@ -166,29 +166,29 @@ class scenePlayMenu extends Phaser.Scene {
 //******************* Carga HUD del servidor ************************//
 function createServerUI() {
     //******************* Información usuario ************************//
-    controller.getCurrentScene().add.rectangle(130, 76, 260, 42, "0x000000", 0.6);
+    controller.getCurrentScene().add.image(130,80, "playServer");
     // Texto //
     controller.getCurrentScene().add.text(10, 70, ("Hola, " + user.getUsername() + "."), {
         fontFamily: 'origins',
         fontSize: 18,
-        color: '#00ff00',
+        color: '#056005',
     });
 
     //******************* Información servidor ************************//
-    controller.getCurrentScene().add.rectangle(220, 134, 440, 42, "0x000000", 0.6);
+    controller.getCurrentScene().add.image(220,136, "playServer2");
     textServerLog = controller.getCurrentScene().add.text(10, 120, "", {
         fontFamily: 'Consolas',
         fontSize: 16,
-        color: '#00ff00',
+        color: '#056005',
     });
 
     //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
+    controller.getCurrentScene().add.image(725,93, "log");
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
         fontSize: 14,
-        color: '#00ff00',
+        color: '#056005',
     });
 
     //******************* Conexión al servidor ************************//
@@ -196,7 +196,7 @@ function createServerUI() {
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
-        color: '#00ff00',
+        color: '#056005',
     });
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);

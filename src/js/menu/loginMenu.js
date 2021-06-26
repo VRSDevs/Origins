@@ -60,8 +60,8 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Imágenes ************************// 
         // Fondo //
         this.add.image(400, 320, "loginMenu");
-        descRectangle = this.add.rectangle(width / 2, 500, 400, 40, 0x000000, 0.6).setVisible(false);
-        
+        descRectangle = controller.getCurrentScene().add.image(400,500, "login").setVisible(false);
+
         // Asignación HTML en Canvas //
         loginHTML = this.add.dom(width / 2, (height / 2) + 40).createFromCache('loginCode').setVisible(false);
         loginHTML.addListener('click');
@@ -217,7 +217,7 @@ class sceneLoginMenu extends Phaser.Scene {
         textModeLog = this.add.text(210, 490, "", {
             fontFamily: 'Consolas',
             fontSize: 16,
-            color: '#00ff00',
+            color: '#056005',
         });
 
         //******************* Botones de acceso ************************//
@@ -297,22 +297,22 @@ class sceneLoginMenu extends Phaser.Scene {
         //****************** Servidor *********************//
         if (server.isServerConnected() === true) {
             textServerConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textServerConnected.setText("Server Online");
             userIc.setTint(0x00ff00);
             textNumOfUsersConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
             textServerConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textServerConnected.setText("Server Offline");
-            userIc.setTint(0xff0000);
+            userIc.setTint(0xbc1616);
             textNumOfUsersConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textNumOfUsersConnected.setText("0");
         }
@@ -406,14 +406,14 @@ function postMessage(message) {
 //******************* Creación de interfaz de servidor ************************//
 function createServerUI() {
     //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
+    controller.getCurrentScene().add.image(725,93, "log");
 
     //******************* Conexión al servidor ************************//
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
         fontSize: 14,
-        color: '#00ff00',
+        color: '#056005',
     });
 
     //******************* Conexión al servidor ************************//
@@ -421,7 +421,7 @@ function createServerUI() {
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
-        color: '#00ff00',
+        color: '#056005',
     });
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);

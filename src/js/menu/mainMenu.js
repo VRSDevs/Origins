@@ -165,13 +165,13 @@ class sceneMainMenu extends Phaser.Scene {
             
             // Actualización estado del servidor //
             textServerConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textServerConnected.setText("Server Online");
             // Actualización usuarios conectados //
             userIc.setTint(0x00ff00);
             textNumOfUsersConnected.setStyle({
-                color: '#00ff00',
+                color: '#056005',
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
         } else {
@@ -179,13 +179,13 @@ class sceneMainMenu extends Phaser.Scene {
             messagesOrUsers.setText(server.getMessagesFromDB());
             // Actualización del estado del servidor //
             textServerConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textServerConnected.setText("Server Offline");
             // Actualización 
-            userIc.setTint(0xff0000);
+            userIc.setTint(0xbc1616);
             textNumOfUsersConnected.setStyle({
-                color: '#ff0000',
+                color: '#bc1616',
             });
             textNumOfUsersConnected.setText("0");
         }
@@ -285,7 +285,7 @@ function createServerUI() {
     graphics.fillRect(xChat, yChat, wChat, hChat);
 
     // Fondo del texto
-    controller.getCurrentScene().add.rectangle(xChat, yChat, wChat, hChat, 0x000000, 0.6).setOrigin(0);
+    controller.getCurrentScene().add.image(xChat, yChat, "message").setOrigin(0);
 
     // Máscara para ocultar
     var mask = new Phaser.Display.Masks.GeometryMask(controller.getCurrentScene(), graphics);
@@ -293,7 +293,7 @@ function createServerUI() {
     // Texto contenedor de los mensajes
     messagesOrUsers = controller.getCurrentScene().add.text(xChat + 6, yChat + 130, server.getMessagesFromDB(), {
         fontFamily: 'Consolas',
-        color: '#00ff00',
+        color: '#056005',
         wordWrap: { width: 310 }
     }).setOrigin(0);
     messagesOrUsers.setMask(mask);
@@ -308,21 +308,22 @@ function createServerUI() {
     });
 
     //******************* Conexión al servidor *******************//
-    controller.getCurrentScene().add.rectangle(730, 93, 160, 67, 0x000000, 0.6);
+
+    controller.getCurrentScene().add.image(725, 93, "log");
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
         fontFamily: 'origins',
         fontSize: 14,
-        color: '#00ff00',
+        color: '#056005',
     });
 
     //******************* Usuario cliente *******************//
-    controller.getCurrentScene().add.rectangle(xChat, yChat - hChat / 4, wChat, hChat / 6, 0x000000, 0.6).setOrigin(0);
+    controller.getCurrentScene().add.image(xChat,yChat - ((hChat/4) - 5), "name").setOrigin(0);
     var nameString = "Hola, " + user.getUsername() + ".";
     textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
         fontFamily: 'origins',
         fontSize: 20,
-        color: '#00ff00',
+        color: '#056005',
     });
 
     //******************* Usuarios *******************//
@@ -330,7 +331,7 @@ function createServerUI() {
     textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
         fontFamily: 'origins',
         fontSize: 24,
-        color: '#00ff00',
+        color: '#056005',
     });
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
