@@ -69,7 +69,6 @@ Para el movimiento del jugador 1, se usarán las teclas ‘W’, ‘A’, ‘S�
 La interacción para poder robar la materia del otro jugador, en el jugador 1 será la ‘V’, mientras que para el jugador 2 será la ‘P’.
 
 #### 2.4 Modo de juego
-- **Modo 1 Jugador.** El jugador aprenderá los controles y la movilidad por el juego. Tendrá que buscar la materia y enfrentarse a una IA para alzarse con la victoria.
 - **Modo 2 jugadores (Local).** Los dos usuarios se enfrentarán para ver quién mantiene más tiempo la materia en su poder, medido gracias a un sistema de puntos. En este modo, no se jugará a una victoria, sino que será al mejor de 3.
 - **Modo Multijador (En línea).** Similar al modo de 2 jugadores. El jugador se conectará a un servidor para enfrentarse a otros jugadores de manera remota para luchar contra ellos y tratar de mantener la materia oscura el mayor tiempo posible.
 
@@ -94,11 +93,9 @@ Figura 4
 ![Figura 5](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/selection.png?raw=true)
 Figura 5
 4. **Pantalla  de  juego:**  tendrá  a  los  personajes,  el  número  de  rondas ganadas,  la puntuación de los personajes y el tiempo restante.
-
 2 Jugadores | Online
 ------------- | -------------
 ![Figura 6](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/2players.png?raw=true) Figura 6 | ![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/online.png?raw=true) Figura 7
-
 5. **Pantalla de victoria:** pantalla con el gato vencedor y unas opciones para poder volver a jugar o volver al menú de inicio.
 ![Figura 7](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/win.png?raw=true)
 Figura 7
@@ -117,24 +114,23 @@ Figura 11
 10. **Menú registrarse:** menú de registro.
 ![Figura 12](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/register.png?raw=true)
 Figura 12
-
 11. **Menú de salas:** Menú donde se podrá elegir entre los cuatro tipos sala.
 ![Figura 13](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/waitingRoom.png?raw=true)
 Figura 13
-
 12. **Sala de espera:** Sala en la cual cada jugador deberá esperar a que el resto esté listo paara comenzar la partida tras pulsar el botón Ready.
 ![Figura 14](https://github.com/Blinx24/Origins/blob/master/resources/img/Interface/especificRoom.png?raw=true)
 Figura 14
 
 #### 2.6 Instrucciones de juego
-El juego comienza con un menú principal, donde el jugador podrá elegir jugar, ver los controles,modificar los ajustes y o salir del juego. Tras pulsar el modo de un jugador dentro del menú jugar, el juego comenzará con un personaje a elegir por el jugador, y deberá buscar la materia oscura antes que las IAs y mantenerla el tiempo necesario para ganar. Por tanto, la condición de victoria en el modo un jugador será obtener la materia durante el mayor tiempo posible.
+El juego comienza con un menú principal, donde el jugador podrá elegir jugar, ver los controles, modificar los ajustes y o salir del juego. Tras pulsar el modo de dos jugadores,
+el juego pasará a la pantalla del jugador, donde uno de los usuario podrá seleccionar a uno de los cuatro gatos disponibles, dejando bloqueado ese gato para que el otro jugador no lo pueda seleccionar. Una vez seleccionados los dos gatos, habrá una cuenta atrás para comenzar a jugar. Ambos lucharán por tener la materia oscura el mayor tiempo posible, quién gane dos rondas habrá ganado el juego. 
 
-En el modo de dos jugadores, el jugador luchará contra otro jugador, ambos podrán elegir su personaje, y la condición de victoria será la misma, ganará quien tenga más puntos por poseer mayor tiempo la materia oscura.
+El modo de juego online es similar al modo de dos jugadores, la principal diferencia es que se pasa de jugar dos jugadores a poder jugar con cuatro jugadores. Después de seleccionar el botón de juego online, se mostrará una pantalla de selección de salas de juego, posteriormente se podrá elegir el personaje y se esperará a que todos los jugadores de esa sala esten listos para jugar. El funcionamiento in game es el mismo que en el modo dos jugadores, conseguir la materia el mayor tiempo posible.
 
-En ambos modos, la condición que define la derrota es tener menos puntos que el otro jugador o la IA.
+En ambos modos, la condición que define la derrota es tener menos puntos que el otro jugador.
 ### 3. Instrucciones para ejecutar la aplicación
 ##### 3.1 Compilación
-Para poder inicializar el proyecto con el servidor online, se abrirá el proyecto en SpringTools. Una vez abierto, para iniciar el server correctamente se hará lo siguiente:
+Para poder inicializar el proyecto con el servidor online, se abrirá el proyecto en SpringTools. Una vez abierto, para iniciar el servidor correctamente se hará lo siguiente:
 1. Se pulsará click derecho encima del nombre del directorio en el Package Explorer. 
 2. Se buscará maven build.
 3. Una vez pulsado, saldrá una pestaña con distintos datos, el que interesa es el espacio de Goals.
@@ -158,9 +154,9 @@ La segunda forma de abrir el archivo .jar, será de la siguiente manera:
 3. Guardar el bloc de notas como .bat
 Al abrir el documento .bat se abrirá directamente la consola con la aplicación ejecutada.
 ##### 3.4 URL para el navegador
-Para abrir la URL donde se encuentra el juego, se tendrá que poner en la barra superior del navegador 'localhost:8080'
+Para abrir la URL donde se encuentra el juego, se tendrá que poner en la barra superior del navegador 'localhost:80'
 ##### 3.4 Requisitos
-Se recomienda tener Java JDK 15 y es necesario tener Spring Tools.
+Se recomienda tener Java JDK 8u251 y es necesario tener Spring Tools en su versión 4.7.0.
 
 
 ### 4. Música
@@ -176,7 +172,7 @@ Diseño de escenario (véase figura 16).
 La forma del mapa será algo similar a esto (véase figura 17).
 
 ### 6. Anexos y referencias
-La idea de la historia ha sido sacada de otro proyecto de la  carrera y se  ha modificado para poder cumplir las características pedidas para este trabajo.
+La idea de la historia ha sido sacada de otro proyecto de la  carrera y se ha modificado para poder cumplir las características pedidas para este trabajo.
 
 #### 6.1 Enlaces de música
 [Música Menú Principal](https://opengameart.org/content/crystal-cave-mysterious-ambience-seamless-loop)
