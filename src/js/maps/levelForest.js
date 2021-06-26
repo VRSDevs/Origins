@@ -75,7 +75,7 @@ class sceneForestLevel extends Phaser.Scene {
 
         // **************** Mapa de fuego *******************//
         //var map = this.make.tilemap({ key: 'fireMap' });
-        //var tileset = map.addTilesetImage("Fire", "tilesFire");
+        //var tileset = map.addTilesetImage("fire", "tilesFire");
 
         // **************** Mapa de cueva *******************//
         //var map = this.make.tilemap({ key: 'caveMap' });
@@ -264,6 +264,7 @@ class sceneForestLevel extends Phaser.Scene {
 
         //******************* Colisiones y arena ************************//
 
+        
         sand = this.physics.add.staticGroup();
 
         sandObjects.forEach(object=>{
@@ -274,6 +275,8 @@ class sceneForestLevel extends Phaser.Scene {
             obj.body.height = object.height; 
             obj.setVisible(false);
         });
+
+        
 
         // Con los bordes
         players[0].getObject().setCollideWorldBounds(true);
@@ -541,6 +544,7 @@ class sceneForestLevel extends Phaser.Scene {
             // Puntuación
             updatePoints();
             
+            
             // Movimiento en la arena
             players[0].setSand(false);
             players[1].setSand(false);
@@ -551,6 +555,7 @@ class sceneForestLevel extends Phaser.Scene {
             this.physics.add.overlap(players[0].getObject(), sand, () => {
                 players[0].setSand(true);
             }, null, this);
+            
         }
     }
 }
