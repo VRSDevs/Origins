@@ -20,31 +20,24 @@ class Cat {
     getObject() {
         return this.object;
     }
-
     getType() {
         return this.type;
     }
-
     getName() {
         return this.name;
     }
-
     getReady() {
         return this.isReady;
     }
-
     getScore() {
         return this.score;
     }
-
     getRoundsWon() {
         return this.roundsWon;
     }
-
     getHasMatter = function () {
         return this.hasMatter;
     }
-
     getSand = function () {
         return this.sand;
     }
@@ -53,34 +46,28 @@ class Cat {
     setObject(obj) {
         this.object = obj;
     }
-
     setType(value) {
         this.type = value;
     }
-
     setName(name) {
         this.name = name;
     }
-
     setReady(value) {
         this.isReady = value;
     }
-
     setScore(value) {
         this.score = value;
     }
-
     setRoundsWon(value) {
         this.roundsWon = value;
     }
-
     setHasMatter(value) {
         this.hasMatter = value;
     }
-
     setSand(value) {
         this.sand = value;
     }
+    
     //******************* Otros ************************//
     // Reseteo de jugadores //
     reset(bool) {

@@ -544,7 +544,6 @@ class sceneForestLevel extends Phaser.Scene {
             // Puntuación
             updatePoints();
             
-            
             // Movimiento en la arena
             players[0].setSand(false);
             players[1].setSand(false);
@@ -618,6 +617,7 @@ function endRound() {
                 ease: 'Power2',
                 yoyo: true,
             });
+            controller.setWinnerCat(1);
             this.time.delayedCall(4200, endMatch, [], this);
         }
     } else if (players[0].getScore() > players[1].getScore()) {
@@ -649,6 +649,7 @@ function endRound() {
                 ease: 'Power2',
                 yoyo: true,
             });
+            controller.setWinnerCat(0);
             this.time.delayedCall(4200, endMatch, [], this);
         } 
 
@@ -683,7 +684,6 @@ function endMatch() {
     controller.getCurrentScene().scene.sleep();
     resetVariables();
     var nextScene = game.scene.getScene("sceneEndGame");
-    controller.setWinnerCat();
     nextScene.scene.wake();
     nextScene.scene.restart();
     controller.getMusicLevelForest().stop();

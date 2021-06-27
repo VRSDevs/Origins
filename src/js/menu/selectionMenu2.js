@@ -409,6 +409,7 @@ function loadDescription(value) {
 
 //******************* Obtención mapa de juego ************************//
 function getMap() {
+    players[1].setName("Player 2");
     var max = 4;
     var min = 1;
     var level = Math.floor(Math.random() * (max - min) + min);
