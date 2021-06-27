@@ -321,7 +321,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             fill: '#ffffff',
         });
         // Evento de finalización de ronda //
-        tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this).get;
+        tEvent = this.time.delayedCall(controller.getTimeRound() * 1500, endRound, [], this).get;
 
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
