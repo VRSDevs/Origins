@@ -19,6 +19,7 @@ var onlineMultiplayerButton = undefined;
 //******************* Control ************************//
 // Animaciones //
 var startAnim = false;
+var mode = 0;
 //******************* Servidor ************************//
 // Imágenes //
 var userIc = undefined;
@@ -47,7 +48,7 @@ class scenePlayMenu extends Phaser.Scene {
         //******************* Fondos ************************//
         this.add.image(400, 320, "play");
 
-        //
+        //******************* Interfaz servidor ************************//
         createServerUI();
 
         //****************** Botones *********************//
@@ -62,10 +63,12 @@ class scenePlayMenu extends Phaser.Scene {
 
         localMultiplayerButton.addListener('pointerover', () => {
             startAnim = true;
+            mode = 2;
             controller.setGameMode(2);
         }, this);
         localMultiplayerButton.addListener('pointerout', () => {
             startAnim = false;
+            mode = 0;
             controller.setGameMode(0);
         }, this);
         localMultiplayerButton.addListener('pointerdown', loadScene, this);
@@ -81,10 +84,12 @@ class scenePlayMenu extends Phaser.Scene {
 
         onlineMultiplayerButton.addListener('pointerover', () => {
             startAnim = true;
+            mode = 3;
             controller.setGameMode(3);
         }, this);
         onlineMultiplayerButton.addListener('pointerout', () => {
             startAnim = false;
+            mode = 0;
             controller.setGameMode(0);
         }, this);
         onlineMultiplayerButton.addListener('pointerdown', loadScene, this);
@@ -204,26 +209,27 @@ function createServerUI() {
 
 //******************* Carga de escena ************************//
 function loadScene(){
-    if(controller.getGameMode() === 1) {
-        controller.setGameMode(0);
-        alert("En progreso...");
-    } else if(controller.getGameMode() === 2){
-        //controller.setGameMode(0);
+    if(mode === 2){
+        resetVariables();
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneSelectionMenu");
         nextScene.scene.start();
-    } else if(controller.getGameMode() === 3){
-        //controller.setGameMode(0);
+    } else if(mode === 3){
+        resetVariables();
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneRoomSelectMenu");
         nextScene.scene.start();
     } else {
+        resetVariables();
         controller.getMusic().pause();
-        controller.setGameMode(0);
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneMainMenu");
         nextScene.scene.start();
     }
+}
+
+function resetVariables() {
+    mode = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
