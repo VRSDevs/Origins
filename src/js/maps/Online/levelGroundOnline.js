@@ -97,11 +97,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         //******************* Mapa ************************//
         var map = this.make.tilemap({ key: 'map2' });
         var tileset = map.addTilesetImage("Bosque", "tilesForest");
-
-        // **************** Mapa de fuego *******************//
-        //var map = this.make.tilemap({ key: 'fireMap' });
-        //var tileset = map.addTilesetImage("fire", "tilesFire");
-
+        // Capas //
         var belowLayer = map.createStaticLayer("Ground", tileset);
         var wallsLayer = map.createStaticLayer("Walls", tileset);
         var sandObjects = map.getObjectLayer('sandObj')['objects'];
@@ -272,22 +268,6 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             controller.getmusicEffect1().play();
         }, null, this);
 
-        /* 
-        for (var i = 0; i < players.length; i++) {
-            // Si el jugador no tiene un objeto asignado (slot vacío)
-            if(players[i].getObject() === undefined) continue;
-
-            console.log("Gato " + i + ": " + players[i].getObject())
-
-            // Generación de colisión
-            this.physics.add.overlap(players[i].getObject(), darkMatter, () => {
-                darkMatter.disableBody(true, true);
-                players[i].setHasMatter(true);
-                controller.getmusicEffect1().play();
-            }, null, this);
-            
-        }*/
-
         //******************* HUD ************************//
         for (var i = 0; i < players.length; i++) {
             // Creación rectángulo para HUD
@@ -343,7 +323,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             fill: '#ffffff',
         });
         // Evento de finalización de ronda //
-        tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
+        tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this).get;
 
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
@@ -357,75 +337,112 @@ class sceneGroundLevelOnline extends Phaser.Scene {
 
     }
     update(time, delta) {
-        // Primero comprobar cual es el usuario en el vector de players, despues hacer que se actualice solo su gato con las teclas
-        // el resto de gatos se actualiza mediante mensajes del ws.
-
-        // No actualizar solo puntos a ver
+        // Si se para la actualización continua de la escena
         if (!controller.getStopUpdateLevel()) {
             //******************* Temporizador ************************//
-            t = t - (tEvent.getProgress() - oldT) * diffT;
-            timer.setText(Math.trunc(t));
-            oldT = tEvent.getProgress();
+            //t = t - (tEvent.getProgress() - oldT) * diffT;
+            timer.setText(Math.trunc(t) /* controller.currentTimeRound() */);
+            //oldT = tEvent.getProgress();
 
             //******************* Personaje ************************//
-            //
+            // Si el jugador concreto no tiene la materia oscura
             if(!players[user.getIdInRoom()].getHasMatter()){
-                //
+                // Detección de tecla pulsada
                 switch (true) {
                     case keys.A.isDown:
+                        // Envío de tecla pulsada
                         sendPlayerUpdate("A");
+
+                        // Actualización de la información del jugador concreto
                         players[user.getIdInRoom()].getObject().setVelocityX(-160);
                         players[user.getIdInRoom()].getObject().setVelocityY(0);
+
+                        // Reproducción de animación concreta
                         players[user.getIdInRoom()].getObject().anims.play(('leftP' + user.getIdInRoom()), true);
+
+                        // Actualización variable auxiliar para saturación de mensajes en IDLE
                         canIdle = true;                                        
                         break;
                     case keys.D.isDown:
+                        // Envío de tecla pulsada
                         sendPlayerUpdate("D");
+
+                        // Actualización de la información del jugador concreto
                         players[user.getIdInRoom()].getObject().setVelocityX(160);
                         players[user.getIdInRoom()].getObject().setVelocityY(0);
+
+                        // Reproducción de animación concreta
                         players[user.getIdInRoom()].getObject().anims.play(('rightP' + user.getIdInRoom()), true);
+
+                        // Actualización variable auxiliar para saturación de mensajes en IDLE
                         canIdle = true;                        
                         break;
                     case keys.S.isDown:
+                        // Envío de tecla pulsada
                         sendPlayerUpdate("S");
+
+                        // Actualización de la información del jugador concreto
                         players[user.getIdInRoom()].getObject().setVelocityY(160);
                         players[user.getIdInRoom()].getObject().setVelocityX(0);
+
+                        // Reproducción de animación concreta
                         players[user.getIdInRoom()].getObject().anims.play(('downP' + user.getIdInRoom()), true);
+
+                        // Actualización variable auxiliar para saturación de mensajes en IDLE
                         canIdle = true;                       
                         break;
                     case keys.W.isDown:
+                        // Envío de tecla pulsada
                         sendPlayerUpdate("W");
+
+                        // Actualización de la información del jugador concreto
                         players[user.getIdInRoom()].getObject().setVelocityY(-160);
                         players[user.getIdInRoom()].getObject().setVelocityX(0);
+
+                        // Reproducción de animación concreta
                         players[user.getIdInRoom()].getObject().anims.play(('upP' + user.getIdInRoom()), true);
+
+                        // Actualización variable auxiliar para saturación de mensajes en IDLE
                         canIdle = true;                                           
                         break;
                     case keys.V.isDown:
+                        // Si la distancia es mínima y el usuario no tiene la materia
                         if (distance() === true && !players[user.getIdInRoom()].getHasMatter()) {
+                            // Envío de tecla pulsada
                             sendPlayerUpdate("V");
 
+                            // Reproducción de efectos
                             controller.getmusicEffect1().play();
                             controller.getmusicEffect2().play();
 
+                            // Actualización de información de materia oscura
                             players[user.getIdInRoom()].setHasMatter(true);
                             players[victim].setHasMatter(false);
 
+                            // Reproducción de animaciones concretas
                             players[user.getIdInRoom()].getObject().anims.play(('idleP' + user.getIdInRoom() + 'Matter'), true);
                             players[victim].getObject().anims.play(('idleP' + victim), true);
                         }
                         break;
                     default:
+                        // Si puede mandar el mensaje
                         if(canIdle){
                             sendPlayerUpdate("N");
-                        }   
+                        }
+                        
+                        // Actualización de la información del jugador concreto
                         players[user.getIdInRoom()].getObject().setVelocityX(0);
                         players[user.getIdInRoom()].getObject().setVelocityY(0);
+
+                        // Reproducción de animación concreta
                         players[user.getIdInRoom()].getObject().anims.play(('idleP' + user.getIdInRoom()), true);
+
+                        // Actualización variable auxiliar para saturación de mensajes en IDLE
                         canIdle = false;
                         break;
-                }
-                
+                } 
             } else {
+                // Mismo caso que el anterior pero con la materia oscura
                 switch (true) {
                     case keys.A.isDown:
                         sendPlayerUpdate("AM");
@@ -467,12 +484,11 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                 }
             }
 
-            //
+            // Llamada al método para la actualización de los puntos de los jugadores
             updatePoints();
 
-            //
+            // Algoritmo para la detección de arena
             players[user.getIdInRoom()].setSand(false);
-
             this.physics.add.overlap(
                 players[user.getIdInRoom()].getObject(),
                 sand,
@@ -489,14 +505,14 @@ class sceneGroundLevelOnline extends Phaser.Scene {
 //                   Funciones comunicación                         //
 //////////////////////////////////////////////////////////////////////
 /**
- * 
+ * Envío de información del jugador
  * @param {String} key 
  */
 function sendPlayerUpdate(key) {
-    //
+    // Obtención de la conexión WS
     var wsConnection = server.getWSConnection()["groundMatch"];
 
-    //
+    // Generación del mensaje a enviar
     var message = {
         code: "OK_PLAYERINFO",
         userID: user.getIdInRoom(),
@@ -504,42 +520,42 @@ function sendPlayerUpdate(key) {
         updateKey: key
     }
 
-    //
+    // Envío del mensaje
     wsConnection.send(JSON.stringify(message));
 }
 
 /**
- * 
+ * Envío de información de las puntuaciones del jugador
  */
 function sendPuntuationUpdate() {
-    //
+    // Obtención de la conexión WS
     var wsConnection = server.getWSConnection()["groundMatch"];
 
-    //
+    // Generación del mensaje a enviar
     var message = {
         code: "OK_POINTSINFO",
         userID: user.getIdInRoom(),
         updatedPoints: players[user.getIdInRoom()].getScore()
     }
 
-    //
+    // Envío del mensaje
     wsConnection.send(JSON.stringify(message));
 }
 
 /**
- * 
+ * Envío de información de posesión de la materia oscura
  */
 function sendTakeDM() {
-    //
+    // Obtención de la conexión WS
     var wsConnection = server.getWSConnection()["groundMatch"];
 
-    //
+    // Generación del mensaje a enviar
     var message = {
         code: "OK_TAKEDM",
         userTaken: user.getIdInRoom(),
     }
 
-    //
+    // Envío del mensaje
     wsConnection.send(JSON.stringify(message));
 }
 
@@ -547,72 +563,76 @@ function sendTakeDM() {
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
 /**
- * 
+ * Comprobación de puntuaciones de jugadores
+ * @returns ID del jugador ganador o caso de empate
  */
 function checkResults() {
-    //
-    var winner = -1;
-    var points = [0, 0, 0, 0];
-    var passedPlayers = 0;
+    // Inicialización de variables
+    var winner = -1;                // ID del jugador ganador (-1 = empate)
+    var points = [0, 0, 0, 0];      // Array de puntuaciones
+    var passedPlayers = 0;          // Número de jugadores superados
 
-    //
+    // Inicialización de array de puntuaciones
     for (var i = 0; i < points.length; i++) {
-        //
+        // Si el jugador actual no existe (slot vacío)
         if(players[i].getObject() === undefined) continue;
 
-        //
+        // Asignación de puntuación
         points[i] = players[i].getScore();
     }
 
-    console.log(points);
-
-    //
+    // Comprobación de puntuaciones por cada jugador
     for (var i = 0; i < players.length; i++) {
-        //
+        // Si el jugador actual no existe (slot vacío)
         if(players[i].getObject() === undefined) continue;
         
-        //
+        // Comprobación con el resto de jugadores
         for (var j = 0; j < players.length; j++) {
+            // Si las IDs coinciden
             if(j === i) continue;
 
-            //
+            // Si la puntuación del primer jugador supera a la del segundo
             if(points[i] > points[j]) {
                 passedPlayers++;
             }
         }
 
-        //
+        // Si se han sobrepasado más de 3 jugadores
         if(passedPlayers >= 3) {
-            //
+            // Asignación de la ID a la del ganador
             winner = i;
+            // Rotura del flujo de ejecución
             break;
-        //
         } else {
-            //
+            // Reset variable de jugadores superados
             passedPlayers = 0;
         }
     }
 
+    // Devolución del valor de la ID del ganador
     return winner;
 }
 
-//******************* Evento final de ronda ************************//
+/**
+ * Evento de final de ronda
+ */
 function endRound() {
-    //
+    // Bloqueo de actualizaciones de la escena
     controller.setStopUpdateLevel(true);
 
+    // Comprobación del ganador
     var winner = checkResults();
 
-    //
     switch (winner) {
-        //
+        // En caso de empate
         case -1:
-            //
+            // Generación de texto
             textEndRound = this.add.text(width + 100, height / 2, "Draw.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
             });
+            // Creación de animación del texto
             this.tweens.add({
                 targets: textEndRound,
                 x: width / 2 - 128,
@@ -620,22 +640,25 @@ function endRound() {
                 ease: 'Power2',
                 yoyo: true,
             });
+
+            // Llamada al siguiente evento de forma retardada
             this.time.delayedCall(4200, endRound2, [], this);
             break;
-        //
+        // En caso de que un jugadir haya ganado la partida
         case 0:
         case 1:
         case 2:
         case 3:
-            //
+            // Actualización del número de rondas ganadas
             players[winner].setRoundsWon(players[winner].getRoundsWon() + 1);
 
-            //
+            // Generación del texto del ganador
             textEndRound = this.add.text(width + 100, height / 2, players[winner].getName() + " won the round.", {
                 fontFamily: 'origins',
                 fontSize: '32px',
                 fill: '#ffffff'
             });
+            // Creación de animación del texto
             this.tweens.add({
                 targets: textEndRound,
                 x: width / 2 - 300,
@@ -644,11 +667,14 @@ function endRound() {
                 yoyo: true,
             });
 
-            //
+            // Si el jugador no ha llegado al máximo de rondas
             if(players[winner].getRoundsWon() < MAX_ROUNDS) {
+                // Llamada al siguiente evento de forma retardada
                 this.time.delayedCall(4200, endRound2, [], this);
             } else {
+                // Asignación del ganador en el controlador
                 controller.setWinnerCat(winner);
+                // Llamada al siguiente evento de forma retardada
                 this.time.delayedCall(4200, endMatch, [], this);
             }
             
@@ -656,124 +682,127 @@ function endRound() {
     }
 }
 
+/**
+ * Segundo evento de final de ronda (reset de variables y restart de la escena)
+ */
 function endRound2() {
+    // Reset de variables de los jugadores
     players.forEach(property => {
         property.setHasMatter(false);
         property.setSand(false);
         property.setScore(0);
     });
+
+    // Actualización del bloqueo del update
     controller.setStopUpdateLevel(false);
+
+    // Restart de la escena
     controller.getCurrentScene().scene.restart();
 }
 
+/**
+ * Evento de final de partida
+ */
 function endMatch() {
+    // Parada de la música de la escena
+    controller.getMusicLevelForest().stop();
+
+    // Parada de la escena actual
     controller.getCurrentScene().scene.sleep();
+
+    // Reset de variables
     resetVariables();
+
+    // Obtención de la siguiente escena
     var nextScene = game.scene.getScene("sceneEndGame");
+    // Inicio de la sigueinte escena
     nextScene.scene.wake();
     nextScene.scene.restart();
-    controller.getMusicLevelForest().stop();
 }
 
-//******************  Calcular distancia entre gatos ****************//
+/**
+ * Función para calcular distancias entre gatos
+ * @returns Si los jugadores se tocan o no
+ */
 function distance() {
-    //
-    var aux = false;
-    distanceBool = false;
-    victim = -1;
+    // Inicialización de variables
+    var aux = false;            // Valor auxiliar de distancia (X)
+    distanceBool = false;       // Si se encuentran en la distancia mínima
+    victim = -1;                // ID de la víctima (usuario que es robado)
 
-    //
+    // Por cada jugador de la lista de jugadores
     for (var i = 0; i < players.length; i++) {
-        //
+        // Si el ID es el mismo o no existe jugador en ese slot
         if(i === user.getIdInRoom() || players[i].getObject() === undefined) continue;
 
-        //
+        // Cálculo de distancias en X e Y
         distancesX[i] = players[user.getIdInRoom()].getObject().x - players[i].getObject().x;
         distancesY[i] = players[user.getIdInRoom()].getObject().y - players[i].getObject().y;
         
-        //
+        // Si la distancia en X es próxima
         if (distancesX[i] >= -50 && distancesX[i] <= 50) {
+            // Actualización de variable auxiliar
             aux = true;
-            //
+            // Si la distancia en Y es próxima y se cumple en X
             if (aux == true && distancesY[i] >= -50 && distancesY[i] <= 50) {
-                //
+                // Actualización de variable controladora
                 distanceBool = true;
+                // Asignación de la ID de la víctima
                 victim = i;
             }
         }
-
     }
 
-    //
+    // Retorno del valor de la variable controladora
     return distanceBool;
 }
 
-//******************  Actualización puntuación de jugadores ****************//
+/**
+ * Actualización de puntuaciones de jugadores
+ */
 function updatePoints() { 
-    //
+    // Si el jugador del cliente tiene la materia
     if(players[user.getIdInRoom()].getHasMatter()) {
-        //
+        // Actualización de puntuación del jugador
         players[user.getIdInRoom()].setScore(players[user.getIdInRoom()].getScore() + 1);
 
-        //
+        // Envío de la información de la puntuación del jugador
         sendPuntuationUpdate();
     }
 
+    // Por cada jugador
     for (var i = 0; i < players.length; i++) {
-        //
+        // Actualización del texto de puntuación de jugadores
         textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
     }    
 }
 
-//******************* Reseteo de variables ************************//
+/**
+ * Función para reestablecer las variables
+ */
 function resetVariables(){
-    // Reseteo de animaciones //
-    // Jugador 1
-    controller.getCurrentScene().anims.remove('leftP1');
-    controller.getCurrentScene().anims.remove('rightP1');
-    controller.getCurrentScene().anims.remove('upP1');
-    controller.getCurrentScene().anims.remove('downP1');
-    controller.getCurrentScene().anims.remove('idleP1');
-    controller.getCurrentScene().anims.remove('leftP1Matter');
-    controller.getCurrentScene().anims.remove('rightP1Matter');
-    controller.getCurrentScene().anims.remove('upP1Matter');
-    controller.getCurrentScene().anims.remove('downP1Matter');
-    controller.getCurrentScene().anims.remove('idleP1Matter');
-    // Jugador 2
-    controller.getCurrentScene().anims.remove('leftP2');
-    controller.getCurrentScene().anims.remove('rightP2');
-    controller.getCurrentScene().anims.remove('upP2');
-    controller.getCurrentScene().anims.remove('downP2');
-    controller.getCurrentScene().anims.remove('idleP2');
-    controller.getCurrentScene().anims.remove('leftP2Matter');
-    controller.getCurrentScene().anims.remove('rightP2Matter');
-    controller.getCurrentScene().anims.remove('upP2Matter');
-    controller.getCurrentScene().anims.remove('downP2Matter');
-    controller.getCurrentScene().anims.remove('idleP2Matter');
-    // Jugador 3
-    controller.getCurrentScene().anims.remove('leftP3');
-    controller.getCurrentScene().anims.remove('rightP3');
-    controller.getCurrentScene().anims.remove('upP3');
-    controller.getCurrentScene().anims.remove('downP3');
-    controller.getCurrentScene().anims.remove('idleP3');
-    controller.getCurrentScene().anims.remove('leftP3Matter');
-    controller.getCurrentScene().anims.remove('rightP3Matter');
-    controller.getCurrentScene().anims.remove('upP3Matter');
-    controller.getCurrentScene().anims.remove('downP3Matter');
-    controller.getCurrentScene().anims.remove('idleP3Matter');
-    // Jugador 4
-    controller.getCurrentScene().anims.remove('leftP4');
-    controller.getCurrentScene().anims.remove('rightP4');
-    controller.getCurrentScene().anims.remove('upP4');
-    controller.getCurrentScene().anims.remove('downP4');
-    controller.getCurrentScene().anims.remove('idleP4');
-    controller.getCurrentScene().anims.remove('leftP4Matter');
-    controller.getCurrentScene().anims.remove('rightP4Matter');
-    controller.getCurrentScene().anims.remove('upP4Matter');
-    controller.getCurrentScene().anims.remove('downP4Matter');
-    controller.getCurrentScene().anims.remove('idleP4Matter');
+    // Por cada jugador
+    for (var i = 0; i < players.length; i++) {
+        // Si el jugador no tiene un objeto asignado (slot vacío)
+        if(players[i].getObject() === undefined) continue;
+
+        // Reset animaciones
+        controller.getCurrentScene().anims.remove('leftP' + i);
+        controller.getCurrentScene().anims.remove('rightP' + i);
+        controller.getCurrentScene().anims.remove('upP' + i);
+        controller.getCurrentScene().anims.remove('downP' + i);
+        controller.getCurrentScene().anims.remove('idleP' + i);
+        controller.getCurrentScene().anims.remove('leftP' + i + 'Matter');
+        controller.getCurrentScene().anims.remove('rightP' + i + 'Matter');
+        controller.getCurrentScene().anims.remove('upP' + i + 'Matter');
+        controller.getCurrentScene().anims.remove('downP' + i + 'Matter');
+        controller.getCurrentScene().anims.remove('idleP' + i + 'Matter');    
+    }
 }
 
+function setTimer(newTime){
+    timer = newTime;
+}
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
 //////////////////////////////////////////////////////////////////////

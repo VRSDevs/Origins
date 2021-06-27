@@ -14,8 +14,8 @@ import { server } from '../../server/server.js';
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
-var readyButton = undefined;
-var backButton = undefined;
+var readyButton = undefined;    // Listo
+var backButton = undefined;     // Volver para atrás
 //****************** Iconos *********************//
 var catIcons = [undefined, undefined, undefined, undefined];
 //****************** Textos *********************//
@@ -143,9 +143,10 @@ class sceneGroundRoom extends Phaser.Scene{
 
     }
     update() {
-        //
+        // Llamada a función para actualizar información de cada uno de los jugadores
         updatePlayerInfo();
 
+        // Si el número de jugadores
         if(controller.getMatchPlayers() !== 0 && !startMatch) {
             //
             option = 1;
@@ -189,7 +190,7 @@ function sendReadyMessage() {
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
 /**
- * 
+ * Función para cargar la siguiente escena
  */
 function loadScene(){
     switch (option) {
@@ -211,11 +212,12 @@ function loadScene(){
 }
 
 /**
- * 
+ * Actualizar la información del jugador (UI)
  */
 function updatePlayerInfo() {
+    // Por cada jugar en la lista de jugadores
     for (var i = 0; i < players.length; i++) {
-        //
+        // Asignación de textura en función del tipo de jugador
         switch (players[i].getType()) {
             case 1:
                 catIcons[i].setTexture("GroundCatFace");
@@ -234,16 +236,19 @@ function updatePlayerInfo() {
                 break;
         }
 
-        //
+        // Asignación del nombre al tipo
         names[i].setText(players[i].getName());
 
-        //
+        // Si el jugador tiene nombre asignado (slot con jugador)
         if(players[i].getName() !== ""){
+            // Si el jugador está listo para la partida
             if(players[i].getReady()) {
                 readyTexts[i].setText("Ready");
+            // En caso de no estarlo
             } else {
                 readyTexts[i].setText("Not ready");
-            } 
+            }
+
         } else {
             readyTexts[i].setText("");
         }     

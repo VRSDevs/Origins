@@ -5,6 +5,7 @@ import { user } from "./user.js";
 import { players } from "../cats.js";
 import { darkMatter } from "../darkmatter.js";
 import { controller } from "../gameController.js";
+import sceneGroundLevelOnline from "../maps/Online/levelGroundOnline.js";
 
 //////////////////////////////////////////////////////////////////////
 //                        Variables globales                        //
@@ -307,6 +308,7 @@ class ServerClass {
                     //
                     controller.setMatterPosX(message.matterX);
                     controller.setMatterPosY(message.matterY);
+                    //controller.setTimeRound(MESSAGE.TIME);
                     break;
                 case "OK_PLAYERINFO":
                     //
@@ -384,6 +386,9 @@ class ServerClass {
                 case "OK_POINTSINFO":
                     players[message.userId].setScore(players[message.userId].getScore() + 1);       
                     break;
+                case "OK_TIMEINFO":
+                    //controller.setCurrentTime(message.time);
+                    break;
                 case "OK_TAKEDM":
                     darkMatter.getObject().disableBody(true, true);
                     players[message.userTaken].setHasMatter(true);
@@ -392,6 +397,9 @@ class ServerClass {
                 case "OK_ENDROUNDINFO":
                     controller.setWinnerCat(message.winnerUser)
                     players[message.winnerUser].setRoundsWon(players[message.winnerUser].getRoundsWon() + 1);
+                    break;
+                case "OK_TIMER":
+                    sceneGroundLevelOnline.setTimer(players[message.roundTime]);
                     break;
             }
         }
