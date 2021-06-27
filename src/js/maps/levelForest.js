@@ -50,6 +50,16 @@ var t = controller.getTimeRound();
 var oldT = 0;
 var diffT = controller.getTimeRound();
 
+//***************** Rondas ganadas ***********************//
+var textPlayerRds = [undefined, undefined,
+    undefined, undefined];
+
+// Auxiliares
+var auxPlayerRdsX = [44, 59,
+    670, 684];
+var auxPlayerRdsY = [74, 74,
+    74, 74];
+
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena del nivel de bosque            //
@@ -380,6 +390,29 @@ class sceneForestLevel extends Phaser.Scene {
             controller.getMusicLevelForest().stop();
         }
 
+        // Rondas ganadas
+        // Generación de imágenes de rondas ganadas
+        textPlayerRds[0 * 2 + 0] = this.add.image(
+            auxPlayerRdsX[0 * 2 + 0],
+            auxPlayerRdsY[0 * 2 + 0],
+            "emptyRoundIcon"
+        );
+        textPlayerRds[1 * 2 + 0] = this.add.image(
+            auxPlayerRdsX[1 * 2 + 0],
+            auxPlayerRdsY[1 * 2 + 0],
+            "emptyRoundIcon"
+        );
+        textPlayerRds[0 * 2 + 1] = this.add.image(
+            auxPlayerRdsX[0 * 2 + 1],
+            auxPlayerRdsY[0 * 2 + 1],
+            "emptyRoundIcon"
+        );
+        textPlayerRds[1 * 2 + 1] = this.add.image(
+            auxPlayerRdsX[1 * 2 + 1],
+            auxPlayerRdsY[1 * 2 + 1],
+            "emptyRoundIcon"
+        );
+
     }
     update(time, delta) {
         // No actualizar solo puntos a ver
@@ -543,6 +576,8 @@ class sceneForestLevel extends Phaser.Scene {
 
             // Puntuación
             updatePoints();
+            // Llamada al método para la actualización de las rondas ganadas de los jugadores
+            updateRounds();
             
             // Movimiento en la arena
             players[0].setSand(false);
@@ -584,6 +619,19 @@ function posAzar() {
             break;
     }
 };
+
+/**
+ * Función para actualizar el HUD de rondas ganadas
+ */
+ function updateRounds() {
+    for (var i = 0; i < 2; i++) {
+        // Si el jugador no tiene un objeto asignado (slot vacío) o no ha ganado ninguna partida
+        if(players[i].getRoundsWon() === 0 || players[i].getObject() === undefined) continue;
+
+        // Actualización del HUD de rondas
+        textPlayerRds[i * 2 + (players[i].getRoundsWon() - 1)].setTexture("roundIcon");
+    }
+}
 
 //******************* Evento final de ronda ************************//
 function endRound() {
