@@ -72,8 +72,6 @@ var auxPlayerPtsPosY = [24, 24, height - 59, height - 59];
 // Evento //
 var tEvent = undefined;
 // Tiempos //
-var t = controller.getTimeRound();
-var oldT = 0;
 var diffT = controller.getTimeRound();
 
 //////////////////////////////////////////////////////////////////////
@@ -317,7 +315,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
 
         //******************* Temporizador ************************//
         // Texto //
-        timer = this.add.text(width / 2 - 10, 20, "time", {
+        timer = this.add.text(width / 2 - 10, 20, controller.getTimeRound(), {
             fontFamily: 'origins',
             fontSize: '32px',
             fill: '#ffffff',
@@ -340,9 +338,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         // Si se para la actualización continua de la escena
         if (!controller.getStopUpdateLevel()) {
             //******************* Temporizador ************************//
-            //t = t - (tEvent.getProgress() - oldT) * diffT;
-            timer.setText(Math.trunc(t) /* controller.currentTimeRound() */);
-            //oldT = tEvent.getProgress();
+            timer.setText(controller.getCurrentTimeRound());
 
             //******************* Personaje ************************//
             // Si el jugador concreto no tiene la materia oscura
@@ -801,7 +797,7 @@ function resetVariables(){
 }
 
 function setTimer(newTime){
-    timer = newTime;
+    timer.setText(newTime);
 }
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
