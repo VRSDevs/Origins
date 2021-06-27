@@ -68,9 +68,10 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 //
-                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
+                victoryText = this.add.text(width/2  - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
+                    align: 'center',
                     fill: '#008f39'
                 });
                 break;
@@ -91,9 +92,10 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 //
-                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
+                victoryText = this.add.text(width/2  - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
+                    align: 'center',
                     fill: '#0000ff'
                 });
                 break;
@@ -112,9 +114,10 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 //
-                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
+                victoryText = this.add.text(width/2  - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
+                    align: 'center',
                     fill: '#81CECF'
                 });
                 break;
@@ -133,9 +136,10 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 //
-                victoryText = this.add.text(width/2 - 135, -20, players[controller.getWinnerCat()].getName() + " won!", {
+                victoryText = this.add.text(width/2 - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
+                    align: 'center',
                     fill: '#FF0000'
                 });
                 break;
@@ -143,7 +147,7 @@ class sceneEndGame extends Phaser.Scene {
 
         //
         //
-        victoryPlayer = this.add.sprite(width/2, height/2, textureID,0);
+        victoryPlayer = this.add.sprite(width/2, height/2, textureID, 0);
         this.anims.create({
             key: 'victoryPlayerAnim',
             frames: this.anims.generateFrameNumbers(textureID, {start: 0, end: 5}),
