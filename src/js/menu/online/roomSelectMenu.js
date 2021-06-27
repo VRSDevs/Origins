@@ -26,13 +26,10 @@ var userIc = undefined;
 // Texto //
 var textServerConnected = "";
 var textNumOfUsersConnected = "";
-var textServerLog = undefined;
-var conected = "";
 var roomStatus = "";
 //******************* Control ************************//
 // Selección de lobby //
 var lobby = 0;  
-
 
 //////////////////////////////////////////////////////////////////////
 //              Clase de escena de menú de loobies                  //
@@ -178,7 +175,7 @@ class sceneRoomSelectMenu extends Phaser.Scene {
             });
             textNumOfUsersConnected.setText(server.getConnectedUsers());
             // Estado conexión
-            roomStatus.setText(server.getRoomStatusMessage());
+            roomStatus.setText("Server Log:\n" + server.getRoomStatusMessage());
         } else {
             // Texto de estado
             textServerConnected.setStyle({
@@ -223,29 +220,32 @@ function createServerUI() {
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 
     // Estado de la sala //
-    controller.getCurrentScene().add.image(670,height-57, "load");
-    roomStatus = controller.getCurrentScene().add.text(660, height - 20, "",{
+    controller.getCurrentScene().add.image(width - 130, height - 57, "load");
+    roomStatus = controller.getCurrentScene().add.text(width - 255, height - 85, "", {
         fontFamily: 'Consolas',
-        fontSize: 24,
+        fontSize: 20,
         color: '#056005',
     });
 }
 
 //******************* Carga de escena ************************//
 /**
- * Carga de sala
+ * Carga de sala seleccionada
  */
 function loadRoom(){
     // Si el usuario tiene asignada una sala
     if(user.getOnlineRoom() !== ""){
         // Parado de la escena actual
-        console.log("Carga de la siguiente escena de bosque.");
         controller.getCurrentScene().scene.stop();
         // Obtención de la siguiente escena
         var nextScene = game.scene.getScene("sceneOnlineSelectionMenu");
         // Comienzo de la escena
         nextScene.scene.start();
     }
+}
+
+function a() {
+    server.setRoomStatusMessage("");
 }
 
 /**
@@ -269,6 +269,15 @@ function loadScene(){
             break;
         // Caso: 2 - Sala de 
         case 2:
+            // Establecimiento de conexión con la sala de tierra
+            server.setRoomStatusMessage("Conectando...");
+            // Carga de la sala una vez se ha establecido la conexión (con delay para poder ejecutarlo correctamente).
+            controller.getCurrentScene().time.delayedCall(
+                500,
+                a,
+                [],
+                this
+            );
             
             break;
         // Caso: 3 - Sala de 
