@@ -14,8 +14,8 @@ import { server } from '../../server/server.js';
 var width = 0;      // Ancho (px)
 var height = 0;     // Alto (px)
 //****************** Botones *********************//
-var readyButton = undefined;
-var backButton = undefined;
+var readyButton = undefined;    // Listo
+var backButton = undefined;     // Volver para atrás
 //****************** Iconos *********************//
 var catIcons = [undefined, undefined, undefined, undefined];
 //****************** Textos *********************//
@@ -143,9 +143,10 @@ class sceneGroundRoom extends Phaser.Scene{
 
     }
     update() {
-        //
+        // Llamada a función para actualizar información de cada uno de los jugadores
         updatePlayerInfo();
 
+        // Si el número de jugadores
         if(controller.getMatchPlayers() !== 0 && !startMatch) {
             //
             option = 1;

@@ -307,6 +307,7 @@ class ServerClass {
                     //
                     controller.setMatterPosX(message.matterX);
                     controller.setMatterPosY(message.matterY);
+                    //controller.setTimeRound(MESSAGE.TIME);
                     break;
                 case "OK_PLAYERINFO":
                     //
@@ -383,6 +384,9 @@ class ServerClass {
                         break;
                 case "OK_POINTSINFO":
                     players[message.userId].setScore(players[message.userId].getScore() + 1);       
+                    break;
+                case "OK_TIMEINFO":
+                    //controller.setCurrentTime(message.time);
                     break;
                 case "OK_TAKEDM":
                     darkMatter.getObject().disableBody(true, true);
