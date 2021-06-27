@@ -340,9 +340,9 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         // Si se para la actualización continua de la escena
         if (!controller.getStopUpdateLevel()) {
             //******************* Temporizador ************************//
-            t = t - (tEvent.getProgress() - oldT) * diffT;
+            //t = t - (tEvent.getProgress() - oldT) * diffT;
             timer.setText(Math.trunc(t) /* controller.currentTimeRound() */);
-            oldT = tEvent.getProgress();
+            //oldT = tEvent.getProgress();
 
             //******************* Personaje ************************//
             // Si el jugador concreto no tiene la materia oscura
@@ -800,6 +800,9 @@ function resetVariables(){
     }
 }
 
+function setTimer(newTime){
+    timer = newTime;
+}
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
 //////////////////////////////////////////////////////////////////////

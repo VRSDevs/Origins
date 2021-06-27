@@ -5,6 +5,7 @@ import { user } from "./user.js";
 import { players } from "../cats.js";
 import { darkMatter } from "../darkmatter.js";
 import { controller } from "../gameController.js";
+import sceneGroundLevelOnline from "../maps/Online/levelGroundOnline.js";
 
 //////////////////////////////////////////////////////////////////////
 //                        Variables globales                        //
@@ -398,7 +399,7 @@ class ServerClass {
                     players[message.winnerUser].setRoundsWon(players[message.winnerUser].getRoundsWon() + 1);
                     break;
                 case "OK_TIMER":
-                    
+                    sceneGroundLevelOnline.setTimer(players[message.roundTime]);
                     break;
             }
         }
