@@ -393,6 +393,9 @@ class ServerClass {
                     controller.setWinnerCat(message.winnerUser)
                     players[message.winnerUser].setRoundsWon(players[message.winnerUser].getRoundsWon() + 1);
                     break;
+                case "OK_TIMER":
+                    
+                    break;
             }
         }
     }
