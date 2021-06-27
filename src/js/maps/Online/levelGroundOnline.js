@@ -36,22 +36,13 @@ var textEndRound = "";
 var textEndMatch = "";
 // Puntuaciones //
 var textPlayerPts = [undefined, undefined, undefined, undefined];
-// Jugador 1 //
-var textRndsP1 = "";
-// Jugador 2 //
-var textRndsP2 = "";
-// Jugador 1 //
-var textRndsP3 = "";
-// Jugador 2 //
-var textRndsP4 = "";
+var textPlayerRds = [undefined, undefined,
+                    undefined, undefined,
+                    undefined, undefined,
+                    undefined, undefined];
 // Temporizador //
 var timer = "";
 //******************* Materia oscura ************************//
-// Posiciones //
-var darkMatterPosX = 0;
-var darkMatterPosY = 0;
-// Objeto //
-//var darkMatter = undefined;
 // ID jugador con materia antigua //
 var victim = -1;
 //******************* Auxiliares ************************//
@@ -68,6 +59,15 @@ var auxCatFacePosY = [41, 41, height - 41, height - 41];
 // Puntuaciones
 var auxPlayerPtsPosX = [96, width - 84, 96 , width - 84];
 var auxPlayerPtsPosY = [24, 24, height - 59, height - 59];
+// Rondas ganadas
+var auxPlayerRdsX = [44, 59,
+                    670, 684,
+                    44, 59,
+                    670, 684];
+var auxPlayerRdsY = [74, 74,
+                    74, 74,
+                    565, 565,
+                    565, 565];
 //******************* Temporizador ************************//
 // Evento //
 var tEvent = undefined;
@@ -305,6 +305,18 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                     fill: '#ffffff'
                 }
             );
+
+            // Generación de imágenes de rondas ganadas
+            textPlayerRds[i * 2 + 0] = this.add.image(
+                auxPlayerRdsX[i * 2 + 0],
+                auxPlayerRdsY[i * 2 + 0],
+                "emptyRoundIcon"
+            );
+            textPlayerRds[i * 2 + 1] = this.add.image(
+                auxPlayerRdsX[i * 2 + 1],
+                auxPlayerRdsY[i * 2 + 1],
+                "emptyRoundIcon"
+            );
         }
 
         // Temporizador //
@@ -483,6 +495,9 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             // Llamada al método para la actualización de los puntos de los jugadores
             updatePoints();
 
+            // Llamada al método para la actualización de las rondas ganadas de los jugadores
+            updateRounds();
+
             // Algoritmo para la detección de arena
             players[user.getIdInRoom()].setSand(false);
             this.physics.add.overlap(
@@ -549,24 +564,6 @@ function sendTakeDM() {
     var message = {
         code: "OK_TAKEDM",
         userTaken: user.getIdInRoom(),
-    }
-
-    // Envío del mensaje
-    wsConnection.send(JSON.stringify(message));
-}
-
-/**
- * Envío del reset del timer
- */
- function sendTimerReset() {
-    // Obtención de la conexión WS
-    var wsConnection = server.getWSConnection()["groundMatch"];
-
-    // Generación del mensaje a enviar
-    var message = {
-        code: "OK_",
-        userTaken: user.getIdInRoom(),
-        roundTime: 60
     }
 
     // Envío del mensaje
@@ -657,9 +654,6 @@ function endRound() {
 
             // Llamada al siguiente evento de forma retardada
             this.time.delayedCall(4200, endRound2, [], this);
-            // LLamada al reinicio del crono
-            sendTimerReset();
-
             break;
         // En caso de que un jugadir haya ganado la partida
         case 0:
@@ -688,16 +682,11 @@ function endRound() {
             if(players[winner].getRoundsWon() < MAX_ROUNDS) {
                 // Llamada al siguiente evento de forma retardada
                 this.time.delayedCall(4200, endRound2, [], this);
-                // LLamada al reinicio del crono
-                sendTimerReset();
-
             } else {
                 // Asignación del ganador en el controlador
                 controller.setWinnerCat(winner);
                 // Llamada al siguiente evento de forma retardada
                 this.time.delayedCall(4200, endMatch, [], this);
-                // LLamada al reinicio del crono
-                sendTimerReset();
             }
             
             break;
@@ -797,6 +786,19 @@ function updatePoints() {
         // Actualización del texto de puntuación de jugadores
         textPlayerPts[i].setText(Math.trunc(players[i].getScore() / diffT));
     }    
+}
+
+/**
+ * Función para actualizar el HUD de rondas ganadas
+ */
+function updateRounds() {
+    for (var i = 0; i < players.length; i++) {
+        // Si el jugador no tiene un objeto asignado (slot vacío) o no ha ganado ninguna partida
+        if(players[i].getRoundsWon() === 0 || players[i].getObject() === undefined) continue;
+
+        // Actualización del HUD de rondas
+        textPlayerRds[i * 2 + (players[i].getRoundsWon() - 1)].setTexture("roundIcon");
+    }
 }
 
 /**

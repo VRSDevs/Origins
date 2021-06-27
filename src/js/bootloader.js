@@ -72,6 +72,8 @@ class bootloader extends Phaser.Scene {
         
         //***********************  Gatos ***************************//
         this.load.image("emptyFace","./resources/img/Icons/transparentCat.png");
+        this.load.image("emptyRoundIcon", "./resources/img/Icons/rounds.png");
+        this.load.image("roundIcon", "./resources/img/Icons/roundsWin.png");
         // Aire //
         this.load.image("AirCatFace","./resources/img/Icons/Wiskas.png");
         // Sin materia
