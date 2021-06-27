@@ -7,50 +7,44 @@
     font-family: 'alien';
     src: url('/resources/fonts/alien.ttf');
 }
+body{
+  font-family: 'Origins';
+}
 
 html{
     background-color: #b8c9cb;
 }
-
 #container{
-    font-family: alien;
+    font-family: 'Origins';
     margin-top: 25px;
     padding: 5px;
     border: 1px solid rgb(255, 255, 255);
 }
 
 .login {
-    font-family: 'Courier New';
+    font-family: 'Origins';
     background: #eceeee;
     border: 3px solid #42464b;
     border-radius: 6px;
     height: 200px;
-    margin: 140px 50px;
+    margin: 140px 55px;
     width: 200px;
 }
 
 input[type="password"], input[type="text"] {
-    font-family: 'Courier New';
-    background: center left no-repeat, linear-gradient(top, #d6d7d7, #dee0e0);
-    border: 2px solid #a1a3a3;
-    border-radius: 4px;
-    box-shadow: 0 1px #fff;
-    box-sizing: border-box;
-    color: #696969;
-    height: 30px;
+    font-family: 'Origins';
     margin: 31px 0 0 29px;
-    padding-left: 37px;
-    transition: box-shadow 0.3s;
-    width: 150px;
+    width: 151px;
+    height: 30px;
+    
   }
 
   input[type="submit"] {
-    font-family: 'Courier New';
+    font-family: 'Origins';
     width:150px;
     height:20px;
     display:block;
-    font-family:Arial, "Helvetica", sans-serif;
-    font-size:16px;
+    font-size:12px;
     font-weight:bold;
     color:#fff;
     text-decoration:none;
@@ -63,7 +57,6 @@ input[type="password"], input[type="text"] {
     cursor:pointer;
     border: none;  
     background-color: #37a69b;
-    background-image: linear-gradient(top,#3db0a6,#3111);
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -72,7 +65,7 @@ input[type="password"], input[type="text"] {
   }
 
   input[type="button"]{
-    font-family: 'Courier New';
+    font-family: 'Origins';
     position: relative;
     top: -10px; left: 0px;
     font-size: 40px;  
@@ -85,7 +78,7 @@ input[type="password"], input[type="text"] {
     cursor: pointer;
   }
  input[type="text1"] {
-    font-family: 'Courier New';
+    font-family: 'Origins';
     position: relative;
     top: -10px; left: 0px;
     font-size: 24px;

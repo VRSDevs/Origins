@@ -208,14 +208,14 @@ class sceneLoginMenu extends Phaser.Scene {
         //******************* Textos ************************//
         // Modo //
         textMode = this.add.text(320, 210, "", {
-            fontFamily: 'Consolas',
-            fontSize: 38,
+            fontFamily: 'Origins',
+            fontSize: 28,
             color: '#ffffff',
         });
 
         // Log de registro / inicio de sesión //
         textModeLog = this.add.text(210, 490, "", {
-            fontFamily: 'Consolas',
+            fontFamily: 'Origins',
             fontSize: 16,
             color: '#056005',
         });
