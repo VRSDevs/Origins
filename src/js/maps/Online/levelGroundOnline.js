@@ -555,6 +555,24 @@ function sendTakeDM() {
     wsConnection.send(JSON.stringify(message));
 }
 
+/**
+ * Envío del reset del timer
+ */
+ function sendTimerReset() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["groundMatch"];
+
+    // Generación del mensaje a enviar
+    var message = {
+        code: "OK_",
+        userTaken: user.getIdInRoom(),
+        roundTime: 60
+    }
+
+    // Envío del mensaje
+    wsConnection.send(JSON.stringify(message));
+}
+
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
@@ -639,6 +657,9 @@ function endRound() {
 
             // Llamada al siguiente evento de forma retardada
             this.time.delayedCall(4200, endRound2, [], this);
+            // LLamada al reinicio del crono
+            sendTimerReset();
+
             break;
         // En caso de que un jugadir haya ganado la partida
         case 0:
@@ -667,11 +688,16 @@ function endRound() {
             if(players[winner].getRoundsWon() < MAX_ROUNDS) {
                 // Llamada al siguiente evento de forma retardada
                 this.time.delayedCall(4200, endRound2, [], this);
+                // LLamada al reinicio del crono
+                sendTimerReset();
+
             } else {
                 // Asignación del ganador en el controlador
                 controller.setWinnerCat(winner);
                 // Llamada al siguiente evento de forma retardada
                 this.time.delayedCall(4200, endMatch, [], this);
+                // LLamada al reinicio del crono
+                sendTimerReset();
             }
             
             break;
