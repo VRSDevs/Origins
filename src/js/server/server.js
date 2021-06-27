@@ -308,7 +308,8 @@ class ServerClass {
                     //
                     controller.setMatterPosX(message.matterX);
                     controller.setMatterPosY(message.matterY);
-                    //controller.setTimeRound(MESSAGE.TIME);
+                    controller.setTimeRound(message.roundTime);
+                    console.log(controller.getTimeRound());
                     break;
                 case "OK_PLAYERINFO":
                     //
@@ -386,9 +387,6 @@ class ServerClass {
                 case "OK_POINTSINFO":
                     players[message.userId].setScore(players[message.userId].getScore() + 1);       
                     break;
-                case "OK_TIMEINFO":
-                    //controller.setCurrentTime(message.time);
-                    break;
                 case "OK_TAKEDM":
                     darkMatter.getObject().disableBody(true, true);
                     players[message.userTaken].setHasMatter(true);
@@ -399,7 +397,8 @@ class ServerClass {
                     players[message.winnerUser].setRoundsWon(players[message.winnerUser].getRoundsWon() + 1);
                     break;
                 case "OK_TIMER":
-                    sceneGroundLevelOnline.setTimer(players[message.roundTime]);
+                    controller.setCurrentTimeRound(message.timer);
+                    console.log("Tiempo restante: " + controller.getCurrentTimeRound());
                     break;
             }
         }
