@@ -392,9 +392,11 @@ class ServerClass {
                     players[message.userTaken].setHasMatter(true);
                     controller.getmusicEffect1().play();
                     break;
-                case "OK_ENDROUNDINFO":
-                    controller.setWinnerCat(message.winnerUser)
-                    players[message.winnerUser].setRoundsWon(players[message.winnerUser].getRoundsWon() + 1);
+                // Caso: OK_ROUNDSTATE -> Nueva ronda va a comenzar
+                case "OK_ROUNDSTATE":
+                    controller.setCurrentTimeRound(message.roundTime);
+                    controller.setMatterPosX(message.matterX);
+                    controller.setMatterPosY(message.matterY);
                     break;
                 case "OK_TIMER":
                     controller.setCurrentTimeRound(message.timer);
