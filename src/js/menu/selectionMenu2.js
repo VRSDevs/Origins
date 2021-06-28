@@ -442,9 +442,10 @@ function getMap() {
     }
 }
 
+
 /**
-        * Carga de escena
-        */
+* Carga de escena
+*/
 function loadScene() {
     switch (selectedCat) {
         case 1:

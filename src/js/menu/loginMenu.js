@@ -202,9 +202,6 @@ class sceneLoginMenu extends Phaser.Scene {
             }
         });
 
-        //******************* Información del servidor ************************//
-        createServerUI();
-
         //******************* Textos ************************//
         // Modo //
         textMode = this.add.text(320, 210, "", {
@@ -294,28 +291,6 @@ class sceneLoginMenu extends Phaser.Scene {
     }
 
     update() {
-        //****************** Servidor *********************//
-        if (server.isServerConnected() === true) {
-            textServerConnected.setStyle({
-                color: '#056005',
-            });
-            textServerConnected.setText("Server Online");
-            userIc.setTint(0x00ff00);
-            textNumOfUsersConnected.setStyle({
-                color: '#056005',
-            });
-            textNumOfUsersConnected.setText(server.getConnectedUsers());
-        } else {
-            textServerConnected.setStyle({
-                color: '#bc1616',
-            });
-            textServerConnected.setText("Server Offline");
-            userIc.setTint(0xbc1616);
-            textNumOfUsersConnected.setStyle({
-                color: '#bc1616',
-            });
-            textNumOfUsersConnected.setText("0");
-        }
     }
 }
 

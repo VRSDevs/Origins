@@ -213,19 +213,25 @@ function createServerUI() {
  * Función para cargar la siguiente escena
  */
 function loadScene(){
-    // Llamada al método de limpieza de variables
-    resetVariables();
-
     // Selección de la siguiente escena en función del modo escogido
     if(mode === 2){
+        // Llamada al método de limpieza de variables
+        resetVariables();
+
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneSelectionMenu");
         nextScene.scene.start();
     } else if(mode === 3){
+        // Llamada al método de limpieza de variables
+        resetVariables();
+
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneRoomSelectMenu");
         nextScene.scene.start();
     } else {
+        // Llamada al método de limpieza de variables
+        resetVariables();
+        
         controller.getMusic().pause();
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneMainMenu");
