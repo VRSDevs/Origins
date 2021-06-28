@@ -72,6 +72,8 @@ var auxPlayerRdsY = [74, 74,
 // Evento //
 var tEvent = undefined;
 // Tiempos //
+var t = controller.getTimeRound();
+var oldT = 0;
 var diffT = controller.getTimeRound();
 
 //////////////////////////////////////////////////////////////////////
@@ -333,7 +335,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             fill: '#ffffff',
         });
         // Evento de finalización de ronda //
-        tEvent = this.time.delayedCall(controller.getTimeRound() * 2000, endRound, [], this);
+        tEvent = this.time.delayedCall(controller.getTimeRound() * 1000, endRound, [], this);
 
         //******************* Música del nivel ************************//
         controller.getMusic().stop();
@@ -350,7 +352,9 @@ class sceneGroundLevelOnline extends Phaser.Scene {
         // Si se para la actualización continua de la escena
         if (!controller.getStopUpdateLevel()) {
             //******************* Temporizador ************************//
-            timer.setText(controller.getCurrentTimeRound());
+            t = t - (tEvent.getProgress() - oldT) * diffT;
+            timer.setText(Math.trunc(t));
+            oldT = tEvent.getProgress();
 
             //******************* Personaje ************************//
             // Si el jugador concreto no tiene la materia oscura
