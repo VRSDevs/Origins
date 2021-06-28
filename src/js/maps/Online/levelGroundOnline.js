@@ -647,7 +647,7 @@ function endRound() {
     // Bloqueo de actualizaciones de la escena
     controller.setStopUpdateLevel(true);
 
-    // LLamada a reinicio de variables de la escena
+    // Llamada a reinicio de variables de la escena
     sendRoundFinished();
 
     // Comprobación del ganador
