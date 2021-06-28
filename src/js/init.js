@@ -19,6 +19,9 @@ import sceneEndGame from './menu/endGame.js';
 import sceneGroundRoom from './menu/online/groundRoom.js'
 import sceneAirRoom from './menu/online/airRoom.js';
 import sceneGroundLevelOnline from './maps/Online/levelGroundOnline.js'
+import sceneFireLevelOnline from './maps/Online/levelFireOnline.js'
+import sceneAirLevelOnline from './maps/Online/levelAirOnline.js'
+import sceneCaveLevelOnline from './maps/Online/levelCaveOnline.js'
 import {controller} from './gameController.js';
 
 
@@ -40,7 +43,7 @@ const config = {
     scene: [                    // Lista de escenas
         bootloader, sceneStart, sceneLoginMenu, sceneMainMenu, scenePlayMenu, sceneControlsMenu,
         sceneSettingsMenu, sceneRoomSelectMenu, sceneSelectionMenu, sceneSelectionMenu2, sceneOnlineSelectionMenu,
-        sceneForestLevel, sceneCaveLevel, sceneGroundRoom, sceneGroundLevelOnline, sceneAirRoom, sceneEndGame
+        sceneForestLevel, sceneCaveLevel, sceneGroundRoom, sceneGroundLevelOnline,sceneAirLevelOnline, sceneFireLevelOnline,sceneCaveLevelOnline, sceneAirRoom, sceneEndGame
     ]
 };
 
