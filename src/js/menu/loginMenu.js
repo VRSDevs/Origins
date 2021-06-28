@@ -320,117 +320,15 @@ class sceneLoginMenu extends Phaser.Scene {
 }
 
 //////////////////////////////////////////////////////////////////////
-//                      Funciones HTTP                              //
+//                 Funciones Comunicaciones                         //
 //////////////////////////////////////////////////////////////////////
-// Usuarios conectados al servidor //
-function getConnectedUsers() {
-    //var wsConnection = server.getWSConnection()["user"];
-
-    //console.log("Dinggi");
-
-    /*wsConnection.onmessage = function(msg) {
-        
-    }*/
-    /*
-    $.ajax({
-        url: 'http://localhost:8080/users/connectedUsers'
-    }).done(function (listOfConnectedUsers) {
-        server.setConnectedUsers(listOfConnectedUsers.length);
-    })
-    */
-}
-
-/*
-// Comprobación del jugador logueado //
-function checkUser(username) {
-    $.ajax({
-        url: 'http://localhost:8080/users/' + username,
-        data: username,
-    }).done(function (user) {
-        if (mode === 1) {
-            userAlreadyCreated = true;
-        } else {
-            userToCheck = user;
-        }
-    })
-}
-
-// Registro del nuevo jugador //
-function postUser(user) {
-    $.ajax({
-        method: "POST",
-        url: 'http://localhost:8080/users',
-        data: JSON.stringify(user),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (item) {
-        console.log("Item created: " + JSON.stringify(item));
-    })
-}
-
-// Inicio de sesión del jugador //
-function updateUser(user) {
-    $.ajax({
-        method: "PUT",
-        url: 'http://localhost:8080/users/' + user.username,
-        data: JSON.stringify(user),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (item) {
-    })
-}
-
-// Envío de mensaje al servidor y a la BD //
-function postMessage(message) {
-    $.ajax({
-        method: "POST",
-        url: 'http://localhost:8080/messages',
-        data: JSON.stringify(message),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (item) {
-        console.log("Item created: " + JSON.stringify(item));
-    })
-}
-*/
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Creación de interfaz de servidor ************************//
-function createServerUI() {
-    //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.image(725,93, "log");
-
-    //******************* Conexión al servidor ************************//
-    // Texto //
-    textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
-        fontFamily: 'origins',
-        fontSize: 14,
-        color: '#056005',
-    });
-
-    //******************* Conexión al servidor ************************//
-    // Texto //
-    textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
-        fontFamily: 'origins',
-        fontSize: 24,
-        color: '#056005',
-    });
-    // Icono //
-    userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
-}
-
-//////////////////////////////////////////////////////////////////////
-//                   Funciones extras                               //
-//////////////////////////////////////////////////////////////////////
-//******************* Cancelación de inicio de sesión ************************//
+/**
+ * Función ejecutada cuando se cancela el inicio de sesión
+ */
 function goBack() {
     mode = 0;
     textMode.setText("");
@@ -442,7 +340,9 @@ function goBack() {
     backButton.setVisible(false);
 }
 
-//******************* Reseteo de variables empleadas ************************//
+/**
+ * Función para reestablecer las variables empleadas
+ */
 function resetVariables() {
     mode = 0;
     updateScene = 0;
@@ -453,7 +353,9 @@ function resetVariables() {
     userToCheck = undefined;
 }
 
-//******************* Carga de la siguiente escena ************************//
+/**
+ * Función para cargar la siguiente escena
+ */
 function loadScene() {
     // Reset de variables
     resetVariables();
