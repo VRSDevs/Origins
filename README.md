@@ -14,6 +14,7 @@ Antonio Rafael Ruano Rodríguez | ar.ruano.2018@alumnos.urjc.es | [Haz click aqu
 - [Cuenta Twitter](https://twitter.com/ArmoonyS?s=20)
 - [Cuenta Instagram](https://www.instagram.com/armoony.s/?hl=es)
 - [Cuenta YouTube](https://www.youtube.com/channel/UCJpZbOBYYst2W-elJBd2tBg/?reload=9&guided_help_flow=5)
+- [Gameplay del Juego](https://youtu.be/Ggk0p7rLgps)
 
 ## Temática del juego
 Un videojuego de fantasía y ciencia ficción sobre la creación de la Tierra.
