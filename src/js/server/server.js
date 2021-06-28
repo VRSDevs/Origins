@@ -30,8 +30,9 @@ class ServerClass {
         // Usuarios //
         this.connectedUsers = 0;            // Usuarios conectados
         this.listConnectedUsers = [];       // Lista de usuarios conectados
+        this.canLogIn = 0;                  // ¿Se puede conectar el usuario al juego?
         
-        // Conexiones
+        // Conexiones //
         this.connections = {};              // Diccionario de conexiones de WS
     }
 
@@ -53,6 +54,9 @@ class ServerClass {
     }
     getRoomStatusMessage() {
         return this.roomStatus;
+    }
+    getCanLogIn() {
+        return this.canLogIn;
     }
     getWSConnection() {
         return this.connections;
@@ -79,6 +83,9 @@ class ServerClass {
     }
     setRoomStatusMessage(msg) {
         this.roomStatus = msg;
+    }
+    setCanLogIn(bool) {
+        this.canLogIn = bool;
     }
     setWSConnection(connections) {
         this.connections = connections;
@@ -161,8 +168,74 @@ class ServerClass {
             // Parser del mensaje recibido
             var message = JSON.parse(msg.data);
 
-            // Actualización del número de jugadores conectados
-            server.setConnectedUsers(message.connectedUsers);
+            // Comprobación del código del mensaje
+            switch (message.code) {
+                // Caso: OK_CHECKREGISTER -> El usuario ha intentado realizar un registro
+                case "OK_CHECKREGISTER":
+                    // Asignación del valor de acceso
+                    server.setCanLogIn(message.status);
+                    console.log(message.status)
+
+                    break;
+                // Caso: OK_CHECKLOG -> El usuario ha intentado realizar un inicio de sesión
+                case "OK_CHECKLOG":
+                    // Asignación del valor de acceso
+                    server.setCanLogIn(message.status);
+
+                    break;
+                // Caso: OK_ALLUSERSCONNECTED -> Conexión nueva. Actualización del número de jugadores conectados
+                case "OK_ALLUSERSCONNECTED":
+                    // Actualización del número de jugadores conectados
+                    server.setConnectedUsers(message.connectedUsers);
+
+                    break;
+                // Caso: OK_CONNECTEDNEWUSER -> Un nuevo usuario se ha conectado
+                case "OK_CONNECTEDNEWUSER":
+                    // Obtención de todos los mensajes recibidos
+                    var aux = [];
+                    aux = server.getListConnectedUsers();
+
+                    // Creación del mensaje recibido por parte de otro cliente
+                    var messageToAdd = message.username;
+
+                    // Inserción de mensaje en pila de mensajes
+                    aux.push(messageToAdd);
+                    // Actualización de lista de mensajes
+                    server.setListConnectedUsers(aux);
+
+                    break;
+                // Caso: OK_GETLISTUSERS -> Caso para cuando se solicita la obtención de todos los jugadores conectados
+                case "OK_GETLISTUSERS":
+                    // Obtención de todos los mensajes recibidos
+                    var aux = [];
+                    aux = server.getListConnectedUsers();
+
+                    // Creación del mensaje recibido por parte de otro cliente
+                    var messageToAdd = message.username;
+
+                    // Inserción de mensaje en pila de mensajes
+                    aux.push(messageToAdd);
+                    // Actualización de lista de mensajes
+                    server.setListConnectedUsers(aux);
+
+                    break;
+                case "OK_SENDUSERDISCONNECTION":
+                    // Inicialización de arrays
+                    var aux = [];
+                    var serverArray = server.getListConnectedUsers();
+
+                    // Reasignación de lista de jugadores conectados (eliminado el usuario desconectado)
+                    for (var i = 0; i < serverArray.length; i++) {
+                        if(serverArray[i] !== message.username) {
+                            aux.push(serverArray[i]);
+                        }
+                    }
+                    
+                    // Actualización de lista de mensajes
+                    server.setListConnectedUsers(aux);
+
+                    break;
+            }
         }
     }
 
