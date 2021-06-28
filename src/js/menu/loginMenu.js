@@ -65,48 +65,48 @@ class sceneLoginMenu extends Phaser.Scene {
                     switch (mode) {
                         // Registro del usuario //
                         case 1:
+                            // Codificación de la contraseña introducida
+                            //var codifiedPassword = sha256(passwordLog.value);
+
                             // Comprobación de existencia en la BD
                             controller.getCurrentScene().time.delayedCall(
-                                300,
+                                1000,
                                 checkUser,
                                 [usernameLog.value, "", "register"],
                                 this
                             );
 
-                            textModeLog.setText("Registrando al usuario...");
+                            textModeLog.setText("Estableciendo conexión...");
 
                             // Ejecucuión tras un período de tiempo
                             controller.getCurrentScene().time.addEvent({
-                                delay: 500,
+                                delay: 2000,
                                 callback: () => {
                                     switch (server.getCanLogIn()) {
                                         // Caso: 2 -> Se pudo realizar el registro
                                         case 2:
-                                            textModeLog.setText("Registro completado.");
+                                            textModeLog.setText("Conectado.");
 
-                                            // Obtención de toda la información de la BD
+                                            // Asignación en el usuario cliente
+                                            user.setUsername(usernameLog.value);
+                                            user.setPassword(passwordLog.value);
+                                            user.setStatus(true); 
+
+                                            // Envío de la información del usuario conectado a la BD
                                             controller.getCurrentScene().time.delayedCall(
-                                                800,
+                                                500,
                                                 getInfoFromBD,
                                                 [],
                                                 this
                                             );
 
-                                            // Asignación en el usuario cliente
-                                            user.setUsername(usernameLog.value);
-                                            user.setPassword(passwordLog.value);
-                                            user.setStatus(true);
-
-                                            // Codificación de la contraseña introducida
-                                            //var codifiedPassword = sha256(passwordLog.value);
-
-                                            // Envío de la información del usuario conectado a la BD
+                                            // Obtención de toda la información de la BD
                                             controller.getCurrentScene().time.delayedCall(
-                                                1200,
-                                                sendConnectedNewUser,
-                                                [],
+                                                1000,
+                                                sendUserConnectedMsgs,
+                                                ["register"],
                                                 this
-                                            );
+                                            );                              
 
                                             // Post de mensaje de inicio de sesión
                                             var message = {
@@ -118,11 +118,11 @@ class sceneLoginMenu extends Phaser.Scene {
 
                                             // Carga de la siguiente escena
                                             controller.getCurrentScene().time.delayedCall(
-                                                1200,
+                                                1500,
                                                 loadScene,
                                                 [],
                                                 this
-                                            );
+                                            );  
                                             
                                             break;
                                         // Caso: 0 -> El jugador intenta iniciar la conexión en una cuenta no existente
@@ -148,16 +148,16 @@ class sceneLoginMenu extends Phaser.Scene {
                         case 2:
                             // Comprobación de existencia en la BD
                             controller.getCurrentScene().time.delayedCall(
-                                300,
+                                1000,
                                 checkUser,
                                 [usernameLog.value, passwordLog.value, "login"],
                                 this
                             );
 
-                            textModeLog.setText("Iniciando sesión...");
+                            textModeLog.setText("Estableciendo conexión...");
 
                             controller.getCurrentScene().time.addEvent({
-                                delay: 500,
+                                delay: 2000,
                                 callback: () => {
                                     // Comprobación con la BD //
                                     switch (server.getCanLogIn()) {
@@ -166,11 +166,11 @@ class sceneLoginMenu extends Phaser.Scene {
                                             //var codedPasswordFromLog = sha256(passwordLog.value);
 
                                             // Estado de conexión del usuario //
-                                            textModeLog.setText("Inicio de sesión con éxito.");
+                                            textModeLog.setText("Conectado.");
 
                                             // Obtención de toda la información de la BD
                                             controller.getCurrentScene().time.delayedCall(
-                                                800,
+                                                500,
                                                 getInfoFromBD,
                                                 [],
                                                 this
@@ -183,26 +183,17 @@ class sceneLoginMenu extends Phaser.Scene {
 
                                             // Envío de la información del usuario conectado a la BD
                                             controller.getCurrentScene().time.delayedCall(
-                                                1200,
-                                                sendConnectedNewUser,
-                                                [],
+                                                1000,
+                                                sendUserConnectedMsgs,
+                                                ["login"],
                                                 this
                                             );
-
-                                            // Post de mensaje de inicio de sesión
-                                            /*
-                                            var message = {
-                                                username: "Server",
-                                                body: "Se conectó " + user.getUsername(),
-                                            }
-                                            postMessage(message);
-                                            */
 
                                             server.setLogPlayMenu(user.getUsername() + " has connected.");
 
                                             // Carga de la siguiente escena
                                             controller.getCurrentScene().time.delayedCall(
-                                                1200,
+                                                1500,
                                                 loadScene,
                                                 [],
                                                 this
@@ -370,7 +361,7 @@ function getListOfConnectedUsers() {
 }
 
 /**
- * Función para notificar la conexión de un usuario
+ * Función para notificar la conexión de un nuevo usuario
  */
 function sendConnectedNewUser() {
     // Obtención de la conexión WS
@@ -381,8 +372,50 @@ function sendConnectedNewUser() {
         code: "OK_CONNECTEDNEWUSER",
         username: user.getUsername(),
         password: user.getPassword(),
-        status: true,
+        status: user.isStatus()
     }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
+
+/**
+ * Función para notificar la conexión de un usuario
+ */
+ function sendConnectedUser() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["user"];
+
+    // Generación del mensaje
+    var message = {
+        code: "OK_CONNECTEDUSER",
+        username: user.getUsername(),
+        password: user.getPassword(),
+        status: user.isStatus()
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
+
+/**
+ * Función para notificar la conexión de un usuario (mensaje del servidor)
+ */
+function sendConnectedUserServer() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["chat"];
+
+    // Generación del mensaje
+    var message = {
+        code: "OK_SENDMESSAGE",
+        name: "Server",
+        message: user.getUsername() + " has connected",
+    }
+
+    // Construcción del mensaje a insertar en el array
+    var messageToAdd = "<" + message.name + "> " + message.message;
+    // Inserción en la lista de mensajes de la BD
+    server.getMessagesFromDB().push(messageToAdd);
 
     // Envío del mensaje al servidor
     wsConnection.send(JSON.stringify(message));
@@ -401,6 +434,8 @@ function checkUser(username, password, key) {
     switch (key) {
         // Caso: register -> El usuario quiere registrarse
         case "register":
+            textModeLog.setText("Registrando usuario...");
+
             message = {
                 code: "OK_CHECKREGISTER",
                 username: username,
@@ -409,6 +444,8 @@ function checkUser(username, password, key) {
             break;
         // Caso: login -> El usuario quiere iniciar la sesión
         case "login":
+            textModeLog.setText("Iniciando sesión...");
+
             message = {
                 code: "OK_CHECKLOG",
                 username: username,
@@ -429,10 +466,29 @@ function checkUser(username, password, key) {
  * Función para obtener toda la información de la BD
  */
 function getInfoFromBD() {
-    textModeLog.setText("Estableciendo conexión...");
+    textModeLog.setText("Obteniendo información...");
 
     getMessagesFromDB();
     getListOfConnectedUsers();
+}
+
+/**
+ * Función para enviar la información de conexión de un usuario nuevo
+ */
+function sendUserConnectedMsgs(key) {
+    // Llamada a métodos de comunicación
+    switch (key) {
+        // Caso: register -> El usuario se ha registrado
+        case "register":
+            sendConnectedNewUser();
+            break;
+        // Caso: login -> El usuario ha iniciado la sesión
+        case "login":
+            sendConnectedUser();
+            break;
+    }
+    
+    sendConnectedUserServer();
 }
 
 /**
