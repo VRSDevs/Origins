@@ -46,17 +46,17 @@ class sceneEndGame extends Phaser.Scene {
         height = this.sys.canvas.height;
 
         //******************* Ganador ************************//
-        //
-        //
+        // Inicialización de la ID de la textura
         var textureID = "";
 
-        //
+        // Ejecución en función del tipo del gato ganador
         switch (players[controller.getWinnerCat()].getType()) {
-            //
+            // Tipo de tierra
             case 1:
-                //
+                // Asignación de la ID de textura
                 textureID = "GroundCatIdle3";
-                //
+
+                // Generación del fondo
                 bg = this.add.sprite(width/2, height/2, "bgVictory_Ground",0);
                 this.anims.create({
                     key: 'bgVictoryAnim',
@@ -64,10 +64,10 @@ class sceneEndGame extends Phaser.Scene {
                     frameRate: 12,
                     repeat: 0
                 });
-                //
+                // Animación del fondo
                 bg.anims.play('bgVictoryAnim');
 
-                //
+                // Generación del texto de victoria
                 victoryText = this.add.text(width/2  - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
@@ -75,12 +75,12 @@ class sceneEndGame extends Phaser.Scene {
                     fill: '#008f39'
                 });
                 break;
-            //
+            // Tipo de agua
             case 2:
-                //
+                // Asignación de la ID de textura
                 textureID = "WaterCatIdle3";
 
-                //
+                // Generación del fondo
                 bg = this.add.sprite(width/2, height/2, "bgVictory_Water",0);
                 this.anims.create({
                     key: 'bgVictoryAnim',
@@ -88,10 +88,11 @@ class sceneEndGame extends Phaser.Scene {
                     frameRate: 12,
                     repeat: 0
                 });
-                //
+                // Animación del fondo
                 bg.anims.play('bgVictoryAnim');
 
-                //
+                // Generación del texto de victoria
+
                 victoryText = this.add.text(width/2  - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
@@ -99,10 +100,12 @@ class sceneEndGame extends Phaser.Scene {
                     fill: '#0000ff'
                 });
                 break;
+            // Tipo de aire
             case 3:
-                //
+                // Asignación de la ID de textura
                 textureID = "AirCatIdle3";
-                //
+
+                // Generación del fondo
                 bg = this.add.sprite(width/2, height/2, "bgVictory_Air",0);
                 this.anims.create({
                     key: 'bgVictoryAnim',
@@ -110,10 +113,10 @@ class sceneEndGame extends Phaser.Scene {
                     frameRate: 12,
                     repeat: 0
                 });
-                //
+                // Animación del fondo
                 bg.anims.play('bgVictoryAnim');
 
-                //
+                // Generación del texto de victoria
                 victoryText = this.add.text(width/2  - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
@@ -121,10 +124,12 @@ class sceneEndGame extends Phaser.Scene {
                     fill: '#81CECF'
                 });
                 break;
+            // Tipo de fuego
             case 4:
-                //
+                // Asignación de la ID de textura
                 textureID = "FireCatIdle3";
-                //
+
+                // Generación del fondo
                 bg = this.add.sprite(width/2, height/2, "bgVictory_Fire",0);
                 this.anims.create({
                     key: 'bgVictoryAnim',
@@ -132,10 +137,10 @@ class sceneEndGame extends Phaser.Scene {
                     frameRate: 12,
                     repeat: 0
                 });
-                //
+                // Animación del fondo
                 bg.anims.play('bgVictoryAnim');
 
-                //
+                // Generación del texto de victoria
                 victoryText = this.add.text(width/2 - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
@@ -145,8 +150,7 @@ class sceneEndGame extends Phaser.Scene {
                 break;
         }
 
-        //
-        //
+        // Generación sprite jugador en función de la textura
         victoryPlayer = this.add.sprite(width/2, height/2, textureID, 0);
         this.anims.create({
             key: 'victoryPlayerAnim',
@@ -154,10 +158,10 @@ class sceneEndGame extends Phaser.Scene {
             frameRate: 4,
             repeat: -1
         });
-        //
+        // Reproducción animación del sprite
         victoryPlayer.anims.play("victoryPlayerAnim");
 
-        //
+        // Animación del texto de victoria
         this.tweens.add({
             targets: victoryText,
             y: height/6,
@@ -184,28 +188,19 @@ class sceneEndGame extends Phaser.Scene {
             mainMenuButton.setFrame(0);
         }, this);
         mainMenuButton.addListener('pointerdown', () => {
-            //
+            // Si el modo de juego es el ONLINE
             if(controller.getGameMode() === 3) {
+                // Desconexión de la sala y de la partida
                 server.disconnectFromRoomAndMatch();
             }
 
-            //
-            controller.getCurrentScene().scene.sleep();
+            // Reset variables
+            
+
+            // Parada y obtención de la siguiente escena
+            controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneMainMenu");
-
-            //
-            resetVariables();
-            //
-            controller.setGameMode(0);
-            controller.setStopUpdateLevel(false);
-            controller.getMusic().stop();
-            controller.setMusic(undefined);
-            controller.setMusic(this.sound.add("music"));
-            controller.getMusic().play();
-
-            //
-            nextScene.scene.wake();
-            nextScene.scene.restart();
+            nextScene.scene.start();
         }, this);
 
         // Reinicio de partida //
@@ -225,15 +220,26 @@ class sceneEndGame extends Phaser.Scene {
             restartButton.setFrame(0);
         }, this);
         restartButton.addListener('pointerdown', () => {
-            players.forEach(cat => {
-                cat.reset(false);
-            });
-            controller.getCurrentScene().scene.sleep();
-            var nextScene = game.scene.getScene(level.scene.key);
-            resetVariables();
-            controller.setStopUpdateLevel(false);
-            nextScene.scene.wake();
-            nextScene.scene.restart();
+            // Reset variables
+            resetVariables("restart");
+
+            if(controller.getGameMode() === 2) {
+                // Actualización del bloqueo de UPDATE de escenas
+                controller.setStopUpdateLevel(false);
+
+                // Parada e inicio de la siguiente escena
+                controller.getCurrentScene().scene.stop();
+                var nextScene = game.scene.getScene(level.scene.key);
+                nextScene.scene.start();
+            } else {
+                // Actualización del bloqueo de UPDATE de escenas
+                controller.setStopUpdateLevel(false);
+
+                // Parada e inicio de la siguiente escena
+                controller.getCurrentScene().scene.stop();
+                var nextScene = game.scene.getScene("sceneGroundRoom");
+                nextScene.scene.start();
+            }
         }, this);
 
         // Animación de botones //
@@ -259,7 +265,9 @@ class sceneEndGame extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Animación de botones ************************//
+/**
+ * Función para ejecutar la animación de los botones
+ */
 function buttonsAnimation(){
     this.tweens.add({
         targets: mainMenuButton,
@@ -277,8 +285,39 @@ function buttonsAnimation(){
     });
 }
 
-//******************* Reseteo de variables ************************//
-function resetVariables(){
+/**
+ * Función para resetear variables de escena y de la partida
+ * @param {String} key Clave para aplicar un tipo de reset u otro
+ */
+function resetVariables(key){
+    switch (key) {
+        case "mainmenu":
+            // Variables del jugador //
+            // Si el modo de juego es el LOCAL
+            if(controller.getGameMode() === 2) {
+                players.forEach(cat => {
+                    cat.reset(true);
+                });
+            }
+
+            // Variables del controlador de juego //
+            controller.setGameMode(0);
+            controller.setStopUpdateLevel(false);
+            controller.getMusic().stop();
+            controller.setMusic(undefined);
+            controller.setMusic(controller.getCurrentScene().sound.add("music"));
+            controller.getMusic().play(); 
+            
+            break;
+        case "restart":
+            // Variables del jugador //
+            players.forEach(cat => {
+                cat.reset(false);
+            });
+
+            break;
+    }
+
     // Reseteo de animaciones //
     controller.getCurrentScene().anims.remove('victoryPlayerAnim');
     controller.getCurrentScene().anims.remove('bgVictoryAnim');
