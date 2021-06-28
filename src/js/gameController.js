@@ -24,6 +24,7 @@ class gameController{
         this.matterPosX = 0;
         this.matterPosY = 0;
         this.winnerCat = -1;
+        this.reseter = false;
     }
 
     //******************* Getters ************************//
@@ -81,6 +82,9 @@ class gameController{
     getWinnerCat(){
         return this.winnerCat;
     }
+    getReseter(){
+        return this.reseter;
+    }
 
     //******************* Setters ************************//
     setGameMode(value){
@@ -133,6 +137,9 @@ class gameController{
     }
     setWinnerCat(id){
         this.winnerCat = id;
+    }
+    setReseter(res){
+        this.reseter = res;
     }
 }
 

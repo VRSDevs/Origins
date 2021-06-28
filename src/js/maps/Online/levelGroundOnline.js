@@ -234,6 +234,8 @@ class sceneGroundLevelOnline extends Phaser.Scene {
             players[i].getObject().setCollideWorldBounds(true);
         }
 
+        /*
+
         // Generación de colisión personaje - personaje 
         for (var i = 0; i < players.length; i++) {
             // Si el jugador no tiene un objeto asignado (slot vacío)
@@ -248,6 +250,7 @@ class sceneGroundLevelOnline extends Phaser.Scene {
                 this.physics.add.collider(players[i].getObject(), players[j].getObject());
             }
         }
+        */
 
         // Generación de colisión personaje - muro 
         wallsLayer.setCollisionByProperty({ collides: true });
