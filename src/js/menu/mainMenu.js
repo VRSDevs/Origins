@@ -155,14 +155,7 @@ class sceneMainMenu extends Phaser.Scene {
 
     update(time, delta) {
         //****************** Servidor *********************//
-        if (server.isServerConnected() === true) {          
-            // Actualización mensajes o lista de usuarios //
-            if(chatMode === 0) {
-                messagesOrUsers.setText(server.getMessagesFromDB());
-            } else {
-                messagesOrUsers.setText(server.getListConnectedUsers());
-            }
-            
+        if (server.isServerConnected() === true) {                     
             // Actualización estado del servidor //
             textServerConnected.setStyle({
                 color: '#056005',
@@ -299,15 +292,6 @@ function createServerUI() {
         }
     });
     changeTxT = controller.getCurrentScene().add.sprite(xChat + 30, 620, "spriteMsgButton", 1).setInteractive();
-    changeTxT.addListener('pointerdown', () => {
-        if(chatMode === 1) {
-            changeTxT.setFrame(1);
-            chatMode = 0;
-        } else {
-            changeTxT.setFrame(0);
-            chatMode = 1;
-        }
-    }, this);
 
     // Muestra de mensajes //
     // Lienzo

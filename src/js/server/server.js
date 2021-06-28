@@ -263,14 +263,12 @@ class ServerClass {
     connectToGroundRoom() {
         var groundRWS = new WebSocket(ip + '/groundR');
 
-        //
         groundRWS.onopen = function() {
             var aux = server.getWSConnection();
             aux["ground"] = groundRWS;
             server.setWSConnection(aux);
         }
-
-        //
+        
         groundRWS.onmessage = function(msg) {
             // Parser del mensaje enviado por parte del servidor
             var message = JSON.parse(msg.data);
@@ -504,6 +502,8 @@ class ServerClass {
             default:
                 break;
         }
+
+        console.log("out");
 
         // Eliminación de la conexión en el diccionario
         this.getWSConnection()["ground"] = null;
