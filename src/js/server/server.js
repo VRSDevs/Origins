@@ -402,6 +402,12 @@ class ServerClass {
                     controller.setCurrentTimeRound(message.timer);
                     console.log("Tiempo restante: " + controller.getCurrentTimeRound());
                     break;
+                // Caso: OK_ROUNDSTATE -> Nueva ronda va a comenzar
+                case "OK_ROUNDSTATE":
+                    controller.setCurrentTimeRound(message.roundTime);
+                    controller.setMatterPosX(message.matterX);
+                    controller.setMatterPosY(message.matterY);
+                    break;
             }
         }
     }

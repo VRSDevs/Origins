@@ -573,7 +573,7 @@ function sendTakeDM() {
 /**
  * Envío de información de fin de ronda
  */
- function sendRoundFinished() {
+function sendRoundFinished() {
     // Obtención de la conexión WS
     var wsConnection = server.getWSConnection()["groundMatch"];
 
