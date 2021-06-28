@@ -230,7 +230,9 @@ function updateUser(user) {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Creación de interfaz de servidor ************************//
+/**
+        * Creación de interfaz de servidor
+        */
 function createServerUI() {
     //******************* Mensajes *******************//
     // Variables auxiliares //   
@@ -336,8 +338,9 @@ function createServerUI() {
     // Icono //
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
-
-//******************* Cierre de sesión de jugador ************************//
+/**
+        * Cierre de sesión de jugador
+        */
 function logOut() {
     user.resertUser();
     /*
@@ -358,8 +361,9 @@ function logOut() {
 function resetVariables() {
     textUsername = "";
 }
-
-//******************* Carga de escena ************************//
+/**
+        * Carga de escena
+        */
 function loadScene() {
     resetVariables();
     switch (id) {

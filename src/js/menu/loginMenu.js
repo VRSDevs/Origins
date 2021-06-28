@@ -403,7 +403,9 @@ function postMessage(message) {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Creación de interfaz de servidor ************************//
+/**
+        * Creación de interfaz de servidor
+        */
 function createServerUI() {
     //******************* Conexión al servidor ************************//
     controller.getCurrentScene().add.image(725,93, "log");
@@ -430,7 +432,9 @@ function createServerUI() {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Cancelación de inicio de sesión ************************//
+/**
+        * Cancelación de inicio de sesión
+        */
 function goBack() {
     mode = 0;
     textMode.setText("");
@@ -441,8 +445,9 @@ function goBack() {
     signupButton.setVisible(true);
     backButton.setVisible(false);
 }
-
-//******************* Reseteo de variables empleadas ************************//
+/**
+        * Reseteo de variables empleadas
+        */
 function resetVariables() {
     mode = 0;
     updateScene = 0;
@@ -452,8 +457,9 @@ function resetVariables() {
     userToUpdate = undefined;
     userToCheck = undefined;
 }
-
-//******************* Carga de la siguiente escena ************************//
+/**
+        * Carga de la siguiente escena
+        */
 function loadScene() {
     // Reset de variables
     resetVariables();

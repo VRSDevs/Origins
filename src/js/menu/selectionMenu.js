@@ -191,7 +191,9 @@ class sceneSelectionMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga descripciones de gatos ************************//
+/**
+        * Carga descripciones de gatos
+        */
 function loadDescription(value) {
     switch (value) {
         case 0:
@@ -211,8 +213,9 @@ function loadDescription(value) {
             break;
     }
 }
-
-//******************* Ir a la siguiente escena ************************//
+/**
+        * Ir a la siguiente escena 
+        */
 function goNextScene() {
     players[0].setName("Player 1");
     selectedCat = 0;
@@ -221,7 +224,9 @@ function goNextScene() {
     nextScene.scene.start();
 }
 
-//******************* Carga de escena ************************//
+/**
+        * Carga de escena
+        */
 function loadScene() {
     switch (selectedCat) {
         case 1:

@@ -597,7 +597,10 @@ class sceneForestLevel extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Posición aleatoria de materia oscura ************************//
+/**
+        * Posición aleatoria de materia oscura
+        */
+
 function posAzar() {
     var rand = Phaser.Math.Between(1, 4)
     switch (rand) {
@@ -632,8 +635,9 @@ function posAzar() {
         textPlayerRds[i * 2 + (players[i].getRoundsWon() - 1)].setTexture("roundIcon");
     }
 }
-
-//******************* Evento final de ronda ************************//
+/**
+        * Evento final de ronda 
+        */
 function endRound() {
     controller.setStopUpdateLevel(true);
     if (players[0].getScore() < players[1].getScore()) {
@@ -718,6 +722,7 @@ function endRound() {
     }
 }
 
+// funcioin termina la ronda si no hay tiempo
 function endRound2() {
     players.forEach(property => {
         property.setHasMatter(false);
@@ -728,6 +733,7 @@ function endRound2() {
     controller.getCurrentScene().scene.restart();
 }
 
+// termina el juego
 function endMatch() {
     controller.getCurrentScene().scene.sleep();
     resetVariables();

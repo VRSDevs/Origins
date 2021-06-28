@@ -465,7 +465,9 @@ class sceneLabLevel extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Posición aleatoria de materia oscura ************************//
+/**
+        * Posición aleatoria de materia oscura 
+        */
 function posAzar() {
     var rand = Phaser.Math.Between(1,4)
     switch(rand){
@@ -487,8 +489,9 @@ function posAzar() {
             break;    
     }
 };
-
-//******************* Evento de temporizador ************************//
+/**
+        * Evento de temporizador
+        */
 function endRound() {
     controller.setStopUpdateLevel(true);
 
@@ -589,7 +592,9 @@ function endMatch() {
     controller.getmusicLevelLab().stop();
 }
 
-//******************  Calcular distancia entre gatos ****************//
+/**
+        * Calcular distancia entre gatos
+        */
 function distance() {
     var aux = false;
     distanceBool = false;
@@ -605,8 +610,9 @@ function distance() {
     }
     return distanceBool;
 }
-
-//******************  Actualización puntuación de jugadores ****************//
+/**
+        * Actualización puntuación de jugadores
+        */
 function updatePoints() {
     // Jugador 1 //
     if (players[0].getHasMatter()) {

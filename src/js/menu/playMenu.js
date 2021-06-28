@@ -168,7 +168,9 @@ class scenePlayMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga HUD del servidor ************************//
+/**
+        * Carga HUD del servidor
+        */
 function createServerUI() {
     //******************* Información usuario ************************//
     controller.getCurrentScene().add.image(130,80, "playServer");
@@ -207,7 +209,9 @@ function createServerUI() {
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
 
-//******************* Carga de escena ************************//
+/**
+        * Carga de escena
+        */
 function loadScene(){
     if(mode === 2){
         resetVariables();

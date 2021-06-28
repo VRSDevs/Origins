@@ -85,7 +85,9 @@ class sceneSettingsMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga de escena ************************//
+/**
+        * Carga de escena
+        */
 function loadScene(){
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneMainMenu");
