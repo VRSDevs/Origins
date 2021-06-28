@@ -139,21 +139,16 @@ class sceneGroundRoom extends Phaser.Scene{
             backButton.setFrame(0);
         }, this);
         backButton.addListener('pointerdown', loadScene, this);
-
-        controller.setReseter(false);
     }
     update() {
         // Llamada a función para actualizar información de cada uno de los jugadores
         updatePlayerInfo();
-       
-        console.log(controller.getMatchPlayers());
 
         // Si el número de jugadores es distinto a 0 y no se empezó la partida
-        if(controller.getMatchPlayers() > 1 && !startMatch && !controller.getReseter()) {                             
+        if(controller.getMatchPlayers() > 1 && !startMatch) {                             
             // Asignación de valores a variables
             option = 1;
             startMatch = true;
-            controller.setReseter(true); 
 
             // Llamada retardada a evento
             controller.getCurrentScene().time.delayedCall(
@@ -273,8 +268,6 @@ function updatePlayerInfo() {
 function resetVariables() {
     option = 0;
     startMatch = false; 
-    controller.setMatchPlayers(0);
-    controller.setStopUpdateLevel(false);
 }
 
 //////////////////////////////////////////////////////////////////////

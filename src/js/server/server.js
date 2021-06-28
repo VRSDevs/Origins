@@ -285,7 +285,6 @@ class ServerClass {
                     // Actualización de información del usuario
                     user.setOnlineRoom("ground");       // Sala en la que se encuentra
                     user.setIdInRoom(message.userID);   // ID del usuario en la sala
-                    console.log(user.getIdInRoom());
                     break;
                 // Caso: OK_PLAYERJOIN / OK_GETPLAYERS -> Caso para cuando un jugador entra a la sala y pide información de todos los jugadores
                 case "OK_PLAYERJOIN":
@@ -309,13 +308,6 @@ class ServerClass {
                     break;
             }
         }       
-
-        //
-        groundRWS.onclose = function() {
-
-            groundRWS = null;
-            setTimeout(server.connectToGroundRoom(), 5000);
-        }
     }
 
     /**
@@ -487,11 +479,6 @@ class ServerClass {
                     controller.setMatterPosY(message.matterY);
                     break;
             }
-        }
-
-        groundMWS.onclose = function(){
-            groundMWS = null;
-            setTimeout(server.connectToGroundMatch(), 5000);
         }
     }
 
