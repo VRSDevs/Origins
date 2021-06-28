@@ -169,8 +169,8 @@ class scenePlayMenu extends Phaser.Scene {
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
 /**
-        * Carga HUD del servidor
-        */
+ * Función para cargar el HUD del servidor
+ */
 function createServerUI() {
     //******************* Información usuario ************************//
     controller.getCurrentScene().add.image(130,80, "playServer");
@@ -210,21 +210,22 @@ function createServerUI() {
 }
 
 /**
-        * Carga de escena
-        */
+ * Función para cargar la siguiente escena
+ */
 function loadScene(){
+    // Llamada al método de limpieza de variables
+    resetVariables();
+
+    // Selección de la siguiente escena en función del modo escogido
     if(mode === 2){
-        resetVariables();
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneSelectionMenu");
         nextScene.scene.start();
     } else if(mode === 3){
-        resetVariables();
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneRoomSelectMenu");
         nextScene.scene.start();
     } else {
-        resetVariables();
         controller.getMusic().pause();
         controller.getCurrentScene().scene.stop();
         var nextScene = game.scene.getScene("sceneMainMenu");
@@ -232,6 +233,9 @@ function loadScene(){
     }
 }
 
+/**
+ * Función para resetar variables
+ */
 function resetVariables() {
     mode = 0;
 }
