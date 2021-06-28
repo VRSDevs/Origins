@@ -308,10 +308,13 @@ class ServerClass {
                     controller.setMatchPlayers(message.players);
                     break;
             }
-        }
+        }       
 
         //
         groundRWS.onclose = function() {
+
+            groundRWS = null;
+            setTimeout(server.connectToGroundRoom(), 5000);
         }
     }
 
@@ -333,6 +336,7 @@ class ServerClass {
         switch (user.getOnlineRoom()) {
             // Cada caso es la clave de cada conexión en el diccionario
             case "ground":
+
                 roomConnection = this.getWSConnection()["ground"];
                 break;
             default:
@@ -483,6 +487,11 @@ class ServerClass {
                     controller.setMatterPosY(message.matterY);
                     break;
             }
+        }
+
+        groundMWS.onclose = function(){
+            groundMWS = null;
+            setTimeout(server.connectToGroundMatch(), 5000);
         }
     }
 

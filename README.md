@@ -14,6 +14,7 @@ Antonio Rafael Ruano Rodríguez | ar.ruano.2018@alumnos.urjc.es | [Haz click aqu
 - [Cuenta Twitter](https://twitter.com/ArmoonyS?s=20)
 - [Cuenta Instagram](https://www.instagram.com/armoony.s/?hl=es)
 - [Cuenta YouTube](https://www.youtube.com/channel/UCJpZbOBYYst2W-elJBd2tBg/?reload=9&guided_help_flow=5)
+- [Gameplay del Juego](https://youtu.be/Ggk0p7rLgps)
 
 ## Temática del juego
 Un videojuego de fantasía y ciencia ficción sobre la creación de la Tierra.
@@ -78,7 +79,8 @@ En el siguiente diagrama se muestra una representación de las diferentes pantal
 ![Figura 1](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Flowchart.png?raw=true)
 Figura 1
 El siguiente diagrama de clases muestra el flujo de la aplicación
-![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Diagrama%20de%20fllujo.png?raw=true)
+![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Diagrama%20de%20flujo.png?raw=true)
+
 Figura 2
 
 ##### 2.5.2 Interfaces y bocetos
