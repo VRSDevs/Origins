@@ -81,7 +81,6 @@ class Cat {
             this.hasMatter = false;
             this.sand = false;
         } else {
-            //this.name = "";
             this.isReady = false;
             this.score = 0; 
             this.roundsWon = 0;

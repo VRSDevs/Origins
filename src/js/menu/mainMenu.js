@@ -201,36 +201,29 @@ class sceneMainMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                     Funciones al servidor                        //
 //////////////////////////////////////////////////////////////////////
-//
+/**
+ * Función para enviar un mensaje al servidor y comunicarselo al resto de clientes
+ * @param {Object} message Mensaje a enviar
+ */
 function sendMessage(message){
+    // Obtención de la conexión WS
     var wsConnection = server.getWSConnection()["chat"];
 
+    // Construcción del mensaje a enviar
     var messageToAdd = "<" + message.name + "> " + message.message;
-    console.log(messageToAdd);
+    // Inserción en la lista de mensajes de la BD
     server.getMessagesFromDB().push(messageToAdd);
 
+    // Envío del mensaje al servidor
     wsConnection.send(JSON.stringify(message));
 }
-
-// Inicio de sesión del jugador //
-function updateUser(user) {
-    $.ajax({
-        method: "PUT",
-        url: 'http://localhost:8080/users/' + user.username,
-        data: JSON.stringify(user),
-        processData: false,
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }).done(function (item) {
-    })
-}
-
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-//******************* Creación de interfaz de servidor ************************//
+/**
+ * Función para crear la UI del servidor
+ */
 function createServerUI() {
     //******************* Mensajes *******************//
     // Variables auxiliares //   
@@ -308,7 +301,6 @@ function createServerUI() {
     });
 
     //******************* Conexión al servidor *******************//
-
     controller.getCurrentScene().add.image(725, 93, "log");
     // Texto //
     textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
@@ -337,7 +329,9 @@ function createServerUI() {
     userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
 }
 
-//******************* Cierre de sesión de jugador ************************//
+/**
+ * Función para eliminar la información del usuario
+ */
 function logOut() {
     user.resertUser();
     /*
@@ -350,18 +344,24 @@ function logOut() {
     updateUser(userToLogOut);
 
     // Reset de usuario del cliente //
-    
     */
 }
 
-//
+/**
+ * Función para reestablecer variables
+ */
 function resetVariables() {
     textUsername = "";
 }
 
-//******************* Carga de escena ************************//
+/**
+ * Función para cargar la siguiente escena
+ */
 function loadScene() {
+    // Llamada a la función de reset de variables
     resetVariables();
+
+    // Acceso a la siguiente escena en función de la ID auxiliar
     switch (id) {
         case 1:
             controller.getCurrentScene().scene.stop();
@@ -379,18 +379,22 @@ function loadScene() {
             nextScene.scene.start();
             break;
         case 4:
+            // Generación de mensaje
             var message = {
                 name: "Server",
                 message: user.getUsername() + " has disconnected.",
             }
-            
+            // Agregar al mensaje al registro del menú "Jugar"
             server.setLogPlayMenu(user.getUsername() + " has disconnected."); 
+            // Envío del mensaje
             sendMessage(message);
             
+            // Cierre de la sesión
+            logOut();
+            // Desconexión del servidor
             server.disconnect();
 
-            logOut();
-
+            // Obtención e inicio de la siguiente escena
             controller.getCurrentScene().scene.stop();
             controller.getMusic().stop();
             var nextScene = game.scene.getScene("sceneLoginMenu");

@@ -191,7 +191,10 @@ class sceneSelectionMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga descripciones de gatos ************************//
+/**
+ * Función para cargar las descripciones de los distintos gatos
+ * @param {integer} value 
+ */
 function loadDescription(value) {
     switch (value) {
         case 0:
@@ -212,17 +215,27 @@ function loadDescription(value) {
     }
 }
 
-//******************* Ir a la siguiente escena ************************//
+/**
+ * Función para ir a la siguiente escena
+ */
 function goNextScene() {
+    // Asignación del nombre al jugador
     players[0].setName("Player 1");
-    selectedCat = 0;
+
+    // invocación al método de limpieza de variables
+    resetVariables();
+    
+    // Parada y obtención de la siguiente escena
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneSelectionMenu2");
     nextScene.scene.start();
 }
 
-//******************* Carga de escena ************************//
+/**
+ * Función para iniciar la siguiente escena
+ */
 function loadScene() {
+    // Asignación de tipo en función del gato escogido
     switch (selectedCat) {
         case 1:
             players[0].setType(1);
@@ -241,11 +254,19 @@ function loadScene() {
             goNextScene();
             break;
         default:
+            // Parada y obtención de la siguiente escena
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("scenePlayMenu");
             nextScene.scene.start();
             break;
     }
+}
+
+/**
+ * Función para limpiar variables
+ */
+function resetVariables() {
+    selectedCat = 0;
 }
 
 //////////////////////////////////////////////////////////////////////
