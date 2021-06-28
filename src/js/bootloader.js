@@ -193,7 +193,7 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteRestart", './resources/img/Buttons/restart_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
         this.load.spritesheet("spriteMainMenu", './resources/img/Buttons/mainMenu_SpriteSheet.png', { frameWidth: 301, frameHeight: 66 });
         // Juego Online //
-        this.load.spritesheet("spriteGroundLobby", './resources/img/Buttons/groundRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67});
+        this.load.spritesheet("spriteGroundLobby", './resources/img/Buttons/groundRoomSS.png', {frameWidth: 662, frameHeight: 67});
         this.load.spritesheet("spriteWaterLobby", './resources/img/Buttons/waterRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67});
         this.load.spritesheet("spriteFireLobby", './resources/img/Buttons/fireRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67}); 
         this.load.spritesheet("spriteAirLobby", './resources/img/Buttons/airRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67});    

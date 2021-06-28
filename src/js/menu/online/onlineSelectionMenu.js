@@ -192,9 +192,14 @@ class sceneOnlineSelectionMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                        Funciones Comunicación                    //
 //////////////////////////////////////////////////////////////////////
+/**
+ * Función para mandar la información del jugador del cliente
+ */
 function sendPlayerInfo() {
+    // Obtención de la conexión del cliente
     var wsConnection = server.getWSConnection()[user.getOnlineRoom()];
 
+    // Generación del mensaje a enviar
     var message = {
         code: "OK_PLAYERJOIN",
         playerId: user.getIdInRoom(),
@@ -203,6 +208,7 @@ function sendPlayerInfo() {
         playerReady: players[user.getIdInRoom()].getReady()
     }
 
+    // Envío del mensaje
     wsConnection.send(JSON.stringify(message));
 }
 
@@ -237,13 +243,13 @@ function loadDescription(value) {
  * Función para ir a la siguiente escena
  */
 function goNextScene() {
-    //
+    // Reinicio del valor del gato seleccionado
     selectedCat = 0;
 
-    //
+    // Llamada a la función de envío de la información del mensaje
     sendPlayerInfo();
 
-    //
+    // Reinicio y paso a la siguiente escena
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneGroundRoom");
     nextScene.scene.start();

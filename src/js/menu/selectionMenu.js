@@ -214,6 +214,7 @@ function loadDescription(value) {
 
 //******************* Ir a la siguiente escena ************************//
 function goNextScene() {
+    players[0].setName("Player 1");
     selectedCat = 0;
     controller.getCurrentScene().scene.stop();
     var nextScene = game.scene.getScene("sceneSelectionMenu2");

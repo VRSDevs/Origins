@@ -842,10 +842,6 @@ function resetVariables(){
         controller.getCurrentScene().anims.remove('idleP' + i + 'Matter');    
     }
 }
-
-function setTimer(newTime){
-    timer.setText(newTime);
-}
 //////////////////////////////////////////////////////////////////////
 //                          Exportaciones                           //
 //////////////////////////////////////////////////////////////////////
