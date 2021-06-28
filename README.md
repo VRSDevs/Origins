@@ -20,7 +20,7 @@ Un videojuego de fantasía y ciencia ficción sobre la creación de la Tierra.
 
 ## Documento de diseño de juego (GDD)
 ### 1. Introducción
-El documento de diseño del juego _Origins_ tiene como finalidad principal atraer aposibles jugadores y plasmar las ideas de implementación del juego.
+El documento de diseño del juego _Origins_ tiene como finalidad principal atraer a posibles jugadores y plasmar las ideas de implementación del juego.
 
 #### 1.1 Creadores
 El juego está creado por el estudio Armoony’s, cuyos integrantes son Alejandro Requena, Antonio Rafael Ruano, Ignacio Calles y Rocío Campo.
