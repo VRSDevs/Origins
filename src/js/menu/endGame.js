@@ -68,7 +68,7 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 // Generación del texto de victoria
-                victoryText = this.add.text(width/2  - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
+                victoryText = this.add.text(width/2  - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     align: 'center',
@@ -92,7 +92,8 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 // Generación del texto de victoria
-                victoryText = this.add.text(width/2  - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
+
+                victoryText = this.add.text(width/2  - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     align: 'center',
@@ -116,7 +117,7 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 // Generación del texto de victoria
-                victoryText = this.add.text(width/2  - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
+                victoryText = this.add.text(width/2  - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     align: 'center',
@@ -140,7 +141,7 @@ class sceneEndGame extends Phaser.Scene {
                 bg.anims.play('bgVictoryAnim');
 
                 // Generación del texto de victoria
-                victoryText = this.add.text(width/2 - 84, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
+                victoryText = this.add.text(width/2 - 100, -20, players[controller.getWinnerCat()].getName() + "\nwon!", {
                     fontFamily: 'origins',
                     fontSize: '40px',
                     align: 'center',
