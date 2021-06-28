@@ -386,7 +386,9 @@ class sceneSelectionMenu2 extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                          Funciones extra                         //
 //////////////////////////////////////////////////////////////////////
-//******************* Carga descripciones de gatos ************************//
+/**
+        * Carga descripciones de gatos
+        */
 function loadDescription(value) {
     switch (value) {
         case 0:
@@ -407,7 +409,9 @@ function loadDescription(value) {
     }
 }
 
-//******************* Obtención mapa de juego ************************//
+/**
+        * Obtención mapa de juego
+        */
 function getMap() {
     players[1].setName("Player 2");
     var max = 4;
@@ -438,6 +442,10 @@ function getMap() {
     }
 }
 
+
+/**
+* Carga de escena
+*/
 function loadScene() {
     switch (selectedCat) {
         case 1:

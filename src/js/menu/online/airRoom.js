@@ -72,8 +72,9 @@ class sceneAirRoom extends Phaser.Scene{
 
 }
 
-
-//******************* Carga de escena ************************//
+/** 
+        * Carga de escena
+        */
 function loadScene(){
     switch (lobby) {
         case 1:
