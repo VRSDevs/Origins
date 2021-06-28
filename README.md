@@ -78,7 +78,7 @@ En el siguiente diagrama se muestra una representación de las diferentes pantal
 ![Figura 1](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Flowchart.png?raw=true)
 Figura 1
 El siguiente diagrama de clases muestra el flujo de la aplicación
-![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Diagrama%20de%20fllujo.png?raw=true)
+![Figura 2](https://github.com/Blinx24/Origins/blob/master/resources/img/Flowchart/Diagrama%20de%20flujo.png?raw=true)
 Figura 2
 
 ##### 2.5.2 Interfaces y bocetos
