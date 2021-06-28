@@ -116,7 +116,7 @@ class sceneGroundRoom extends Phaser.Scene{
                 readyButton.setFrame(1);
                 players[user.getIdInRoom()].setReady(true);
             }
-            //
+            // Invocación de método para indicar que el jugador se encuetra listo
             sendReadyMessage();
         }, this);
 
@@ -195,6 +195,10 @@ function sendReadyMessage() {
 function loadScene(){
     switch (option) {
         case 1:
+            // Llamada al método de limpieza de variables
+            resetVariables();
+
+            // Parada y obtención de la siguiente escena
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneGroundLevelOnline");
             nextScene.scene.start();
@@ -203,7 +207,11 @@ function loadScene(){
         case 2:
             // Desconexión de la sala
             server.disconnectFromRoom();
-            //
+
+            // Llamada al método de limpieza de variables
+            resetVariables();
+
+            // Parada y obtención de la siguiente escena
             controller.getCurrentScene().scene.stop();
             var nextScene = game.scene.getScene("sceneMainMenu");
             nextScene.scene.start();
@@ -253,6 +261,14 @@ function updatePlayerInfo() {
             readyTexts[i].setText("");
         }     
     }
+}
+
+/**
+ * Función para limpiar variables
+ */
+function resetVariables() {
+    option = 0;
+    startMatch = false; 
 }
 
 //////////////////////////////////////////////////////////////////////

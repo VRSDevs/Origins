@@ -5,6 +5,7 @@ import { controller } from '../gameController.js';
 import { players } from '../cats.js';
 import { game } from '../init.js';
 import { server } from '../server/server.js';
+import { user } from '../server/user.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -195,7 +196,7 @@ class sceneEndGame extends Phaser.Scene {
             }
 
             // Reset variables
-            
+            resetVariables();
 
             // Parada y obtención de la siguiente escena
             controller.getCurrentScene().scene.stop();
@@ -235,6 +236,10 @@ class sceneEndGame extends Phaser.Scene {
                 // Actualización del bloqueo de UPDATE de escenas
                 controller.setStopUpdateLevel(false);
 
+                // Reset usuario listo
+                players[user.getIdInRoom()].setReady(false);
+                sendReadyUpdate();
+
                 // Parada e inicio de la siguiente escena
                 controller.getCurrentScene().scene.stop();
                 var nextScene = game.scene.getScene("sceneGroundRoom");
@@ -257,9 +262,51 @@ class sceneEndGame extends Phaser.Scene {
         //******************* Efectos ************************//
         // Fade in //
         this.cameras.main.fadeIn(5000);
+
+        //******************* Comunicación final de partida ************************//
+        sendMatchEnded();
     }
     update(time,delta){
     }
+}
+
+//////////////////////////////////////////////////////////////////////
+//                   Funciones comunicación                         //
+//////////////////////////////////////////////////////////////////////
+/**
+ * Función para enviar al servidor información de si está listo el jugador
+ */
+function sendReadyUpdate() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["ground"];
+
+    // Generación del mensaje a enviar
+    var message = {
+        code: "OK_PLAYERREADY",
+        playerId: user.getIdInRoom(),
+        playerType: players[user.getIdInRoom()].getType(),
+        playerName: players[user.getIdInRoom()].getName(),
+        playerReady: players[user.getIdInRoom()].getReady()
+    }
+
+    // Envío del mensaje
+    wsConnection.send(JSON.stringify(message));
+}
+
+/**
+ * Función para comunicar el final de partida
+ */
+function sendMatchEnded() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["ground"];
+
+    // Generación del mensaje a enviar
+    var message = {
+        code: "OK_MATCHENDED"
+    }
+
+    // Envío del mensaje
+    wsConnection.send(JSON.stringify(message));
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -301,6 +348,7 @@ function resetVariables(key){
             }
 
             // Variables del controlador de juego //
+            controller.setMatchPlayers(0);
             controller.setGameMode(0);
             controller.setStopUpdateLevel(false);
             controller.getMusic().stop();
@@ -314,6 +362,9 @@ function resetVariables(key){
             players.forEach(cat => {
                 cat.reset(false);
             });
+
+            // Variables del controlador de juego //
+            controller.setMatchPlayers(0);
 
             break;
     }
