@@ -174,7 +174,6 @@ class ServerClass {
                 case "OK_CHECKREGISTER":
                     // Asignación del valor de acceso
                     server.setCanLogIn(message.status);
-                    console.log(message.status)
 
                     break;
                 // Caso: OK_CHECKLOG -> El usuario ha intentado realizar un inicio de sesión
@@ -357,7 +356,7 @@ class ServerClass {
     }
 
     /**
-     * 
+     * Conexión a la partida de tierra
      */
     connectToGroundMatch() {
         var groundMWS = new WebSocket(ip + '/groundM');
@@ -371,12 +370,12 @@ class ServerClass {
         }
 
         groundMWS.onmessage = function(msg) {
-            //
+            // Parser del mensaje enviado por parte del servidor
             var message = JSON.parse(msg.data);
 
-            //
+            // Comprobación del código del mensaje
             switch (message.code) {
-                //
+                // Caso: OK_INITIALSTATE -> Caso para la comunicación del estado inicial
                 case "OK_INITIALSTATE":
                     //
                     controller.setMatterPosX(message.matterX);
@@ -384,8 +383,9 @@ class ServerClass {
                     controller.setTimeRound(message.roundTime);
                     console.log(controller.getTimeRound());
                     break;
+                // Caso: OK_PLAYERINFO -> Caso para la comunicación del estado del jugador
                 case "OK_PLAYERINFO":
-                    //
+                    // Comprobación de la tecla pulsada
                     switch (message.updateKey) {
                         case "W":
                             players[message.userId].getObject().setVelocityY(-160);
@@ -449,7 +449,7 @@ class ServerClass {
                             break;
                     }
 
-                        //Normalizar vectores
+                        // Normalización vectores
                         if(players[message.userId].getSand() == true){
                             players[message.userId].getObject().body.velocity.normalize().scale(80);
                         } else {
@@ -457,9 +457,11 @@ class ServerClass {
                         }
 
                         break;
+                // Caso: OK_POINTSINFO -> Caso para la comunicación de la puntuación del jugador 
                 case "OK_POINTSINFO":
                     players[message.userId].setScore(players[message.userId].getScore() + 1);       
                     break;
+                // Caso: OK_TAKEDM -> Caso para la comunicación de variación de la materia oscura
                 case "OK_TAKEDM":
                     darkMatter.getObject().disableBody(true, true);
                     players[message.userTaken].setHasMatter(true);
@@ -471,6 +473,7 @@ class ServerClass {
                     controller.setMatterPosX(message.matterX);
                     controller.setMatterPosY(message.matterY);
                     break;
+                // Caso: OK_ROUNDSTATE -> Actualización del temporizador
                 case "OK_TIMER":
                     controller.setCurrentTimeRound(message.timer);
                     console.log("Tiempo restante: " + controller.getCurrentTimeRound());
@@ -486,7 +489,7 @@ class ServerClass {
     }
 
     /**
-     * 
+     * Método para desconectar de la sala y la partida de tierra
      */
     disconnectFromRoomAndMatch() {
         // Obtención de la conexión del diccionario de conexiones (en función de la sala conectada del usuario)

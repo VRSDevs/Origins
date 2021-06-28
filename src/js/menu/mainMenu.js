@@ -27,7 +27,7 @@ var changeTxT = undefined;
 var userIc = undefined;
 // Texto //
 var textServerConnected = "";
-var textUsername = "";
+var textUsername = undefined;
 var textNumOfUsersConnected = "";
 var messagesOrUsers = "";
 //******************* Control ************************//
@@ -219,7 +219,7 @@ function sendMessage(message){
 }
 
 /**
- * 
+ * Función para enviar mensaje al servidor con la desconexión del usuario
  */
 function sendUserDisconnection() {
     // Obtención de la conexión ws del diccionario de conexiones
@@ -231,6 +231,24 @@ function sendUserDisconnection() {
         username: user.getUsername(),
         password: user.getPassword(),
         status: false,
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
+
+/**
+ * Función para notificar la conexión de un usuario (mensaje del servidor)
+ */
+ function sendDisconnectedUserServer() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["chat"];
+
+    // Generación del mensaje
+    var message = {
+        code: "OK_SENDMESSAGE",
+        name: "Server",
+        message: user.getUsername() + " has disconnected",
     }
 
     // Envío del mensaje al servidor
@@ -350,11 +368,20 @@ function createServerUI() {
 }
 
 /**
+ * Función para enviar la información de conexión de un usuario nuevo
+ */
+ function sendUserDisconnectedMsgs() {
+    // Llamada a métodos de comunicación
+    sendUserDisconnection();
+    sendDisconnectedUserServer();
+}
+
+/**
  * Función para eliminar la información del usuario
  */
 function logOut() {
     // Envió de la información de la desconexión
-    sendUserDisconnection();
+    sendUserDisconnectedMsgs();
 
     // Reset valores del usuario
     user.resertUser();
@@ -362,25 +389,27 @@ function logOut() {
     // Reset de valores de servidor
     server.setListConnectedUsers([]);
     server.setMessagesFromDB([]);
-
-    /*
-    // Usuario auxiliar para actualizar la BD //
-    var userToLogOut = {
-        username: user.getUsername(),
-        password: user.getPassword(),
-        status: false,
-    }
-    updateUser(userToLogOut);
-
-    // Reset de usuario del cliente //
-    */
 }
 
 /**
  * Función para reestablecer variables
  */
 function resetVariables() {
-    textUsername = "";
+    textUsername = undefined;
+}
+
+/**
+ * Función para cerrar el juego
+ */
+ function closeGame() {
+    // Desconexión del servidor
+    server.disconnect();
+
+    // Obtención y cambio de escena
+    controller.getCurrentScene().scene.stop();
+    controller.getMusic().stop();
+    var nextScene = game.scene.getScene("sceneLoginMenu");
+    nextScene.scene.start();
 }
 
 /**
@@ -407,33 +436,17 @@ function loadScene() {
             var nextScene = game.scene.getScene("sceneSettingsMenu");
             nextScene.scene.start();
             break;
-        case 4:
-            // Generación de mensaje
-            var message = {
-                name: "Server",
-                message: user.getUsername() + " has disconnected.",
-            }
-            // Agregar al mensaje al registro del menú "Jugar"
-            server.setLogPlayMenu(user.getUsername() + " has disconnected."); 
-            // Envío del mensaje
-            sendMessage(message);
-            
+        case 4:           
             // Cierre de la sesión
             logOut();
 
             // Desconexión del servidor
             controller.getCurrentScene().time.delayedCall(
                 1000,
-                server.disconnect,
+                closeGame,
                 [],
                 this
             );
-
-            // Obtención e inicio de la siguiente escena
-            controller.getCurrentScene().scene.stop();
-            controller.getMusic().stop();
-            var nextScene = game.scene.getScene("sceneLoginMenu");
-            nextScene.scene.start();
             break;
     }
 }
