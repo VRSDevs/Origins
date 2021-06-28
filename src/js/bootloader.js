@@ -200,13 +200,13 @@ class bootloader extends Phaser.Scene {
     	this.load.spritesheet("readyPButton", './resources/img/Buttons/readySpriteSheet.png', { frameWidth: 411, frameHeight: 69});
 
         //******************** Interfaz Server ********************************//
-        this.load.spritesheet("login", './resources/img/ServerUtils/LoginServer.png', {frameWidth: 403, frameHeight: 42});
-        this.load.spritesheet("message", './resources/img/ServerUtils/MessagesMenu.png', {frameWidth: 319, frameHeight: 257});
-        this.load.spritesheet("name", './resources/img/ServerUtils/NameMenu.png', {frameWidth: 332, frameHeight: 46});
-        this.load.spritesheet("playServer", './resources/img/ServerUtils/PlayMenuServer.png', {frameWidth: 258, frameHeight: 41});
-        this.load.spritesheet("playServer2", './resources/img/ServerUtils/PlayMenuServer2.png', {frameWidth: 439, frameHeight: 43});
-        this.load.spritesheet("log", './resources/img/ServerUtils/ServerLog.png', {frameWidth: 150, frameHeight: 67});
-        this.load.spritesheet("load", './resources/img/ServerUtils/loadServer.png', {frameWidth: 268, frameHeight: 70});
+        this.load.image("login", './resources/img/ServerUtils/LoginServer.png');
+        this.load.image("message", './resources/img/ServerUtils/MessagesMenu.png');
+        this.load.image("name", './resources/img/ServerUtils/NameMenu.png');
+        this.load.image("playServer", './resources/img/ServerUtils/PlayMenuServer.png');
+        this.load.image("playServer2", './resources/img/ServerUtils/PlayMenuServer2.png');
+        this.load.image("log", './resources/img/ServerUtils/ServerLog.png');
+        this.load.image("load", './resources/img/ServerUtils/loadServer.png');
     }
 }
 
