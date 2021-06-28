@@ -570,6 +570,22 @@ function sendTakeDM() {
     wsConnection.send(JSON.stringify(message));
 }
 
+/**
+ * Envío de información de fin de ronda
+ */
+function sendRoundFinished() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["groundMatch"];
+
+    // Generación del mensaje a enviar
+    var message = {
+        code: "OK_ROUNDSTATE",
+    }
+
+    // Envío del mensaje
+    wsConnection.send(JSON.stringify(message));
+}
+
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
@@ -630,6 +646,9 @@ function checkResults() {
 function endRound() {
     // Bloqueo de actualizaciones de la escena
     controller.setStopUpdateLevel(true);
+
+    // LLamada a reinicio de variables de la escena
+    sendRoundFinished();
 
     // Comprobación del ganador
     var winner = checkResults();
