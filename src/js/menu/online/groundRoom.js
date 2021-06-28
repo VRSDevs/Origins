@@ -24,8 +24,8 @@ var names = ["", "", "", ""];
 // Preparados //
 var readyTexts = ["", "", "", ""];
 //****************** Control *********************//
-var startMatch = false;
-var option = 0;
+var startMatch = false;     // ¿Empezó la partida?
+var option = 0;             // Opción del menú (salir del lobby o empezar partida)
 
 //////////////////////////////////////////////////////////////////////
 //              Clase de escena de lobby de tierra                  //
@@ -146,13 +146,13 @@ class sceneGroundRoom extends Phaser.Scene{
         // Llamada a función para actualizar información de cada uno de los jugadores
         updatePlayerInfo();
 
-        // Si el número de jugadores
+        // Si el número de jugadores es distinto a 0 y no se empezó la partida
         if(controller.getMatchPlayers() !== 0 && !startMatch) {
-            //
+            // Asignación de valores a variables
             option = 1;
             startMatch = true;
 
-            //
+            // Llamada retardada a evento
             controller.getCurrentScene().time.delayedCall(
                 1000,
                 loadScene,

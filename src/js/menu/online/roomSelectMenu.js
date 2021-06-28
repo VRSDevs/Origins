@@ -228,7 +228,6 @@ function createServerUI() {
     });
 }
 
-//******************* Carga de escena ************************//
 /**
  * Carga de sala seleccionada
  */
