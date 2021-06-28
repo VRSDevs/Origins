@@ -218,6 +218,25 @@ function sendMessage(message){
     wsConnection.send(JSON.stringify(message));
 }
 
+/**
+ * 
+ */
+function sendUserDisconnection() {
+    // Obtención de la conexión ws del diccionario de conexiones
+    var wsConnection = server.getWSConnection()["user"];
+
+    // Creación del mensaje a mandar al servidor con el estado de "listo"
+    var message = {
+        code: "OK_SENDUSERDISCONNECTION",
+        username: user.getUsername(),
+        password: user.getPassword(),
+        status: false,
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
+
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
@@ -245,6 +264,7 @@ function createServerUI() {
             if (elementHTML.value !== '') {
                 // Objeto de mensaje
                 var message = {
+                    code: "OK_SENDMESSAGE",
                     name: user.getUsername(),
                     message: elementHTML.value,
                 }
@@ -333,7 +353,16 @@ function createServerUI() {
  * Función para eliminar la información del usuario
  */
 function logOut() {
+    // Envió de la información de la desconexión
+    sendUserDisconnection();
+
+    // Reset valores del usuario
     user.resertUser();
+
+    // Reset de valores de servidor
+    server.setListConnectedUsers([]);
+    server.setMessagesFromDB([]);
+
     /*
     // Usuario auxiliar para actualizar la BD //
     var userToLogOut = {
@@ -391,8 +420,14 @@ function loadScene() {
             
             // Cierre de la sesión
             logOut();
+
             // Desconexión del servidor
-            server.disconnect();
+            controller.getCurrentScene().time.delayedCall(
+                1000,
+                server.disconnect,
+                [],
+                this
+            );
 
             // Obtención e inicio de la siguiente escena
             controller.getCurrentScene().scene.stop();

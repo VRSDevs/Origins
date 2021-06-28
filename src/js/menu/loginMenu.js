@@ -20,24 +20,10 @@ var textMode = undefined;
 var textModeLog = undefined;
 //******************* Control ************************//
 var mode = 0;           // Opción de menú
-var updateScene = 0;    // Variable de control para implementar HTML
-var userAlreadyCreated = false;
 //******************* Botones ************************//
 var signupButton = undefined;
 var loginButton = undefined;
 var backButton = undefined;
-//******************* Servidor ************************//
-// Imágenes //
-var userIc = undefined;
-// Botones //
-var syncButton = undefined;
-// Texto //
-var textServerConnected = "";
-var textNumOfUsersConnected = "";
-// Usuarios //
-var userToUpdate = undefined;
-var userToCreate = undefined;
-var userToCheck = undefined;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú de logueo              //
@@ -67,6 +53,11 @@ class sceneLoginMenu extends Phaser.Scene {
         loginHTML.addListener('click');
         loginHTML.on('click', function (event) {
             if (event.target.name === 'loginButton') {
+                // Establecer conexion al servidor
+                server.connectToChatService();
+                server.connectToUserService();
+
+                // Obtención valores de los campos HTML
                 var usernameLog = this.getChildByName('usernameField');
                 var passwordLog = this.getChildByName('passwordField');
 
@@ -75,60 +66,77 @@ class sceneLoginMenu extends Phaser.Scene {
                         // Registro del usuario //
                         case 1:
                             // Comprobación de existencia en la BD
-                            //checkUser(usernameLog.value);
+                            controller.getCurrentScene().time.delayedCall(
+                                300,
+                                checkUser,
+                                [usernameLog.value, "", "register"],
+                                this
+                            );
+
+                            textModeLog.setText("Registrando al usuario...");
 
                             // Ejecucuión tras un período de tiempo
                             controller.getCurrentScene().time.addEvent({
-                                delay: 20,
+                                delay: 500,
                                 callback: () => {
-                                    if (!userAlreadyCreated) {
-                                        // Establecer conexion al servidor
-                                        server.connectToChatService();
-                                        server.connectToUserService();
+                                    switch (server.getCanLogIn()) {
+                                        // Caso: 2 -> Se pudo realizar el registro
+                                        case 2:
+                                            textModeLog.setText("Registro completado.");
 
-                                        textModeLog.setText("Registro con éxito.");
-                                        // Codificación de la contraseña introducida
-                                        //var codifiedPassword = sha256(passwordLog.value);
+                                            // Obtención de toda la información de la BD
+                                            controller.getCurrentScene().time.delayedCall(
+                                                800,
+                                                getInfoFromBD,
+                                                [],
+                                                this
+                                            );
 
-                                        // Asignación en el usuario cliente
-                                        user.setUsername(usernameLog.value);
-                                        user.setPassword(passwordLog.value);
-                                        user.setStatus(true);
+                                            // Asignación en el usuario cliente
+                                            user.setUsername(usernameLog.value);
+                                            user.setPassword(passwordLog.value);
+                                            user.setStatus(true);
 
-                                        // Copia usuario auxiliar para subir a la BD
-                                        userToCreate = {
-                                            username: usernameLog.value,
-                                            password: passwordLog.value,
-                                            status: true,
-                                        }
+                                            // Codificación de la contraseña introducida
+                                            //var codifiedPassword = sha256(passwordLog.value);
 
-                                        // Post del usuario creado
-                                        //postUser(userToCreate);
-                                        userAlreadyCreated = true;
+                                            // Envío de la información del usuario conectado a la BD
+                                            controller.getCurrentScene().time.delayedCall(
+                                                1200,
+                                                sendConnectedNewUser,
+                                                [],
+                                                this
+                                            );
 
-                                        // Post de mensaje de inicio de sesión
-                                        var message = {
-                                            name: "Server",
-                                            message: user.getUsername() + " has connected.",
-                                        }
-                                        server.setLogPlayMenu(user.getUsername() + " has connected.");
-                                        //server.messageToChatService(message);
+                                            // Post de mensaje de inicio de sesión
+                                            var message = {
+                                                name: "Server",
+                                                message: user.getUsername() + " has connected.",
+                                            }
+                                            server.setLogPlayMenu(user.getUsername() + " has connected.");
+                                            //server.messageToChatService(message);
 
-                                        // Limpieza de datos
-                                        usernameLog.value = '';
-                                        passwordLog.value = '';
-                                        userToCreate = undefined;
+                                            // Carga de la siguiente escena
+                                            controller.getCurrentScene().time.delayedCall(
+                                                1200,
+                                                loadScene,
+                                                [],
+                                                this
+                                            );
+                                            
+                                            break;
+                                        // Caso: 0 -> El jugador intenta iniciar la conexión en una cuenta no existente
+                                        case 0:
+                                            textModeLog.setText("Error. El usuario introducido ya existe.");
 
-                                        // Carga de la siguiente escena
-                                        loadScene();
-                                    } else {
-                                        textModeLog.setText("Error. El usuario introducido ya existe.");
+                                            // Desconexión del servidor
+                                            server.disconnect();
+
+                                            break;
                                     }
                                     // Limpieza de datos
                                     usernameLog.value = '';
-                                    passwordLog.value = '';
-                                    userToCreate = undefined;
-                                    userAlreadyCreated = false;
+                                    passwordLog.value = '';                            
                                 },
                                 callbackScope: this,
                                 loop: false
@@ -138,60 +146,90 @@ class sceneLoginMenu extends Phaser.Scene {
 
                         // Inicio de sesión del usuario
                         case 2:
-                            // Obtención del usuario en la BD
-                            checkUser(usernameLog.value);
+                            // Comprobación de existencia en la BD
+                            controller.getCurrentScene().time.delayedCall(
+                                300,
+                                checkUser,
+                                [usernameLog.value, passwordLog.value, "login"],
+                                this
+                            );
+
+                            textModeLog.setText("Iniciando sesión...");
 
                             controller.getCurrentScene().time.addEvent({
-                                delay: 20,
+                                delay: 500,
                                 callback: () => {
                                     // Comprobación con la BD //
-                                    if (userToCheck !== undefined) {
-                                        //var codedPasswordFromLog = sha256(passwordLog.value);
-                                        // Coincidencia con la contraseña //
-                                        if (userToCheck.password === passwordLog.value) {
+                                    switch (server.getCanLogIn()) {
+                                        // Caso: 2 -> Se pudo iniciar la sesión
+                                        case 2:
+                                            //var codedPasswordFromLog = sha256(passwordLog.value);
+
                                             // Estado de conexión del usuario //
-                                            if (userToCheck.status === false) {
-                                                textModeLog.setText("Inicio de sesión con éxito.");
-                                                //Inserción en usuario del cliente
-                                                user.setUsername(usernameLog.value);
-                                                user.setPassword(passwordLog.value);
-                                                user.setStatus(true);
+                                            textModeLog.setText("Inicio de sesión con éxito.");
 
-                                                // Actualización información de la BD
-                                                userToUpdate = {
-                                                    username: usernameLog.value,
-                                                    password: passwordLog.value,
-                                                    status: true,
-                                                }
-                                                //updateUser(userToUpdate);
+                                            // Obtención de toda la información de la BD
+                                            controller.getCurrentScene().time.delayedCall(
+                                                800,
+                                                getInfoFromBD,
+                                                [],
+                                                this
+                                            );
 
-                                                // Post de mensaje de inicio de sesión
-                                                var message = {
-                                                    username: "Server",
-                                                    body: "Se conectó " + user.getUsername(),
-                                                }
-                                                postMessage(message);
+                                            //Inserción en usuario del cliente
+                                            user.setUsername(usernameLog.value);
+                                            user.setPassword(passwordLog.value);
+                                            user.setStatus(true);
 
-                                                server.setLogPlayMenu(user.getUsername() + " has connected.");
+                                            // Envío de la información del usuario conectado a la BD
+                                            controller.getCurrentScene().time.delayedCall(
+                                                1200,
+                                                sendConnectedNewUser,
+                                                [],
+                                                this
+                                            );
 
-                                                // Carga de la siguiente escena
-                                                loadScene();
-                                            } else {
-                                                textModeLog.setText("Error. El usuario ya está conectado.");
-                                                // Limpieza de datos
-                                                userToCheck = undefined;
+                                            // Post de mensaje de inicio de sesión
+                                            /*
+                                            var message = {
+                                                username: "Server",
+                                                body: "Se conectó " + user.getUsername(),
                                             }
-                                        } else {
-                                            textModeLog.setText("Error. La contraseña es incorrecta.");
-                                        }
-                                    } else {
-                                        textModeLog.setText("Error. El usuario no existe.");
+                                            postMessage(message);
+                                            */
+
+                                            server.setLogPlayMenu(user.getUsername() + " has connected.");
+
+                                            // Carga de la siguiente escena
+                                            controller.getCurrentScene().time.delayedCall(
+                                                1200,
+                                                loadScene,
+                                                [],
+                                                this
+                                            );
+
+                                            break;
+                                        // Caso: 1 -> El jugador intenta conectarse a una cuenta ya conectada
+                                        case 1:
+                                            textModeLog.setText("Error. El usuario está conectado.");
+
+                                            // Desconexión del servidor
+                                            server.disconnect();
+
+                                            break;
+                                        // Caso: 0 -> El jugador intenta iniciar la conexión en una cuenta no existente
+                                        case 0:
+                                            textModeLog.setText("Error. El usuario no existe.");
+
+                                            // Desconexión del servidor
+                                            server.disconnect();
+
+                                            break;
                                     }
                                     // Limpieza de datos
-                                    userToUpdate = undefined;
-                                    userToCheck = undefined;
                                     usernameLog.value = '';
                                     passwordLog.value = '';
+                                    server.setCanLogIn(0);
                                 },
                                 callbackScope: this,
                                 loop: false
@@ -213,7 +251,7 @@ class sceneLoginMenu extends Phaser.Scene {
         // Log de registro / inicio de sesión //
         textModeLog = this.add.text(210, 490, "", {
             fontFamily: 'Origins',
-            fontSize: 16,
+            fontSize: 14,
             color: '#056005',
         });
 
@@ -297,10 +335,106 @@ class sceneLoginMenu extends Phaser.Scene {
 //////////////////////////////////////////////////////////////////////
 //                 Funciones Comunicaciones                         //
 //////////////////////////////////////////////////////////////////////
+// Funciones de mensajes //
+/**
+ * Función para obtener a todos los usuarios conectados
+ */
+function getMessagesFromDB() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["chat"];
+
+    // Generación del mensaje
+    var message = {
+        code: "OK_GETMESSAGES"
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
+
+// Funciones de usuarios //
+/**
+ * Función para obtener la lista de todos los usuarios conectados
+ */
+function getListOfConnectedUsers() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["user"];
+
+    // Generación del mensaje
+    var message = {
+        code: "OK_GETLISTUSERS"
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
+
+/**
+ * Función para notificar la conexión de un usuario
+ */
+function sendConnectedNewUser() {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["user"];
+
+    // Generación del mensaje
+    var message = {
+        code: "OK_CONNECTEDNEWUSER",
+        username: user.getUsername(),
+        password: user.getPassword(),
+        status: true,
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
+
+/**
+ * Función para comprobar si el usuario introducido existe en la base de datos
+ * @param {String} key Clave según el modo seleccionado en el menú
+ */
+function checkUser(username, password, key) {
+    // Obtención de la conexión WS
+    var wsConnection = server.getWSConnection()["user"];
+
+    // Generación del mensaje
+    var message;
+    switch (key) {
+        // Caso: register -> El usuario quiere registrarse
+        case "register":
+            message = {
+                code: "OK_CHECKREGISTER",
+                username: username,
+            }
+
+            break;
+        // Caso: login -> El usuario quiere iniciar la sesión
+        case "login":
+            message = {
+                code: "OK_CHECKLOG",
+                username: username,
+                password: password
+            }
+
+            break;
+    }
+
+    // Envío del mensaje al servidor
+    wsConnection.send(JSON.stringify(message));
+}
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
+/**
+ * Función para obtener toda la información de la BD
+ */
+function getInfoFromBD() {
+    textModeLog.setText("Estableciendo conexión...");
+
+    getMessagesFromDB();
+    getListOfConnectedUsers();
+}
+
 /**
  * Función ejecutada cuando se cancela el inicio de sesión
  */
@@ -320,12 +454,7 @@ function goBack() {
  */
 function resetVariables() {
     mode = 0;
-    updateScene = 0;
-    userToCheck = undefined;
-    userAlreadyCreated = false;
-    userToCreate = undefined;
-    userToUpdate = undefined;
-    userToCheck = undefined;
+    server.setCanLogIn(0);
 }
 
 /**
