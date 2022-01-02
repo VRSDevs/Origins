@@ -16,7 +16,7 @@ class gameController{
         this.gameMode = 0;               // Modo de juego: 
                                                 //                  2 -> Dos jugadores (J vs. J)
                                                 //                  3 -> Multijugador
-        this.timeRound = 15;             // Tiempo de ronda
+        this.timeRound = 30;             // Tiempo de ronda
         this.currentTimeRound = 0;      //
         this.maxRounds = 2;
         this.stopUpdateLevel = false;

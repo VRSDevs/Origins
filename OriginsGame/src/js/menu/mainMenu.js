@@ -3,8 +3,6 @@
 //////////////////////////////////////////////////////////////////////
 import { controller } from '../gameController.js';
 import { game } from '../init.js';
-import { server } from '../server/server.js';
-import { user } from '../server/user.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -17,19 +15,6 @@ var playButton = undefined;
 var controlsButton = undefined;
 var settingsButton = undefined;
 var exitButton = undefined;
-//******************* Servidor ************************//
-// Control //
-var chatMode = 0;
-// Botón //
-var syncButton = undefined;
-var changeTxT = undefined;
-// Imágenes //
-var userIc = undefined;
-// Texto //
-var textServerConnected = "";
-var textUsername = undefined;
-var textNumOfUsersConnected = "";
-var messagesOrUsers = "";
 //******************* Control ************************//
 // Selección de submenú //
 var id = 0;
@@ -126,7 +111,7 @@ class sceneMainMenu extends Phaser.Scene {
             repeat: 0
         });
 
-        exitButton.addListener('pointerover', () => {
+        exitButton.addListener('pointer', () => {
             id = 4;
             exitButton.anims.play('exitButtonAnim', true);
         }, this);
@@ -136,9 +121,6 @@ class sceneMainMenu extends Phaser.Scene {
             exitButton.setFrame(0);
         }, this);
         exitButton.addListener('pointerdown', loadScene, this);
-
-        //******************* Interfaz servidor ************************//
-        createServerUI();
 
         //****************** Música *********************//
         if (controller.getMusicPlaying() === false) {
@@ -154,42 +136,6 @@ class sceneMainMenu extends Phaser.Scene {
     }
 
     update(time, delta) {
-        //****************** Servidor *********************//
-        if (server.isServerConnected() === true) {          
-            // Actualización mensajes o lista de usuarios //
-            if(chatMode === 0) {
-                messagesOrUsers.setText(server.getMessagesFromDB());
-            } else {
-                messagesOrUsers.setText(server.getListConnectedUsers());
-            }
-            
-            // Actualización estado del servidor //
-            textServerConnected.setStyle({
-                color: '#056005',
-            });
-            textServerConnected.setText("Server Online");
-            // Actualización usuarios conectados //
-            userIc.setTint(0x00ff00);
-            textNumOfUsersConnected.setStyle({
-                color: '#056005',
-            });
-            textNumOfUsersConnected.setText(server.getConnectedUsers());
-        } else {
-            //
-            messagesOrUsers.setText(server.getMessagesFromDB());
-            // Actualización del estado del servidor //
-            textServerConnected.setStyle({
-                color: '#bc1616',
-            });
-            textServerConnected.setText("Server Offline");
-            // Actualización 
-            userIc.setTint(0xbc1616);
-            textNumOfUsersConnected.setStyle({
-                color: '#bc1616',
-            });
-            textNumOfUsersConnected.setText("0");
-        }
-
         //****************** Música *********************//
         if (controller.getMusicEnabled() === false) {
             controller.getMusic().pause();
@@ -198,227 +144,14 @@ class sceneMainMenu extends Phaser.Scene {
         }
     }
 }
-//////////////////////////////////////////////////////////////////////
-//                     Funciones al servidor                        //
-//////////////////////////////////////////////////////////////////////
-/**
- * Función para enviar un mensaje al servidor y comunicarselo al resto de clientes
- * @param {Object} message Mensaje a enviar
- */
-function sendMessage(message){
-    // Obtención de la conexión WS
-    var wsConnection = server.getWSConnection()["chat"];
-
-    // Construcción del mensaje a enviar
-    var messageToAdd = "<" + message.name + "> " + message.message;
-    // Inserción en la lista de mensajes de la BD
-    server.getMessagesFromDB().push(messageToAdd);
-
-    // Envío del mensaje al servidor
-    wsConnection.send(JSON.stringify(message));
-}
-
-/**
- * Función para enviar mensaje al servidor con la desconexión del usuario
- */
-function sendUserDisconnection() {
-    // Obtención de la conexión ws del diccionario de conexiones
-    var wsConnection = server.getWSConnection()["user"];
-
-    // Creación del mensaje a mandar al servidor con el estado de "listo"
-    var message = {
-        code: "OK_SENDUSERDISCONNECTION",
-        username: user.getUsername(),
-        password: user.getPassword(),
-        status: false,
-    }
-
-    // Envío del mensaje al servidor
-    wsConnection.send(JSON.stringify(message));
-}
-
-/**
- * Función para notificar la conexión de un usuario (mensaje del servidor)
- */
- function sendDisconnectedUserServer() {
-    // Obtención de la conexión WS
-    var wsConnection = server.getWSConnection()["chat"];
-
-    // Generación del mensaje
-    var message = {
-        code: "OK_SENDMESSAGE",
-        name: "Server",
-        message: user.getUsername() + " has disconnected",
-    }
-
-    // Envío del mensaje al servidor
-    wsConnection.send(JSON.stringify(message));
-}
 
 //////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
 /**
- * Función para crear la UI del servidor
- */
-function createServerUI() {
-    //******************* Mensajes *******************//
-    // Variables auxiliares //   
-    var xChat = 19;
-    var yChat = 340;
-    var wChat = 320;
-    var hChat = 256;
-
-    // Introducción de mensajes //
-    // Código HTML para introducir mensajes
-    var messagesHTML = controller.getCurrentScene().add.dom(95, 605).createFromCache('messagesCode').setOrigin(0);
-    messagesHTML.setScale(0.5);
-    messagesHTML.addListener('click');
-    // Evento al hacer clic
-    messagesHTML.on('click', function (event) {
-        if (event.target.name === 'sendMessage') {
-            //  Elemento HTML donde se introduce el texto
-            var elementHTML = this.getChildByName('messageField');
-            if (elementHTML.value !== '') {
-                // Objeto de mensaje
-                var message = {
-                    code: "OK_SENDMESSAGE",
-                    name: user.getUsername(),
-                    message: elementHTML.value,
-                }
-
-                // Envío del mensaje al servidor y a la BD
-                sendMessage(message);
-
-                // Limpieza del campo de texto
-                elementHTML.value = '';
-
-            } else {
-                console.log("No hay escrito ningún mensaje!")
-            }
-        }
-    });
-    changeTxT = controller.getCurrentScene().add.sprite(xChat + 30, 620, "spriteMsgButton", 1).setInteractive();
-    changeTxT.addListener('pointerdown', () => {
-        if(chatMode === 1) {
-            changeTxT.setFrame(1);
-            chatMode = 0;
-        } else {
-            changeTxT.setFrame(0);
-            chatMode = 1;
-        }
-    }, this);
-
-    // Muestra de mensajes //
-    // Lienzo
-    var graphics = controller.getCurrentScene().make.graphics().setDepth(2);
-    graphics.fillStyle(0xffffff);
-    graphics.fillRect(xChat, yChat, wChat, hChat);
-
-    // Fondo del texto
-    controller.getCurrentScene().add.image(xChat, yChat, "message").setOrigin(0);
-
-    // Máscara para ocultar
-    var mask = new Phaser.Display.Masks.GeometryMask(controller.getCurrentScene(), graphics);
-
-    // Texto contenedor de los mensajes
-    messagesOrUsers = controller.getCurrentScene().add.text(xChat + 6, yChat + 130, server.getMessagesFromDB(), {
-        fontFamily: 'Consolas',
-        color: '#056005',
-        wordWrap: { width: 310 }
-    }).setOrigin(0);
-    messagesOrUsers.setMask(mask);
-
-    // Zona
-    var zone = controller.getCurrentScene().add.zone(xChat, yChat, wChat, hChat).setOrigin(0).setInteractive();
-    zone.on('pointermove', function (pointer) {
-        if (pointer.isDown) {
-            messagesOrUsers.y += (pointer.velocity.y / 10);
-            messagesOrUsers.y = Phaser.Math.Clamp(messagesOrUsers.y, -300, 400);
-        }
-    });
-
-    //******************* Conexión al servidor *******************//
-    controller.getCurrentScene().add.image(725, 93, "log");
-    // Texto //
-    textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
-        fontFamily: 'origins',
-        fontSize: 14,
-        color: '#056005',
-    });
-
-    //******************* Usuario cliente *******************//
-    controller.getCurrentScene().add.image(xChat,yChat - ((hChat/4) - 5), "name").setOrigin(0);
-    var nameString = "Hola, " + user.getUsername() + ".";
-    textUsername = controller.getCurrentScene().add.text(xChat + 12, yChat - hChat / 5, nameString, {
-        fontFamily: 'origins',
-        fontSize: 20,
-        color: '#056005',
-    });
-
-    //******************* Usuarios *******************//
-    // Texto //
-    textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
-        fontFamily: 'origins',
-        fontSize: 24,
-        color: '#056005',
-    });
-    // Icono //
-    userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
-}
-
-/**
- * Función para enviar la información de conexión de un usuario nuevo
- */
- function sendUserDisconnectedMsgs() {
-    // Llamada a métodos de comunicación
-    sendUserDisconnection();
-    sendDisconnectedUserServer();
-}
-
-/**
- * Función para eliminar la información del usuario
- */
-function logOut() {
-    // Envió de la información de la desconexión
-    sendUserDisconnectedMsgs();
-
-    // Reset valores del usuario
-    user.resertUser();
-
-    // Reset de valores de servidor
-    server.setListConnectedUsers([]);
-    server.setMessagesFromDB([]);
-}
-
-/**
- * Función para reestablecer variables
- */
-function resetVariables() {
-    textUsername = undefined;
-}
-
-/**
- * Función para cerrar el juego
- */
- function closeGame() {
-    // Desconexión del servidor
-    server.disconnect();
-
-    // Obtención y cambio de escena
-    controller.getCurrentScene().scene.stop();
-    controller.getMusic().stop();
-    var nextScene = game.scene.getScene("sceneLoginMenu");
-    nextScene.scene.start();
-}
-
-/**
  * Función para cargar la siguiente escena
  */
 function loadScene() {
-    // Llamada a la función de reset de variables
-    resetVariables();
-
     // Acceso a la siguiente escena en función de la ID auxiliar
     switch (id) {
         case 1:

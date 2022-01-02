@@ -20,10 +20,6 @@ class bootloader extends Phaser.Scene {
             loadedResoruces = true;
         });
 
-        //***********************  Códigos HTML ***************************//
-        this.load.html('messagesCode','src/html/sendMessage.html');
-        this.load.html('loginCode', 'src/html/login.html');
-
         //***********************  TilesMap ***************************//
         this.load.image("tilesForest", "./resources/img/Tileset/Tileset/Tilemap.png");
         this.load.image("tilesFire", "./resources/img/Tileset/Tilemap_Fire.png");
@@ -198,15 +194,6 @@ class bootloader extends Phaser.Scene {
         this.load.spritesheet("spriteFireLobby", './resources/img/Buttons/fireRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67}); 
         this.load.spritesheet("spriteAirLobby", './resources/img/Buttons/airRoomSpritesheet.png', {frameWidth: 662, frameHeight: 67});    
     	this.load.spritesheet("readyPButton", './resources/img/Buttons/readySpriteSheet.png', { frameWidth: 411, frameHeight: 69});
-
-        //******************** Interfaz Server ********************************//
-        this.load.image("login", './resources/img/ServerUtils/LoginServer.png');
-        this.load.image("message", './resources/img/ServerUtils/MessagesMenu.png');
-        this.load.image("name", './resources/img/ServerUtils/NameMenu.png');
-        this.load.image("playServer", './resources/img/ServerUtils/PlayMenuServer.png');
-        this.load.image("playServer2", './resources/img/ServerUtils/PlayMenuServer2.png');
-        this.load.image("log", './resources/img/ServerUtils/ServerLog.png');
-        this.load.image("load", './resources/img/ServerUtils/loadServer.png');
     }
 }
 

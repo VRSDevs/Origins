@@ -3,8 +3,6 @@
 //////////////////////////////////////////////////////////////////////
 import { game } from '../init.js';
 import { controller } from '../gameController.js';
-import { user } from '../server/user.js';
-import { server } from '../server/server.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -20,13 +18,6 @@ var onlineMultiplayerButton = undefined;
 // Animaciones //
 var startAnim = false;
 var mode = 0;
-//******************* Servidor ************************//
-// Imágenes //
-var userIc = undefined;
-// Texto //
-var textServerConnected = "";
-var textNumOfUsersConnected = "";
-var textServerLog = undefined;
 
 //////////////////////////////////////////////////////////////////////
 //                   Clase de escena de menú jugar                  //
@@ -47,9 +38,6 @@ class scenePlayMenu extends Phaser.Scene {
 
         //******************* Fondos ************************//
         this.add.image(400, 320, "play");
-
-        //******************* Interfaz servidor ************************//
-        createServerUI();
 
         //****************** Botones *********************//
         // Modo 2 Jugador (local) //
@@ -92,13 +80,12 @@ class scenePlayMenu extends Phaser.Scene {
             mode = 0;
             controller.setGameMode(0);
         }, this);
-        onlineMultiplayerButton.addListener('pointerdown', loadScene, this);
 
         // Retroceso //
         backButton = this.add.sprite(242/2, 580, "spriteBackButton2", 0).setInteractive();
         this.anims.create({
             key: 'backButtonAnim',
-            frames: this.anims.generateFrameNumbers('spriteBackButton', {start: 1, end: 4}),
+            frames: this.anims.generateFrameNumbers('spriteBackButton2', {start: 1, end: 4}),
             frameRate: 3,
             repeat: 0
         });
@@ -114,32 +101,6 @@ class scenePlayMenu extends Phaser.Scene {
     }
 
     update(time, delta){
-        //****************** Servidor *********************//
-        if (server.isServerConnected() === true) {
-            textServerConnected.setStyle({
-                color: '#056005',
-            });
-            textServerConnected.setText("Server Online");
-            userIc.setTint(0x00ff00);
-            textNumOfUsersConnected.setStyle({
-                color: '#056005',
-            });
-            textNumOfUsersConnected.setText(server.getConnectedUsers());
-        } else {
-            textServerConnected.setStyle({
-                color: '#bc1616',
-            });
-            textServerConnected.setText("Server Offline");
-            userIc.setTint(0xbc1616);
-            textNumOfUsersConnected.setStyle({
-                color: '#bc1616',
-            });
-            textNumOfUsersConnected.setText("0");
-        }
-
-        //****************** Información servidor *********************//
-        textServerLog.setText(("Server Log:\n" + server.getLogPlayMenu()));
-
         //****************** Animaciones *********************//
         if (startAnim === true && controller.getGameMode() === 2){
             localMultiplayerButton.anims.play('localMultiplayerAnim', true);
@@ -162,53 +123,8 @@ class scenePlayMenu extends Phaser.Scene {
 }
 
 //////////////////////////////////////////////////////////////////////
-//                      Funciones HTTP                              //
-//////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////
 //                   Funciones extras                               //
 //////////////////////////////////////////////////////////////////////
-/**
- * Función para cargar el HUD del servidor
- */
-function createServerUI() {
-    //******************* Información usuario ************************//
-    controller.getCurrentScene().add.image(130,80, "playServer");
-    // Texto //
-    controller.getCurrentScene().add.text(10, 70, ("Hola, " + user.getUsername() + "."), {
-        fontFamily: 'origins',
-        fontSize: 18,
-        color: '#056005',
-    });
-
-    //******************* Información servidor ************************//
-    controller.getCurrentScene().add.image(220,136, "playServer2");
-    textServerLog = controller.getCurrentScene().add.text(10, 120, "", {
-        fontFamily: 'Consolas',
-        fontSize: 16,
-        color: '#056005',
-    });
-
-    //******************* Conexión al servidor ************************//
-    controller.getCurrentScene().add.image(725,93, "log");
-    // Texto //
-    textServerConnected = controller.getCurrentScene().add.text(660, 70, "Loading...", {
-        fontFamily: 'origins',
-        fontSize: 14,
-        color: '#056005',
-    });
-
-    //******************* Conexión al servidor ************************//
-    // Texto //
-    textNumOfUsersConnected = controller.getCurrentScene().add.text(685, 89, server.getConnectedUsers(), {
-        fontFamily: 'origins',
-        fontSize: 24,
-        color: '#056005',
-    });
-    // Icono //
-    userIc = controller.getCurrentScene().add.image(670, 105, "userIcon").setScale(1.2);
-}
-
 /**
  * Función para cargar la siguiente escena
  */

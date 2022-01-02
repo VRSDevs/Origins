@@ -4,8 +4,6 @@
 import { controller } from '../gameController.js';
 import { players } from '../cats.js';
 import { game } from '../init.js';
-import { server } from '../server/server.js';
-import { user } from '../server/user.js';
 
 //////////////////////////////////////////////////////////////////////
 //                  Variables globales                              //
@@ -189,12 +187,6 @@ class sceneEndGame extends Phaser.Scene {
             mainMenuButton.setFrame(0);
         }, this);
         mainMenuButton.addListener('pointerdown', () => {
-            // Si el modo de juego es el ONLINE
-            if(controller.getGameMode() === 3) {
-                // Desconexión de la sala y de la partida
-                server.disconnectFromRoomAndMatch();
-            }
-
             // Reset variables
             resetVariables();
 
@@ -224,27 +216,13 @@ class sceneEndGame extends Phaser.Scene {
             // Reset variables
             resetVariables("restart");
 
-            if(controller.getGameMode() === 2) {
-                // Actualización del bloqueo de UPDATE de escenas
-                controller.setStopUpdateLevel(false);
+            // Actualización del bloqueo de UPDATE de escenas
+            controller.setStopUpdateLevel(false);
 
-                // Parada e inicio de la siguiente escena
-                controller.getCurrentScene().scene.stop();
-                var nextScene = game.scene.getScene(level.scene.key);
-                nextScene.scene.start();
-            } else {
-                // Actualización del bloqueo de UPDATE de escenas
-                controller.setStopUpdateLevel(false);
-
-                // Reset usuario listo
-                players[user.getIdInRoom()].setReady(false);
-                sendReadyUpdate();
-
-                // Parada e inicio de la siguiente escena
-                controller.getCurrentScene().scene.stop();
-                var nextScene = game.scene.getScene("sceneGroundRoom");
-                nextScene.scene.start();
-            }
+            // Parada e inicio de la siguiente escena
+            controller.getCurrentScene().scene.stop();
+            var nextScene = game.scene.getScene(level.scene.key);
+            nextScene.scene.start();
         }, this);
 
         // Animación de botones //
@@ -262,51 +240,10 @@ class sceneEndGame extends Phaser.Scene {
         //******************* Efectos ************************//
         // Fade in //
         this.cameras.main.fadeIn(5000);
-
-        //******************* Comunicación final de partida ************************//
-        sendMatchEnded();
     }
+
     update(time,delta){
     }
-}
-
-//////////////////////////////////////////////////////////////////////
-//                   Funciones comunicación                         //
-//////////////////////////////////////////////////////////////////////
-/**
- * Función para enviar al servidor información de si está listo el jugador
- */
-function sendReadyUpdate() {
-    // Obtención de la conexión WS
-    var wsConnection = server.getWSConnection()["ground"];
-
-    // Generación del mensaje a enviar
-    var message = {
-        code: "OK_PLAYERREADY",
-        playerId: user.getIdInRoom(),
-        playerType: players[user.getIdInRoom()].getType(),
-        playerName: players[user.getIdInRoom()].getName(),
-        playerReady: players[user.getIdInRoom()].getReady()
-    }
-
-    // Envío del mensaje
-    wsConnection.send(JSON.stringify(message));
-}
-
-/**
- * Función para comunicar el final de partida
- */
-function sendMatchEnded() {
-    // Obtención de la conexión WS
-    var wsConnection = server.getWSConnection()["ground"];
-
-    // Generación del mensaje a enviar
-    var message = {
-        code: "OK_MATCHENDED"
-    }
-
-    // Envío del mensaje
-    wsConnection.send(JSON.stringify(message));
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -340,12 +277,9 @@ function resetVariables(key){
     switch (key) {
         case "mainmenu":
             // Variables del jugador //
-            // Si el modo de juego es el LOCAL
-            if(controller.getGameMode() === 2) {
-                players.forEach(cat => {
-                    cat.reset(true);
-                });
-            }
+            players.forEach(cat => {
+                cat.reset(true);
+            });
 
             // Variables del controlador de juego //
             controller.setMatchPlayers(0);

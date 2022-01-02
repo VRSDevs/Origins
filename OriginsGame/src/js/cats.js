@@ -71,8 +71,8 @@ class Cat {
     //******************* Otros ************************//
     
     /**
-        * Reseteo de jugadores
-        */
+    * Reseteo de jugadores
+    */
     reset(bool) {
         if(bool){
             this.object = undefined;
